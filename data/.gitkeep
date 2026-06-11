@@ -1,0 +1,2 @@
+# data/ directory — runtime data (chroma DB, BM25 index, images, logs)
+# This directory is gitignored; contents are generated at runtime.

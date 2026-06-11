@@ -1,0 +1,403 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>多模态升级（路径B）· 改动说明</title>
+<style>
+  :root{
+    --bg:#0d1117; --panel:#161b22; --panel2:#1c2330; --border:#2b3340;
+    --txt:#e6edf3; --muted:#8b95a5; --accent:#7c93ff; --accent2:#46d39a;
+    --warn:#f0a35e; --danger:#f06d6d; --code:#0b1020;
+    --tag-new:#1f6f4a; --tag-mod:#5a4b1f; --radius:14px;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:linear-gradient(180deg,#0a0d12,#0d1117);color:var(--txt);
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Microsoft YaHei",sans-serif;
+    line-height:1.65;-webkit-font-smoothing:antialiased}
+  .wrap{max-width:1080px;margin:0 auto;padding:32px 20px 80px}
+  header.hero{text-align:center;padding:30px 0 18px}
+  .hero h1{font-size:30px;margin:0 0 8px;letter-spacing:.5px}
+  .hero h1 .grad{background:linear-gradient(90deg,var(--accent),var(--accent2));
+    -webkit-background-clip:text;background-clip:text;color:transparent}
+  .hero p{color:var(--muted);margin:6px 0 0;font-size:15px}
+  .badges{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-top:16px}
+  .badge{background:var(--panel);border:1px solid var(--border);border-radius:999px;
+    padding:6px 14px;font-size:13px;color:var(--muted)}
+  .badge b{color:var(--accent2)}
+  /* tabs */
+  .tabs{display:flex;gap:6px;flex-wrap:wrap;justify-content:center;margin:26px 0 22px;
+    position:sticky;top:0;background:rgba(13,17,23,.85);backdrop-filter:blur(8px);
+    padding:12px 0;z-index:20;border-bottom:1px solid var(--border)}
+  .tab{cursor:pointer;border:1px solid var(--border);background:var(--panel);color:var(--muted);
+    padding:8px 16px;border-radius:10px;font-size:14px;transition:.18s}
+  .tab:hover{color:var(--txt);border-color:var(--accent)}
+  .tab.active{background:linear-gradient(90deg,var(--accent),var(--accent2));color:#08111a;
+    font-weight:600;border-color:transparent}
+  .panel{display:none;animation:fade .35s ease}
+  .panel.active{display:block}
+  @keyframes fade{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+  /* cards */
+  .card{background:var(--panel);border:1px solid var(--border);border-radius:var(--radius);
+    margin:14px 0;overflow:hidden}
+  .card .head{display:flex;align-items:center;gap:12px;padding:16px 18px;cursor:pointer;user-select:none}
+  .card .head:hover{background:var(--panel2)}
+  .card .head .id{font-family:ui-monospace,Menlo,monospace;font-size:13px;color:#08111a;
+    background:var(--accent);border-radius:8px;padding:3px 9px;font-weight:700}
+  .card .head h3{margin:0;font-size:16px;flex:1}
+  .card .head .arrow{color:var(--muted);transition:.2s}
+  .card.open .head .arrow{transform:rotate(90deg)}
+  .card .body{display:none;padding:0 18px 18px;border-top:1px solid var(--border)}
+  .card.open .body{display:block}
+  ul{margin:10px 0;padding-left:20px}
+  li{margin:5px 0}
+  code{font-family:ui-monospace,Menlo,monospace;background:var(--code);border:1px solid var(--border);
+    padding:1px 6px;border-radius:6px;font-size:13px;color:#cdd6f4}
+  .tag{font-size:11px;padding:2px 8px;border-radius:6px;font-weight:600;letter-spacing:.3px}
+  .tag.new{background:var(--tag-new);color:#b9f6d2}
+  .tag.mod{background:var(--tag-mod);color:#ffe6a8}
+  table{width:100%;border-collapse:collapse;margin:14px 0;font-size:14px;background:var(--panel)}
+  th,td{border:1px solid var(--border);padding:10px 12px;text-align:left;vertical-align:top}
+  th{background:var(--panel2);color:var(--accent)}
+  .mermaid{background:var(--panel);border:1px solid var(--border);border-radius:var(--radius);
+    padding:18px;text-align:center;margin:16px 0}
+  /* CSS flow diagram (无外部依赖) */
+  .diagram{background:var(--panel);border:1px solid var(--border);border-radius:var(--radius);
+    padding:22px 18px;margin:16px 0;display:flex;flex-direction:column;align-items:center;gap:0}
+  .node{background:var(--panel2);border:1px solid var(--border);border-radius:10px;
+    padding:10px 16px;font-size:14px;max-width:560px;text-align:center;line-height:1.45}
+  .node .sub{display:block;color:var(--muted);font-size:12px;margin-top:2px}
+  .node.hl{background:rgba(31,111,74,.35);border-color:var(--accent2)}
+  .node.hl .sub{color:#a8e8c8}
+  .node.store{background:rgba(35,49,79,.6);border-color:var(--accent);border-radius:999px}
+  .node.warnnode{background:rgba(90,75,31,.4);border-color:var(--warn)}
+  .node.warnnode .sub{color:#ffe0b0}
+  .node.decision{background:#2a2030;border-color:#b074d6}
+  .down{color:var(--accent);font-size:20px;line-height:1;margin:7px 0}
+  .down small{display:block;color:var(--muted);font-size:11px}
+  .branch{display:flex;gap:26px;justify-content:center;flex-wrap:wrap;align-items:flex-start}
+  .branch .col{display:flex;flex-direction:column;align-items:center}
+  .merge-lines{color:var(--accent);font-size:13px;margin:4px 0}
+  .legend{display:flex;gap:14px;justify-content:center;flex-wrap:wrap;margin-top:6px;font-size:12px;color:var(--muted)}
+  .legend i{display:inline-block;width:12px;height:12px;border-radius:3px;margin-right:5px;vertical-align:-1px}
+  .note{border-left:3px solid var(--warn);background:rgba(240,163,94,.08);
+    padding:12px 16px;border-radius:0 10px 10px 0;margin:14px 0;font-size:14px}
+  .note.danger{border-color:var(--danger);background:rgba(240,109,109,.08)}
+  .note.ok{border-color:var(--accent2);background:rgba(70,211,154,.08)}
+  .file{font-family:ui-monospace,Menlo,monospace;font-size:13px;color:var(--accent2)}
+  h2.sec{font-size:20px;margin:26px 0 6px;border-left:4px solid var(--accent);padding-left:12px}
+  .muted{color:var(--muted)}
+  .pill-row{display:flex;gap:8px;flex-wrap:wrap;margin:8px 0}
+  .pill{font-size:12px;background:var(--panel2);border:1px solid var(--border);
+    border-radius:999px;padding:4px 11px;color:var(--muted)}
+  .flow{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin:10px 0}
+  .step{background:var(--panel2);border:1px solid var(--border);border-radius:10px;
+    padding:8px 12px;font-size:13px}
+  .step b{color:var(--accent2)}
+  .sep{color:var(--accent)}
+  footer{text-align:center;color:var(--muted);font-size:13px;margin-top:40px;
+    padding-top:20px;border-top:1px solid var(--border)}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header class="hero">
+    <h1>基于 Qwen 的<span class="grad">真·跨模态多模态升级</span></h1>
+    <p>路径 B · 图文统一向量空间 · MCP 查询接收图片 · 一个 DashScope Key 全打通</p>
+    <div class="badges">
+      <span class="badge">测试 <b>328 passed</b></span>
+      <span class="badge">新增单测 <b>+21</b></span>
+      <span class="badge">向量维度 <b>1024（图文同空间）</b></span>
+      <span class="badge">视觉模型 <b>qwen-vl-max</b></span>
+      <span class="badge">已真实验证 <b>✓</b></span>
+    </div>
+  </header>
+
+  <nav class="tabs">
+    <div class="tab active" data-t="overview">概览</div>
+    <div class="tab" data-t="changes">改动清单 M1–M7</div>
+    <div class="tab" data-t="ingest">摄取链路</div>
+    <div class="tab" data-t="query">查询链路</div>
+    <div class="tab" data-t="files">文件清单</div>
+    <div class="tab" data-t="safety">安全 & 测试</div>
+  </nav>
+
+  <!-- ================= OVERVIEW ================= -->
+  <section class="panel active" id="overview">
+    <h2 class="sec">这次解决了什么</h2>
+    <p>原项目设计是 <b>Image-to-Text</b>（图→文字描述→文本检索），但端到端从未打通，图片数恒为 0。本次升级到 <b>路径 B</b>：把<strong>文本与图片编码进同一个向量空间</strong>，实现真正的「以文搜图 / 以图搜文 / 以图搜图」，并让 MCP 查询工具能直接<strong>接收图片提问</strong>。</p>
+
+    <table>
+      <tr><th>维度</th><th>升级前</th><th>升级后</th></tr>
+      <tr><td>向量空间</td><td>纯文本 <code>text-embedding-v3</code></td><td>图文统一 <code>multimodal-embedding-v1</code>（1024 维）</td></tr>
+      <tr><td>PDF 抽图</td><td class="muted">占位（markitdown 只出文本，正则恒空）</td><td><b>pypdfium2 真抽图</b>落盘入库</td></tr>
+      <tr><td>图片描述</td><td class="muted">硬编码 Azure，未启用</td><td><b>qwen-vl-max</b> 经工厂调用，默认开启</td></tr>
+      <tr><td><code>image_refs</code></td><td class="muted">从未被填充（隐藏断点）</td><td>抽图→分配→缝描述→还原原图 全贯通</td></tr>
+      <tr><td>图片检索</td><td class="muted">无</td><td>图片作为<b>独立向量记录</b>入同一 collection</td></tr>
+      <tr><td>query 接收图片</td><td class="muted">仅 <code>query:string</code></td><td>新增 <code>image</code> 入参（base64/受限路径）</td></tr>
+    </table>
+
+    <div class="note ok"><b>已真实验证：</b>文本向量与图片向量均落 1024 维同一空间；GPT-3 论文真抽出 83 张图、Transformer 3 张图，占位与抽图数一致。</div>
+
+    <h2 class="sec">三种查询模式</h2>
+    <div class="flow">
+      <span class="step">纯文本 → <b>Dense(文本) + Sparse(BM25) + RRF</b>（原行为）</span>
+    </div>
+    <div class="flow">
+      <span class="step">纯图片 → <b>Dense(图片向量) only</b>（BM25 对图无意义，跳过）</span>
+    </div>
+    <div class="flow">
+      <span class="step">图文混合 → <b>Dense 用图向量 + Sparse 用文本关键词 + RRF</b></span>
+    </div>
+  </section>
+
+  <!-- ================= CHANGES ================= -->
+  <section class="panel" id="changes">
+    <h2 class="sec">7 项改动（点击展开）</h2>
+    <p class="muted"><span class="tag new">NEW</span> 新增文件　<span class="tag mod">MOD</span> 修改文件</p>
+
+    <div class="card open">
+      <div class="head"><span class="id">M1</span><h3>多模态向量 Embedding（地基）</h3><span class="arrow">▶</span></div>
+      <div class="body">
+        <div class="pill-row"><span class="pill">DashScope SDK</span><span class="pill">逐条编码</span><span class="pill">auto_truncation</span></div>
+        <ul>
+          <li><span class="tag new">NEW</span> <span class="file">src/libs/embedding/qwen_multimodal_embedding.py</span> — <code>QwenMultimodalEmbedding</code>，实现 <code>embed()</code>（文本）+ <code>embed_image()</code>（路径/bytes/base64/data:URI 统一规范化为 <code>file://</code>）。</li>
+          <li><span class="tag mod">MOD</span> <span class="file">base_embedding.py</span> — 新增可选 <code>embed_image()</code>（默认 <code>NotImplementedError</code>）+ <code>supports_images()</code>，向后兼容纯文本 provider。</li>
+          <li><span class="tag mod">MOD</span> <span class="file">embedding_factory.py</span> — 惰性注册加 <code>qwen_multimodal</code>。</li>
+          <li><span class="tag mod">MOD</span> <span class="file">pyproject.toml</span> — 新增依赖 <code>dashscope&gt;=1.20</code>。</li>
+        </ul>
+        <div class="note"><b>关键决策：</b><code>multimodal-embedding-v1</code> 不兼容 OpenAI SDK，且会把多元素输入<strong>融合成单向量</strong>；为保证「每 chunk/每图一个独立向量」的 RAG 语义，采用<strong>每次只编码单个 content</strong>。</div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="head"><span class="id">M2</span><h3>视觉模型 qwen-vl-max + 工厂</h3><span class="arrow">▶</span></div>
+      <div class="body">
+        <ul>
+          <li><span class="tag new">NEW</span> <span class="file">src/libs/llm/qwen_vision_llm.py</span> — <code>QwenVisionLLM</code>，走 DashScope compatible-mode，复用 OpenAI <code>image_url</code>(data:base64)。</li>
+          <li><span class="tag new">NEW</span> <span class="file">src/libs/llm/vision_llm_factory.py</span> — <code>VisionLLMFactory</code>（第 7 个工厂），同构「显式 import + setdefault」惰性注册 <code>azure_vision</code>/<code>qwen_vision</code>。</li>
+          <li><span class="tag mod">MOD</span> <span class="file">image_captioner.py</span> — 解除对 <code>AzureVisionLLM</code> 的硬编码，改走工厂。</li>
+          <li><span class="tag mod">MOD</span> <span class="file">settings.py</span> — <code>VisionLLMSettings</code> 增 <code>base_url</code> 字段。</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="head"><span class="id">M3</span><h3>PDF 真抽图（修复隐藏断点）</h3><span class="arrow">▶</span></div>
+      <div class="body">
+        <ul>
+          <li><span class="tag mod">MOD</span> <span class="file">src/libs/loader/pdf_loader.py</span> — markitdown 出文本 + <b>pypdfium2</b> 抠出内嵌图片（<code>get_objects()</code> 滤图像对象 → <code>get_bitmap().to_pil()</code>），落盘到 <code>data/images/_staging/&lt;doc_hash&gt;/</code>，滤掉 &lt;96px 小图。</li>
+          <li>填充 <code>metadata["images"]</code>=｛id, path, page｝，并在文末追加 <code>[IMAGE: id]</code> 占位，供分块器分配 + 描述缝入。</li>
+        </ul>
+        <div class="note">旧的「markdown 正则抽图」被废弃 —— 那是恒空的占位实现，正是图片数为 0 的根因之一。</div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="head"><span class="id">M4</span><h3>图片入库为独立向量记录</h3><span class="arrow">▶</span></div>
+      <div class="body">
+        <ul>
+          <li><span class="tag new">NEW</span> <span class="file">src/ingestion/embedding/image_encoder.py</span> — <code>ImageEncoder</code> 文档级处理：<code>ImageStorage.save</code> 落盘+索引 → <code>embed_image</code> → 独立 <code>ChunkRecord</code>（<code>id=img_&lt;id&gt;</code>，<code>modality=image</code>，<code>image_refs=[id]</code>）。</li>
+          <li><span class="tag mod">MOD</span> <span class="file">pipeline.py</span> — encode 阶段后收集 captions → <code>encode_document</code> → 图片记录与文本记录一同 upsert 到同一 collection。</li>
+          <li><span class="tag mod">MOD</span> <span class="file">settings.py</span> — <code>IngestionSettings</code> 增 <code>image_embedding</code> 开关。</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="head"><span class="id">M5</span><h3>检索栈支持向量/图片查询</h3><span class="arrow">▶</span></div>
+      <div class="body">
+        <ul>
+          <li><span class="tag mod">MOD</span> <span class="file">dense_retriever.py</span> — 新增 <code>retrieve_by_vector()</code> 与 <code>embed_image_query()</code>，<b>不破坏</b>原 <code>retrieve(query:str)</code>。</li>
+          <li><span class="tag mod">MOD</span> <span class="file">hybrid_search.py</span> — <code>search()</code> 增可选 <code>image</code> 入参；有图→图向量做 Dense（纯图 dense-only），文本→关键词做 Sparse，图文→RRF 融合。</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="head"><span class="id">M6</span><h3>MCP query 接收图片 + 安全</h3><span class="arrow">▶</span></div>
+      <div class="body">
+        <ul>
+          <li><span class="tag mod">MOD</span> <span class="file">query_knowledge_hub.py</span> — <code>INPUT_SCHEMA</code> 增 <code>image</code>；<code>required</code> 改为运行时校验「query 或 image 至少其一」；纯图查询跳过 rerank。</li>
+          <li><span class="tag new">NEW</span> <span class="file">src/mcp_server/tools/image_input.py</span> — <code>validate_query_image()</code>：防穿越（限 <code>data/</code> 白名单）、防 SSRF（拒远程 URL）、限大小（10 MiB）。</li>
+          <li><span class="tag mod">MOD</span> <span class="file">scripts/query.py</span> — 增 <code>--image</code> 参数（<code>--query</code> 改非必填）。</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="head"><span class="id">M7</span><h3>配置切换 + 测试 + 文档</h3><span class="arrow">▶</span></div>
+      <div class="body">
+        <ul>
+          <li><span class="tag mod">MOD</span> <span class="file">config/settings.yaml</span> — embedding→<code>qwen_multimodal</code>，vision_llm→<code>qwen_vision/qwen-vl-max</code> 启用，<code>image_embedding: true</code>（复用同一 Key）。</li>
+          <li><span class="tag new">NEW</span> <span class="file">tests/unit/test_multimodal.py</span> — 21 个用例（fake dashscope 注入，免网络）。</li>
+          <li><span class="tag mod">MOD</span> 适配 pipeline/trace/config/loader/mcp 既有测试 → <b>全量 328 passed</b>。</li>
+          <li><span class="tag mod">MOD</span> README / PROGRESS 多模态章节。</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= INGEST ================= -->
+  <section class="panel" id="ingest">
+    <h2 class="sec">摄取链路（图片真正进入统一向量空间）</h2>
+    <div class="diagram">
+      <div class="node">PDF 文件</div>
+      <div class="down">▼</div>
+      <div class="branch">
+        <div class="col">
+          <div class="node">PdfLoader<span class="sub">markitdown 出文本</span></div>
+        </div>
+        <div class="col">
+          <div class="node hl">pypdfium2 真抽图<span class="sub">滤小图 + 落盘 staging</span></div>
+        </div>
+      </div>
+      <div class="merge-lines">└──────────┬──────────┘</div>
+      <div class="node">文末追加 <code>[IMAGE: id]</code> 占位</div>
+      <div class="down">▼</div>
+      <div class="node">DocumentChunker<span class="sub">按占位把 image_refs 分配到 chunk</span></div>
+      <div class="down">▼</div>
+      <div class="node">ImageCaptioner<span class="sub">qwen-vl-max 生成描述缝入文本</span></div>
+      <div class="down">▼<small>分两路编码</small></div>
+      <div class="branch">
+        <div class="col">
+          <div class="node">BatchProcessor<span class="sub">文本块 → 多模态向量(dense) + BM25(sparse)</span></div>
+          <div class="down">▼</div>
+          <div class="node store">Chroma 统一向量空间</div>
+        </div>
+        <div class="col">
+          <div class="node hl">ImageEncoder<span class="sub">ImageStorage.save + 图片 → 多模态向量</span></div>
+          <div class="down">▼</div>
+          <div class="node store">Chroma（同一空间）</div>
+          <div class="down">▼</div>
+          <div class="node store">ImageStorage 索引<span class="sub">image_id → 路径</span></div>
+        </div>
+      </div>
+      <div class="legend">
+        <span><i style="background:#1f6f4a"></i>本次新增/打通</span>
+        <span><i style="background:#23314f"></i>存储</span>
+      </div>
+    </div>
+    <p class="muted">绿色为本次新增/打通的关键环节：图片既被描述缝进文本（利于以文召回），又作为独立向量入库（实现真跨模态召回）。</p>
+  </section>
+
+  <!-- ================= QUERY ================= -->
+  <section class="panel" id="query">
+    <h2 class="sec">查询链路（query 可纯文 / 纯图 / 图文）</h2>
+    <div class="diagram">
+      <div class="node">query_knowledge_hub<span class="sub">query? + image?</span></div>
+      <div class="down">▼</div>
+      <div class="node decision">有 image ?</div>
+      <div class="down">▼</div>
+      <div class="branch">
+        <div class="col">
+          <div class="muted" style="font-size:12px;margin-bottom:6px">是（含图）</div>
+          <div class="node warnnode">image_input 安全校验<span class="sub">防穿越 / SSRF / 限大小</span></div>
+          <div class="down">▼</div>
+          <div class="node hl">embed_image_query<span class="sub">图片 → 统一空间向量</span></div>
+          <div class="down">▼</div>
+          <div class="node hl">retrieve_by_vector<span class="sub">dense-only</span></div>
+        </div>
+        <div class="col">
+          <div class="muted" style="font-size:12px;margin-bottom:6px">纯文本</div>
+          <div class="node">embed 文本向量</div>
+          <div class="down">▼</div>
+          <div class="node">HybridSearch<span class="sub">Dense + Sparse + RRF</span></div>
+        </div>
+      </div>
+      <div class="merge-lines">└──────────┬──────────┘</div>
+      <div class="node">检索结果</div>
+      <div class="down">▼</div>
+      <div class="node">MultimodalAssembler<span class="sub">image_refs → 还原原图 Base64</span></div>
+      <div class="down">▼</div>
+      <div class="node store">带引用的 Markdown + 图片</div>
+      <div class="legend">
+        <span><i style="background:#5a4b1f"></i>安全校验</span>
+        <span><i style="background:#1f6f4a"></i>跨模态新增</span>
+        <span><i style="background:#23314f"></i>输出</span>
+      </div>
+    </div>
+
+    <h2 class="sec">命令行验证</h2>
+    <table>
+      <tr><th>场景</th><th>命令</th></tr>
+      <tr><td>以图检索</td><td><code>python scripts/query.py --image data/query_images/fig.png</code></td></tr>
+      <tr><td>图文混合</td><td><code>python scripts/query.py --query "这张图说明了什么" --image data/q.png</code></td></tr>
+      <tr><td>纯文本（原）</td><td><code>python scripts/query.py --query "介绍一下混合检索"</code></td></tr>
+    </table>
+  </section>
+
+  <!-- ================= FILES ================= -->
+  <section class="panel" id="files">
+    <h2 class="sec">文件清单</h2>
+    <table>
+      <tr><th>类型</th><th>文件</th><th>职责</th></tr>
+      <tr><td><span class="tag new">NEW</span></td><td class="file">libs/embedding/qwen_multimodal_embedding.py</td><td>图文统一向量 provider</td></tr>
+      <tr><td><span class="tag new">NEW</span></td><td class="file">libs/llm/qwen_vision_llm.py</td><td>qwen-vl-max 视觉模型</td></tr>
+      <tr><td><span class="tag new">NEW</span></td><td class="file">libs/llm/vision_llm_factory.py</td><td>视觉模型工厂（第 7 个）</td></tr>
+      <tr><td><span class="tag new">NEW</span></td><td class="file">ingestion/embedding/image_encoder.py</td><td>图片→独立向量记录</td></tr>
+      <tr><td><span class="tag new">NEW</span></td><td class="file">mcp_server/tools/image_input.py</td><td>查询图片安全校验</td></tr>
+      <tr><td><span class="tag new">NEW</span></td><td class="file">tests/unit/test_multimodal.py</td><td>21 个多模态单测</td></tr>
+      <tr><td><span class="tag mod">MOD</span></td><td class="file">libs/embedding/base_embedding.py</td><td>+ embed_image / supports_images</td></tr>
+      <tr><td><span class="tag mod">MOD</span></td><td class="file">libs/embedding/embedding_factory.py</td><td>注册 qwen_multimodal</td></tr>
+      <tr><td><span class="tag mod">MOD</span></td><td class="file">libs/loader/pdf_loader.py</td><td>pypdfium2 真抽图</td></tr>
+      <tr><td><span class="tag mod">MOD</span></td><td class="file">ingestion/transform/image_captioner.py</td><td>改走视觉工厂</td></tr>
+      <tr><td><span class="tag mod">MOD</span></td><td class="file">ingestion/pipeline.py</td><td>接入图片向量入库</td></tr>
+      <tr><td><span class="tag mod">MOD</span></td><td class="file">core/query_engine/dense_retriever.py</td><td>retrieve_by_vector / embed_image_query</td></tr>
+      <tr><td><span class="tag mod">MOD</span></td><td class="file">core/query_engine/hybrid_search.py</td><td>image 入参 / 纯图 dense-only</td></tr>
+      <tr><td><span class="tag mod">MOD</span></td><td class="file">mcp_server/tools/query_knowledge_hub.py</td><td>image 入参 + 校验</td></tr>
+      <tr><td><span class="tag mod">MOD</span></td><td class="file">core/settings.py</td><td>base_url / image_embedding</td></tr>
+      <tr><td><span class="tag mod">MOD</span></td><td class="file">config/settings.yaml · scripts/query.py · pyproject.toml</td><td>配置 / CLI / 依赖</td></tr>
+    </table>
+  </section>
+
+  <!-- ================= SAFETY ================= -->
+  <section class="panel" id="safety">
+    <h2 class="sec">安全设计</h2>
+    <table>
+      <tr><th>风险</th><th>防护</th></tr>
+      <tr><td>路径穿越</td><td>本地图片路径必须 <code>resolve()</code> 后位于 <code>data/</code> 白名单目录内，拒绝 <code>..</code> 越权</td></tr>
+      <tr><td>SSRF</td><td>查询图片<strong>拒绝远程 URL</strong>（http/https/ftp）</td></tr>
+      <tr><td>超大载荷</td><td>Base64/文件解码后限制 ≤ 10 MiB；返回图片单张 ≤ 5 MiB</td></tr>
+      <tr><td>可靠性</td><td>单图抽取/编码/描述失败均 <code>warning</code> 跳过，绝不阻断文本答案</td></tr>
+      <tr><td>路径来源</td><td>还图时路径<strong>仅来自 ImageStorage 索引</strong>，不接受调用方任意路径</td></tr>
+    </table>
+
+    <h2 class="sec">测试结果</h2>
+    <div class="pill-row">
+      <span class="pill">全量 <b style="color:var(--accent2)">328 passed</b></span>
+      <span class="pill">新增 21（fake dashscope，免网络）</span>
+      <span class="pill">0 lint 错误</span>
+      <span class="pill">无回归</span>
+    </div>
+    <ul>
+      <li>覆盖：embed/embed_image、视觉工厂注册、图片输入校验（穿越/SSRF/大小）、ImageEncoder、retrieve_by_vector、纯图 dense-only 路由、query 工具 image 入参。</li>
+    </ul>
+
+    <div class="note danger"><b>使用前必读：</b>切换多模态向量后旧文本向量库不兼容，必须先清库再重摄：<br/><code>rm -rf data/db/chroma data/db/bm25 data/db/image_index.db data/db/ingestion_history.db data/images/*</code><br/>（已为你执行过）。</div>
+    <div class="note"><b>成本提示：</b>已默认开启 qwen-vl-max 描述 + 图片向量，摄取明显变慢、token 消耗大（GPT-3 一篇 83 张图）。建议先跑单个栏目（如 <code>rag</code>）验证。</div>
+    <div class="note danger"><b>安全隐患：</b><code>config/settings.yaml</code> 中硬编码了 DashScope Key（沿用你既有配置），建议迁移到环境变量 <code>DASHSCOPE_API_KEY</code>。</div>
+  </section>
+
+  <footer>Modular-RAG-MCP-Server · 多模态升级（路径B）· 生成于 2026-06-11</footer>
+</div>
+
+<script>
+  // tabs
+  document.querySelectorAll('.tab').forEach(function(t){
+    t.addEventListener('click', function(){
+      document.querySelectorAll('.tab').forEach(x=>x.classList.remove('active'));
+      document.querySelectorAll('.panel').forEach(x=>x.classList.remove('active'));
+      t.classList.add('active');
+      document.getElementById(t.dataset.t).classList.add('active');
+      window.scrollTo({top:0, behavior:'smooth'});
+    });
+  });
+  // collapsible cards
+  document.querySelectorAll('.card .head').forEach(function(h){
+    h.addEventListener('click', function(){ h.parentElement.classList.toggle('open'); });
+  });
+</script>
+</body>
+</html>

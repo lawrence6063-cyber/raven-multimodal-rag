@@ -1,0 +1,76 @@
+# Main configuration file for Modular RAG MCP Server
+# See DEV_SPEC.md Section 5 for detailed field descriptions
+
+llm:
+  provider: "qwen"            # qwen(DashScope) | openai | azure | ollama | deepseek
+  model: "qwen-plus"          # qwen-plus | qwen-max | qwen-turbo
+  api_key: ""                 # 填入 DashScope API Key（留空则回退环境变量）
+  azure_endpoint: ""
+  deployment_name: ""
+  api_version: "2024-02-01"
+  base_url: ""                # 留空自动用 DashScope 兼容地址
+  temperature: 0.0
+  max_tokens: 4096
+
+embedding:
+  provider: "qwen_multimodal"   # 路径B：图文统一向量空间（DashScope 多模态向量，非 OpenAI 兼容）
+  model: "multimodal-embedding-v1"
+  api_key: ""                 # 同一个 DashScope API Key
+  azure_endpoint: ""
+  deployment_name: ""
+  api_version: "2024-02-01"
+  base_url: ""
+  dimensions: 1024            # 多模态向量维度（切换后必须清空 data/db 重新摄取）
+
+vector_store:
+  provider: "chroma"           # chroma
+  collection_name: "default"
+  persist_directory: "data/db/chroma"
+
+splitter:
+  provider: "recursive"        # recursive | semantic | fixed
+  chunk_size: 1000
+  chunk_overlap: 200
+
+retrieval:
+  top_k: 10
+  dense_weight: 0.7
+  sparse_weight: 0.3
+  rrf_k: 60
+
+rerank:
+  enabled: true               # 精排：对粗排候选用 LLM 重排序，提升 top 结果质量
+  provider: "llm"              # none | cross_encoder | llm（llm 复用 qwen，零额外依赖）
+  model: ""
+  top_n: 5
+
+vision_llm:
+  enabled: true
+  provider: "qwen_vision"      # qwen_vision(qwen-vl-max via DashScope) | azure_vision
+  model: "qwen-vl-max"
+  api_key: ""   # 同一个 DashScope API Key
+  azure_endpoint: ""
+  deployment_name: ""
+  api_version: "2024-02-01"
+  base_url: ""                 # 留空自动用 DashScope 兼容地址
+  max_image_size: 2048
+
+ingestion:
+  chunk_refiner:
+    use_llm: true              # LLM 清洗 chunk（去噪/修复），摄取变慢，需清库重摄生效
+  metadata_enricher:
+    use_llm: true              # LLM 抽取 title/summary/tags，摄取变慢，需清库重摄生效
+  image_captioner:
+    enabled: true              # 用 qwen-vl-max 为图片生成中文描述缝入文本
+  batch_size: 32
+  bm25_index_path: "data/db/bm25"
+  image_embedding: true        # 将文档图片编码为独立多模态向量入库（跨模态检索）
+
+evaluation:
+  backends: ["custom"]         # custom | ragas
+  golden_test_set: "data/golden_papers.json"   # 针对真实论文库；单测夹具在 tests/fixtures/
+
+observability:
+  trace_enabled: true
+  log_file: "logs/traces.jsonl"
+  log_level: "INFO"

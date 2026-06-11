@@ -1,0 +1,65 @@
+{
+  "_comment": "针对真实论文知识库的黄金测试集（与 data/documents/ 下 15 篇论文对应）。expected_sources 使用 source_path 完整路径，与 EvalRunner._resolve_source 解析一致。注意：tests/fixtures/golden_test_set.json 是给单测/E2E 内存语料用的，与此文件互不影响。",
+  "test_cases": [
+    {
+      "query": "What is Dense Passage Retrieval (DPR) for open-domain question answering?",
+      "expected_sources": ["data/documents/rag/02_dense_passage_retrieval.pdf"]
+    },
+    {
+      "query": "How does Retrieval-Augmented Generation combine a retriever with a generator for knowledge-intensive tasks?",
+      "expected_sources": ["data/documents/rag/01_rag_knowledge_intensive_nlp.pdf"]
+    },
+    {
+      "query": "REALM retrieval-augmented language model pre-training",
+      "expected_sources": ["data/documents/rag/03_realm.pdf"]
+    },
+    {
+      "query": "Fusion-in-Decoder: leveraging passage retrieval with generative models for open domain QA",
+      "expected_sources": ["data/documents/rag/04_fusion_in_decoder.pdf"]
+    },
+    {
+      "query": "Self-RAG: learning to retrieve, generate and critique through self-reflection",
+      "expected_sources": ["data/documents/rag/05_self_rag.pdf"]
+    },
+    {
+      "query": "Attention is all you need: the Transformer architecture with self-attention",
+      "expected_sources": ["data/documents/llm/01_transformer_attention_is_all_you_need.pdf"]
+    },
+    {
+      "query": "BERT: pre-training of deep bidirectional transformers for language understanding",
+      "expected_sources": ["data/documents/llm/02_bert.pdf"]
+    },
+    {
+      "query": "GPT-3: language models are few-shot learners",
+      "expected_sources": ["data/documents/llm/03_gpt3_few_shot_learners.pdf"]
+    },
+    {
+      "query": "LLaMA: open and efficient foundation language models",
+      "expected_sources": ["data/documents/llm/04_llama.pdf"]
+    },
+    {
+      "query": "InstructGPT: training language models to follow instructions with human feedback (RLHF)",
+      "expected_sources": ["data/documents/llm/05_instructgpt.pdf"]
+    },
+    {
+      "query": "ReAct: synergizing reasoning and acting in language models",
+      "expected_sources": ["data/documents/agent/01_react.pdf"]
+    },
+    {
+      "query": "Toolformer: language models can teach themselves to use tools",
+      "expected_sources": ["data/documents/agent/02_toolformer.pdf"]
+    },
+    {
+      "query": "Reflexion: language agents with verbal reinforcement learning",
+      "expected_sources": ["data/documents/agent/03_reflexion.pdf"]
+    },
+    {
+      "query": "Generative Agents: interactive simulacra of human behavior",
+      "expected_sources": ["data/documents/agent/04_generative_agents.pdf"]
+    },
+    {
+      "query": "HuggingGPT: solving AI tasks with ChatGPT and its friends in Hugging Face",
+      "expected_sources": ["data/documents/agent/05_hugginggpt.pdf"]
+    }
+  ]
+}

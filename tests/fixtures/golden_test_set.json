@@ -1,0 +1,30 @@
+{
+  "description": "Golden test set for RAG retrieval regression. expected_chunk_ids align with the in-memory corpus used by tests/e2e/test_recall.py; expected_sources are human-readable document names.",
+  "test_cases": [
+    {
+      "query": "如何配置 Azure OpenAI 的 endpoint 和 api_key",
+      "expected_chunk_ids": ["doc_azure_001"],
+      "expected_sources": ["azure_openai_guide.md"]
+    },
+    {
+      "query": "Chroma 向量数据库怎么持久化存储",
+      "expected_chunk_ids": ["doc_chroma_001"],
+      "expected_sources": ["vector_store_chroma.md"]
+    },
+    {
+      "query": "BM25 稀疏检索关键词匹配原理",
+      "expected_chunk_ids": ["doc_bm25_001"],
+      "expected_sources": ["sparse_retrieval_bm25.md"]
+    },
+    {
+      "query": "RRF 融合排序如何合并多路检索结果",
+      "expected_chunk_ids": ["doc_rrf_001"],
+      "expected_sources": ["fusion_rrf.md"]
+    },
+    {
+      "query": "reranker 重排序模型提升相关性",
+      "expected_chunk_ids": ["doc_rerank_001"],
+      "expected_sources": ["reranker_guide.md"]
+    }
+  ]
+}

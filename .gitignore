@@ -1,0 +1,44 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+*.egg-info/
+dist/
+build/
+.eggs/
+
+# Virtual environments
+.venv/
+venv/
+ENV/
+
+# Environment variables
+.env
+.env.local
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Project data (generated at runtime)
+data/db/
+data/images/
+logs/
+
+# Test artifacts
+.coverage
+htmlcov/
+.pytest_cache/
+
+# Spec sync hash
+.spec_hash
+
+# CodeBuddy dev artifacts (memory/plan/automations)
+.codebuddy/
