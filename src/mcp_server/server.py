@@ -24,6 +24,7 @@ from src.mcp_server.protocol_handler import (
     JsonRpcError,
     ProtocolHandler,
 )
+from src.mcp_server.tools.agentic_query import AgenticQueryTool
 from src.mcp_server.tools.get_document_summary import (
     GetDocumentSummaryTool,
     build_default_summary_provider,
@@ -49,7 +50,7 @@ def build_protocol_handler(
         documents_dir: Root directory scanned by list_collections.
 
     Returns:
-        A ProtocolHandler with the three core tools registered.
+        A ProtocolHandler with the four core tools registered.
     """
     from src.core.response.multimodal_assembler import MultimodalAssembler
     from src.ingestion.storage.image_storage import ImageStorage
@@ -60,6 +61,14 @@ def build_protocol_handler(
     query_tool = QueryKnowledgeHubTool(settings, multimodal_assembler=multimodal)
     handler.register(
         query_tool.NAME, query_tool.DESCRIPTION, query_tool.INPUT_SCHEMA, query_tool.run
+    )
+
+    agentic_tool = AgenticQueryTool(settings, multimodal_assembler=multimodal)
+    handler.register(
+        agentic_tool.NAME,
+        agentic_tool.DESCRIPTION,
+        agentic_tool.INPUT_SCHEMA,
+        agentic_tool.run,
     )
 
     list_tool = ListCollectionsTool(documents_dir)

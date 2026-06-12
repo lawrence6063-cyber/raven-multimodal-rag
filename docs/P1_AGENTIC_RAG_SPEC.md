@@ -1,8 +1,8 @@
 # P1 — Agentic RAG 实施 Spec
 
-> 状态：待评审（draft）｜创建：2026-06-11｜测试基线：367 passed（P0 完成后）
+> 状态：已完成（done）｜创建：2026-06-11｜完成：2026-06-12｜测试：423 passed（+56 离线 agent 用例）
 > 来源：`docs/OPTIMIZATION_SPEC.md` §3（P1 最热加分项）
-> 用途：本文件是 P1 的执行蓝图，定稿后从「§9 里程碑与任务清单」开工。
+> 落地：`src/core/agent/`（router/transformer/reflector/synthesizer/registry/agentic_rag）+ `config/prompts/agent_*.txt` + MCP 工具 `agentic_query`（`src/mcp_server/tools/agentic_query.py`）+ `AgentSettings`（默认 enabled=False，config 默认开启）。
 
 ---
 

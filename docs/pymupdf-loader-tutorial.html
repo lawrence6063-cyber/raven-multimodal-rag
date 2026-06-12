@@ -1,0 +1,1342 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PyMuPDFLoader 深度解析 — 交互式教学</title>
+    <style>
+        :root {
+            --primary: #6366f1;
+            --primary-light: #a5b4fc;
+            --secondary: #10b981;
+            --warning: #f59e0b;
+            --danger: #ef4444;
+            --bg: #0f172a;
+            --bg-card: #1e293b;
+            --bg-code: #0d1117;
+            --text: #e2e8f0;
+            --text-muted: #94a3b8;
+            --border: #334155;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.7;
+            overflow-x: hidden;
+        }
+
+        /* ===== 导航 ===== */
+        .nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            background: rgba(15, 23, 42, 0.95);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid var(--border);
+            z-index: 1000;
+            padding: 12px 24px;
+            display: flex;
+            align-items: center;
+            gap: 24px;
+        }
+        .nav-title {
+            font-weight: 700;
+            font-size: 1.1rem;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .nav-links { display: flex; gap: 16px; flex-wrap: wrap; }
+        .nav-links a {
+            color: var(--text-muted);
+            text-decoration: none;
+            font-size: 0.85rem;
+            padding: 4px 10px;
+            border-radius: 6px;
+            transition: all 0.2s;
+        }
+        .nav-links a:hover, .nav-links a.active {
+            color: var(--primary-light);
+            background: rgba(99, 102, 241, 0.1);
+        }
+
+        /* ===== 主容器 ===== */
+        .container {
+            max-width: 1100px;
+            margin: 80px auto 60px;
+            padding: 0 24px;
+        }
+
+        /* ===== Hero ===== */
+        .hero {
+            text-align: center;
+            padding: 60px 0 40px;
+        }
+        .hero h1 {
+            font-size: 2.8rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 16px;
+        }
+        .hero p {
+            font-size: 1.2rem;
+            color: var(--text-muted);
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        /* ===== Section ===== */
+        section {
+            margin-bottom: 60px;
+            scroll-margin-top: 80px;
+        }
+        section h2 {
+            font-size: 1.8rem;
+            font-weight: 700;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid var(--border);
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        section h2 .badge {
+            font-size: 0.75rem;
+            padding: 3px 10px;
+            border-radius: 20px;
+            background: var(--primary);
+            color: white;
+            font-weight: 600;
+        }
+        section h3 {
+            font-size: 1.3rem;
+            margin: 24px 0 12px;
+            color: var(--primary-light);
+        }
+
+        /* ===== 卡片 ===== */
+        .card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 24px;
+            margin-bottom: 20px;
+        }
+        .card-header {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 16px;
+        }
+        .card-icon {
+            width: 36px;
+            height: 36px;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+        }
+
+        /* ===== 代码块 ===== */
+        .code-block {
+            background: var(--bg-code);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 16px 20px;
+            margin: 12px 0;
+            overflow-x: auto;
+            font-family: 'JetBrains Mono', 'Fira Code', monospace;
+            font-size: 0.85rem;
+            line-height: 1.6;
+            position: relative;
+        }
+        .code-block .lang-tag {
+            position: absolute;
+            top: 8px;
+            right: 12px;
+            font-size: 0.7rem;
+            color: var(--text-muted);
+            background: var(--bg-card);
+            padding: 2px 8px;
+            border-radius: 4px;
+        }
+        .code-block .highlight { background: rgba(99, 102, 241, 0.2); display: inline; }
+        .code-block .comment { color: #6a9955; }
+        .code-block .keyword { color: #c586c0; }
+        .code-block .string { color: #ce9178; }
+        .code-block .func { color: #dcdcaa; }
+        .code-block .var { color: #9cdcfe; }
+        .code-block .num { color: #b5cea8; }
+
+        /* ===== 流程图 ===== */
+        .pipeline {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            flex-wrap: wrap;
+            margin: 20px 0;
+            padding: 20px;
+            background: var(--bg-card);
+            border-radius: 12px;
+            border: 1px solid var(--border);
+        }
+        .pipeline-step {
+            padding: 10px 18px;
+            border-radius: 8px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            border: 2px solid transparent;
+        }
+        .pipeline-step:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+        }
+        .pipeline-step.active {
+            border-color: white;
+            transform: scale(1.05);
+        }
+        .pipeline-arrow {
+            color: var(--text-muted);
+            font-size: 1.2rem;
+        }
+
+        /* ===== 对比面板 ===== */
+        .compare {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+            margin: 20px 0;
+        }
+        @media (max-width: 768px) {
+            .compare { grid-template-columns: 1fr; }
+        }
+        .compare-panel {
+            border-radius: 10px;
+            padding: 20px;
+            border: 1px solid var(--border);
+        }
+        .compare-panel.bad {
+            background: rgba(239, 68, 68, 0.05);
+            border-color: rgba(239, 68, 68, 0.3);
+        }
+        .compare-panel.good {
+            background: rgba(16, 185, 129, 0.05);
+            border-color: rgba(16, 185, 129, 0.3);
+        }
+        .compare-panel h4 {
+            font-size: 0.9rem;
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .compare-panel.bad h4 { color: var(--danger); }
+        .compare-panel.good h4 { color: var(--secondary); }
+
+        /* ===== 交互式 Demo ===== */
+        .demo-area {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 24px;
+            margin: 20px 0;
+        }
+        .demo-controls {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 16px;
+            flex-wrap: wrap;
+        }
+        .btn {
+            padding: 8px 16px;
+            border-radius: 6px;
+            border: 1px solid var(--border);
+            background: var(--bg);
+            color: var(--text);
+            font-size: 0.85rem;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        .btn:hover { border-color: var(--primary); color: var(--primary-light); }
+        .btn.active { background: var(--primary); border-color: var(--primary); color: white; }
+
+        .demo-output {
+            background: var(--bg-code);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 16px;
+            min-height: 200px;
+            font-family: monospace;
+            font-size: 0.85rem;
+            white-space: pre-wrap;
+            transition: all 0.3s;
+        }
+
+        /* ===== PDF 页面模拟 ===== */
+        .pdf-sim {
+            background: white;
+            border-radius: 8px;
+            padding: 24px;
+            color: #1a1a1a;
+            font-size: 0.8rem;
+            line-height: 1.5;
+            position: relative;
+            min-height: 400px;
+        }
+        .pdf-sim .column {
+            display: inline-block;
+            vertical-align: top;
+            width: 46%;
+            padding: 8px;
+        }
+        .pdf-sim .column:first-child { margin-right: 4%; }
+        .pdf-sim .midline {
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            left: 50%;
+            border-left: 2px dashed rgba(99, 102, 241, 0.5);
+            z-index: 10;
+        }
+        .pdf-sim .table-area {
+            border: 2px solid var(--warning);
+            border-radius: 4px;
+            padding: 8px;
+            margin: 8px 0;
+            background: rgba(245, 158, 11, 0.05);
+        }
+        .pdf-sim .image-area {
+            border: 2px solid var(--primary);
+            border-radius: 4px;
+            padding: 12px;
+            margin: 8px 0;
+            background: rgba(99, 102, 241, 0.05);
+            text-align: center;
+            color: var(--primary);
+            font-weight: 600;
+        }
+
+        /* ===== 动画标注 ===== */
+        .annotation {
+            position: absolute;
+            background: var(--primary);
+            color: white;
+            padding: 4px 10px;
+            border-radius: 4px;
+            font-size: 0.7rem;
+            font-weight: 600;
+            white-space: nowrap;
+            animation: pulse 2s infinite;
+        }
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.7; }
+        }
+
+        /* ===== 步骤指示器 ===== */
+        .steps {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+            margin: 20px 0;
+        }
+        .step {
+            display: flex;
+            gap: 16px;
+            align-items: flex-start;
+            padding: 16px;
+            border-radius: 10px;
+            border: 1px solid var(--border);
+            background: var(--bg-card);
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        .step:hover { border-color: var(--primary); }
+        .step.active { border-color: var(--primary); background: rgba(99, 102, 241, 0.05); }
+        .step-num {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            background: var(--primary);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 0.85rem;
+            flex-shrink: 0;
+        }
+        .step-content h4 { margin-bottom: 4px; }
+        .step-content p { color: var(--text-muted); font-size: 0.9rem; }
+
+        /* ===== 表格 ===== */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 16px 0;
+            font-size: 0.85rem;
+        }
+        th, td {
+            padding: 10px 14px;
+            border: 1px solid var(--border);
+            text-align: left;
+        }
+        th {
+            background: var(--bg-card);
+            font-weight: 600;
+            color: var(--primary-light);
+        }
+        td { background: rgba(30, 41, 59, 0.5); }
+
+        /* ===== 标签 ===== */
+        .tag {
+            display: inline-block;
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-size: 0.75rem;
+            font-weight: 600;
+        }
+        .tag-good { background: rgba(16, 185, 129, 0.2); color: var(--secondary); }
+        .tag-bad { background: rgba(239, 68, 68, 0.2); color: var(--danger); }
+        .tag-info { background: rgba(99, 102, 241, 0.2); color: var(--primary-light); }
+
+        /* ===== 提示框 ===== */
+        .tip {
+            padding: 16px 20px;
+            border-radius: 8px;
+            margin: 16px 0;
+            border-left: 4px solid;
+            font-size: 0.9rem;
+        }
+        .tip-info { background: rgba(99, 102, 241, 0.08); border-color: var(--primary); }
+        .tip-warn { background: rgba(245, 158, 11, 0.08); border-color: var(--warning); }
+        .tip-success { background: rgba(16, 185, 129, 0.08); border-color: var(--secondary); }
+
+        /* ===== 动画 ===== */
+        .fade-in {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.6s ease;
+        }
+        .fade-in.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* ===== 交互式 bbox 演示 ===== */
+        .bbox-demo {
+            position: relative;
+            background: white;
+            border-radius: 8px;
+            padding: 20px;
+            min-height: 300px;
+            color: #333;
+        }
+        .bbox-word {
+            display: inline-block;
+            padding: 2px 4px;
+            margin: 2px;
+            border: 1px solid transparent;
+            border-radius: 3px;
+            transition: all 0.3s;
+            cursor: pointer;
+            font-size: 0.85rem;
+        }
+        .bbox-word:hover {
+            border-color: var(--primary);
+            background: rgba(99, 102, 241, 0.1);
+        }
+        .bbox-word.highlighted {
+            border-color: var(--primary);
+            background: rgba(99, 102, 241, 0.2);
+        }
+        .bbox-tooltip {
+            position: absolute;
+            background: var(--bg);
+            color: var(--text);
+            padding: 8px 12px;
+            border-radius: 6px;
+            font-size: 0.75rem;
+            font-family: monospace;
+            pointer-events: none;
+            opacity: 0;
+            transition: opacity 0.2s;
+            z-index: 100;
+            border: 1px solid var(--border);
+        }
+        .bbox-tooltip.show { opacity: 1; }
+
+        /* ===== 滚动进度条 ===== */
+        .progress-bar {
+            position: fixed;
+            top: 52px;
+            left: 0;
+            height: 3px;
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+            z-index: 1001;
+            transition: width 0.1s;
+        }
+
+        /* ===== Footer ===== */
+        footer {
+            text-align: center;
+            padding: 40px 0;
+            color: var(--text-muted);
+            font-size: 0.85rem;
+            border-top: 1px solid var(--border);
+        }
+    </style>
+</head>
+<body>
+
+<!-- 导航 -->
+<nav class="nav">
+    <span class="nav-title">📄 PyMuPDFLoader 教学</span>
+    <div class="nav-links">
+        <a href="#overview">总览</a>
+        <a href="#pipeline">处理流程</a>
+        <a href="#reading-order">阅读顺序</a>
+        <a href="#spacing">空格修复</a>
+        <a href="#tables">表格提取</a>
+        <a href="#images">图片锚定</a>
+        <a href="#fallback">容错降级</a>
+    </div>
+</nav>
+<div class="progress-bar" id="progressBar"></div>
+
+<div class="container">
+
+<!-- Hero -->
+<div class="hero fade-in">
+    <h1>PyMuPDFLoader 深度解析</h1>
+    <p>一个交互式教程，带你理解 PDF 版面感知解析的核心原理——为什么它比简单文本提取效果好 10 倍</p>
+</div>
+
+<!-- ===== 第一章：总览 ===== -->
+<section id="overview" class="fade-in">
+    <h2>🎯 总览 <span class="badge">WHY</span></h2>
+
+    <div class="card">
+        <p>在 RAG（检索增强生成）系统中，PDF 文档的解析质量直接决定了下游检索和生成的效果。传统的 <code>markitdown</code> 库只做简单的文本流提取，而 <code>PyMuPDFLoader</code> 利用 PDF 的<strong>坐标级布局信息</strong>来理解页面结构。</p>
+    </div>
+
+    <h3>核心差异：有没有坐标信息</h3>
+    <div class="compare">
+        <div class="compare-panel bad">
+            <h4>❌ MarkItDown（PdfLoader）</h4>
+            <p style="font-size:0.85rem; color:var(--text-muted)">只拿到一串字符流，不知道每个字在页面的哪个位置</p>
+            <div class="code-block">
+                <span class="comment"># 输出：一串混乱的文本</span>
+"Theresultsshow that around96%ofourdataset
+wasprocessedcorrectly.Table1shows..."
+            </div>
+        </div>
+        <div class="compare-panel good">
+            <h4>✅ PyMuPDF（PyMuPDFLoader）</h4>
+            <p style="font-size:0.85rem; color:var(--text-muted)">每个词都带有精确的 bbox 坐标 (x0, y0, x1, y1)</p>
+            <div class="code-block">
+                <span class="comment"># 每个词都有位置信息</span>
+(72.0, 100.5, 95.2, 112.3, "The", 0, 0, 0)
+(97.1, 100.5, 135.8, 112.3, "results", 0, 0, 1)
+(137.5, 100.5, 165.2, 112.3, "show", 0, 0, 2)
+            </div>
+        </div>
+    </div>
+
+    <div class="tip tip-info">
+        💡 <strong>关键洞察</strong>：PyMuPDF 的 <code>page.get_text("words")</code> 返回的每个词都是一个 8 元组 <code>(x0, y0, x1, y1, word, block_no, line_no, word_no)</code>，这就是所有魔法的基础。
+    </div>
+</section>
+
+<!-- ===== 第二章：处理流程 ===== -->
+<section id="pipeline" class="fade-in">
+    <h2>🔄 处理流程 <span class="badge">HOW</span></h2>
+
+    <p>点击下方流程中的每个步骤，查看详细说明：</p>
+
+    <div class="pipeline">
+        <div class="pipeline-step" style="background:#4f46e5" onclick="showPipelineDetail(0)">📂 加载 PDF</div>
+        <span class="pipeline-arrow">→</span>
+        <div class="pipeline-step" style="background:#7c3aed" onclick="showPipelineDetail(1)">📊 表格检测</div>
+        <span class="pipeline-arrow">→</span>
+        <div class="pipeline-step" style="background:#2563eb" onclick="showPipelineDetail(2)">📝 文本提取</div>
+        <span class="pipeline-arrow">→</span>
+        <div class="pipeline-step" style="background:#0891b2" onclick="showPipelineDetail(3)">🖼️ 图片提取</div>
+        <span class="pipeline-arrow">→</span>
+        <div class="pipeline-step" style="background:#059669" onclick="showPipelineDetail(4)">🔀 排序合并</div>
+        <span class="pipeline-arrow">→</span>
+        <div class="pipeline-step" style="background:#d97706" onclick="showPipelineDetail(5)">📄 输出 Document</div>
+    </div>
+
+    <div id="pipelineDetail" class="card" style="display:none;">
+        <div id="pipelineDetailContent"></div>
+    </div>
+
+    <h3>完整代码流程</h3>
+    <div class="code-block">
+        <span class="lang-tag">Python</span>
+<span class="keyword">def</span> <span class="func">load</span>(<span class="var">self</span>, <span class="var">path</span>: <span class="var">str</span>) -> <span class="var">Document</span>:
+    <span class="comment"># 1. 验证文件存在且是 PDF</span>
+    <span class="var">file_path</span> = Path(path)
+
+    <span class="comment"># 2. 尝试导入 PyMuPDF，失败则降级</span>
+    <span class="keyword">try</span>:
+        <span class="keyword">import</span> fitz
+    <span class="keyword">except</span> ImportError:
+        <span class="keyword">return</span> <span class="var">self</span>._fallback_load(path)
+
+    <span class="comment"># 3. 计算文档哈希（用于去重和图片命名）</span>
+    <span class="var">doc_hash</span> = hashlib.sha256(file_path.read_bytes()).hexdigest()[:16]
+
+    <span class="comment"># 4. 提取表格 → 提取文本+图片 → 排序合并</span>
+    <span class="var">tables_by_page</span> = <span class="var">self</span>._extract_tables_by_page(file_path)
+    <span class="var">text</span>, <span class="var">images</span> = <span class="var">self</span>._parse_document(fitz, file_path, doc_hash, tables_by_page)
+
+    <span class="comment"># 5. 返回标准 Document 对象</span>
+    <span class="keyword">return</span> Document(id=doc_id, text=text, metadata=metadata)
+    </div>
+</section>
+
+<!-- ===== 第三章：阅读顺序 ===== -->
+<section id="reading-order" class="fade-in">
+    <h2>📖 阅读顺序修复 <span class="badge">2.1</span></h2>
+
+    <h3>问题：双栏 PDF 的文本交错</h3>
+    <p>学术论文通常是双栏排版。简单的文本提取会把左右两栏的文字交错混合：</p>
+
+    <div class="demo-area">
+        <div class="demo-controls">
+            <button class="btn active" onclick="showColumnDemo('wrong')">❌ 错误顺序（MarkItDown）</button>
+            <button class="btn" onclick="showColumnDemo('correct')">✅ 正确顺序（PyMuPDF）</button>
+        </div>
+
+        <div style="display:grid; grid-template-columns: 1fr 1fr; gap: 16px;">
+            <!-- PDF 模拟 -->
+            <div class="pdf-sim" style="min-height:320px">
+                <div class="midline"></div>
+                <div class="column" id="leftCol">
+                    <p style="margin-bottom:8px"><strong>1. Introduction</strong></p>
+                    <p>Deep learning has revolutionized natural language processing in recent years.</p>
+                    <p style="margin-top:8px">The transformer architecture enables parallel computation.</p>
+                </div>
+                <div class="column" id="rightCol">
+                    <p style="margin-bottom:8px"><strong>2. Related Work</strong></p>
+                    <p>Previous approaches relied on recurrent neural networks (RNNs).</p>
+                    <p style="margin-top:8px">Attention mechanisms were first introduced by Bahdanau et al.</p>
+                </div>
+                <div class="annotation" style="top:5px;left:50%;transform:translateX(-50%)">← 页面中线 →</div>
+            </div>
+
+            <!-- 输出结果 -->
+            <div class="demo-output" id="columnOutput">
+<span style="color:#ef4444">// MarkItDown 输出（交错混乱）：</span>
+
+1. Introduction
+2. Related Work
+Deep learning has revolutionized
+Previous approaches relied on
+natural language processing
+recurrent neural networks (RNNs).
+in recent years.
+Attention mechanisms were first
+The transformer architecture
+introduced by Bahdanau et al.
+enables parallel computation.
+            </div>
+        </div>
+    </div>
+
+    <h3>解决方案：坐标排序</h3>
+    <div class="code-block">
+        <span class="lang-tag">Python - _order_elements()</span>
+<span class="keyword">def</span> <span class="func">_order_elements</span>(<span class="var">self</span>, <span class="var">elements</span>, <span class="var">page_width</span>):
+    <span class="var">mid</span> = page_width / <span class="num">2.0</span>
+
+    <span class="comment"># 判断是否为双栏布局</span>
+    <span class="keyword">if</span> <span class="var">self</span>._is_two_column(elements, mid):
+        <span class="comment"># 排序键：(列号, y坐标, x坐标)</span>
+        <span class="comment"># 列号 0=左栏先输出, 1=右栏后输出</span>
+        <span class="keyword">return</span> sorted(elements, key=<span class="keyword">lambda</span> e: (
+            <span class="highlight"><span class="var">self</span>._column_index(e[<span class="string">"bbox"</span>], mid)</span>,  <span class="comment"># 先按列分组</span>
+            <span class="highlight">e[<span class="string">"bbox"</span>][<span class="num">1</span>]</span>,                        <span class="comment"># 再按 y 从上到下</span>
+            e[<span class="string">"bbox"</span>][<span class="num">0</span>]                         <span class="comment"># 最后按 x 从左到右</span>
+        ))
+
+    <span class="comment"># 单栏：简单按 y → x 排序</span>
+    <span class="keyword">return</span> sorted(elements, key=<span class="keyword">lambda</span> e: (e[<span class="string">"bbox"</span>][<span class="num">1</span>], e[<span class="string">"bbox"</span>][<span class="num">0</span>]))
+    </div>
+
+    <h3>双栏检测逻辑</h3>
+    <div class="code-block">
+        <span class="lang-tag">Python - _is_two_column()</span>
+<span class="keyword">@staticmethod</span>
+<span class="keyword">def</span> <span class="func">_is_two_column</span>(<span class="var">elements</span>, <span class="var">mid</span>):
+    <span class="comment"># 统计完全在左半边的块数量</span>
+    <span class="var">left</span> = sum(<span class="num">1</span> <span class="keyword">for</span> e <span class="keyword">in</span> elements <span class="keyword">if</span> e[<span class="string">"bbox"</span>][<span class="num">2</span>] <= mid)
+    <span class="comment"># 统计完全在右半边的块数量</span>
+    <span class="var">right</span> = sum(<span class="num">1</span> <span class="keyword">for</span> e <span class="keyword">in</span> elements <span class="keyword">if</span> e[<span class="string">"bbox"</span>][<span class="num">0</span>] >= mid)
+    <span class="comment"># 左右各至少 2 个块 → 判定为双栏</span>
+    <span class="keyword">return</span> left >= <span class="num">2</span> <span class="keyword">and</span> right >= <span class="num">2</span>
+    </div>
+
+    <div class="tip tip-success">
+        ✅ <strong>效果</strong>：双栏论文的文本会按「左栏全部 → 右栏全部」的正确阅读顺序输出，不再交错。
+    </div>
+</section>
+
+<!-- ===== 第四章：空格修复 ===== -->
+<section id="spacing" class="fade-in">
+    <h2>🔤 空格与断字修复 <span class="badge">2.1</span></h2>
+
+    <h3>问题：字符粘连</h3>
+    <div class="compare">
+        <div class="compare-panel bad">
+            <h4>❌ MarkItDown 输出</h4>
+            <div class="code-block" style="font-size:0.9rem">around96%ofourdataset wasprocessedcorrectly</div>
+            <p style="font-size:0.8rem;color:var(--text-muted);margin-top:8px">PDF 内部的字符没有显式空格，MarkItDown 无法判断词边界</p>
+        </div>
+        <div class="compare-panel good">
+            <h4>✅ PyMuPDF 输出</h4>
+            <div class="code-block" style="font-size:0.9rem">around 96% of our dataset was processed correctly</div>
+            <p style="font-size:0.8rem;color:var(--text-muted);margin-top:8px">PyMuPDF 在引擎层面识别词边界，每个词独立返回</p>
+        </div>
+    </div>
+
+    <h3>交互演示：词级 bbox</h3>
+    <p style="margin-bottom:12px;color:var(--text-muted)">将鼠标悬停在下方的词上，查看每个词的坐标信息：</p>
+
+    <div class="demo-area">
+        <div class="bbox-demo" id="bboxDemo">
+            <div class="bbox-tooltip" id="bboxTooltip"></div>
+            <!-- 词会通过 JS 生成 -->
+        </div>
+    </div>
+
+    <h3>断字合并（De-hyphenation）</h3>
+    <p>学术论文经常在行尾用连字符断词：</p>
+
+    <div class="compare">
+        <div class="compare-panel bad">
+            <h4>❌ 原始行</h4>
+            <div class="code-block">"compu-"
+"tation"</div>
+        </div>
+        <div class="compare-panel good">
+            <h4>✅ 合并后</h4>
+            <div class="code-block">"computation"</div>
+        </div>
+    </div>
+
+    <div class="code-block">
+        <span class="lang-tag">Python - _join_lines_dehyphen()</span>
+<span class="keyword">@staticmethod</span>
+<span class="keyword">def</span> <span class="func">_join_lines_dehyphen</span>(<span class="var">lines</span>):
+    <span class="var">out</span> = <span class="string">""</span>
+    <span class="keyword">for</span> <span class="var">line</span> <span class="keyword">in</span> lines:
+        <span class="keyword">if not</span> out:
+            out = line
+        <span class="keyword">elif</span> <span class="highlight">out.endswith(<span class="string">"-"</span>)</span>:
+            <span class="comment"># 行尾是连字符 → 去掉连字符，直接拼接下一行</span>
+            <span class="highlight">out = out[:-<span class="num">1</span>] + line</span>
+        <span class="keyword">else</span>:
+            <span class="comment"># 正常情况 → 加空格拼接</span>
+            out = f<span class="string">"{out} {line}"</span>
+    <span class="keyword">return</span> out
+    </div>
+</section>
+
+<!-- ===== 第五章：表格提取 ===== -->
+<section id="tables" class="fade-in">
+    <h2>📊 表格提取 <span class="badge">2.2</span></h2>
+
+    <h3>问题：表格变成乱文本</h3>
+    <div class="compare">
+        <div class="compare-panel bad">
+            <h4>❌ MarkItDown 输出</h4>
+            <div class="code-block">Model Accuracy F1
+BERT 92.3 91.8
+GPT-4 96.1 95.7
+Our Method 97.2 96.9</div>
+            <p style="font-size:0.8rem;color:var(--text-muted);margin-top:8px">表格结构完全丢失，无法区分行列</p>
+        </div>
+        <div class="compare-panel good">
+            <h4>✅ PyMuPDF 输出</h4>
+            <div class="code-block">| Model | Accuracy | F1 |
+| --- | --- | --- |
+| BERT | 92.3 | 91.8 |
+| GPT-4 | 96.1 | 95.7 |
+| Our Method | 97.2 | 96.9 |</div>
+            <p style="font-size:0.8rem;color:var(--text-muted);margin-top:8px">标准 Markdown 表格，结构清晰</p>
+        </div>
+    </div>
+
+    <h3>实现步骤</h3>
+    <div class="steps">
+        <div class="step active" onclick="highlightStep(this)">
+            <div class="step-num">1</div>
+            <div class="step-content">
+                <h4>pdfplumber 检测表格区域</h4>
+                <p>使用 <code>page.find_tables()</code> 找到每个表格的 bbox 坐标</p>
+            </div>
+        </div>
+        <div class="step" onclick="highlightStep(this)">
+            <div class="step-num">2</div>
+            <div class="step-content">
+                <h4>提取表格数据</h4>
+                <p>使用 <code>table.extract()</code> 获取二维数组 <code>[[cell, ...], ...]</code></p>
+            </div>
+        </div>
+        <div class="step" onclick="highlightStep(this)">
+            <div class="step-num">3</div>
+            <div class="step-content">
+                <h4>渲染为 Markdown</h4>
+                <p><code>_table_to_markdown()</code> 将二维数组转为 GitHub 风格 Markdown 表格</p>
+            </div>
+        </div>
+        <div class="step" onclick="highlightStep(this)">
+            <div class="step-num">4</div>
+            <div class="step-content">
+                <h4>去重：抑制表格区域内的文本</h4>
+                <p><code>_drop_text_inside_tables()</code> 检查文本块中心是否在表格 bbox 内，如果是则移除</p>
+            </div>
+        </div>
+    </div>
+
+    <h3>去重逻辑可视化</h3>
+    <div class="demo-area">
+        <div class="demo-controls">
+            <button class="btn active" onclick="showTableDemo('before')">去重前</button>
+            <button class="btn" onclick="showTableDemo('after')">去重后</button>
+        </div>
+        <div id="tableDemoOutput" class="demo-output">
+<span style="color:var(--text-muted)">// 页面元素列表（去重前）：</span>
+
+<span style="color:var(--secondary)">TEXT</span> bbox=(72, 100, 300, 115) "Table 1: Comparison results"
+<span style="color:var(--warning)">TABLE</span> bbox=(72, 120, 520, 250) "| Model | Acc | F1 |..."
+<span style="color:var(--danger)">TEXT</span> bbox=(80, 130, 150, 142) "Model"        ← <span style="color:var(--danger)">中心在表格内！</span>
+<span style="color:var(--danger)">TEXT</span> bbox=(200, 130, 280, 142) "Accuracy"    ← <span style="color:var(--danger)">中心在表格内！</span>
+<span style="color:var(--danger)">TEXT</span> bbox=(85, 155, 130, 167) "BERT"         ← <span style="color:var(--danger)">中心在表格内！</span>
+<span style="color:var(--secondary)">TEXT</span> bbox=(72, 270, 500, 285) "As shown in Table 1..."
+        </div>
+    </div>
+
+    <div class="code-block">
+        <span class="lang-tag">Python - _drop_text_inside_tables()</span>
+<span class="keyword">@staticmethod</span>
+<span class="keyword">def</span> <span class="func">_drop_text_inside_tables</span>(<span class="var">text_elems</span>, <span class="var">table_elems</span>):
+    <span class="var">boxes</span> = [t[<span class="string">"bbox"</span>] <span class="keyword">for</span> t <span class="keyword">in</span> table_elems]
+    <span class="var">kept</span> = []
+    <span class="keyword">for</span> <span class="var">e</span> <span class="keyword">in</span> text_elems:
+        x0, y0, x1, y1 = e[<span class="string">"bbox"</span>]
+        <span class="comment"># 计算文本块的中心点</span>
+        <span class="highlight"><span class="var">cx</span>, <span class="var">cy</span> = (x0 + x1) / <span class="num">2</span>, (y0 + y1) / <span class="num">2</span></span>
+        <span class="comment"># 检查中心点是否在任何表格区域内</span>
+        <span class="var">inside</span> = <span class="keyword">any</span>(
+            bx0 <= cx <= bx1 <span class="keyword">and</span> by0 <= cy <= by1
+            <span class="keyword">for</span> bx0, by0, bx1, by1 <span class="keyword">in</span> boxes
+        )
+        <span class="keyword">if not</span> inside:
+            kept.append(e)
+    <span class="keyword">return</span> kept
+    </div>
+</section>
+
+<!-- ===== 第六章：图片锚定 ===== -->
+<section id="images" class="fade-in">
+    <h2>🖼️ 图片位置锚定 <span class="badge">2.3</span></h2>
+
+    <h3>问题：图片与上下文脱离</h3>
+    <div class="compare">
+        <div class="compare-panel bad">
+            <h4>❌ MarkItDown</h4>
+            <div class="code-block">...正文内容...
+...更多正文...
+
+<span style="color:var(--danger)">// 所有图片统一追加在文档末尾</span>
+[IMAGE: doc_abc_000]
+[IMAGE: doc_abc_001]
+[IMAGE: doc_abc_002]</div>
+        </div>
+        <div class="compare-panel good">
+            <h4>✅ PyMuPDF</h4>
+            <div class="code-block">...第一段正文...
+
+<span style="color:var(--secondary)">[IMAGE: doc_abc_000]</span>  ← 在原始位置
+<span style="color:var(--secondary)">// caption: "Figure 1: Architecture"</span>
+
+...第二段正文...
+
+<span style="color:var(--secondary)">[IMAGE: doc_abc_001]</span>  ← 在原始位置
+<span style="color:var(--secondary)">// caption: "Figure 2: Results"</span></div>
+        </div>
+    </div>
+
+    <h3>图片处理流程</h3>
+    <div class="demo-area">
+        <div style="display:grid; grid-template-columns: 1fr 1fr; gap: 16px;">
+            <div>
+                <h4 style="margin-bottom:12px; color:var(--primary-light)">📐 PDF 页面（模拟）</h4>
+                <div class="pdf-sim" style="min-height:350px; font-size:0.75rem;">
+                    <p style="margin-bottom:12px">Deep learning models have achieved remarkable performance on various NLP tasks...</p>
+                    <div class="image-area" id="imgArea1">
+                        🖼️ 嵌入图片<br>
+                        <span style="font-size:0.7rem; font-weight:normal">bbox: (100, 150, 450, 320)</span>
+                    </div>
+                    <p style="font-size:0.75rem; color:#666; font-style:italic; margin-bottom:12px">Figure 1: The proposed transformer architecture with multi-head attention.</p>
+                    <p>As shown in Figure 1, our architecture consists of an encoder and decoder...</p>
+                </div>
+            </div>
+            <div>
+                <h4 style="margin-bottom:12px; color:var(--primary-light)">📋 处理步骤</h4>
+                <div class="steps" style="margin:0">
+                    <div class="step" style="padding:12px">
+                        <div class="step-num" style="width:28px;height:28px;font-size:0.75rem">1</div>
+                        <div class="step-content">
+                            <h4 style="font-size:0.85rem">get_images() 获取图片列表</h4>
+                            <p style="font-size:0.8rem">拿到所有嵌入图片的 xref 引用</p>
+                        </div>
+                    </div>
+                    <div class="step" style="padding:12px">
+                        <div class="step-num" style="width:28px;height:28px;font-size:0.75rem">2</div>
+                        <div class="step-content">
+                            <h4 style="font-size:0.85rem">get_image_rects() 获取位置</h4>
+                            <p style="font-size:0.8rem">得到图片在页面上的 bbox 坐标</p>
+                        </div>
+                    </div>
+                    <div class="step" style="padding:12px">
+                        <div class="step-num" style="width:28px;height:28px;font-size:0.75rem">3</div>
+                        <div class="step-content">
+                            <h4 style="font-size:0.85rem">Pixmap 渲染并保存 PNG</h4>
+                            <p style="font-size:0.8rem">过滤小于 96px 的图标碎片</p>
+                        </div>
+                    </div>
+                    <div class="step" style="padding:12px">
+                        <div class="step-num" style="width:28px;height:28px;font-size:0.75rem">4</div>
+                        <div class="step-content">
+                            <h4 style="font-size:0.85rem">_find_caption() 查找图注</h4>
+                            <p style="font-size:0.8rem">在图片下方找 "Figure N:" 文本</p>
+                        </div>
+                    </div>
+                    <div class="step" style="padding:12px">
+                        <div class="step-num" style="width:28px;height:28px;font-size:0.75rem">5</div>
+                        <div class="step-content">
+                            <h4 style="font-size:0.85rem">按 bbox 插入占位符</h4>
+                            <p style="font-size:0.8rem">与文本块一起参与排序</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <h3>图注查找算法</h3>
+    <div class="code-block">
+        <span class="lang-tag">Python - _find_caption()</span>
+<span class="keyword">@staticmethod</span>
+<span class="keyword">def</span> <span class="func">_find_caption</span>(<span class="var">page</span>, <span class="var">bbox</span>):
+    <span class="comment"># 获取页面所有文本块</span>
+    <span class="var">blocks</span> = page.get_text(<span class="string">"blocks"</span>)
+    bx0, by0, bx1, by1 = bbox  <span class="comment"># 图片的边界框</span>
+
+    <span class="var">candidates</span> = []
+    <span class="keyword">for</span> blk <span class="keyword">in</span> blocks:
+        text = blk[<span class="num">4</span>]
+        <span class="comment"># 必须匹配 "Figure N" / "Fig. N" / "图 N" 模式</span>
+        <span class="keyword">if not</span> <span class="highlight">_FIGURE_RE.search(text)</span>:
+            <span class="keyword">continue</span>
+
+        <span class="comment"># 条件1: 文本在图片下方（y0 >= 图片底部 - 5px 容差）</span>
+        <span class="comment"># 条件2: 水平方向有重叠</span>
+        <span class="keyword">if</span> <span class="highlight">y0 >= by1 - <span class="num">5</span></span> <span class="keyword">and</span> <span class="highlight">horizontally_overlaps</span>:
+            candidates.append((distance, text))
+
+    <span class="comment"># 返回距离最近的图注</span>
+    candidates.sort(key=<span class="keyword">lambda</span> t: t[<span class="num">0</span>])
+    <span class="keyword">return</span> candidates[<span class="num">0</span>][<span class="num">1</span>]
+    </div>
+
+    <div class="tip tip-warn">
+        ⚠️ <strong>过滤策略</strong>：小于 96×96 像素的图片会被过滤掉（<code>_MIN_IMAGE_DIM = 96</code>），因为这些通常是图标、装饰符号或字体碎片，不是有意义的图片。
+    </div>
+</section>
+
+<!-- ===== 第七章：容错降级 ===== -->
+<section id="fallback" class="fade-in">
+    <h2>🛡️ 容错与降级 <span class="badge">RESILIENCE</span></h2>
+
+    <h3>三层防护设计</h3>
+
+    <div class="card" style="background: linear-gradient(135deg, rgba(99,102,241,0.05), rgba(16,185,129,0.05));">
+        <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap:16px;">
+            <div style="padding:16px; border-radius:8px; border:1px solid var(--border);">
+                <h4 style="color:var(--primary-light); margin-bottom:8px;">🔄 第一层：库级降级</h4>
+                <p style="font-size:0.85rem; color:var(--text-muted)">如果 PyMuPDF 未安装，自动回退到 MarkItDown</p>
+                <div class="code-block" style="font-size:0.8rem">
+<span class="keyword">try</span>:
+    <span class="keyword">import</span> fitz
+<span class="keyword">except</span> ImportError:
+    <span class="keyword">return</span> self._fallback_load(path)
+                </div>
+            </div>
+            <div style="padding:16px; border-radius:8px; border:1px solid var(--border);">
+                <h4 style="color:var(--warning); margin-bottom:8px;">📄 第二层：页级容错</h4>
+                <p style="font-size:0.85rem; color:var(--text-muted)">单页失败不影响其他页面</p>
+                <div class="code-block" style="font-size:0.8rem">
+<span class="keyword">for</span> page_num <span class="keyword">in</span> range(page_count):
+    <span class="keyword">try</span>:
+        ... <span class="comment"># 处理当前页</span>
+    <span class="keyword">except</span> Exception <span class="keyword">as</span> e:
+        logger.warning(...)
+        <span class="comment"># 跳过，继续下一页</span>
+                </div>
+            </div>
+            <div style="padding:16px; border-radius:8px; border:1px solid var(--border);">
+                <h4 style="color:var(--secondary); margin-bottom:8px;">🖼️ 第三层：元素级容错</h4>
+                <p style="font-size:0.85rem; color:var(--text-muted)">单个图片/表格失败不影响其他元素</p>
+                <div class="code-block" style="font-size:0.8rem">
+<span class="keyword">for</span> img <span class="keyword">in</span> raw_images:
+    <span class="keyword">try</span>:
+        ... <span class="comment"># 处理当前图片</span>
+    <span class="keyword">except</span> Exception <span class="keyword">as</span> e:
+        logger.warning(...)
+        <span class="comment"># 跳过，继续下一张</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <h3>降级链路图</h3>
+    <div class="card" style="text-align:center; padding:30px;">
+        <div style="display:inline-block; text-align:left;">
+            <pre style="font-family:monospace; font-size:0.85rem; line-height:2;">
+┌─────────────────────────────────────────────────────┐
+│  <span style="color:var(--primary-light)">PyMuPDFLoader.load(path)</span>                           │
+│                                                     │
+│  ① fitz 未安装？ ──YES──→ <span style="color:var(--warning)">_fallback_load()</span>           │
+│       │ NO                      │                   │
+│       ▼                         ▼                   │
+│  ② 解析失败？ ───YES──→ <span style="color:var(--warning)">_fallback_load()</span>             │
+│       │ NO                      │                   │
+│       ▼                         ▼                   │
+│  ③ 正常输出 Document    <span style="color:var(--secondary)">PdfLoader(markitdown)</span>       │
+│                          作为安全网兜底              │
+└─────────────────────────────────────────────────────┘
+            </pre>
+        </div>
+    </div>
+</section>
+
+<!-- ===== 总结 ===== -->
+<section id="summary" class="fade-in">
+    <h2>📋 总结对比 <span class="badge">SUMMARY</span></h2>
+
+    <table>
+        <thead>
+            <tr>
+                <th>维度</th>
+                <th>PdfLoader (MarkItDown)</th>
+                <th>PyMuPDFLoader</th>
+                <th>关键代码</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td><strong>阅读顺序</strong></td>
+                <td><span class="tag tag-bad">❌ 双栏交错</span></td>
+                <td><span class="tag tag-good">✅ 坐标排序</span></td>
+                <td><code>_order_elements()</code></td>
+            </tr>
+            <tr>
+                <td><strong>空格保留</strong></td>
+                <td><span class="tag tag-bad">❌ 字符粘连</span></td>
+                <td><span class="tag tag-good">✅ 词级 token</span></td>
+                <td><code>get_text("words")</code></td>
+            </tr>
+            <tr>
+                <td><strong>断字处理</strong></td>
+                <td><span class="tag tag-bad">❌ 无</span></td>
+                <td><span class="tag tag-good">✅ 自动合并</span></td>
+                <td><code>_join_lines_dehyphen()</code></td>
+            </tr>
+            <tr>
+                <td><strong>表格</strong></td>
+                <td><span class="tag tag-bad">❌ 纯文本</span></td>
+                <td><span class="tag tag-good">✅ Markdown 表格</span></td>
+                <td><code>pdfplumber + _table_to_markdown()</code></td>
+            </tr>
+            <tr>
+                <td><strong>图片定位</strong></td>
+                <td><span class="tag tag-bad">❌ 末尾追加</span></td>
+                <td><span class="tag tag-good">✅ 原位锚定+图注</span></td>
+                <td><code>_find_caption() + bbox 排序</code></td>
+            </tr>
+            <tr>
+                <td><strong>容错性</strong></td>
+                <td><span class="tag tag-info">一般</span></td>
+                <td><span class="tag tag-good">✅ 三层防护</span></td>
+                <td><code>try/except 逐页逐图</code></td>
+            </tr>
+            <tr>
+                <td><strong>依赖体积</strong></td>
+                <td><span class="tag tag-good">✅ 轻量 (~5MB)</span></td>
+                <td><span class="tag tag-info">较大 (~50MB)</span></td>
+                <td>PyMuPDF + pdfplumber</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <div class="tip tip-info" style="margin-top:24px">
+        💡 <strong>一句话总结</strong>：PyMuPDFLoader 的所有优势都建立在 <code>fitz</code> 提供的<strong>坐标级 API</strong> 之上。有了每个词、每张图的精确位置，才能做阅读顺序修复、空格保留、表格去重和图片锚定。这是 MarkItDown 根本做不到的——因为它只返回一串字符流。
+    </div>
+</section>
+
+</div>
+
+<footer>
+    <p>PyMuPDFLoader 交互式教学 · MODULAR-RAG-MCP-SERVER 项目</p>
+    <p style="margin-top:8px; font-size:0.8rem;">源码位置：<code>src/libs/loader/pymupdf_loader.py</code></p>
+</footer>
+
+<script>
+// ===== 滚动进度条 =====
+window.addEventListener('scroll', () => {
+    const scrollTop = document.documentElement.scrollTop;
+    const scrollHeight = document.documentElement.scrollHeight - window.innerHeight;
+    const progress = (scrollTop / scrollHeight) * 100;
+    document.getElementById('progressBar').style.width = progress + '%';
+});
+
+// ===== 淡入动画 =====
+const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+        if (entry.isIntersecting) {
+            entry.target.classList.add('visible');
+        }
+    });
+}, { threshold: 0.1 });
+
+document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+
+// ===== 导航高亮 =====
+window.addEventListener('scroll', () => {
+    const sections = document.querySelectorAll('section');
+    const links = document.querySelectorAll('.nav-links a');
+    let current = '';
+    sections.forEach(section => {
+        const top = section.offsetTop - 100;
+        if (window.scrollY >= top) current = section.id;
+    });
+    links.forEach(link => {
+        link.classList.toggle('active', link.getAttribute('href') === '#' + current);
+    });
+});
+
+// ===== 流程详情 =====
+const pipelineDetails = [
+    {
+        title: '📂 加载 PDF',
+        content: `<p>验证文件存在且后缀为 <code>.pdf</code>，计算文件的 SHA256 哈希值前 16 位作为文档 ID。</p>
+        <div class="code-block"><span class="var">doc_hash</span> = hashlib.sha256(file_path.read_bytes()).hexdigest()[:16]
+<span class="var">doc_id</span> = f"doc_{doc_hash}"</div>
+        <p style="color:var(--text-muted);font-size:0.85rem">哈希用于：① 文档去重 ② 图片文件命名 ③ 暂存目录隔离</p>`
+    },
+    {
+        title: '📊 表格检测（pdfplumber）',
+        content: `<p>使用 pdfplumber 的 <code>find_tables()</code> 检测每一页的表格区域，返回 <code>{page_index: [table_elements]}</code>。</p>
+        <p style="margin-top:8px;color:var(--text-muted);font-size:0.85rem">为什么先做表格？因为后续需要用表格 bbox 来过滤重复的文本块。</p>`
+    },
+    {
+        title: '📝 文本提取',
+        content: `<p>调用 <code>page.get_text("words")</code> 获取词级 token，按 block → line → word 层级重组，用空格拼接同行词，用断字合并跨行词。</p>
+        <p style="margin-top:8px;color:var(--text-muted);font-size:0.85rem">每个文本块都带有精确的 bbox，用于后续排序。</p>`
+    },
+    {
+        title: '🖼️ 图片提取',
+        content: `<p>通过 <code>page.get_images()</code> 获取嵌入图片列表，用 <code>fitz.Pixmap</code> 渲染为 PNG 保存到暂存目录。过滤小于 96px 的碎片图片。</p>
+        <p style="margin-top:8px;color:var(--text-muted);font-size:0.85rem">同时查找图片下方的 "Figure N:" 图注文本。</p>`
+    },
+    {
+        title: '🔀 排序合并',
+        content: `<p>将文本块、表格、图片占位符统一放入元素列表，根据 bbox 坐标排序：</p>
+        <ul style="margin-top:8px;font-size:0.85rem;color:var(--text-muted)">
+            <li>双栏：按 (列号, y, x) 排序</li>
+            <li>单栏：按 (y, x) 排序</li>
+        </ul>`
+    },
+    {
+        title: '📄 输出 Document',
+        content: `<p>将排序后的元素文本用 <code>\\n\\n</code> 拼接，连同 metadata（source_path, doc_hash, images 列表）封装为标准 <code>Document</code> 对象返回。</p>`
+    }
+];
+
+function showPipelineDetail(index) {
+    const detail = document.getElementById('pipelineDetail');
+    const content = document.getElementById('pipelineDetailContent');
+    detail.style.display = 'block';
+    content.innerHTML = `<h4 style="margin-bottom:12px">${pipelineDetails[index].title}</h4>${pipelineDetails[index].content}`;
+
+    document.querySelectorAll('.pipeline-step').forEach((s, i) => {
+        s.classList.toggle('active', i === index);
+    });
+}
+
+// ===== 双栏演示 =====
+function showColumnDemo(mode) {
+    const output = document.getElementById('columnOutput');
+    const btns = output.closest('.demo-area').querySelectorAll('.btn');
+    btns.forEach(b => b.classList.remove('active'));
+    event.target.classList.add('active');
+
+    if (mode === 'wrong') {
+        output.innerHTML = `<span style="color:#ef4444">// MarkItDown 输出（交错混乱）：</span>
+
+1. Introduction
+2. Related Work
+Deep learning has revolutionized
+Previous approaches relied on
+natural language processing
+recurrent neural networks (RNNs).
+in recent years.
+Attention mechanisms were first
+The transformer architecture
+introduced by Bahdanau et al.
+enables parallel computation.`;
+    } else {
+        output.innerHTML = `<span style="color:#10b981">// PyMuPDF 输出（正确阅读顺序）：</span>
+
+<span style="color:#a5b4fc">// ─── 左栏（column_index=0）───</span>
+1. Introduction
+Deep learning has revolutionized natural language
+processing in recent years.
+The transformer architecture enables parallel computation.
+
+<span style="color:#a5b4fc">// ─── 右栏（column_index=1）───</span>
+2. Related Work
+Previous approaches relied on recurrent neural
+networks (RNNs).
+Attention mechanisms were first introduced by Bahdanau et al.`;
+    }
+}
+
+// ===== 表格去重演示 =====
+function showTableDemo(mode) {
+    const output = document.getElementById('tableDemoOutput');
+    const btns = output.closest('.demo-area').querySelectorAll('.btn');
+    btns.forEach(b => b.classList.remove('active'));
+    event.target.classList.add('active');
+
+    if (mode === 'before') {
+        output.innerHTML = `<span style="color:var(--text-muted)">// 页面元素列表（去重前）：</span>
+
+<span style="color:var(--secondary)">TEXT</span> bbox=(72, 100, 300, 115) "Table 1: Comparison results"
+<span style="color:var(--warning)">TABLE</span> bbox=(72, 120, 520, 250) "| Model | Acc | F1 |..."
+<span style="color:var(--danger)">TEXT</span> bbox=(80, 130, 150, 142) "Model"        ← <span style="color:var(--danger)">中心(115,136)在表格内！</span>
+<span style="color:var(--danger)">TEXT</span> bbox=(200, 130, 280, 142) "Accuracy"    ← <span style="color:var(--danger)">中心(240,136)在表格内！</span>
+<span style="color:var(--danger)">TEXT</span> bbox=(85, 155, 130, 167) "BERT"         ← <span style="color:var(--danger)">中心(107,161)在表格内！</span>
+<span style="color:var(--secondary)">TEXT</span> bbox=(72, 270, 500, 285) "As shown in Table 1..."`;
+    } else {
+        output.innerHTML = `<span style="color:var(--text-muted)">// 页面元素列表（去重后）：</span>
+
+<span style="color:var(--secondary)">TEXT</span> bbox=(72, 100, 300, 115) "Table 1: Comparison results"  ✅ 保留
+<span style="color:var(--warning)">TABLE</span> bbox=(72, 120, 520, 250) "| Model | Acc | F1 |..."     ✅ 保留
+<span style="color:var(--text-muted);text-decoration:line-through">TEXT "Model"      — 已移除（中心在表格 bbox 内）</span>
+<span style="color:var(--text-muted);text-decoration:line-through">TEXT "Accuracy"   — 已移除（中心在表格 bbox 内）</span>
+<span style="color:var(--text-muted);text-decoration:line-through">TEXT "BERT"       — 已移除（中心在表格 bbox 内）</span>
+<span style="color:var(--secondary)">TEXT</span> bbox=(72, 270, 500, 285) "As shown in Table 1..."     ✅ 保留
+
+<span style="color:var(--secondary)">// 结果：表格内容只通过 TABLE 元素输出一次，不会重复！</span>`;
+    }
+}
+
+// ===== 步骤高亮 =====
+function highlightStep(el) {
+    el.closest('.steps').querySelectorAll('.step').forEach(s => s.classList.remove('active'));
+    el.classList.add('active');
+}
+
+// ===== bbox 交互演示 =====
+const bboxWords = [
+    { word: "The", x0: 72, y0: 100, x1: 95, y1: 112 },
+    { word: "results", x0: 97, y0: 100, x1: 136, y1: 112 },
+    { word: "show", x0: 138, y0: 100, x1: 165, y1: 112 },
+    { word: "that", x0: 167, y0: 100, x1: 188, y1: 112 },
+    { word: "around", x0: 190, y0: 100, x1: 225, y1: 112 },
+    { word: "96%", x0: 227, y0: 100, x1: 250, y1: 112 },
+    { word: "of", x0: 252, y0: 100, x1: 264, y1: 112 },
+    { word: "our", x0: 266, y0: 100, x1: 285, y1: 112 },
+    { word: "dataset", x0: 287, y0: 100, x1: 330, y1: 112 },
+    { word: "was", x0: 72, y0: 118, x1: 93, y1: 130 },
+    { word: "processed", x0: 95, y0: 118, x1: 152, y1: 130 },
+    { word: "correctly.", x0: 154, y0: 118, x1: 210, y1: 130 },
+    { word: "The", x0: 72, y0: 140, x1: 95, y1: 152 },
+    { word: "transformer", x0: 97, y0: 140, x1: 170, y1: 152 },
+    { word: "architecture", x0: 172, y0: 140, x1: 245, y1: 152 },
+    { word: "enables", x0: 247, y0: 140, x1: 292, y1: 152 },
+    { word: "parallel", x0: 294, y0: 140, x1: 342, y1: 152 },
+    { word: "compu-", x0: 72, y0: 158, x1: 125, y1: 170 },
+    { word: "tation.", x0: 72, y0: 176, x1: 118, y1: 188 },
+];
+
+function initBboxDemo() {
+    const demo = document.getElementById('bboxDemo');
+    const tooltip = document.getElementById('bboxTooltip');
+    let lastY = null;
+
+    bboxWords.forEach((w, i) => {
+        if (lastY !== null && w.y0 > lastY) {
+            demo.appendChild(document.createElement('br'));
+        }
+        lastY = w.y0;
+
+        const span = document.createElement('span');
+        span.className = 'bbox-word';
+        span.textContent = w.word;
+        span.style.borderColor = w.word === 'compu-' || w.word === 'tation.' ? 'var(--warning)' : '';
+        span.style.background = w.word === 'compu-' || w.word === 'tation.' ? 'rgba(245,158,11,0.1)' : '';
+
+        span.addEventListener('mouseenter', (e) => {
+            span.classList.add('highlighted');
+            tooltip.classList.add('show');
+            tooltip.innerHTML = `bbox: (${w.x0}, ${w.y0}, ${w.x1}, ${w.y1})\nword: "${w.word}"\nblock: 0, line: ${Math.floor((w.y0-100)/18)}, word: ${i}`;
+            const rect = span.getBoundingClientRect();
+            const demoRect = demo.getBoundingClientRect();
+            tooltip.style.left = (rect.left - demoRect.left) + 'px';
+            tooltip.style.top = (rect.top - demoRect.top - 60) + 'px';
+        });
+        span.addEventListener('mouseleave', () => {
+            span.classList.remove('highlighted');
+            tooltip.classList.remove('show');
+        });
+        demo.appendChild(span);
+    });
+
+    // 添加说明
+    const note = document.createElement('div');
+    note.style.cssText = 'margin-top:20px; padding-top:12px; border-top:1px solid #ddd; font-size:0.8rem; color:#666;';
+    note.innerHTML = `
+        <p>👆 悬停查看每个词的坐标 | <span style="border:1px solid var(--warning);padding:1px 4px;border-radius:3px;background:rgba(245,158,11,0.1)">黄色高亮</span> = 断字词（会被合并为 "computation"）</p>
+        <p style="margin-top:4px">PyMuPDF 返回格式：<code>(x0, y0, x1, y1, word, block_no, line_no, word_no)</code></p>
+    `;
+    demo.appendChild(note);
+}
+
+// 初始化
+document.addEventListener('DOMContentLoaded', () => {
+    initBboxDemo();
+    // 默认展开第一个流程步骤
+    showPipelineDetail(0);
+});
+</script>
+
+</body>
+</html>

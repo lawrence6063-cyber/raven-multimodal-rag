@@ -6,6 +6,7 @@ Provides Settings dataclass and load/validate functions for config/settings.yaml
 from __future__ import annotations
 
 from dataclasses import dataclass, field
+import os
 from pathlib import Path
 from typing import Any
 
@@ -166,6 +167,29 @@ class ObservabilitySettings:
 
 
 @dataclass
+class AgentSettings:
+    """Agentic RAG configuration（默认全关，零侵入兼容旧行为）。
+
+    总开关 ``enabled`` 关闭时 ``agentic_query`` 工具委托传统 ``query_knowledge_hub``
+    行为；各子能力（route/rewrite/multihop/reflect/synthesize）有独立开关，可单独
+    启用。所有循环均有硬上限，任一 LLM 步骤异常时降级为单次混合检索，绝不抛错。
+    """
+
+    enabled: bool = False              # 总开关（agentic_query 是否启用 agent 编排）
+    route_enabled: bool = True         # 3.1 检索决策（是否检索 / 选 collection）
+    rewrite_enabled: bool = True       # 3.2 查询改写 / 分解为子查询
+    multihop_enabled: bool = True      # 3.3 多跳检索
+    reflect_enabled: bool = True       # 3.4 self-correction 反思
+    synthesize_answer: bool = True     # 服务端 LLM 合成最终答案
+    max_hops: int = 3                  # 多跳检索硬上限
+    max_subqueries: int = 3            # 查询分解子查询数上限
+    max_reflect_rounds: int = 2        # 反思重检轮数上限
+    max_context_chunks: int = 20       # 累积上下文片段上限（防上下文爆炸）
+    retrieval_top_k: int = 5           # 每个子查询的检索条数
+    answer_model: str = ""             # 空则复用 settings.llm.model
+
+
+@dataclass
 class Settings:
     """Root configuration object for the RAG MCP Server."""
 
@@ -180,6 +204,7 @@ class Settings:
     ingestion: IngestionSettings = field(default_factory=IngestionSettings)
     evaluation: EvaluationSettings = field(default_factory=EvaluationSettings)
     observability: ObservabilitySettings = field(default_factory=ObservabilitySettings)
+    agent: AgentSettings = field(default_factory=AgentSettings)
 
 
 # Required fields that must have non-empty values
@@ -268,7 +293,7 @@ def load_settings(path: str | Path = "config/settings.yaml") -> Settings:
         image_embedding=ingestion_raw.get("image_embedding", False),
     )
 
-    return Settings(
+    settings = Settings(
         llm=_build_dataclass(LLMSettings, raw.get("llm")),
         embedding=_build_dataclass(EmbeddingSettings, raw.get("embedding")),
         vector_store=_build_dataclass(VectorStoreSettings, raw.get("vector_store")),
@@ -280,4 +305,47 @@ def load_settings(path: str | Path = "config/settings.yaml") -> Settings:
         ingestion=ingestion_settings,
         evaluation=_build_dataclass(EvaluationSettings, raw.get("evaluation")),
         observability=_build_dataclass(ObservabilitySettings, raw.get("observability")),
+        agent=_build_dataclass(AgentSettings, raw.get("agent")),
     )
+
+    # ── 环境变量回退：yaml 中 api_key 为空时，从环境变量读取 ──
+    _resolve_api_keys(settings)
+
+    return settings
+
+
+def _resolve_api_keys(settings: Settings) -> None:
+    """如果 settings 中 api_key 为空，则从环境变量回退读取。
+
+    优先级：settings.yaml 显式值 > 专用环境变量 > 通用环境变量
+    """
+    # DashScope 系列（qwen / qwen_multimodal / qwen_vision）
+    dashscope_key = os.getenv("DASHSCOPE_API_KEY", "")
+    # OpenAI 系列
+    openai_key = os.getenv("OPENAI_API_KEY", "")
+
+    # 根据 provider 决定回退的环境变量
+    _PROVIDER_ENV_MAP = {
+        "qwen": dashscope_key,
+        "qwen_multimodal": dashscope_key,
+        "qwen_vision": dashscope_key,
+        "dashscope": dashscope_key,
+        "openai": openai_key,
+        "deepseek": os.getenv("DEEPSEEK_API_KEY", ""),
+        "azure": os.getenv("AZURE_API_KEY", "") or os.getenv("AZURE_OPENAI_API_KEY", ""),
+    }
+
+    # LLM api_key 回退
+    if not settings.llm.api_key:
+        fallback = _PROVIDER_ENV_MAP.get(settings.llm.provider.lower(), "") or dashscope_key or openai_key
+        settings.llm.api_key = fallback
+
+    # Embedding api_key 回退
+    if not settings.embedding.api_key:
+        fallback = _PROVIDER_ENV_MAP.get(settings.embedding.provider.lower(), "") or dashscope_key or openai_key
+        settings.embedding.api_key = fallback
+
+    # Vision LLM api_key 回退
+    if not settings.vision_llm.api_key:
+        fallback = _PROVIDER_ENV_MAP.get(settings.vision_llm.provider.lower(), "") or dashscope_key or openai_key
+        settings.vision_llm.api_key = fallback

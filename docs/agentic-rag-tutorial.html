@@ -1,0 +1,1010 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Agentic RAG 深度解析 — 交互式教学</title>
+    <style>
+        :root {
+            --primary: #6366f1;
+            --primary-light: #a5b4fc;
+            --secondary: #10b981;
+            --warning: #f59e0b;
+            --danger: #ef4444;
+            --purple: #a855f7;
+            --cyan: #06b6d4;
+            --bg: #0f172a;
+            --bg-card: #1e293b;
+            --bg-code: #0d1117;
+            --text: #e2e8f0;
+            --text-muted: #94a3b8;
+            --border: #334155;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.7;
+            overflow-x: hidden;
+        }
+
+        /* ===== 导航 ===== */
+        .nav {
+            position: fixed;
+            top: 0; left: 0; right: 0;
+            background: rgba(15, 23, 42, 0.95);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid var(--border);
+            z-index: 1000;
+            padding: 12px 24px;
+            display: flex;
+            align-items: center;
+            gap: 24px;
+        }
+        .nav-title {
+            font-weight: 700;
+            font-size: 1.1rem;
+            white-space: nowrap;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .nav-links { display: flex; gap: 10px; flex-wrap: wrap; }
+        .nav-links a {
+            color: var(--text-muted);
+            text-decoration: none;
+            font-size: 0.85rem;
+            padding: 4px 10px;
+            border-radius: 6px;
+            transition: all 0.2s;
+        }
+        .nav-links a:hover, .nav-links a.active {
+            color: var(--primary-light);
+            background: rgba(99, 102, 241, 0.1);
+        }
+
+        .container {
+            max-width: 1100px;
+            margin: 80px auto 60px;
+            padding: 0 24px;
+        }
+
+        /* ===== Hero ===== */
+        .hero { text-align: center; padding: 60px 0 40px; }
+        .hero h1 {
+            font-size: 2.8rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 16px;
+        }
+        .hero p { font-size: 1.2rem; color: var(--text-muted); max-width: 720px; margin: 0 auto; }
+        .hero .pill {
+            display: inline-block;
+            margin-top: 18px;
+            padding: 6px 16px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-family: monospace;
+            background: rgba(99,102,241,0.12);
+            border: 1px solid rgba(99,102,241,0.3);
+            color: var(--primary-light);
+        }
+
+        /* ===== Section ===== */
+        section { margin-bottom: 60px; scroll-margin-top: 80px; }
+        section h2 {
+            font-size: 1.8rem;
+            font-weight: 700;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid var(--border);
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        section h2 .badge {
+            font-size: 0.75rem;
+            padding: 3px 10px;
+            border-radius: 20px;
+            background: var(--primary);
+            color: white;
+            font-weight: 600;
+        }
+        section h3 { font-size: 1.3rem; margin: 24px 0 12px; color: var(--primary-light); }
+
+        /* ===== 卡片 ===== */
+        .card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 24px;
+            margin-bottom: 20px;
+        }
+
+        /* ===== 代码块 ===== */
+        .code-block {
+            background: var(--bg-code);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 16px 20px;
+            margin: 12px 0;
+            overflow-x: auto;
+            font-family: 'JetBrains Mono', 'Fira Code', monospace;
+            font-size: 0.85rem;
+            line-height: 1.6;
+            position: relative;
+            white-space: pre;
+        }
+        .code-block .lang-tag {
+            position: absolute;
+            top: 8px; right: 12px;
+            font-size: 0.7rem;
+            color: var(--text-muted);
+            background: var(--bg-card);
+            padding: 2px 8px;
+            border-radius: 4px;
+        }
+        .code-block .highlight { background: rgba(99, 102, 241, 0.2); }
+        .code-block .comment { color: #6a9955; }
+        .code-block .keyword { color: #c586c0; }
+        .code-block .string { color: #ce9178; }
+        .code-block .func { color: #dcdcaa; }
+        .code-block .var { color: #9cdcfe; }
+        .code-block .num { color: #b5cea8; }
+
+        /* ===== 流程图 ===== */
+        .pipeline {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            flex-wrap: wrap;
+            margin: 20px 0;
+            padding: 20px;
+            background: var(--bg-card);
+            border-radius: 12px;
+            border: 1px solid var(--border);
+            justify-content: center;
+        }
+        .pipeline-step {
+            padding: 10px 16px;
+            border-radius: 8px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            border: 2px solid transparent;
+            color: white;
+        }
+        .pipeline-step:hover { transform: translateY(-2px); box-shadow: 0 4px 12px rgba(0,0,0,0.3); }
+        .pipeline-step.active { border-color: white; transform: scale(1.05); }
+        .pipeline-arrow { color: var(--text-muted); font-size: 1.2rem; }
+        .pipeline-loop {
+            font-size: 0.7rem;
+            color: var(--warning);
+            border: 1px dashed var(--warning);
+            border-radius: 6px;
+            padding: 2px 8px;
+        }
+
+        /* ===== 对比面板 ===== */
+        .compare {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+            margin: 20px 0;
+        }
+        @media (max-width: 768px) { .compare { grid-template-columns: 1fr; } }
+        .compare-panel { border-radius: 10px; padding: 20px; border: 1px solid var(--border); }
+        .compare-panel.bad { background: rgba(239, 68, 68, 0.05); border-color: rgba(239, 68, 68, 0.3); }
+        .compare-panel.good { background: rgba(16, 185, 129, 0.05); border-color: rgba(16, 185, 129, 0.3); }
+        .compare-panel h4 { font-size: 0.95rem; margin-bottom: 12px; display: flex; align-items: center; gap: 8px; }
+        .compare-panel.bad h4 { color: var(--danger); }
+        .compare-panel.good h4 { color: var(--secondary); }
+
+        /* ===== Demo ===== */
+        .demo-area {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 24px;
+            margin: 20px 0;
+        }
+        .demo-controls { display: flex; gap: 10px; margin-bottom: 16px; flex-wrap: wrap; }
+        .btn {
+            padding: 8px 16px;
+            border-radius: 6px;
+            border: 1px solid var(--border);
+            background: var(--bg);
+            color: var(--text);
+            font-size: 0.85rem;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        .btn:hover { border-color: var(--primary); color: var(--primary-light); }
+        .btn.active { background: var(--primary); border-color: var(--primary); color: white; }
+        .demo-output {
+            background: var(--bg-code);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 16px;
+            min-height: 200px;
+            font-family: monospace;
+            font-size: 0.82rem;
+            white-space: pre-wrap;
+            transition: all 0.3s;
+        }
+
+        /* ===== 步骤 ===== */
+        .steps { display: flex; flex-direction: column; gap: 16px; margin: 20px 0; }
+        .step {
+            display: flex;
+            gap: 16px;
+            align-items: flex-start;
+            padding: 16px;
+            border-radius: 10px;
+            border: 1px solid var(--border);
+            background: var(--bg-card);
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        .step:hover { border-color: var(--primary); }
+        .step.active { border-color: var(--primary); background: rgba(99, 102, 241, 0.05); }
+        .step-num {
+            width: 32px; height: 32px;
+            border-radius: 50%;
+            background: var(--primary);
+            color: white;
+            display: flex; align-items: center; justify-content: center;
+            font-weight: 700; font-size: 0.85rem; flex-shrink: 0;
+        }
+        .step-content h4 { margin-bottom: 4px; }
+        .step-content p { color: var(--text-muted); font-size: 0.9rem; }
+
+        /* ===== 表格 ===== */
+        table { width: 100%; border-collapse: collapse; margin: 16px 0; font-size: 0.85rem; }
+        th, td { padding: 10px 14px; border: 1px solid var(--border); text-align: left; }
+        th { background: var(--bg-card); font-weight: 600; color: var(--primary-light); }
+        td { background: rgba(30, 41, 59, 0.5); }
+
+        code { background: rgba(148,163,184,0.15); padding: 1px 6px; border-radius: 4px; font-size: 0.85em; }
+
+        /* ===== 标签 ===== */
+        .tag { display: inline-block; padding: 2px 8px; border-radius: 4px; font-size: 0.75rem; font-weight: 600; }
+        .tag-good { background: rgba(16, 185, 129, 0.2); color: var(--secondary); }
+        .tag-bad { background: rgba(239, 68, 68, 0.2); color: var(--danger); }
+        .tag-info { background: rgba(99, 102, 241, 0.2); color: var(--primary-light); }
+
+        /* ===== 提示框 ===== */
+        .tip { padding: 16px 20px; border-radius: 8px; margin: 16px 0; border-left: 4px solid; font-size: 0.9rem; }
+        .tip-info { background: rgba(99, 102, 241, 0.08); border-color: var(--primary); }
+        .tip-warn { background: rgba(245, 158, 11, 0.08); border-color: var(--warning); }
+        .tip-success { background: rgba(16, 185, 129, 0.08); border-color: var(--secondary); }
+
+        /* ===== 动画 ===== */
+        .fade-in { opacity: 0; transform: translateY(20px); transition: all 0.6s ease; }
+        .fade-in.visible { opacity: 1; transform: translateY(0); }
+
+        /* ===== 进度条 ===== */
+        .progress-bar {
+            position: fixed;
+            top: 52px; left: 0;
+            height: 3px;
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+            z-index: 1001;
+            transition: width 0.1s;
+        }
+
+        /* ===== 多跳交互演示 ===== */
+        .hop-sim { display: grid; grid-template-columns: 1fr; gap: 12px; }
+        .hop-row {
+            display: flex; align-items: center; gap: 12px;
+            padding: 12px 16px;
+            border-radius: 8px;
+            border: 1px solid var(--border);
+            background: var(--bg);
+            opacity: 0.35;
+            transition: all 0.4s;
+        }
+        .hop-row.on { opacity: 1; border-color: var(--primary); background: rgba(99,102,241,0.06); }
+        .hop-badge {
+            flex-shrink: 0;
+            padding: 4px 10px; border-radius: 6px;
+            font-size: 0.75rem; font-weight: 700; color: white;
+        }
+        .ctx-bar {
+            height: 22px; border-radius: 5px;
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+            display: flex; align-items: center; justify-content: flex-end;
+            padding: 0 8px; color: white; font-size: 0.72rem; font-weight: 700;
+            transition: width 0.6s ease; min-width: 36px;
+        }
+
+        /* ===== 配置滑块表 ===== */
+        .cfg-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px,1fr)); gap: 12px; margin: 16px 0; }
+        .cfg-item { background: var(--bg-card); border: 1px solid var(--border); border-radius: 10px; padding: 14px; text-align: center; }
+        .cfg-item .val { font-size: 1.6rem; font-weight: 800; color: var(--primary-light); }
+        .cfg-item .key { font-size: 0.72rem; color: var(--text-muted); font-family: monospace; margin-top: 4px; }
+
+        footer {
+            text-align: center;
+            padding: 40px 0;
+            color: var(--text-muted);
+            font-size: 0.85rem;
+            border-top: 1px solid var(--border);
+        }
+    </style>
+</head>
+<body>
+
+<nav class="nav">
+    <span class="nav-title">🤖 Agentic RAG 教学</span>
+    <div class="nav-links">
+        <a href="#overview">总览</a>
+        <a href="#pipeline">编排流水线</a>
+        <a href="#router">路由决策</a>
+        <a href="#transform">查询改写</a>
+        <a href="#multihop">多跳检索</a>
+        <a href="#reflect">反思自纠</a>
+        <a href="#synth">答案合成</a>
+        <a href="#resilience">容错降级</a>
+        <a href="#summary">总结</a>
+    </div>
+</nav>
+<div class="progress-bar" id="progressBar"></div>
+
+<div class="container">
+
+<div class="hero fade-in">
+    <h1>Agentic RAG 深度解析</h1>
+    <p>一个交互式教程，带你理解「会自己思考的检索」——让 LLM 决定<strong>是否检索、检索什么、检索几轮、答得够不够</strong>，而不是一次盲目召回。</p>
+    <div class="pill">route → (transform → multi-hop retrieve → reflect)* → synthesize</div>
+</div>
+
+<!-- ===== 第一章：总览 ===== -->
+<section id="overview" class="fade-in">
+    <h2>🎯 总览：为什么需要 Agentic RAG <span class="badge">WHY</span></h2>
+
+    <div class="card">
+        <p>经典 RAG 的流程是固定的：<strong>查询 → 一次向量检索 → 把片段塞给 LLM 生成</strong>。它有三个天然短板：①简单寒暄也照样检索，浪费算力；②复合问题（"对比 A 和 B"）一次召回抓不全；③召回不足时没有补救机制，直接拿着残缺上下文硬答。</p>
+        <p style="margin-top:10px"><strong>Agentic RAG</strong> 把检索变成一个由 LLM 驱动的<strong>自主决策循环</strong>：先判断要不要检索、去哪个库检索；把复杂问题拆成子查询；多跳累积上下文；并在每跳后<strong>反思</strong>证据是否充分，不足则自己生成追问再补检；最后服务端合成带<code>[n]</code>引用的答案。</p>
+    </div>
+
+    <div class="compare">
+        <div class="compare-panel bad">
+            <h4>❌ 经典 RAG（query_knowledge_hub）</h4>
+            <p style="font-size:0.85rem; color:var(--text-muted)">单向、无脑、一次召回，答案由外部客户端 LLM 拼</p>
+            <div class="code-block" style="font-size:0.8rem"><span class="var">query</span> → hybrid_search(top_k) → <span class="keyword">return</span> passages
+<span class="comment"># 不判断是否该检索</span>
+<span class="comment"># 复合问题抓不全</span>
+<span class="comment"># 召回不足无补救</span></div>
+        </div>
+        <div class="compare-panel good">
+            <h4>✅ Agentic RAG（agentic_query）</h4>
+            <p style="font-size:0.85rem; color:var(--text-muted)">闭环、自主、多跳，服务端合成带引用答案</p>
+            <div class="code-block" style="font-size:0.8rem"><span class="func">route</span>()      <span class="comment"># 要不要检索？去哪个库？</span>
+<span class="func">transform</span>()  <span class="comment"># 拆成聚焦的子查询</span>
+<span class="func">retrieve</span>()*  <span class="comment"># 多跳累积、去重</span>
+<span class="func">reflect</span>()*   <span class="comment"># 不够？生成追问再补检</span>
+<span class="func">synthesize</span>() <span class="comment"># 合成 + [n] 引用</span></div>
+        </div>
+    </div>
+
+    <div class="tip tip-info">
+        💡 <strong>关键洞察</strong>：Agentic RAG 的每一个"智能"环节（路由 / 改写 / 反思）都是<strong>最佳努力的优化项（best-effort）</strong>。任何一步的 LLM 调用或 JSON 解析失败，都会<strong>保守降级</strong>而非报错——这是它能在生产环境稳定运行的根本设计哲学。后面每一章都会反复看到这一点。
+    </div>
+
+    <h3>本项目的实现位置</h3>
+    <table>
+        <thead><tr><th>组件</th><th>职责</th><th>源码文件</th></tr></thead>
+        <tbody>
+            <tr><td><strong>AgenticRAG</strong></td><td>编排器（串起全流程 + 全局降级）</td><td><code>src/core/agent/agentic_rag.py</code></td></tr>
+            <tr><td><strong>QueryRouter</strong></td><td>判断是否检索 + 选 collection</td><td><code>src/core/agent/router.py</code></td></tr>
+            <tr><td><strong>QueryTransformer</strong></td><td>查询改写/分解为子查询</td><td><code>src/core/agent/query_transformer.py</code></td></tr>
+            <tr><td><strong>Reflector</strong></td><td>充分性评估 + 生成追问</td><td><code>src/core/agent/reflector.py</code></td></tr>
+            <tr><td><strong>AnswerSynthesizer</strong></td><td>合成带引用的答案</td><td><code>src/core/agent/answer_synthesizer.py</code></td></tr>
+            <tr><td><strong>agentic_query</strong></td><td>MCP 工具入口</td><td><code>src/mcp_server/tools/agentic_query.py</code></td></tr>
+        </tbody>
+    </table>
+</section>
+
+<!-- ===== 第二章：编排流水线 ===== -->
+<section id="pipeline" class="fade-in">
+    <h2>🔄 编排流水线 <span class="badge">HOW</span></h2>
+
+    <p>点击下方流程中的每个阶段，查看 <code>AgenticRAG._run_agentic()</code> 中对应的逻辑：</p>
+
+    <div class="pipeline">
+        <div class="pipeline-step" style="background:#6366f1" onclick="showPipelineDetail(0)">🧭 Route</div>
+        <span class="pipeline-arrow">→</span>
+        <span class="pipeline-loop">循环开始 ↻</span>
+        <div class="pipeline-step" style="background:#a855f7" onclick="showPipelineDetail(1)">✂️ Transform</div>
+        <span class="pipeline-arrow">→</span>
+        <div class="pipeline-step" style="background:#06b6d4" onclick="showPipelineDetail(2)">🔍 Retrieve</div>
+        <span class="pipeline-arrow">→</span>
+        <div class="pipeline-step" style="background:#f59e0b" onclick="showPipelineDetail(3)">🤔 Reflect</div>
+        <span class="pipeline-loop">↺ 不足则再跳</span>
+        <span class="pipeline-arrow">→</span>
+        <div class="pipeline-step" style="background:#10b981" onclick="showPipelineDetail(4)">📝 Synthesize</div>
+    </div>
+
+    <div id="pipelineDetail" class="card" style="display:none;">
+        <div id="pipelineDetailContent"></div>
+    </div>
+
+    <h3>编排主循环（简化版）</h3>
+    <div class="code-block">
+        <span class="lang-tag">Python - AgenticRAG._run_agentic()</span>
+<span class="comment"># 1. 路由：决定是否检索 + 哪些 collection</span>
+<span class="var">decision</span> = <span class="var">self</span>._route(query, trace)
+
+<span class="comment"># 2. 直答捷径：无需检索且 LLM 已给出答案</span>
+<span class="keyword">if not</span> decision.need_retrieval <span class="keyword">and</span> decision.direct_answer:
+    <span class="keyword">return</span> AgentResult(answer=decision.direct_answer, results=[], steps=steps)
+
+<span class="comment"># 3. 解析 collection 过滤：显式参数优先，否则单一路由结果</span>
+<span class="var">target_collection</span> = collection <span class="keyword">or</span> (decision.target_collections[<span class="num">0</span>]
+                       <span class="keyword">if</span> len(decision.target_collections) == <span class="num">1</span> <span class="keyword">else</span> <span class="keyword">None</span>)
+
+<span class="comment"># 4. 改写：把查询拆成聚焦子查询</span>
+<span class="var">subqueries</span> = <span class="var">self</span>._transform(query, trace)
+
+<span class="comment"># 5. 多跳检索循环（去重累积 + 预算 + 反思补检）</span>
+<span class="var">results</span> = <span class="var">self</span>._retrieve_loop(query, subqueries, target_collection, ...)
+
+<span class="comment"># 6. 服务端合成带引用答案</span>
+<span class="var">answer</span> = <span class="var">self</span>._synthesize(query, results, trace)
+<span class="keyword">return</span> AgentResult(answer=answer, results=results, steps=steps)
+    </div>
+
+    <div class="tip tip-warn">
+        ⚠️ <strong>全局护栏</strong>：上面整段逻辑都被 <code>run()</code> 中的一个 <code>try/except</code> 包住。任何异常都会跌落到 <code>_fallback()</code>——退化成<strong>一次普通混合检索 + 尽力合成</strong>，并把 <code>AgentResult.fallback=True</code>。用户永远不会看到 agent 报错。
+    </div>
+</section>
+
+<!-- ===== 第三章：路由决策 ===== -->
+<section id="router" class="fade-in">
+    <h2>🧭 路由决策（Route） <span class="badge">3.1</span></h2>
+
+    <p><code>QueryRouter</code> 回答两个问题：①这个问题<strong>需不需要</strong>查知识库？②如果需要，查<strong>哪个 collection</strong>？</p>
+
+    <h3>交互演示：不同问题的路由结果</h3>
+    <div class="demo-area">
+        <div class="demo-controls">
+            <button class="btn active" onclick="showRoute('greet')">"你好呀"</button>
+            <button class="btn" onclick="showRoute('single')">"RAG 论文提出了什么检索方法？"</button>
+            <button class="btn" onclick="showRoute('cross')">"对比所有文档里的性能指标"</button>
+            <button class="btn" onclick="showRoute('hallu')">LLM 幻觉出不存在的库</button>
+        </div>
+        <div id="routeOutput" class="demo-output"></div>
+    </div>
+
+    <h3>白名单校验：防止幻觉 collection</h3>
+    <p>LLM 提议的 collection <strong>必须</strong>在可用集合内，否则被丢弃。这是一道安全闸门——防止 LLM 把查询路由到不存在或越权的库。</p>
+    <div class="code-block">
+        <span class="lang-tag">Python - QueryRouter._decide()</span>
+<span class="comment"># 白名单校验：丢弃任何不在 available 集合中的 collection</span>
+<span class="var">proposed</span> = data.get(<span class="string">"collections"</span>, [])
+<span class="var">targets</span>: list[str] = []
+<span class="keyword">if</span> isinstance(proposed, list):
+    <span class="var">available_set</span> = set(available_collections)
+    <span class="keyword">for</span> name <span class="keyword">in</span> proposed:
+        <span class="keyword">if</span> <span class="highlight">isinstance(name, str) <span class="keyword">and</span> name <span class="keyword">in</span> available_set</span> <span class="keyword">and</span> name <span class="keyword">not in</span> targets:
+            targets.append(name)
+    </div>
+
+    <div class="tip tip-info">
+        💡 <strong>保守降级三连</strong>：① LLM 调用异常 → <code>need_retrieval=True, collections=[]</code>（检索全部）；② JSON 解析失败 → 同上（<code>parse_fallback</code>）；③ <code>route_enabled=false</code> → 直接默认检索全部。<strong>宁可多检索，绝不漏检索。</strong>
+    </div>
+
+    <h3>路由 Prompt 的核心规则</h3>
+    <div class="card" style="font-size:0.88rem">
+        <p>① 只有<strong>寒暄/闲聊/纯算术/无需文档支撑的常识</strong>才设 <code>need_retrieval=false</code>，存疑一律 true；<br>
+        ② <code>collections</code> 严格从 AVAILABLE 选，空数组 <code>[]</code> = 搜全部，<strong>绝不臆造</strong>；<br>
+        ③ 只输出裸 JSON，不要 <code>```json```</code> 代码块包裹。</p>
+    </div>
+</section>
+
+<!-- ===== 第四章：查询改写 ===== -->
+<section id="transform" class="fade-in">
+    <h2>✂️ 查询改写与分解（Transform） <span class="badge">3.2</span></h2>
+
+    <p>口语化或复合的问题往往检索效果差。<code>QueryTransformer</code> 把它改写成一个或多个<strong>聚焦、关键词丰富</strong>的子查询——只有存在<strong>明确不同的需求</strong>时才分解。</p>
+
+    <div class="compare">
+        <div class="compare-panel bad">
+            <h4>❌ 原始复合查询</h4>
+            <div class="code-block" style="font-size:0.82rem">"BERT 和 GPT-4 在准确率和
+推理速度上分别怎么样，
+哪个更适合做线上服务？"</div>
+            <p style="font-size:0.8rem;color:var(--text-muted);margin-top:8px">一次检索很难同时命中这么多子需求</p>
+        </div>
+        <div class="compare-panel good">
+            <h4>✅ 分解后的子查询（≤ max_subqueries）</h4>
+            <div class="code-block" style="font-size:0.82rem">[
+  {"text": "BERT GPT-4 准确率对比"},
+  {"text": "BERT GPT-4 推理延迟 速度"},
+  {"text": "线上服务 模型选型 权衡"}
+]</div>
+            <p style="font-size:0.8rem;color:var(--text-muted);margin-top:8px">每条聚焦单一需求，各自检索</p>
+        </div>
+    </div>
+
+    <h3>去重 + 截断（永不为空）</h3>
+    <div class="code-block">
+        <span class="lang-tag">Python - QueryTransformer._transform()</span>
+<span class="var">seen</span>: set[str] = set()
+<span class="var">subqueries</span>: list[SubQuery] = []
+<span class="keyword">for</span> item <span class="keyword">in</span> data:
+    <span class="var">text</span> = <span class="var">self</span>._extract_text(item)          <span class="comment"># 兼容裸字符串 / {"text": ...}</span>
+    <span class="keyword">if not</span> text: <span class="keyword">continue</span>
+    <span class="var">key</span> = text.strip().lower()
+    <span class="keyword">if</span> <span class="highlight">key <span class="keyword">in</span> seen</span>: <span class="keyword">continue</span>          <span class="comment"># 归一化去重</span>
+    seen.add(key)
+    subqueries.append(SubQuery(text=text, purpose=...))
+    <span class="keyword">if</span> <span class="highlight">len(subqueries) >= max_subqueries</span>: <span class="keyword">break</span>  <span class="comment"># 数量封顶</span>
+    </div>
+
+    <div class="tip tip-success">
+        ✅ <strong>降级保证</strong>：LLM 失败、解析失败、或结果为空 → 一律回退为 <code>[SubQuery(text=query)]</code>（原始查询作为唯一子查询）。<code>transform()</code> 的返回值<strong>永远非空</strong>，所以检索总能进行。当 <code>rewrite_enabled=false</code> 时也直接走这条路。
+    </div>
+</section>
+
+<!-- ===== 第五章：多跳检索 ===== -->
+<section id="multihop" class="fade-in">
+    <h2>🔍 多跳检索循环（Multi-hop Retrieve） <span class="badge">3.3</span></h2>
+
+    <p>这是 Agentic RAG 的心脏：<code>_retrieve_loop()</code> 在子查询上迭代检索，<strong>去重累积</strong>上下文，受 <code>max_hops</code> 和 <code>max_context_chunks</code> 双重预算约束。反思（下一章）会把追问塞回 <code>pending</code> 触发新的一跳。</p>
+
+    <h3>交互演示：观察上下文如何跨跳累积</h3>
+    <div class="demo-area">
+        <div class="demo-controls">
+            <button class="btn active" onclick="runHopDemo()">▶ 重新播放多跳过程</button>
+        </div>
+        <div class="hop-sim" id="hopSim">
+            <div class="hop-row" id="hop1">
+                <span class="hop-badge" style="background:#06b6d4">HOP 1</span>
+                <div style="flex:1">
+                    <div style="font-size:0.82rem">子查询：<code>BERT GPT-4 准确率对比</code></div>
+                    <div style="margin-top:6px"><div class="ctx-bar" id="bar1" style="width:0">0</div></div>
+                </div>
+            </div>
+            <div class="hop-row" id="hop2">
+                <span class="hop-badge" style="background:#a855f7">HOP 2</span>
+                <div style="flex:1">
+                    <div style="font-size:0.82rem">反思追问：<code>GPT-4 推理延迟 基准</code>（去重后命中 +3）</div>
+                    <div style="margin-top:6px"><div class="ctx-bar" id="bar2" style="width:0">0</div></div>
+                </div>
+            </div>
+            <div class="hop-row" id="hop3">
+                <span class="hop-badge" style="background:#f59e0b">HOP 3</span>
+                <div style="flex:1">
+                    <div style="font-size:0.82rem">反思追问：<code>线上服务模型选型</code>（命中达上限，截断）</div>
+                    <div style="margin-top:6px"><div class="ctx-bar" id="bar3" style="width:0">0</div></div>
+                </div>
+            </div>
+        </div>
+        <p id="hopNote" style="margin-top:12px;font-size:0.82rem;color:var(--text-muted)"></p>
+    </div>
+
+    <h3>去重累积：按 chunk_id 留高分</h3>
+    <p>不同子查询/不同跳可能召回<strong>同一片段</strong>。<code>_accumulate()</code> 用 <code>chunk_id</code> 去重，已存在则<strong>保留更高分</strong>的那次，且严格遵守 <code>max_context_chunks</code> 预算。</p>
+    <div class="code-block">
+        <span class="lang-tag">Python - AgenticRAG._accumulate()</span>
+<span class="keyword">for</span> r <span class="keyword">in</span> results:
+    <span class="var">existing</span> = seen.get(r.chunk_id)
+    <span class="keyword">if</span> existing <span class="keyword">is not</span> <span class="keyword">None</span>:
+        <span class="keyword">if</span> <span class="highlight">r.score > context[existing].score</span>:   <span class="comment"># 同片段保留高分</span>
+            context[existing] = r
+        <span class="keyword">continue</span>
+    <span class="keyword">if</span> <span class="highlight">len(context) >= max_chunks</span>:            <span class="comment"># 预算用尽，丢弃</span>
+        <span class="keyword">continue</span>
+    seen[r.chunk_id] = len(context)
+    context.append(r)
+    added += <span class="num">1</span>
+<span class="keyword">return</span> added                                <span class="comment"># 新增片段数</span>
+    </div>
+
+    <h3>循环骨架</h3>
+    <div class="code-block">
+        <span class="lang-tag">Python - AgenticRAG._retrieve_loop()</span>
+<span class="var">max_hops</span> = cfg.max_hops <span class="keyword">if</span> cfg.multihop_enabled <span class="keyword">else</span> <span class="num">1</span>
+<span class="var">pending</span> = [sq.text <span class="keyword">for</span> sq <span class="keyword">in</span> subqueries]
+<span class="var">hop</span> = <span class="num">0</span>
+<span class="keyword">while</span> <span class="highlight">pending <span class="keyword">and</span> hop < max_hops</span>:
+    hop += <span class="num">1</span>
+    <span class="var">current</span>, pending = pending, []
+    <span class="keyword">for</span> sub <span class="keyword">in</span> current:
+        <span class="var">results</span> = <span class="var">self</span>._retrieve(sub, ...)        <span class="comment"># 混合检索</span>
+        <span class="var">results</span> = <span class="var">self</span>._maybe_rerank(sub, results)  <span class="comment"># 可选重排</span>
+        <span class="var">new_hits</span> += <span class="var">self</span>._accumulate(context, seen, results, max_chunks)
+    <span class="comment"># …反思：不足则把追问写回 pending，触发下一跳…</span>
+    </div>
+
+    <div class="tip tip-info">
+        💡 每个子查询检索 <code>retrieval_top_k</code> 条；可选地经 <code>QueryReranker</code> 重排（<code>rerank.enabled</code> 且重排器可用时）；重排失败<strong>绝不阻塞</strong>，直接返回原结果。
+    </div>
+</section>
+
+<!-- ===== 第六章：反思自纠 ===== -->
+<section id="reflect" class="fade-in">
+    <h2>🤔 反思与自纠（Reflect） <span class="badge">3.4</span></h2>
+
+    <p>每跳之后，<code>Reflector</code>（CRAG / Self-RAG 风格）评估：<strong>当前上下文够不够回答原始问题？</strong>不够就生成 1-3 个<strong>聚焦的追问</strong>，喂回多跳循环；够了就停。</p>
+
+    <h3>反思触发的四个守卫条件</h3>
+    <div class="steps">
+        <div class="step active" onclick="highlightStep(this)">
+            <div class="step-num">1</div>
+            <div class="step-content"><h4><code>reflect_enabled</code> 为真</h4><p>总开关打开</p></div>
+        </div>
+        <div class="step" onclick="highlightStep(this)">
+            <div class="step-num">2</div>
+            <div class="step-content"><h4><code>context</code> 非空</h4><p>有东西才值得评估</p></div>
+        </div>
+        <div class="step" onclick="highlightStep(this)">
+            <div class="step-num">3</div>
+            <div class="step-content"><h4><code>hop &lt; max_hops</code></h4><p>最后一跳不反思——没有余地再行动了</p></div>
+        </div>
+        <div class="step" onclick="highlightStep(this)">
+            <div class="step-num">4</div>
+            <div class="step-content"><h4><code>reflect_rounds &lt; max_reflect_rounds</code></h4><p>反思轮数也有上限，防止反复 spin</p></div>
+        </div>
+    </div>
+
+    <div class="code-block">
+        <span class="lang-tag">Python - AgenticRAG._retrieve_loop()（反思片段）</span>
+<span class="keyword">if</span> (<span class="highlight">cfg.reflect_enabled <span class="keyword">and</span> context <span class="keyword">and</span> hop < max_hops
+        <span class="keyword">and</span> reflect_rounds < cfg.max_reflect_rounds</span>):
+    <span class="var">verdict</span> = <span class="var">self</span>._get_reflector().assess(query, context, trace=trace)
+    <span class="keyword">if</span> <span class="keyword">not</span> verdict.sufficient <span class="keyword">and</span> verdict.follow_up_queries:
+        reflect_rounds += <span class="num">1</span>
+        <span class="var">pending</span> = [q <span class="keyword">for</span> q <span class="keyword">in</span> verdict.follow_up_queries
+                   <span class="keyword">if</span> <span class="highlight">q.strip().lower() <span class="keyword">not in</span> asked</span>]  <span class="comment"># 不重复已问过的</span>
+    </div>
+
+    <h3>交互演示：充分 vs 不充分</h3>
+    <div class="demo-area">
+        <div class="demo-controls">
+            <button class="btn active" onclick="showReflect('insufficient')">🔴 证据不足 → 生成追问</button>
+            <button class="btn" onclick="showReflect('sufficient')">🟢 证据充分 → 停止</button>
+        </div>
+        <div id="reflectOutput" class="demo-output"></div>
+    </div>
+
+    <div class="tip tip-warn">
+        ⚠️ <strong>保守即安全</strong>：反思的任何失败（LLM 异常 / JSON 解析失败 / 没给出具体追问）一律视为 <code>sufficient=True</code>——<strong>让循环停下来，而不是空转</strong>。这是成本与延迟的安全阀。Prompt 也明确要求"偏向 sufficient，过度追问伤延迟"。
+    </div>
+</section>
+
+<!-- ===== 第七章：答案合成 ===== -->
+<section id="synth" class="fade-in">
+    <h2>📝 答案合成（Synthesize） <span class="badge">服务端</span></h2>
+
+    <p>这是项目<strong>以前缺失</strong>的一层——过去答案由外部 MCP 客户端拼。<code>AnswerSynthesizer</code> 让 LLM <strong>仅基于编号片段</strong>作答，并报告引用了哪几条（<code>[n]</code>）。反思器复用同一套编号上下文做评估。</p>
+
+    <h3>编号上下文：引用索引的统一来源</h3>
+    <div class="code-block">
+        <span class="lang-tag">Python - context_utils.format_numbered_context()</span>
+<span class="keyword">for</span> i, result <span class="keyword">in</span> enumerate(context, start=<span class="num">1</span>):   <span class="comment"># 1-based 编号</span>
+    <span class="var">snippet</span> = (result.text <span class="keyword">or</span> <span class="string">""</span>).strip()[:<span class="num">300</span>]  <span class="comment"># 每条截断 300 字</span>
+    lines.append(f<span class="string">"[{i}] {snippet}"</span>)
+<span class="keyword">return</span> <span class="string">"\n"</span>.join(lines)
+    </div>
+    <p style="font-size:0.85rem;color:var(--text-muted)">合成器与反思器共用这个格式，保证两边的引用编号一致。</p>
+
+    <h3>稳健解析：宁可多引，不可静默丢引用</h3>
+    <div class="code-block">
+        <span class="lang-tag">Python - AnswerSynthesizer._parse()</span>
+<span class="var">data</span> = extract_json_object(response_text)
+<span class="keyword">if</span> data <span class="keyword">is</span> <span class="keyword">None</span>:
+    <span class="comment"># 无法解析 JSON → 整段当答案，并假设所有片段都被引用</span>
+    <span class="keyword">return</span> SynthResult(answer=response_text.strip(),
+                       <span class="highlight">used_citation_ids=list(range(<span class="num">1</span>, n_context + <span class="num">1</span>))</span>)
+<span class="comment"># 正常路径：只保留 1..n 范围内的合法引用编号</span>
+<span class="keyword">for</span> item <span class="keyword">in</span> raw_citations:
+    <span class="keyword">if</span> <span class="num">1</span> <= idx <= n_context <span class="keyword">and</span> idx <span class="keyword">not in</span> used:
+        used.append(idx)
+    </div>
+
+    <h3>MCP 工具最终输出</h3>
+    <p><code>AgenticQueryTool._build_result()</code> 把合成答案、<code>### References</code> 引用块、以及支撑图片组装进 <code>MCPToolResult</code>：</p>
+    <div class="code-block">
+        <span class="lang-tag">Markdown - 最终答案形态</span>
+GPT-4 在准确率（96.1）上领先 BERT（92.3）[1]，但推理延迟更高 [2]。
+若线上服务对延迟敏感，BERT 是更稳妥的选型 [3]。
+
+### References
+[1] ml_papers/comparison.pdf (page 4) — score 0.8123
+[2] ml_papers/latency_bench.pdf (page 2) — score 0.7710
+[3] ml_papers/deployment.pdf (page 7) — score 0.7402
+    </div>
+
+    <div class="tip tip-info">
+        💡 与前几个组件不同，合成器的 LLM 错误<strong>会向上抛出</strong>——交给编排器的全局 <code>try/except</code> 统一降级。这样设计是因为合成是答案的最后一环，需要让全局护栏接管。
+    </div>
+</section>
+
+<!-- ===== 第八章：容错降级 ===== -->
+<section id="resilience" class="fade-in">
+    <h2>🛡️ 容错与降级 <span class="badge">RESILIENCE</span></h2>
+
+    <h3>分层降级：每个组件都"永不抛错"</h3>
+    <div class="card" style="background: linear-gradient(135deg, rgba(99,102,241,0.05), rgba(16,185,129,0.05));">
+        <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap:16px;">
+            <div style="padding:16px; border-radius:8px; border:1px solid var(--border);">
+                <h4 style="color:var(--primary-light); margin-bottom:8px;">🧭 路由降级</h4>
+                <p style="font-size:0.85rem; color:var(--text-muted)">失败 → <code>need_retrieval=True, collections=[]</code>（检索全部）</p>
+            </div>
+            <div style="padding:16px; border-radius:8px; border:1px solid var(--border);">
+                <h4 style="color:var(--purple); margin-bottom:8px;">✂️ 改写降级</h4>
+                <p style="font-size:0.85rem; color:var(--text-muted)">失败 → 用原始查询作为唯一子查询，检索照常</p>
+            </div>
+            <div style="padding:16px; border-radius:8px; border:1px solid var(--border);">
+                <h4 style="color:var(--warning); margin-bottom:8px;">🤔 反思降级</h4>
+                <p style="font-size:0.85rem; color:var(--text-muted)">失败 → <code>sufficient=True</code>，循环停止，绝不空转</p>
+            </div>
+            <div style="padding:16px; border-radius:8px; border:1px solid var(--border);">
+                <h4 style="color:var(--cyan); margin-bottom:8px;">🔁 重排降级</h4>
+                <p style="font-size:0.85rem; color:var(--text-muted)">重排器不可用/失败 → 返回原检索结果</p>
+            </div>
+            <div style="padding:16px; border-radius:8px; border:1px solid var(--border);">
+                <h4 style="color:var(--danger); margin-bottom:8px;">🛟 全局降级</h4>
+                <p style="font-size:0.85rem; color:var(--text-muted)">任何环节异常 → 一次混合检索 + 尽力合成，<code>fallback=True</code></p>
+            </div>
+            <div style="padding:16px; border-radius:8px; border:1px solid var(--border);">
+                <h4 style="color:var(--secondary); margin-bottom:8px;">🔌 总开关降级</h4>
+                <p style="font-size:0.85rem; color:var(--text-muted)"><code>agent.enabled=false</code> → 委托 <code>query_knowledge_hub</code></p>
+            </div>
+        </div>
+    </div>
+
+    <h3>全局降级链路</h3>
+    <div class="card" style="text-align:center; padding:30px;">
+        <div style="display:inline-block; text-align:left;">
+            <pre style="font-family:monospace; font-size:0.82rem; line-height:1.9;">
+┌──────────────────────────────────────────────────────────┐
+│  <span style="color:var(--primary-light)">AgenticQueryTool.run(query)</span>                              │
+│                                                          │
+│  ① agent.enabled = false ? ──YES──→ <span style="color:var(--secondary)">query_knowledge_hub</span>    │
+│       │ NO                              （行为不变）       │
+│       ▼                                                  │
+│  ② AgenticRAG.run() ── try ──→ route→…→synthesize        │
+│       │                                                  │
+│       └─ except 任意异常 ──→ <span style="color:var(--warning)">_fallback()</span>                   │
+│                              · 一次 hybrid_search          │
+│                              · 尽力 synthesize             │
+│                              · <span style="color:var(--danger)">fallback = True</span>              │
+└──────────────────────────────────────────────────────────┘
+            </pre>
+        </div>
+    </div>
+
+    <div class="tip tip-success">
+        ✅ <strong>设计哲学</strong>：所有"智能"环节都是<strong>锦上添花的优化项</strong>，而非<strong>必经的关键路径</strong>。即使每一个 LLM 都罢工，系统也会优雅退化成一个最朴素但可用的 RAG。这正是它敢上生产的底气。
+    </div>
+</section>
+
+<!-- ===== 第九章：配置与总结 ===== -->
+<section id="summary" class="fade-in">
+    <h2>📋 配置与总结 <span class="badge">SUMMARY</span></h2>
+
+    <h3>config/settings.yaml 的 agent 段</h3>
+    <div class="cfg-grid">
+        <div class="cfg-item"><div class="val">3</div><div class="key">max_hops</div></div>
+        <div class="cfg-item"><div class="val">3</div><div class="key">max_subqueries</div></div>
+        <div class="cfg-item"><div class="val">2</div><div class="key">max_reflect_rounds</div></div>
+        <div class="cfg-item"><div class="val">20</div><div class="key">max_context_chunks</div></div>
+        <div class="cfg-item"><div class="val">5</div><div class="key">retrieval_top_k</div></div>
+    </div>
+    <p style="font-size:0.85rem;color:var(--text-muted)">五个开关 <code>route_enabled / rewrite_enabled / multihop_enabled / reflect_enabled / synthesize_answer</code> 可独立关停任一环节；<code>enabled</code> 是总开关。</p>
+
+    <h3>各组件一览</h3>
+    <table>
+        <thead><tr><th>阶段</th><th>组件</th><th>失败时如何降级</th><th>是否抛错</th></tr></thead>
+        <tbody>
+            <tr><td><strong>Route</strong></td><td>QueryRouter</td><td>检索全部 collection</td><td><span class="tag tag-good">否</span></td></tr>
+            <tr><td><strong>Transform</strong></td><td>QueryTransformer</td><td>用原始查询</td><td><span class="tag tag-good">否</span></td></tr>
+            <tr><td><strong>Retrieve</strong></td><td>HybridSearch + Reranker</td><td>重排失败用原结果</td><td><span class="tag tag-info">部分</span></td></tr>
+            <tr><td><strong>Reflect</strong></td><td>Reflector</td><td>判定 sufficient 停止</td><td><span class="tag tag-good">否</span></td></tr>
+            <tr><td><strong>Synthesize</strong></td><td>AnswerSynthesizer</td><td>交给全局降级</td><td><span class="tag tag-bad">是（向上抛）</span></td></tr>
+        </tbody>
+    </table>
+
+    <div class="tip tip-info" style="margin-top:24px">
+        💡 <strong>一句话总结</strong>：Agentic RAG = <strong>会思考的检索循环</strong>。它把"是否检索、检索什么、检索几轮、答得够不够"这些原本写死的决策<strong>交给 LLM 动态判断</strong>；同时用层层降级把每个 LLM 决策变成"能用则用、不能用就退"的最佳努力优化项。智能与稳健，二者兼得。
+    </div>
+</section>
+
+</div>
+
+<footer>
+    <p>Agentic RAG 交互式教学 · MODULAR-RAG-MCP-SERVER 项目</p>
+    <p style="margin-top:8px; font-size:0.8rem;">源码位置：<code>src/core/agent/</code> · 入口：<code>src/mcp_server/tools/agentic_query.py</code></p>
+</footer>
+
+<script>
+// ===== 滚动进度条 =====
+window.addEventListener('scroll', () => {
+    const scrollTop = document.documentElement.scrollTop;
+    const scrollHeight = document.documentElement.scrollHeight - window.innerHeight;
+    document.getElementById('progressBar').style.width = (scrollTop / scrollHeight) * 100 + '%';
+});
+
+// ===== 淡入动画 =====
+const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => { if (entry.isIntersecting) entry.target.classList.add('visible'); });
+}, { threshold: 0.1 });
+document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+
+// ===== 导航高亮 =====
+window.addEventListener('scroll', () => {
+    const sections = document.querySelectorAll('section');
+    const links = document.querySelectorAll('.nav-links a');
+    let current = '';
+    sections.forEach(section => {
+        if (window.scrollY >= section.offsetTop - 100) current = section.id;
+    });
+    links.forEach(link => link.classList.toggle('active', link.getAttribute('href') === '#' + current));
+});
+
+// ===== 流程详情 =====
+const pipelineDetails = [
+    {
+        title: '🧭 Route — 检索决策',
+        content: `<p>调用 <code>QueryRouter.decide()</code>。判断 <code>need_retrieval</code>（要不要查库）与 <code>target_collections</code>（查哪个库，已经过白名单校验）。</p>
+        <p style="margin-top:8px;color:var(--text-muted);font-size:0.85rem">若 <code>need_retrieval=false</code> 且 LLM 给出了 <code>direct_answer</code>，直接返回，跳过后续所有检索。<code>route_enabled=false</code> 时默认检索全部。</p>`
+    },
+    {
+        title: '✂️ Transform — 查询改写/分解',
+        content: `<p>调用 <code>QueryTransformer.transform()</code>，把查询拆成至多 <code>max_subqueries</code>(=3) 个聚焦子查询，去重后作为多跳循环的初始 <code>pending</code> 队列。</p>
+        <p style="margin-top:8px;color:var(--text-muted);font-size:0.85rem">只有存在明确不同的子需求时才分解；否则就是改写后的单条子查询。失败则回退原始查询。</p>`
+    },
+    {
+        title: '🔍 Retrieve — 多跳检索',
+        content: `<p>对每个子查询执行 <code>HybridSearch.search()</code>（可选 <code>QueryReranker</code> 重排），用 <code>_accumulate()</code> 按 <code>chunk_id</code> 去重累积进 <code>context</code>。</p>
+        <p style="margin-top:8px;color:var(--text-muted);font-size:0.85rem">受 <code>max_hops</code>(=3) 与 <code>max_context_chunks</code>(=20) 双重约束。同一片段保留更高分的那次召回。</p>`
+    },
+    {
+        title: '🤔 Reflect — 反思自纠',
+        content: `<p>调用 <code>Reflector.assess()</code> 评估上下文充分性。不足则生成 1-3 个追问（剔除已问过的）写回 <code>pending</code>，触发下一跳。</p>
+        <p style="margin-top:8px;color:var(--text-muted);font-size:0.85rem">仅当 reflect_enabled、context 非空、hop &lt; max_hops、reflect_rounds &lt; max_reflect_rounds(=2) 四个条件都满足时才反思。失败视为充分，停止。</p>`
+    },
+    {
+        title: '📝 Synthesize — 答案合成',
+        content: `<p>调用 <code>AnswerSynthesizer.answer()</code>，让 LLM 仅基于编号片段作答并报告引用编号 <code>[n]</code>，封装为 <code>AgentResult</code>。</p>
+        <p style="margin-top:8px;color:var(--text-muted);font-size:0.85rem"><code>synthesize_answer=false</code> 时返回空答案（只给片段）。这一步的 LLM 错误会向上抛给全局降级处理。</p>`
+    }
+];
+function showPipelineDetail(index) {
+    const detail = document.getElementById('pipelineDetail');
+    document.getElementById('pipelineDetailContent').innerHTML =
+        `<h4 style="margin-bottom:12px">${pipelineDetails[index].title}</h4>${pipelineDetails[index].content}`;
+    detail.style.display = 'block';
+    document.querySelectorAll('.pipeline-step').forEach((s, i) => s.classList.toggle('active', i === index));
+}
+
+// ===== 路由演示 =====
+const routeData = {
+    greet: `<span style="color:#94a3b8">// 问题："你好呀"</span>
+
+<span style="color:#10b981">{</span>
+  "need_retrieval": <span style="color:#ef4444">false</span>,        <span style="color:#6a9955">// 寒暄，无需查库</span>
+  "collections": [],
+  "reasoning": "Simple greeting",
+  "direct_answer": <span style="color:#ce9178">"你好！需要我帮你查询知识库里的什么内容？"</span>
+<span style="color:#10b981">}</span>
+
+<span style="color:#a5b4fc">➡ 走直答捷径，整条检索流水线被跳过</span>`,
+    single: `<span style="color:#94a3b8">// 问题："RAG 论文提出了什么检索方法？"</span>
+<span style="color:#94a3b8">// AVAILABLE: ["ml_papers", "company_docs"]</span>
+
+<span style="color:#10b981">{</span>
+  "need_retrieval": <span style="color:#10b981">true</span>,
+  "collections": [<span style="color:#ce9178">"ml_papers"</span>],   <span style="color:#6a9955">// 命中单一库</span>
+  "reasoning": "About RAG paper content",
+  "direct_answer": ""
+<span style="color:#10b981">}</span>
+
+<span style="color:#a5b4fc">➡ target_collection = "ml_papers"，检索被限定到此库</span>`,
+    cross: `<span style="color:#94a3b8">// 问题："对比所有文档里的性能指标"</span>
+
+<span style="color:#10b981">{</span>
+  "need_retrieval": <span style="color:#10b981">true</span>,
+  "collections": [],          <span style="color:#6a9955">// 空数组 = 搜全部库</span>
+  "reasoning": "Cross-collection comparison",
+  "direct_answer": ""
+<span style="color:#10b981">}</span>
+
+<span style="color:#a5b4fc">➡ 不限定 collection，跨库检索</span>`,
+    hallu: `<span style="color:#94a3b8">// AVAILABLE: ["ml_papers", "company_docs"]</span>
+<span style="color:#94a3b8">// LLM 幻觉返回了不存在的 "secret_db"</span>
+
+LLM 输出: "collections": [<span style="color:#ef4444">"secret_db"</span>, <span style="color:#ce9178">"ml_papers"</span>]
+
+<span style="color:#f59e0b">⚙ 白名单校验：</span>
+  "secret_db"  ∉ available  →  <span style="color:#ef4444">丢弃 ✗</span>
+  "ml_papers"  ∈ available  →  <span style="color:#10b981">保留 ✓</span>
+
+<span style="color:#a5b4fc">➡ 最终 target_collections = ["ml_papers"]，幻觉被拦截</span>`
+};
+function showRoute(key) {
+    document.getElementById('routeOutput').innerHTML = routeData[key];
+    const btns = document.querySelectorAll('#routeOutput').length ? event.target.closest('.demo-area').querySelectorAll('.btn') : [];
+    btns.forEach(b => b.classList.remove('active'));
+    event.target.classList.add('active');
+}
+
+// ===== 多跳演示 =====
+function runHopDemo() {
+    const rows = ['hop1','hop2','hop3'].map(id => document.getElementById(id));
+    const bars = ['bar1','bar2','bar3'].map(id => document.getElementById(id));
+    const note = document.getElementById('hopNote');
+    const data = [
+        { hits: 5, total: 5, msg: 'HOP 1：3 个子查询各召回若干，去重后累积 5 条。反思判定「缺推理延迟数据」→ 生成追问。' },
+        { hits: 3, total: 8, msg: 'HOP 2：追问命中 3 条新片段（部分重复被去重）。反思判定「缺选型权衡」→ 再追问。' },
+        { hits: 12, total: 20, msg: 'HOP 3：召回触及 max_context_chunks=20 上限，超出部分被截断。达到 max_hops，循环结束。' }
+    ];
+    rows.forEach(r => { r.classList.remove('on'); });
+    bars.forEach(b => { b.style.width = '0'; b.textContent = '0'; });
+    note.textContent = '';
+    data.forEach((d, i) => {
+        setTimeout(() => {
+            rows[i].classList.add('on');
+            bars[i].style.width = (d.total / 20 * 100) + '%';
+            bars[i].textContent = d.total + ' / 20';
+            note.textContent = d.msg;
+        }, i * 1100 + 300);
+    });
+}
+
+// ===== 反思演示 =====
+const reflectData = {
+    insufficient: `<span style="color:#94a3b8">// 原问题：对比 BERT 与 GPT-4 的准确率和推理延迟</span>
+<span style="color:#94a3b8">// 当前上下文只有准确率数据，缺延迟</span>
+
+<span style="color:#10b981">{</span>
+  "sufficient": <span style="color:#ef4444">false</span>,
+  "follow_up": [<span style="color:#ce9178">"GPT-4 BERT 推理延迟 基准测试"</span>],
+  "reasoning": "上下文覆盖了准确率，但完全没有推理延迟的信息"
+<span style="color:#10b981">}</span>
+
+<span style="color:#f59e0b">➡ reflect_rounds += 1，追问写回 pending，触发下一跳</span>`,
+    sufficient: `<span style="color:#94a3b8">// 原问题：RAG 模型由哪三个组件构成？</span>
+<span style="color:#94a3b8">// 上下文已包含 retriever / generator / 二者连接方式</span>
+
+<span style="color:#10b981">{</span>
+  "sufficient": <span style="color:#10b981">true</span>,
+  "follow_up": [],
+  "reasoning": "三个组件都已覆盖，足以构造完整答案"
+<span style="color:#10b981">}</span>
+
+<span style="color:#a5b4fc">➡ pending 为空，多跳循环结束，进入合成</span>`
+};
+function showReflect(key) {
+    document.getElementById('reflectOutput').innerHTML = reflectData[key];
+    event.target.closest('.demo-area').querySelectorAll('.btn').forEach(b => b.classList.remove('active'));
+    event.target.classList.add('active');
+}
+
+// ===== 步骤高亮 =====
+function highlightStep(el) {
+    el.closest('.steps').querySelectorAll('.step').forEach(s => s.classList.remove('active'));
+    el.classList.add('active');
+}
+
+// ===== 初始化 =====
+document.addEventListener('DOMContentLoaded', () => {
+    showPipelineDetail(0);
+    showRoute('greet');
+    showReflect('insufficient');
+    runHopDemo();
+});
+</script>
+
+</body>
+</html>

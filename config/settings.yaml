@@ -3,8 +3,8 @@
 
 llm:
   provider: "qwen"            # qwen(DashScope) | openai | azure | ollama | deepseek
-  model: "qwen-plus"          # qwen-plus | qwen-max | qwen-turbo
-  api_key: ""                 # 填入 DashScope API Key（留空则回退环境变量）
+  model: "qwen3.7-plus"          # qwen3.7-max(最新旗舰) | qwen3-max | qwen-plus
+  api_key: "sk-691b8e8f59da4ee480df10d908eac862"                 # 填入 DashScope API Key（留空则回退环境变量）
   azure_endpoint: ""
   deployment_name: ""
   api_version: "2024-02-01"
@@ -14,13 +14,13 @@ llm:
 
 embedding:
   provider: "qwen_multimodal"   # 路径B：图文统一向量空间（DashScope 多模态向量，非 OpenAI 兼容）
-  model: "multimodal-embedding-v1"
-  api_key: ""                 # 同一个 DashScope API Key
+  model: "tongyi-embedding-vision-plus"
+  api_key: "sk-691b8e8f59da4ee480df10d908eac862"                 # 同一个 DashScope API Key
   azure_endpoint: ""
   deployment_name: ""
   api_version: "2024-02-01"
   base_url: ""
-  dimensions: 1024            # 多模态向量维度（切换后必须清空 data/db 重新摄取）
+  dimensions: 1024            # 多模态向量维度（tongyi-embedding-vision-plus 默认1024，切换模型后必须清空 data/db 重新摄取）
 
 vector_store:
   provider: "chroma"           # chroma
@@ -52,8 +52,8 @@ rerank:
 
 vision_llm:
   enabled: true
-  provider: "qwen_vision"      # qwen_vision(qwen-vl-max via DashScope) | azure_vision
-  model: "qwen-vl-max"
+  provider: "qwen_vision"      # qwen_vision(Qwen3-VL via DashScope) | azure_vision
+  model: "qwen3-vl-max"
   api_key: ""   # 同一个 DashScope API Key
   azure_endpoint: ""
   deployment_name: ""
@@ -63,11 +63,11 @@ vision_llm:
 
 ingestion:
   chunk_refiner:
-    use_llm: true              # LLM 清洗 chunk（去噪/修复），摄取变慢，需清库重摄生效
+    use_llm: false              # LLM 清洗 chunk（去噪/修复），摄取变慢，需清库重摄生效
   metadata_enricher:
     use_llm: true              # LLM 抽取 title/summary/tags，摄取变慢，需清库重摄生效
   image_captioner:
-    enabled: true              # 用 qwen-vl-max 为图片生成中文描述缝入文本
+    enabled: true              # 用 qwen3-vl-max 为图片生成中文描述缝入文本
   batch_size: 32
   bm25_index_path: "data/db/bm25"
   image_embedding: true        # 将文档图片编码为独立多模态向量入库（跨模态检索）
@@ -80,3 +80,17 @@ observability:
   trace_enabled: true
   log_file: "logs/traces.jsonl"
   log_level: "INFO"
+
+agent:
+  enabled: true                # 总开关：开启 agentic_query 的 agent 编排（关闭则委托 query_knowledge_hub）
+  route_enabled: true          # 3.1 检索决策：判断是否检索/选 collection，简单问题直答
+  rewrite_enabled: true        # 3.2 查询改写/分解为子查询
+  multihop_enabled: true       # 3.3 多跳检索（基于已得上下文迭代追加）
+  reflect_enabled: true        # 3.4 self-correction 反思（不足则重检）
+  synthesize_answer: true      # 服务端 LLM 合成最终答案（带引用[n]）
+  max_hops: 3                  # 多跳硬上限
+  max_subqueries: 3            # 子查询数上限
+  max_reflect_rounds: 2        # 反思轮数上限
+  max_context_chunks: 20       # 累积上下文片段上限
+  retrieval_top_k: 5           # 每个子查询检索条数
+  answer_model: ""             # 空则复用 llm.model

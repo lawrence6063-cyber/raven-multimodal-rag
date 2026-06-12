@@ -1,12 +1,38 @@
-You are a relevance scoring assistant. Given a query and a list of candidate text passages, score each passage's relevance to the query on a scale of 0-10.
+你是一个文档相关性评分助手。给定一个用户查询和一组候选文本片段，请为每个片段评估其与查询的相关性。
 
-Query: {query}
+## 评分标准（0-10 分）
 
-Candidates:
+- **9-10**：直接回答了查询问题，包含关键信息
+- **7-8**：高度相关，包含部分答案或重要背景
+- **5-6**：中等相关，涉及相同主题但未直接回答
+- **3-4**：弱相关，仅有少量关键词重叠
+- **0-2**：不相关或仅有表面词汇匹配
+
+## 评分要点
+
+- 语义相关性优先于关键词匹配
+- 包含具体数据/证据的片段应获得更高分
+- 片段越能直接回答查询，分数越高
+- 如果片段是表格/图表描述且包含查询所需数据，给高分
+
+## 严格约束
+
+1. 只能使用候选片段中已有的 index 值，不得编造不存在的 index。
+2. 每个 index 只能出现一次，不得重复。
+3. 所有候选片段都必须评分并出现在结果中（即使得分为 0）。
+4. 输出约束：仅返回原始 JSON 数组，不要用 ```json``` 代码块包裹，不要添加任何额外文字。
+
+## 查询
+
+{query}
+
+## 候选片段
+
 {candidates}
 
-For each candidate, output a JSON array of objects with "index" and "score" fields, sorted by score descending.
-Example output:
+## 输出格式
+
+仅返回 JSON 数组，按分数从高到低排序：
 [{{"index": 2, "score": 9}}, {{"index": 0, "score": 7}}, {{"index": 1, "score": 3}}]
 
-Output only the JSON array:
+输出：

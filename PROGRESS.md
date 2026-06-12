@@ -1,6 +1,6 @@
 # 开发进度追踪
 
-> 自动更新 | 最后更新: 2026-06-11
+> 自动更新 | 最后更新: 2026-06-12
 
 ## 总览
 
@@ -9,7 +9,24 @@
 | 总任务数 | 68 |
 | 已完成 | 68 |
 | 进度 | 100% |
-| 全量测试 | 328 passed |
+| 全量测试 | 423 passed |
+
+---
+
+## P1 — Agentic RAG（OPTIMIZATION_SPEC §3，已完成）
+
+将「一次性检索 → 拼引用」升级为「LLM 作为 agent 主动决策检索」并在服务端合成带引用答案。新增独立 MCP 工具 `agentic_query`，不改动 `query_knowledge_hub`（保留为快速直检/降级路径）。
+
+| 里程碑 | 内容 | 状态 |
+|------|------|------|
+| M-C1 | `AgentSettings`(默认关) + `agent_types` + `CollectionRegistry` + `AnswerSynthesizer`(服务端首次具备 LLM 合成答案) + `QueryRouter`(3.1，白名单+保守降级) + `AgenticRAG` 最小闭环 + `agentic_query` 工具并注册 | ✅ |
+| M-C2 | `QueryTransformer`(3.2 改写/分解+去重+降级) + 多跳检索循环(3.3，`max_hops`/`max_context_chunks` 预算、去重累积、`agent_hop_n` trace) | ✅ |
+| M-C3 | `Reflector`(3.4 self-correction，CRAG 思路) + reflect→follow-up→重检回路(`max_reflect_rounds`、失败保守跳出) | ✅ |
+| M-C4 | 全量回归(423 passed，+56 离线 agent 用例) + 文档更新 | ✅ |
+
+- **关键设计**：全程降级（任一 LLM 步骤异常→单次混合检索，绝不报错）；硬上限防成本失控；JSON 容错（截取 `[..]`/`{..}` + fallback，绝不 eval）；collection 白名单防幻觉越权；`agent.enabled=False` 委托旧工具，行为与升级前完全一致。
+- **复用而非重写**：检索走 `HybridSearch`、重排走 `QueryReranker`、LLM 走 `LLMFactory`、trace 走 `TraceContext`，不改动检索内核。
+- **详见** `docs/P1_AGENTIC_RAG_SPEC.md`。
 
 ---
 

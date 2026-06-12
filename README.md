@@ -42,7 +42,7 @@
 |------|------|------|
 | **Ingestion Pipeline** | PDF → Markdown → Chunk → Transform → Embedding → Upsert | 全链路数据摄取，支持多模态图片描述（Image Captioning） |
 | **Hybrid Search** | Dense (向量) + Sparse (BM25) + RRF Fusion + Rerank | 粗排召回 + 精排重排的两段式检索架构 |
-| **MCP Server** | 标准 MCP 协议暴露 Tools | `query_knowledge_hub`、`list_collections`、`get_document_summary` |
+| **MCP Server** | 标准 MCP 协议暴露 Tools | `query_knowledge_hub`、`agentic_query`、`list_collections`、`get_document_summary` |
 | **Dashboard** | Streamlit 六页面管理平台 | 系统总览 / 数据浏览 / Ingestion 管理 / 摄取追踪 / 查询追踪 / 评估面板 |
 | **Evaluation** | Ragas + Custom 评估体系 | 支持 golden test set 回归测试，拒绝"凭感觉"调优 |
 | **Observability** | 全链路白盒化追踪 | Ingestion 与 Query 两条链路的每一个中间状态透明可见 |
@@ -449,7 +449,9 @@ python scripts/query.py --query "这张图说明了什么" --image data/q.png   
 }
 ```
 
-配置后 Client 即可调用三个工具：`query_knowledge_hub`（混合检索 + 引用）、`list_collections`（列出集合）、`get_document_summary`（文档摘要）。
+配置后 Client 即可调用四个工具：`query_knowledge_hub`（混合检索 + 引用，返回检索片段交由 Client LLM 合成）、`agentic_query`（Agentic RAG：服务端 agent 自主路由/分解/多跳/自纠正，直接返回带 `[n]` 引用的合成答案，适合多跳与推理型问题）、`list_collections`（列出集合）、`get_document_summary`（文档摘要）。
+
+> `agentic_query` 由 `config/settings.yaml` 的 `agent` 段控制（`enabled`、各子能力开关、`max_hops`/`max_subqueries`/`max_reflect_rounds`/`max_context_chunks` 等硬上限）。`agent.enabled=False` 时该工具自动委托 `query_knowledge_hub`，行为与升级前完全一致；任一 LLM 决策步骤异常会降级为单次混合检索，绝不报错。详见 `docs/P1_AGENTIC_RAG_SPEC.md`。
 
 ### 6. Dashboard 使用指南
 
