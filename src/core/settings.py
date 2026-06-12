@@ -55,6 +55,22 @@ class VectorStoreSettings:
 
 
 @dataclass
+class LoaderSettings:
+    """Document loader configuration.
+
+    provider 选择 PDF 解析后端：``markitdown``（默认，兼容旧行为）或
+    ``pymupdf``（版面感知解析，修断词+双栏阅读顺序+表格抽取+图注定位）。
+    """
+
+    provider: str = "markitdown"
+    image_output_dir: str = "data/images"
+    # extract_tables 是否用 pdfplumber 抽取表格为 Markdown（仅 pymupdf provider 生效）
+    extract_tables: bool = True
+    # column_gap_ratio 双栏检测的列间距阈值（相对页宽），用于版面重排
+    column_gap_ratio: float = 0.15
+
+
+@dataclass
 class SplitterSettings:
     """Splitter configuration."""
 
@@ -156,6 +172,7 @@ class Settings:
     llm: LLMSettings = field(default_factory=LLMSettings)
     embedding: EmbeddingSettings = field(default_factory=EmbeddingSettings)
     vector_store: VectorStoreSettings = field(default_factory=VectorStoreSettings)
+    loader: LoaderSettings = field(default_factory=LoaderSettings)
     splitter: SplitterSettings = field(default_factory=SplitterSettings)
     retrieval: RetrievalSettings = field(default_factory=RetrievalSettings)
     rerank: RerankSettings = field(default_factory=RerankSettings)
@@ -255,6 +272,7 @@ def load_settings(path: str | Path = "config/settings.yaml") -> Settings:
         llm=_build_dataclass(LLMSettings, raw.get("llm")),
         embedding=_build_dataclass(EmbeddingSettings, raw.get("embedding")),
         vector_store=_build_dataclass(VectorStoreSettings, raw.get("vector_store")),
+        loader=_build_dataclass(LoaderSettings, raw.get("loader")),
         splitter=_build_dataclass(SplitterSettings, raw.get("splitter")),
         retrieval=_build_dataclass(RetrievalSettings, raw.get("retrieval")),
         rerank=_build_dataclass(RerankSettings, raw.get("rerank")),

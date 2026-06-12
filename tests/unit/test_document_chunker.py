@@ -117,3 +117,23 @@ class TestDocumentChunker:
         chunker = DocumentChunker(self._make_settings())
         doc = Document(id="doc1", text="", metadata={})
         assert chunker.split_document(doc) == []
+
+    @patch("src.ingestion.chunking.document_chunker.SplitterFactory")
+    def test_block_type_classification(self, mock_factory):
+        mock_splitter = MagicMock()
+        mock_splitter.split_text.return_value = [
+            "| Model | BLEU |\n| --- | --- |\n| A | 26.3 |",  # table
+            "plain paragraph text",                              # text
+            "see [IMAGE: img1] here",                            # image
+            "# Section Title",                                   # heading
+        ]
+        mock_factory.create.return_value = mock_splitter
+
+        chunker = DocumentChunker(self._make_settings())
+        doc = Document(id="doc1", text="full", metadata={})
+        chunks = chunker.split_document(doc)
+
+        assert chunks[0].metadata["block_type"] == "table"
+        assert chunks[1].metadata["block_type"] == "text"
+        assert chunks[2].metadata["block_type"] == "image"
+        assert chunks[3].metadata["block_type"] == "heading"

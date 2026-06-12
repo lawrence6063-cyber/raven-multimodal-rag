@@ -12,10 +12,15 @@ from __future__ import annotations
 
 import hashlib
 from pathlib import Path
+from typing import TYPE_CHECKING
 
 from src.core.types import Document
 from src.libs.loader.base_loader import BaseLoader, LoaderError
+from src.libs.loader.loader_factory import register_loader
 from src.observability.logger import get_logger
+
+if TYPE_CHECKING:
+    from src.core.settings import LoaderSettings
 
 logger = get_logger("loader.pdf")
 
@@ -23,10 +28,13 @@ logger = get_logger("loader.pdf")
 _MIN_IMAGE_DIM = 96
 
 
+@register_loader("markitdown")
 class PdfLoader(BaseLoader):
     """PDF loader: MarkItDown text + pypdfium2 embedded-image extraction."""
 
-    def __init__(self, image_output_dir: str = "data/images"):
+    def __init__(self, settings: "LoaderSettings | None" = None, image_output_dir: str = "data/images"):
+        if settings is not None and getattr(settings, "image_output_dir", None):
+            image_output_dir = settings.image_output_dir
         self._image_output_dir = Path(image_output_dir)
 
     def load(self, path: str) -> Document:

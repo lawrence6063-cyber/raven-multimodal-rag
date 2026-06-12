@@ -27,8 +27,14 @@ vector_store:
   collection_name: "default"
   persist_directory: "data/db/chroma"
 
+loader:
+  provider: "pymupdf"          # markitdown(默认/回退) | pymupdf(版面感知:修断词+双栏阅读顺序+表格抽取+图注定位)
+  image_output_dir: "data/images"
+  extract_tables: true         # 用 pdfplumber 抽表格为 Markdown（仅 pymupdf 生效）
+  column_gap_ratio: 0.15       # 双栏检测的列间距阈值（相对页宽）
+
 splitter:
-  provider: "recursive"        # recursive | semantic | fixed
+  provider: "document_structure"  # recursive | semantic | fixed | document_structure(结构感知:不切碎表格/图块/标题)
   chunk_size: 1000
   chunk_overlap: 200
 

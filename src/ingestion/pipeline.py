@@ -10,7 +10,7 @@ from src.core.types import Document, Chunk, ChunkRecord
 from src.core.trace.trace_collector import TraceCollector
 from src.core.trace.trace_context import TraceContext
 from src.libs.loader.file_integrity import SQLiteIntegrityChecker
-from src.libs.loader.pdf_loader import PdfLoader
+from src.libs.loader.loader_factory import LoaderFactory
 from src.ingestion.chunking.document_chunker import DocumentChunker
 from src.ingestion.transform.chunk_refiner import ChunkRefiner
 from src.ingestion.transform.metadata_enricher import MetadataEnricher
@@ -33,7 +33,8 @@ class IngestionPipeline:
     def __init__(self, settings: "Settings"):
         self._settings = settings
         self._integrity = SQLiteIntegrityChecker()
-        self._loader = PdfLoader()
+        self._loader = LoaderFactory.create(settings.loader)
+        self._loader_provider = getattr(settings.loader, "provider", "markitdown")
         self._chunker = DocumentChunker(settings)
         self._refiner = ChunkRefiner(settings)
         self._enricher = MetadataEnricher(settings)
@@ -91,7 +92,9 @@ class IngestionPipeline:
             start = time.perf_counter()
             document = self._loader.load(str(path))
             document.metadata["collection"] = collection
-            self._trace_stage(trace, "load", start, method="markitdown")
+            self._trace_stage(
+                trace, "load", start, method=getattr(self, "_loader_provider", "markitdown")
+            )
 
             # Stage 3: Split
             if on_progress:

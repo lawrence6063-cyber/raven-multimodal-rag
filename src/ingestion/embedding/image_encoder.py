@@ -96,7 +96,8 @@ class ImageEncoder:
                 continue
 
             caption = captions.get(image_id, "")
-            text = f"[Image {image_id}] {caption}".strip()
+            figure_caption = str(img.get("caption", "")).strip()
+            text = self._build_record_text(image_id, caption, figure_caption)
             records.append(
                 ChunkRecord(
                     id=f"img_{image_id}",
@@ -117,3 +118,20 @@ class ImageEncoder:
         if records:
             logger.info(f"Encoded {len(records)} image vector(s) for {document.id}")
         return records
+
+    @staticmethod
+    def _build_record_text(image_id: str, caption: str, figure_caption: str) -> str:
+        """Combine the PDF figure caption and the vision caption into record text.
+
+        The PDF-extracted ``Figure N: ...`` caption is the most precise description
+        of an image, so it is woven in alongside the vision-generated caption (with
+        duplicates collapsed) to maximize lexical/textual discoverability.
+        """
+        parts: list[str] = [f"[Image {image_id}]"]
+        seen: set[str] = set()
+        for piece in (figure_caption, caption):
+            piece = (piece or "").strip()
+            if piece and piece not in seen:
+                parts.append(piece)
+                seen.add(piece)
+        return " ".join(parts).strip()

@@ -78,6 +78,7 @@ class DocumentChunker:
 
         # Add chunk-specific fields
         meta["chunk_index"] = chunk_index
+        meta["block_type"] = self._classify_block_type(chunk_text)
 
         # Distribute image references: only include images whose placeholders appear in this chunk
         image_refs = []
@@ -98,3 +99,30 @@ class DocumentChunker:
             meta["images"] = chunk_images
 
         return meta
+
+    # _TABLE_RE 匹配连续两行及以上的 Markdown 表格
+    _TABLE_RE = re.compile(r"(?:^\|.+\|\s*$\n?){2,}", re.MULTILINE)
+    # _CODE_RE 匹配围栏代码块
+    _CODE_RE = re.compile(r"^```", re.MULTILINE)
+    # _IMAGE_RE 匹配图片引用占位
+    _IMAGE_RE = re.compile(r"\[IMAGE:\s*[^\]]+\]|!\[[^\]]*\]\([^)]+\)")
+    # _HEADING_RE 匹配 Markdown 标题
+    _HEADING_RE = re.compile(r"^#{1,6}\s+\S", re.MULTILINE)
+
+    @classmethod
+    def _classify_block_type(cls, text: str) -> str:
+        """Classify a chunk's dominant block type for structure-aware metadata.
+
+        Returns one of ``table``/``code``/``image``/``heading``/``text``. Tables and
+        code take precedence so structural blocks are not mislabeled as plain text.
+        """
+        if cls._TABLE_RE.search(text):
+            return "table"
+        if cls._CODE_RE.search(text):
+            return "code"
+        if cls._IMAGE_RE.search(text):
+            return "image"
+        stripped = text.lstrip()
+        if cls._HEADING_RE.match(stripped):
+            return "heading"
+        return "text"

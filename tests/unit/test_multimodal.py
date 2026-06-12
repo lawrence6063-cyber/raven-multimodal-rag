@@ -271,6 +271,50 @@ def test_image_encoder_builds_image_records(monkeypatch):
     assert "a chart" in rec.text
 
 
+def test_image_encoder_merges_figure_caption(monkeypatch):
+    from src.core.types import Document
+
+    enc = _image_encoder(monkeypatch, enabled=True)
+    doc = Document(
+        id="d1",
+        text="t",
+        metadata={
+            "doc_hash": "h1",
+            "images": [
+                {
+                    "id": "h1_000",
+                    "path": "data/images/_staging/h1/h1_000.png",
+                    "page": 1,
+                    "caption": "Figure 1: The Transformer architecture",
+                },
+            ],
+        },
+    )
+    records = enc.encode_document(doc, collection="kb", captions={"h1_000": "a chart"})
+
+    rec = records[0]
+    # Both the PDF figure caption and the vision caption are woven into the text.
+    assert "Figure 1: The Transformer architecture" in rec.text
+    assert "a chart" in rec.text
+
+
+def test_image_encoder_caption_no_duplicate(monkeypatch):
+    from src.core.types import Document
+
+    enc = _image_encoder(monkeypatch, enabled=True)
+    doc = Document(
+        id="d1",
+        text="t",
+        metadata={
+            "doc_hash": "h1",
+            "images": [{"id": "h1_000", "path": "p", "caption": "same caption"}],
+        },
+    )
+    records = enc.encode_document(doc, collection="kb", captions={"h1_000": "same caption"})
+    # Identical figure/vision captions are collapsed (appear once).
+    assert records[0].text.count("same caption") == 1
+
+
 # --------------------------------------------------------------------------- #
 # DenseRetriever vector / image search
 # --------------------------------------------------------------------------- #
