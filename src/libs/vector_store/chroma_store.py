@@ -223,6 +223,58 @@ class ChromaStore(BaseVectorStore):
         except Exception as e:
             raise VectorStoreError(f"Get by metadata failed: {e}", provider="chroma") from e
 
+    def update_metadata(self, ids: list[str], metadatas: list[dict[str, Any]]) -> None:
+        """Update metadata for existing records (text and embeddings unchanged).
+
+        Args:
+            ids: Record IDs to update.
+            metadatas: New metadata dicts (same order as ids).
+        """
+        if not ids:
+            return
+        collection = self._get_collection()
+        try:
+            collection.update(
+                ids=ids,
+                metadatas=[self._sanitize_metadata(m) for m in metadatas],
+            )
+        except Exception as e:
+            raise VectorStoreError(f"Update metadata failed: {e}", provider="chroma") from e
+
+    def get_all_by_metadata(
+        self, where: dict[str, Any], limit: int = 10000
+    ) -> list[QueryResult]:
+        """Get all records matching metadata filter (for batch processing).
+
+        Args:
+            where: Chroma metadata filter.
+            limit: Max records to return.
+
+        Returns:
+            List of QueryResult with id, text, metadata.
+        """
+        if not where:
+            return []
+        collection = self._get_collection()
+        try:
+            results = collection.get(
+                where=where,
+                limit=limit,
+                include=["documents", "metadatas"],
+            )
+            records: list[QueryResult] = []
+            if results and results.get("ids"):
+                for i, id_ in enumerate(results["ids"]):
+                    records.append(QueryResult(
+                        id=id_,
+                        score=0.0,
+                        text=results["documents"][i] if results.get("documents") else "",
+                        metadata=results["metadatas"][i] if results.get("metadatas") else {},
+                    ))
+            return records
+        except Exception as e:
+            raise VectorStoreError(f"Get all by metadata failed: {e}", provider="chroma") from e
+
     def delete_by_metadata(self, where: dict[str, Any]) -> int:
         """Delete records matching metadata filters.
 

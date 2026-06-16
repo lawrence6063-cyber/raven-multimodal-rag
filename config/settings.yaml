@@ -3,7 +3,7 @@
 
 llm:
   provider: "qwen"            # qwen(DashScope) | openai | azure | ollama | deepseek
-  model: "qwen3.7-plus"          # qwen3.7-max(最新旗舰) | qwen3-max | qwen-plus
+  model: "qwen3.7-max-2026-06-08"          # qwen3.7-max(最新旗舰) | qwen3-max | qwen-plus
   api_key: "sk-691b8e8f59da4ee480df10d908eac862"                 # 填入 DashScope API Key（留空则回退环境变量）
   azure_endpoint: ""
   deployment_name: ""
@@ -65,7 +65,7 @@ ingestion:
   chunk_refiner:
     use_llm: false              # LLM 清洗 chunk（去噪/修复），摄取变慢，需清库重摄生效
   metadata_enricher:
-    use_llm: true              # LLM 抽取 title/summary/tags，摄取变慢，需清库重摄生效
+    use_llm: false             # 摄取时仅规则提取(快)，入库后用 scripts/enrich_metadata.py 离线并发补 LLM metadata
   image_captioner:
     enabled: true              # 用 qwen3-vl-max 为图片生成中文描述缝入文本
   batch_size: 32

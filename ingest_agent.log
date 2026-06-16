@@ -1,0 +1,60 @@
+2026-06-12 21:39:13,630 [INFO] ingestion.pipeline: Skipping (already processed): data/documents/agent/01_react.pdf
+2026-06-12 21:39:13,632 [INFO] ingestion.pipeline: Skipping (already processed): data/documents/agent/02_toolformer.pdf
+2026-06-12 21:39:13,633 [INFO] ingestion.pipeline: Skipping (already processed): data/documents/agent/03_reflexion.pdf
+2026-06-12 21:39:13,641 [INFO] ingestion.pipeline: Loading: data/documents/agent/04_generative_agents.pdf
+2026-06-12 21:39:17,752 [INFO] loader.pymupdf: Extracted 9 image(s) from 04_generative_agents.pdf
+2026-06-12 21:39:17,752 [INFO] ingestion.pipeline: Splitting into chunks...
+2026-06-12 21:39:17,943 [INFO] ingestion.pipeline: Produced 191 chunks
+2026-06-12 21:39:17,943 [INFO] ingestion.pipeline: Refining chunks...
+2026-06-12 21:39:17,947 [INFO] ingestion.pipeline: Enriching metadata...
+2026-06-12 21:39:17,949 [INFO] ingestion.pipeline: Processing images...
+2026-06-12 21:39:19,664 [INFO] ingestion.pipeline: Encoding chunks (dense + sparse)...
+2026-06-12 21:40:22,662 [INFO] ingestion.image_encoder: Encoded 9 image vector(s) for doc_1b31e77fb24d25d7
+2026-06-12 21:40:22,663 [INFO] ingestion.pipeline: Added 9 image vector record(s)
+2026-06-12 21:40:22,663 [INFO] ingestion.pipeline: Upserting to vector store...
+2026-06-12 21:40:23,451 [INFO] ingestion.pipeline: Building BM25 index...
+2026-06-12 21:40:23,462 [INFO] ingestion.pipeline: Ingestion complete: 200 chunks stored
+2026-06-12 21:40:23,467 [INFO] ingestion.pipeline: Loading: data/documents/agent/05_hugginggpt.pdf
+2026-06-12 21:40:25,996 [INFO] loader.pymupdf: Extracted 52 image(s) from 05_hugginggpt.pdf
+2026-06-12 21:40:25,996 [INFO] ingestion.pipeline: Splitting into chunks...
+2026-06-12 21:40:26,004 [INFO] ingestion.pipeline: Produced 158 chunks
+2026-06-12 21:40:26,004 [INFO] ingestion.pipeline: Refining chunks...
+2026-06-12 21:40:26,007 [INFO] ingestion.pipeline: Enriching metadata...
+2026-06-12 21:40:26,008 [INFO] ingestion.pipeline: Processing images...
+2026-06-12 21:40:26,031 [INFO] ingestion.pipeline: Encoding chunks (dense + sparse)...
+2026-06-12 21:41:49,860 [INFO] ingestion.image_encoder: Encoded 52 image vector(s) for doc_5add5f7ff9041299
+2026-06-12 21:41:49,861 [INFO] ingestion.pipeline: Added 52 image vector record(s)
+2026-06-12 21:41:49,861 [INFO] ingestion.pipeline: Upserting to vector store...
+2026-06-12 21:41:50,222 [INFO] ingestion.pipeline: Building BM25 index...
+2026-06-12 21:41:50,229 [INFO] ingestion.pipeline: Ingestion complete: 210 chunks stored
+
+============================================================
+  📚 批量文档摄取
+============================================================
+  路径: data/documents/agent
+  文件数: 5
+  集合: agent
+  强制: 否
+============================================================
+
+  [1/5] 01_react.pdf
+         ⏭️  跳过 (0.0s)
+  [2/5] 02_toolformer.pdf
+         ⏭️  跳过 (0.0s)
+  [3/5] 03_reflexion.pdf
+         ⏭️  跳过 (0.0s)
+  [4/5] 04_generative_agents.pdf
+         ✅ 200 chunks (69.8s)
+  [5/5] 05_hugginggpt.pdf
+         ✅ 210 chunks (86.8s)
+
+============================================================
+  📊 摄取汇总
+────────────────────────────────────────────────────────────
+  ✅ 成功: 2 个文件, 共 410 chunks
+  ⏭️  跳过: 3 个文件
+  ❌ 失败: 0 个文件
+  ⏱️  总耗时: 156.6 秒
+  📁 集合: agent
+============================================================
+

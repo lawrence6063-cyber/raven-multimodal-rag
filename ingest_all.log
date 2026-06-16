@@ -1,0 +1,174 @@
+2026-06-12 21:33:44,746 [INFO] ingestion.pipeline: Skipping (already processed): data/documents/rag/01_rag_knowledge_intensive_nlp.pdf
+2026-06-12 21:33:44,747 [INFO] ingestion.pipeline: Skipping (already processed): data/documents/rag/02_dense_passage_retrieval.pdf
+2026-06-12 21:33:44,749 [INFO] ingestion.pipeline: Skipping (already processed): data/documents/rag/03_realm.pdf
+2026-06-12 21:33:44,750 [INFO] ingestion.pipeline: Skipping (already processed): data/documents/rag/04_fusion_in_decoder.pdf
+2026-06-12 21:33:44,752 [INFO] ingestion.pipeline: Loading: data/documents/rag/05_self_rag.pdf
+2026-06-12 21:33:48,028 [INFO] ingestion.pipeline: Splitting into chunks...
+2026-06-12 21:33:48,223 [INFO] ingestion.pipeline: Produced 163 chunks
+2026-06-12 21:33:48,223 [INFO] ingestion.pipeline: Refining chunks...
+2026-06-12 21:33:48,226 [INFO] ingestion.pipeline: Enriching metadata...
+2026-06-12 21:33:48,229 [INFO] ingestion.pipeline: Processing images...
+2026-06-12 21:33:48,229 [INFO] ingestion.pipeline: Encoding chunks (dense + sparse)...
+2026-06-12 21:34:27,328 [INFO] ingestion.pipeline: Upserting to vector store...
+2026-06-12 21:34:28,321 [INFO] ingestion.pipeline: Building BM25 index...
+2026-06-12 21:34:28,328 [INFO] ingestion.pipeline: Ingestion complete: 163 chunks stored
+
+============================================================
+  📚 批量文档摄取
+============================================================
+  路径: data/documents/rag
+  文件数: 5
+  集合: rag
+  强制: 否
+============================================================
+
+  [1/5] 01_rag_knowledge_intensive_nlp.pdf
+         ⏭️  跳过 (0.0s)
+  [2/5] 02_dense_passage_retrieval.pdf
+         ⏭️  跳过 (0.0s)
+  [3/5] 03_realm.pdf
+         ⏭️  跳过 (0.0s)
+  [4/5] 04_fusion_in_decoder.pdf
+         ⏭️  跳过 (0.0s)
+  [5/5] 05_self_rag.pdf
+         ✅ 163 chunks (43.6s)
+
+============================================================
+  📊 摄取汇总
+────────────────────────────────────────────────────────────
+  ✅ 成功: 1 个文件, 共 163 chunks
+  ⏭️  跳过: 4 个文件
+  ❌ 失败: 0 个文件
+  ⏱️  总耗时: 43.6 秒
+  📁 集合: rag
+============================================================
+
+2026-06-12 21:34:28,595 [INFO] ingestion.pipeline: Skipping (already processed): data/documents/llm/01_transformer_attention_is_all_you_need.pdf
+2026-06-12 21:34:28,597 [INFO] ingestion.pipeline: Skipping (already processed): data/documents/llm/02_bert.pdf
+2026-06-12 21:34:28,602 [INFO] ingestion.pipeline: Loading: data/documents/llm/03_gpt3_few_shot_learners.pdf
+2026-06-12 21:34:34,712 [INFO] loader.pymupdf: Extracted 83 image(s) from 03_gpt3_few_shot_learners.pdf
+2026-06-12 21:34:34,712 [INFO] ingestion.pipeline: Splitting into chunks...
+2026-06-12 21:34:34,916 [INFO] ingestion.pipeline: Produced 337 chunks
+2026-06-12 21:34:34,916 [INFO] ingestion.pipeline: Refining chunks...
+2026-06-12 21:34:34,922 [INFO] ingestion.pipeline: Enriching metadata...
+2026-06-12 21:34:34,926 [INFO] ingestion.pipeline: Processing images...
+2026-06-12 21:34:36,416 [INFO] ingestion.pipeline: Encoding chunks (dense + sparse)...
+2026-06-12 21:37:06,795 [INFO] ingestion.image_encoder: Encoded 83 image vector(s) for doc_97fd272f1fdfc186
+2026-06-12 21:37:06,795 [INFO] ingestion.pipeline: Added 83 image vector record(s)
+2026-06-12 21:37:06,796 [INFO] ingestion.pipeline: Upserting to vector store...
+2026-06-12 21:37:08,006 [INFO] ingestion.pipeline: Building BM25 index...
+2026-06-12 21:37:08,017 [INFO] ingestion.pipeline: Ingestion complete: 420 chunks stored
+2026-06-12 21:37:08,022 [INFO] ingestion.pipeline: Loading: data/documents/llm/04_llama.pdf
+2026-06-12 21:37:09,816 [INFO] ingestion.pipeline: Splitting into chunks...
+2026-06-12 21:37:09,823 [INFO] ingestion.pipeline: Produced 132 chunks
+2026-06-12 21:37:09,823 [INFO] ingestion.pipeline: Refining chunks...
+2026-06-12 21:37:09,825 [INFO] ingestion.pipeline: Enriching metadata...
+2026-06-12 21:37:09,827 [INFO] ingestion.pipeline: Processing images...
+2026-06-12 21:37:09,827 [INFO] ingestion.pipeline: Encoding chunks (dense + sparse)...
+2026-06-12 21:37:41,803 [INFO] ingestion.pipeline: Upserting to vector store...
+2026-06-12 21:37:41,967 [INFO] ingestion.pipeline: Building BM25 index...
+2026-06-12 21:37:41,980 [INFO] ingestion.pipeline: Ingestion complete: 132 chunks stored
+2026-06-12 21:37:41,985 [INFO] ingestion.pipeline: Loading: data/documents/llm/05_instructgpt.pdf
+2026-06-12 21:37:45,693 [INFO] loader.pymupdf: Extracted 7 image(s) from 05_instructgpt.pdf
+2026-06-12 21:37:45,693 [INFO] ingestion.pipeline: Splitting into chunks...
+2026-06-12 21:37:45,709 [INFO] ingestion.pipeline: Produced 337 chunks
+2026-06-12 21:37:45,709 [INFO] ingestion.pipeline: Refining chunks...
+2026-06-12 21:37:45,715 [INFO] ingestion.pipeline: Enriching metadata...
+2026-06-12 21:37:45,719 [INFO] ingestion.pipeline: Processing images...
+2026-06-12 21:37:46,019 [INFO] ingestion.pipeline: Encoding chunks (dense + sparse)...
+2026-06-12 21:39:12,715 [INFO] ingestion.image_encoder: Encoded 7 image vector(s) for doc_c1984bb50a5b90fd
+2026-06-12 21:39:12,715 [INFO] ingestion.pipeline: Added 7 image vector record(s)
+2026-06-12 21:39:12,716 [INFO] ingestion.pipeline: Upserting to vector store...
+2026-06-12 21:39:13,018 [INFO] ingestion.pipeline: Building BM25 index...
+2026-06-12 21:39:13,042 [INFO] ingestion.pipeline: Ingestion complete: 344 chunks stored
+
+============================================================
+  📚 批量文档摄取
+============================================================
+  路径: data/documents/llm
+  文件数: 5
+  集合: llm
+  强制: 否
+============================================================
+
+  [1/5] 01_transformer_attention_is_all_you_need.pdf
+         ⏭️  跳过 (0.0s)
+  [2/5] 02_bert.pdf
+         ⏭️  跳过 (0.0s)
+  [3/5] 03_gpt3_few_shot_learners.pdf
+         ✅ 420 chunks (159.4s)
+  [4/5] 04_llama.pdf
+         ✅ 132 chunks (34.0s)
+  [5/5] 05_instructgpt.pdf
+         ✅ 344 chunks (91.1s)
+
+============================================================
+  📊 摄取汇总
+────────────────────────────────────────────────────────────
+  ✅ 成功: 3 个文件, 共 896 chunks
+  ⏭️  跳过: 2 个文件
+  ❌ 失败: 0 个文件
+  ⏱️  总耗时: 284.5 秒
+  📁 集合: llm
+============================================================
+
+2026-06-12 21:39:13,630 [INFO] ingestion.pipeline: Skipping (already processed): data/documents/agent/01_react.pdf
+2026-06-12 21:39:13,632 [INFO] ingestion.pipeline: Skipping (already processed): data/documents/agent/02_toolformer.pdf
+2026-06-12 21:39:13,633 [INFO] ingestion.pipeline: Skipping (already processed): data/documents/agent/03_reflexion.pdf
+2026-06-12 21:39:13,641 [INFO] ingestion.pipeline: Loading: data/documents/agent/04_generative_agents.pdf
+2026-06-12 21:39:17,752 [INFO] loader.pymupdf: Extracted 9 image(s) from 04_generative_agents.pdf
+2026-06-12 21:39:17,752 [INFO] ingestion.pipeline: Splitting into chunks...
+2026-06-12 21:39:17,943 [INFO] ingestion.pipeline: Produced 191 chunks
+2026-06-12 21:39:17,943 [INFO] ingestion.pipeline: Refining chunks...
+2026-06-12 21:39:17,947 [INFO] ingestion.pipeline: Enriching metadata...
+2026-06-12 21:39:17,949 [INFO] ingestion.pipeline: Processing images...
+2026-06-12 21:39:19,664 [INFO] ingestion.pipeline: Encoding chunks (dense + sparse)...
+2026-06-12 21:40:22,662 [INFO] ingestion.image_encoder: Encoded 9 image vector(s) for doc_1b31e77fb24d25d7
+2026-06-12 21:40:22,663 [INFO] ingestion.pipeline: Added 9 image vector record(s)
+2026-06-12 21:40:22,663 [INFO] ingestion.pipeline: Upserting to vector store...
+2026-06-12 21:40:23,451 [INFO] ingestion.pipeline: Building BM25 index...
+2026-06-12 21:40:23,462 [INFO] ingestion.pipeline: Ingestion complete: 200 chunks stored
+2026-06-12 21:40:23,467 [INFO] ingestion.pipeline: Loading: data/documents/agent/05_hugginggpt.pdf
+2026-06-12 21:40:25,996 [INFO] loader.pymupdf: Extracted 52 image(s) from 05_hugginggpt.pdf
+2026-06-12 21:40:25,996 [INFO] ingestion.pipeline: Splitting into chunks...
+2026-06-12 21:40:26,004 [INFO] ingestion.pipeline: Produced 158 chunks
+2026-06-12 21:40:26,004 [INFO] ingestion.pipeline: Refining chunks...
+2026-06-12 21:40:26,007 [INFO] ingestion.pipeline: Enriching metadata...
+2026-06-12 21:40:26,008 [INFO] ingestion.pipeline: Processing images...
+2026-06-12 21:40:26,031 [INFO] ingestion.pipeline: Encoding chunks (dense + sparse)...
+2026-06-12 21:41:49,860 [INFO] ingestion.image_encoder: Encoded 52 image vector(s) for doc_5add5f7ff9041299
+2026-06-12 21:41:49,861 [INFO] ingestion.pipeline: Added 52 image vector record(s)
+2026-06-12 21:41:49,861 [INFO] ingestion.pipeline: Upserting to vector store...
+2026-06-12 21:41:50,222 [INFO] ingestion.pipeline: Building BM25 index...
+2026-06-12 21:41:50,229 [INFO] ingestion.pipeline: Ingestion complete: 210 chunks stored
+
+============================================================
+  📚 批量文档摄取
+============================================================
+  路径: data/documents/agent
+  文件数: 5
+  集合: agent
+  强制: 否
+============================================================
+
+  [1/5] 01_react.pdf
+         ⏭️  跳过 (0.0s)
+  [2/5] 02_toolformer.pdf
+         ⏭️  跳过 (0.0s)
+  [3/5] 03_reflexion.pdf
+         ⏭️  跳过 (0.0s)
+  [4/5] 04_generative_agents.pdf
+         ✅ 200 chunks (69.8s)
+  [5/5] 05_hugginggpt.pdf
+         ✅ 210 chunks (86.8s)
+
+============================================================
+  📊 摄取汇总
+────────────────────────────────────────────────────────────
+  ✅ 成功: 2 个文件, 共 410 chunks
+  ⏭️  跳过: 3 个文件
+  ❌ 失败: 0 个文件
+  ⏱️  总耗时: 156.6 秒
+  📁 集合: agent
+============================================================
+

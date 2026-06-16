@@ -24,24 +24,48 @@ class BM25Indexer:
         self._loaded = False
 
     def build(self, records: list[ChunkRecord]) -> None:
-        """Build inverted index from ChunkRecords with sparse vectors."""
+        """Incrementally add records to BM25 index (merge, not overwrite).
+
+        Loads existing index from disk, merges new records, recomputes IDF,
+        then persists the combined index.
+        """
         if not records:
             return
 
-        inverted: dict[str, list[dict]] = defaultdict(list)
-        doc_lengths = []
+        # Load existing index first (incremental merge)
+        if not self._loaded:
+            self._load()
 
-        for rec in records:
+        # Deduplicate: skip records whose IDs already exist in the index
+        existing_ids: set[str] = set()
+        for postings in self._inverted_index.values():
+            for p in postings:
+                existing_ids.add(p["chunk_id"])
+
+        new_records = [r for r in records if r.id not in existing_ids]
+        if not new_records:
+            return
+
+        # Merge new records into existing inverted index
+        inverted: dict[str, list[dict]] = defaultdict(list, {k: list(v) for k, v in self._inverted_index.items()})
+        new_doc_lengths = []
+
+        for rec in new_records:
             doc_len = sum(rec.sparse_vector.values()) if rec.sparse_vector else 0
-            doc_lengths.append(doc_len)
+            new_doc_lengths.append(doc_len)
             for term, tf in rec.sparse_vector.items():
                 inverted[term].append({"chunk_id": rec.id, "tf": tf, "doc_length": doc_len})
 
         self._inverted_index = dict(inverted)
-        self._doc_count = len(records)
-        self._avg_doc_length = sum(doc_lengths) / len(doc_lengths) if doc_lengths else 0
 
-        # Compute IDF
+        # Recompute doc_count and avg_doc_length incrementally
+        old_total_length = self._avg_doc_length * self._doc_count
+        self._doc_count += len(new_records)
+        new_total_length = old_total_length + sum(new_doc_lengths)
+        self._avg_doc_length = new_total_length / self._doc_count if self._doc_count > 0 else 0
+
+        # Recompute IDF for all terms
+        self._idf = {}
         for term, postings in self._inverted_index.items():
             df = len(postings)
             self._idf[term] = math.log((self._doc_count - df + 0.5) / (df + 0.5))

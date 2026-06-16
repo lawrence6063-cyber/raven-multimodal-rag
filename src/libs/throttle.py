@@ -19,11 +19,14 @@ code changes (defaults keep current behaviour: no forced delay):
 
 from __future__ import annotations
 
+import logging
 import os
 import random
 import threading
 import time
 from typing import Callable, TypeVar
+
+logger = logging.getLogger(__name__)
 
 T = TypeVar("T")
 
@@ -117,10 +120,20 @@ def retry_call(
             return fn()
         except Exception as e:
             if is_retryable(e) and attempt < max_retries:
+                delay = backoff_delay(attempt, base_delay)
+                logger.warning(
+                    "[retry_call] attempt %d/%d failed (retryable): %s: %s — sleeping %.1fs",
+                    attempt + 1, max_retries, type(e).__name__, str(e)[:200], delay,
+                )
                 if on_retry is not None:
                     on_retry(attempt, e)
-                time.sleep(backoff_delay(attempt, base_delay))
+                time.sleep(delay)
                 continue
+            if attempt > 0:
+                logger.error(
+                    "[retry_call] giving up after %d attempts: %s: %s",
+                    attempt + 1, type(e).__name__, str(e)[:200],
+                )
             raise
     # Unreachable, but keeps type checkers happy.
     raise RuntimeError("retry_call exhausted without returning")

@@ -106,7 +106,7 @@ class TestLoadSettings:
         settings = load_settings("config/settings.yaml")
         assert settings.llm.provider == "qwen"
         assert settings.embedding.provider == "qwen_multimodal"
-        assert settings.embedding.model == "multimodal-embedding-v1"
+        assert settings.embedding.model == "tongyi-embedding-vision-plus"
 
 
 class TestValidateSettings:

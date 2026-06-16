@@ -59,27 +59,59 @@ class MetadataEnricher(BaseTransform):
 
     def transform(self, chunks: list[Chunk]) -> list[Chunk]:
         """Enrich chunks with semantic metadata."""
+        import time as _time
+
         enriched = []
-        for chunk in chunks:
+        total = len(chunks)
+        llm_total_time = 0.0
+        llm_success = 0
+        llm_fail = 0
+
+        logger.info("MetadataEnricher: starting enrichment for %d chunks (use_llm=%s)", total, self._use_llm)
+
+        for idx, chunk in enumerate(chunks):
             try:
                 meta = dict(chunk.metadata)
 
                 if self._use_llm:
+                    t0 = _time.perf_counter()
                     llm_meta = self._llm_enrich(chunk.text)
+                    elapsed = _time.perf_counter() - t0
+                    llm_total_time += elapsed
+
                     if llm_meta:
                         meta.update(llm_meta)
                         meta["enriched_by"] = "llm"
+                        llm_success += 1
+                        logger.info(
+                            "  [%d/%d] LLM enrich OK (%.2fs) title=%r",
+                            idx + 1, total, elapsed,
+                            (llm_meta.get("title", "")[:60]),
+                        )
                     else:
                         meta.update(self._rule_enrich(chunk.text))
                         meta["enriched_by"] = "rule"
+                        llm_fail += 1
+                        logger.warning(
+                            "  [%d/%d] LLM enrich FAILED (%.2fs), fallback to rule",
+                            idx + 1, total, elapsed,
+                        )
                 else:
                     meta.update(self._rule_enrich(chunk.text))
                     meta["enriched_by"] = "rule"
 
                 enriched.append(Chunk(id=chunk.id, text=chunk.text, metadata=meta, source_ref=chunk.source_ref))
-            except Exception:
+            except Exception as e:
+                logger.error("  [%d/%d] chunk enrich exception: %s", idx + 1, total, e)
                 chunk.metadata["enriched_by"] = "none"
                 enriched.append(chunk)
+
+        if self._use_llm:
+            logger.info(
+                "MetadataEnricher: done. LLM calls=%d success=%d fail=%d total_time=%.1fs avg=%.2fs/chunk",
+                total, llm_success, llm_fail, llm_total_time,
+                llm_total_time / max(total, 1),
+            )
 
         return enriched
 
@@ -117,9 +149,18 @@ class MetadataEnricher(BaseTransform):
                 messages.append(ChatMessage(role="system", content=self._system_prompt))
             messages.append(ChatMessage(role="user", content=user_content))
 
+            logger.debug("  -> LLM request: model=%s, user_content_len=%d", getattr(llm, '_model', '?'), len(user_content))
             response = llm.chat(messages)
+            logger.debug(
+                "  <- LLM response: content_len=%d, usage=%s, raw_content=%r",
+                len(response.content or ""),
+                response.usage,
+                (response.content or "")[:200],
+            )
+
             data = self._parse_json(response.content)
             if data is None:
+                logger.warning("  JSON parse failed for response: %r", (response.content or "")[:300])
                 return None
 
             return {
