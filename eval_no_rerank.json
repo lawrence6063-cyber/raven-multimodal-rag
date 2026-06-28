@@ -1,0 +1,896 @@
+{
+  "metrics": {
+    "custom.hit_rate": 1.0,
+    "custom.mrr": 0.9492753623188406,
+    "avg_latency_ms": 293.34
+  },
+  "per_query": [
+    {
+      "query": "What is Dense Passage Retrieval (DPR) for open-domain question answering?",
+      "category": "title_match",
+      "retrieved_ids": [
+        "doc_3e67fc1a9977715a_0012_3cf49499",
+        "doc_3e67fc1a9977715a_0000_629b8d4d",
+        "doc_3e67fc1a9977715a_0004_1b89a2d5",
+        "doc_3e67fc1a9977715a_0008_4a5ec08a",
+        "doc_3e67fc1a9977715a_0039_48fb16ab",
+        "doc_3e67fc1a9977715a_0011_8f3744df",
+        "doc_3e67fc1a9977715a_0013_17e3e149",
+        "doc_3e67fc1a9977715a_0058_6e55bfc5",
+        "doc_3e67fc1a9977715a_0070_0de0c245",
+        "doc_3e67fc1a9977715a_0024_6f60ffc4"
+      ],
+      "retrieved_sources": [
+        "data/documents/rag/02_dense_passage_retrieval.pdf",
+        "data/documents/rag/02_dense_passage_retrieval.pdf",
+        "data/documents/rag/02_dense_passage_retrieval.pdf",
+        "data/documents/rag/02_dense_passage_retrieval.pdf",
+        "data/documents/rag/02_dense_passage_retrieval.pdf",
+        "data/documents/rag/02_dense_passage_retrieval.pdf",
+        "data/documents/rag/02_dense_passage_retrieval.pdf",
+        "data/documents/rag/02_dense_passage_retrieval.pdf",
+        "data/documents/rag/02_dense_passage_retrieval.pdf",
+        "data/documents/rag/02_dense_passage_retrieval.pdf"
+      ],
+      "expected_chunk_ids": [],
+      "expected_sources": [
+        "data/documents/rag/02_dense_passage_retrieval.pdf"
+      ],
+      "num_retrieved": 10,
+      "num_expected": 1,
+      "hit": true,
+      "latency_ms": 873.84,
+      "search_ms": 873.84,
+      "rerank_ms": 0.0
+    },
+    {
+      "query": "How does Retrieval-Augmented Generation combine a retriever with a generator for knowledge-intensive tasks?",
+      "category": "title_match",
+      "retrieved_ids": [
+        "doc_23e3249e9a1e7541_0000_520747b4",
+        "doc_23e3249e9a1e7541_0001_bc0879c3",
+        "doc_d9eaa1398abac0df_0111_4eed3121",
+        "doc_f1ee7e927c3fb31b_0003_c7f15fa3",
+        "doc_d9eaa1398abac0df_0014_50ad2593",
+        "doc_f285b0971ae4a790_0061_9ebeccd5",
+        "doc_d9eaa1398abac0df_0101_273cffd7",
+        "doc_23e3249e9a1e7541_0008_804d6298",
+        "doc_3e67fc1a9977715a_0065_adeab1a0",
+        "doc_f1ee7e927c3fb31b_0006_e568ecea"
+      ],
+      "retrieved_sources": [
+        "data/documents/rag/01_rag_knowledge_intensive_nlp.pdf",
+        "data/documents/rag/01_rag_knowledge_intensive_nlp.pdf",
+        "data/documents/rag/05_self_rag.pdf",
+        "data/documents/rag/04_fusion_in_decoder.pdf",
+        "data/documents/rag/05_self_rag.pdf",
+        "data/documents/agent/01_react.pdf",
+        "data/documents/rag/05_self_rag.pdf",
+        "data/documents/rag/01_rag_knowledge_intensive_nlp.pdf",
+        "data/documents/rag/02_dense_passage_retrieval.pdf",
+        "data/documents/rag/04_fusion_in_decoder.pdf"
+      ],
+      "expected_chunk_ids": [],
+      "expected_sources": [
+        "data/documents/rag/01_rag_knowledge_intensive_nlp.pdf"
+      ],
+      "num_retrieved": 10,
+      "num_expected": 1,
+      "hit": true,
+      "latency_ms": 244.24,
+      "search_ms": 244.24,
+      "rerank_ms": 0.0
+    },
+    {
+      "query": "REALM retrieval-augmented language model pre-training",
+      "category": "title_match",
+      "retrieved_ids": [
+        "doc_0ec1a7ab3de5514c_0000_50dba397",
+        "doc_0ec1a7ab3de5514c_0005_7bef8b2d",
+        "doc_0ec1a7ab3de5514c_0030_457de45a",
+        "doc_0ec1a7ab3de5514c_0067_f33c9dd1",
+        "doc_0ec1a7ab3de5514c_0003_180161a1",
+        "doc_0ec1a7ab3de5514c_0004_7a7044e4",
+        "doc_0ec1a7ab3de5514c_0050_41883141",
+        "doc_0ec1a7ab3de5514c_0019_79f0635b",
+        "doc_0ec1a7ab3de5514c_0020_d1e0feec",
+        "doc_0ec1a7ab3de5514c_0009_315daf1d"
+      ],
+      "retrieved_sources": [
+        "data/documents/rag/03_realm.pdf",
+        "data/documents/rag/03_realm.pdf",
+        "data/documents/rag/03_realm.pdf",
+        "data/documents/rag/03_realm.pdf",
+        "data/documents/rag/03_realm.pdf",
+        "data/documents/rag/03_realm.pdf",
+        "data/documents/rag/03_realm.pdf",
+        "data/documents/rag/03_realm.pdf",
+        "data/documents/rag/03_realm.pdf",
+        "data/documents/rag/03_realm.pdf"
+      ],
+      "expected_chunk_ids": [],
+      "expected_sources": [
+        "data/documents/rag/03_realm.pdf"
+      ],
+      "num_retrieved": 10,
+      "num_expected": 1,
+      "hit": true,
+      "latency_ms": 280.53,
+      "search_ms": 280.53,
+      "rerank_ms": 0.0
+    },
+    {
+      "query": "Fusion-in-Decoder: leveraging passage retrieval with generative models for open domain QA",
+      "category": "title_match",
+      "retrieved_ids": [
+        "doc_f1ee7e927c3fb31b_0022_b04818b3",
+        "doc_f1ee7e927c3fb31b_0000_ba5a7782",
+        "doc_f1ee7e927c3fb31b_0012_812cf7c6",
+        "doc_f1ee7e927c3fb31b_0006_e568ecea",
+        "doc_f1ee7e927c3fb31b_0016_896159c8",
+        "doc_f1ee7e927c3fb31b_0015_cb858319",
+        "doc_f1ee7e927c3fb31b_0017_ea4566ff",
+        "doc_f1ee7e927c3fb31b_0013_62fbe099",
+        "doc_f1ee7e927c3fb31b_0010_dfca3efb",
+        "doc_3e67fc1a9977715a_0004_1b89a2d5"
+      ],
+      "retrieved_sources": [
+        "data/documents/rag/04_fusion_in_decoder.pdf",
+        "data/documents/rag/04_fusion_in_decoder.pdf",
+        "data/documents/rag/04_fusion_in_decoder.pdf",
+        "data/documents/rag/04_fusion_in_decoder.pdf",
+        "data/documents/rag/04_fusion_in_decoder.pdf",
+        "data/documents/rag/04_fusion_in_decoder.pdf",
+        "data/documents/rag/04_fusion_in_decoder.pdf",
+        "data/documents/rag/04_fusion_in_decoder.pdf",
+        "data/documents/rag/04_fusion_in_decoder.pdf",
+        "data/documents/rag/02_dense_passage_retrieval.pdf"
+      ],
+      "expected_chunk_ids": [],
+      "expected_sources": [
+        "data/documents/rag/04_fusion_in_decoder.pdf"
+      ],
+      "num_retrieved": 10,
+      "num_expected": 1,
+      "hit": true,
+      "latency_ms": 281.96,
+      "search_ms": 281.96,
+      "rerank_ms": 0.0
+    },
+    {
+      "query": "Self-RAG: learning to retrieve, generate and critique through self-reflection",
+      "category": "title_match",
+      "retrieved_ids": [
+        "doc_d9eaa1398abac0df_0000_86a3403d",
+        "doc_d9eaa1398abac0df_0020_c444f456",
+        "doc_d9eaa1398abac0df_0025_2de6a690",
+        "doc_d9eaa1398abac0df_0039_13f34fa8",
+        "doc_d9eaa1398abac0df_0023_5df79ade",
+        "doc_d9eaa1398abac0df_0010_4b1a1d38",
+        "doc_d9eaa1398abac0df_0070_56f64c00",
+        "doc_d9eaa1398abac0df_0006_f0537ae9",
+        "doc_d9eaa1398abac0df_0009_52f78314",
+        "doc_d9eaa1398abac0df_0027_22f04e41"
+      ],
+      "retrieved_sources": [
+        "data/documents/rag/05_self_rag.pdf",
+        "data/documents/rag/05_self_rag.pdf",
+        "data/documents/rag/05_self_rag.pdf",
+        "data/documents/rag/05_self_rag.pdf",
+        "data/documents/rag/05_self_rag.pdf",
+        "data/documents/rag/05_self_rag.pdf",
+        "data/documents/rag/05_self_rag.pdf",
+        "data/documents/rag/05_self_rag.pdf",
+        "data/documents/rag/05_self_rag.pdf",
+        "data/documents/rag/05_self_rag.pdf"
+      ],
+      "expected_chunk_ids": [],
+      "expected_sources": [
+        "data/documents/rag/05_self_rag.pdf"
+      ],
+      "num_retrieved": 10,
+      "num_expected": 1,
+      "hit": true,
+      "latency_ms": 266.79,
+      "search_ms": 266.79,
+      "rerank_ms": 0.0
+    },
+    {
+      "query": "Attention is all you need: the Transformer architecture with self-attention",
+      "category": "title_match",
+      "retrieved_ids": [
+        "doc_bdfaa68d8984f0dc_0008_4f748a24",
+        "doc_bdfaa68d8984f0dc_0006_27abb5d9",
+        "doc_bdfaa68d8984f0dc_0016_d1e4d7f8",
+        "doc_2e663675ae36ad12_0056_cac9c5c1",
+        "doc_5692a5514787a8c6_0023_57207275",
+        "doc_bdfaa68d8984f0dc_0009_31b5cddc",
+        "doc_bdfaa68d8984f0dc_0001_ab505a30",
+        "doc_5692a5514787a8c6_0024_f0cc1f67",
+        "doc_bdfaa68d8984f0dc_0010_5ab0b402",
+        "doc_2e663675ae36ad12_0087_ce6ba0de"
+      ],
+      "retrieved_sources": [
+        "data/documents/llm/01_transformer_attention_is_all_you_need.pdf",
+        "data/documents/llm/01_transformer_attention_is_all_you_need.pdf",
+        "data/documents/llm/01_transformer_attention_is_all_you_need.pdf",
+        "data/documents/llm/04_llama.pdf",
+        "data/documents/llm/02_bert.pdf",
+        "data/documents/llm/01_transformer_attention_is_all_you_need.pdf",
+        "data/documents/llm/01_transformer_attention_is_all_you_need.pdf",
+        "data/documents/llm/02_bert.pdf",
+        "data/documents/llm/01_transformer_attention_is_all_you_need.pdf",
+        "data/documents/llm/04_llama.pdf"
+      ],
+      "expected_chunk_ids": [],
+      "expected_sources": [
+        "data/documents/llm/01_transformer_attention_is_all_you_need.pdf"
+      ],
+      "num_retrieved": 10,
+      "num_expected": 1,
+      "hit": true,
+      "latency_ms": 274.48,
+      "search_ms": 274.48,
+      "rerank_ms": 0.0
+    },
+    {
+      "query": "BERT: pre-training of deep bidirectional transformers for language understanding",
+      "category": "title_match",
+      "retrieved_ids": [
+        "doc_5692a5514787a8c6_0000_7b882ac3",
+        "doc_5692a5514787a8c6_0004_08069ef7",
+        "doc_97fd272f1fdfc186_0307_973db3a7",
+        "doc_5692a5514787a8c6_0005_cf153df2",
+        "doc_f1ee7e927c3fb31b_0027_c040247c",
+        "doc_5692a5514787a8c6_0016_2c3f7814",
+        "doc_5692a5514787a8c6_0084_6c285b73",
+        "doc_5692a5514787a8c6_0093_34367540",
+        "doc_5692a5514787a8c6_0063_73236905",
+        "doc_2e663675ae36ad12_0070_2688d3ef"
+      ],
+      "retrieved_sources": [
+        "data/documents/llm/02_bert.pdf",
+        "data/documents/llm/02_bert.pdf",
+        "data/documents/llm/03_gpt3_few_shot_learners.pdf",
+        "data/documents/llm/02_bert.pdf",
+        "data/documents/rag/04_fusion_in_decoder.pdf",
+        "data/documents/llm/02_bert.pdf",
+        "data/documents/llm/02_bert.pdf",
+        "data/documents/llm/02_bert.pdf",
+        "data/documents/llm/02_bert.pdf",
+        "data/documents/llm/04_llama.pdf"
+      ],
+      "expected_chunk_ids": [],
+      "expected_sources": [
+        "data/documents/llm/02_bert.pdf"
+      ],
+      "num_retrieved": 10,
+      "num_expected": 1,
+      "hit": true,
+      "latency_ms": 276.81,
+      "search_ms": 276.81,
+      "rerank_ms": 0.0
+    },
+    {
+      "query": "GPT-3: language models are few-shot learners",
+      "category": "title_match",
+      "retrieved_ids": [
+        "doc_97fd272f1fdfc186_0000_776ce7d6",
+        "doc_1b31e77fb24d25d7_0144_2a1f5cac",
+        "doc_97fd272f1fdfc186_0023_59049dbf",
+        "doc_97fd272f1fdfc186_0025_f451d9c0",
+        "doc_97fd272f1fdfc186_0001_434130b0",
+        "doc_5add5f7ff9041299_0077_63341edf",
+        "doc_97fd272f1fdfc186_0163_3427cdf2",
+        "doc_f285b0971ae4a790_0108_4cf8f315",
+        "doc_97fd272f1fdfc186_0020_d3afd6e0",
+        "doc_97fd272f1fdfc186_0066_a2c16399"
+      ],
+      "retrieved_sources": [
+        "data/documents/llm/03_gpt3_few_shot_learners.pdf",
+        "data/documents/agent/04_generative_agents.pdf",
+        "data/documents/llm/03_gpt3_few_shot_learners.pdf",
+        "data/documents/llm/03_gpt3_few_shot_learners.pdf",
+        "data/documents/llm/03_gpt3_few_shot_learners.pdf",
+        "data/documents/agent/05_hugginggpt.pdf",
+        "data/documents/llm/03_gpt3_few_shot_learners.pdf",
+        "data/documents/agent/01_react.pdf",
+        "data/documents/llm/03_gpt3_few_shot_learners.pdf",
+        "data/documents/llm/03_gpt3_few_shot_learners.pdf"
+      ],
+      "expected_chunk_ids": [],
+      "expected_sources": [
+        "data/documents/llm/03_gpt3_few_shot_learners.pdf"
+      ],
+      "num_retrieved": 10,
+      "num_expected": 1,
+      "hit": true,
+      "latency_ms": 251.19,
+      "search_ms": 251.19,
+      "rerank_ms": 0.0
+    },
+    {
+      "query": "LLaMA: open and efficient foundation language models",
+      "category": "title_match",
+      "retrieved_ids": [
+        "doc_2e663675ae36ad12_0000_9b6f632a",
+        "doc_2e663675ae36ad12_0060_8e054ae0",
+        "doc_5add5f7ff9041299_0076_e66a1aca",
+        "doc_2e663675ae36ad12_0004_a0361904",
+        "doc_5add5f7ff9041299_0003_f91ab271",
+        "doc_2e663675ae36ad12_0019_95c8a6cc",
+        "doc_d9eaa1398abac0df_0089_7368e484",
+        "doc_5add5f7ff9041299_0030_97c7a42b",
+        "doc_2e663675ae36ad12_0018_94cc7ef2",
+        "doc_5add5f7ff9041299_0084_cc3c11cf"
+      ],
+      "retrieved_sources": [
+        "data/documents/llm/04_llama.pdf",
+        "data/documents/llm/04_llama.pdf",
+        "data/documents/agent/05_hugginggpt.pdf",
+        "data/documents/llm/04_llama.pdf",
+        "data/documents/agent/05_hugginggpt.pdf",
+        "data/documents/llm/04_llama.pdf",
+        "data/documents/rag/05_self_rag.pdf",
+        "data/documents/agent/05_hugginggpt.pdf",
+        "data/documents/llm/04_llama.pdf",
+        "data/documents/agent/05_hugginggpt.pdf"
+      ],
+      "expected_chunk_ids": [],
+      "expected_sources": [
+        "data/documents/llm/04_llama.pdf"
+      ],
+      "num_retrieved": 10,
+      "num_expected": 1,
+      "hit": true,
+      "latency_ms": 293.96,
+      "search_ms": 293.96,
+      "rerank_ms": 0.0
+    },
+    {
+      "query": "InstructGPT: training language models to follow instructions with human feedback (RLHF)",
+      "category": "title_match",
+      "retrieved_ids": [
+        "doc_c1984bb50a5b90fd_0000_e46d31f0",
+        "doc_c1984bb50a5b90fd_0016_d3e4c9f7",
+        "doc_c1984bb50a5b90fd_0019_daf388e1",
+        "doc_c1984bb50a5b90fd_0007_881f7b72",
+        "doc_d9eaa1398abac0df_0018_aef17132",
+        "doc_c1984bb50a5b90fd_0102_5ff26548",
+        "doc_c1984bb50a5b90fd_0114_26f2cfc4",
+        "doc_c1984bb50a5b90fd_0002_0689ce69",
+        "doc_c1984bb50a5b90fd_0101_4178e1e4",
+        "doc_c1984bb50a5b90fd_0099_edecb933"
+      ],
+      "retrieved_sources": [
+        "data/documents/llm/05_instructgpt.pdf",
+        "data/documents/llm/05_instructgpt.pdf",
+        "data/documents/llm/05_instructgpt.pdf",
+        "data/documents/llm/05_instructgpt.pdf",
+        "data/documents/rag/05_self_rag.pdf",
+        "data/documents/llm/05_instructgpt.pdf",
+        "data/documents/llm/05_instructgpt.pdf",
+        "data/documents/llm/05_instructgpt.pdf",
+        "data/documents/llm/05_instructgpt.pdf",
+        "data/documents/llm/05_instructgpt.pdf"
+      ],
+      "expected_chunk_ids": [],
+      "expected_sources": [
+        "data/documents/llm/05_instructgpt.pdf"
+      ],
+      "num_retrieved": 10,
+      "num_expected": 1,
+      "hit": true,
+      "latency_ms": 263.61,
+      "search_ms": 263.61,
+      "rerank_ms": 0.0
+    },
+    {
+      "query": "ReAct: synergizing reasoning and acting in language models",
+      "category": "title_match",
+      "retrieved_ids": [
+        "doc_f285b0971ae4a790_0000_1f4759ef",
+        "doc_f285b0971ae4a790_0022_4886b02e",
+        "doc_f285b0971ae4a790_0054_f1ca84c8",
+        "doc_f285b0971ae4a790_0102_2da36ba3",
+        "doc_f285b0971ae4a790_0060_47dd3741",
+        "doc_f285b0971ae4a790_0002_a3856754",
+        "doc_6d7483d94653008e_0090_fc4c6846",
+        "doc_f285b0971ae4a790_0052_2b80396d",
+        "doc_6059b6f89fea9959_0075_f4e216c1",
+        "doc_f285b0971ae4a790_0059_471f0ae1"
+      ],
+      "retrieved_sources": [
+        "data/documents/agent/01_react.pdf",
+        "data/documents/agent/01_react.pdf",
+        "data/documents/agent/01_react.pdf",
+        "data/documents/agent/01_react.pdf",
+        "data/documents/agent/01_react.pdf",
+        "data/documents/agent/01_react.pdf",
+        "data/documents/agent/02_toolformer.pdf",
+        "data/documents/agent/01_react.pdf",
+        "data/documents/agent/03_reflexion.pdf",
+        "data/documents/agent/01_react.pdf"
+      ],
+      "expected_chunk_ids": [],
+      "expected_sources": [
+        "data/documents/agent/01_react.pdf"
+      ],
+      "num_retrieved": 10,
+      "num_expected": 1,
+      "hit": true,
+      "latency_ms": 269.93,
+      "search_ms": 269.93,
+      "rerank_ms": 0.0
+    },
+    {
+      "query": "Toolformer: language models can teach themselves to use tools",
+      "category": "title_match",
+      "retrieved_ids": [
+        "doc_6d7483d94653008e_0000_82df99b5",
+        "doc_6d7483d94653008e_0001_2016606d",
+        "doc_d9eaa1398abac0df_0088_ce5384f1",
+        "doc_6d7483d94653008e_0009_4ecd2700",
+        "doc_6d7483d94653008e_0068_74751b07",
+        "doc_6d7483d94653008e_0013_edff6726",
+        "doc_5add5f7ff9041299_0083_0ee7d3d4",
+        "doc_6059b6f89fea9959_0073_8c4f9895",
+        "doc_6d7483d94653008e_0031_a5e0d821",
+        "doc_6d7483d94653008e_0066_b22f2c85"
+      ],
+      "retrieved_sources": [
+        "data/documents/agent/02_toolformer.pdf",
+        "data/documents/agent/02_toolformer.pdf",
+        "data/documents/rag/05_self_rag.pdf",
+        "data/documents/agent/02_toolformer.pdf",
+        "data/documents/agent/02_toolformer.pdf",
+        "data/documents/agent/02_toolformer.pdf",
+        "data/documents/agent/05_hugginggpt.pdf",
+        "data/documents/agent/03_reflexion.pdf",
+        "data/documents/agent/02_toolformer.pdf",
+        "data/documents/agent/02_toolformer.pdf"
+      ],
+      "expected_chunk_ids": [],
+      "expected_sources": [
+        "data/documents/agent/02_toolformer.pdf"
+      ],
+      "num_retrieved": 10,
+      "num_expected": 1,
+      "hit": true,
+      "latency_ms": 241.65,
+      "search_ms": 241.65,
+      "rerank_ms": 0.0
+    },
+    {
+      "query": "Reflexion: language agents with verbal reinforcement learning",
+      "category": "title_match",
+      "retrieved_ids": [
+        "doc_6059b6f89fea9959_0000_56ca23a6",
+        "doc_6059b6f89fea9959_0001_3ddf337e",
+        "doc_6059b6f89fea9959_0007_631fe9b2",
+        "doc_6059b6f89fea9959_0004_c992c916",
+        "doc_6059b6f89fea9959_0068_778630d0",
+        "doc_6059b6f89fea9959_0008_a2b8e1bd",
+        "doc_6059b6f89fea9959_0022_1194e8fa",
+        "doc_6059b6f89fea9959_0002_035d3f29",
+        "doc_6059b6f89fea9959_0038_b928ca2d",
+        "doc_6059b6f89fea9959_0067_3317b8e3"
+      ],
+      "retrieved_sources": [
+        "data/documents/agent/03_reflexion.pdf",
+        "data/documents/agent/03_reflexion.pdf",
+        "data/documents/agent/03_reflexion.pdf",
+        "data/documents/agent/03_reflexion.pdf",
+        "data/documents/agent/03_reflexion.pdf",
+        "data/documents/agent/03_reflexion.pdf",
+        "data/documents/agent/03_reflexion.pdf",
+        "data/documents/agent/03_reflexion.pdf",
+        "data/documents/agent/03_reflexion.pdf",
+        "data/documents/agent/03_reflexion.pdf"
+      ],
+      "expected_chunk_ids": [],
+      "expected_sources": [
+        "data/documents/agent/03_reflexion.pdf"
+      ],
+      "num_retrieved": 10,
+      "num_expected": 1,
+      "hit": true,
+      "latency_ms": 254.65,
+      "search_ms": 254.65,
+      "rerank_ms": 0.0
+    },
+    {
+      "query": "Generative Agents: interactive simulacra of human behavior",
+      "category": "title_match",
+      "retrieved_ids": [
+        "doc_1b31e77fb24d25d7_0000_721388f8",
+        "doc_1b31e77fb24d25d7_0005_edb18667",
+        "doc_1b31e77fb24d25d7_0137_2975707a",
+        "doc_1b31e77fb24d25d7_0126_631a4399",
+        "doc_1b31e77fb24d25d7_0001_91006afb",
+        "doc_1b31e77fb24d25d7_0016_c9ba1e2b",
+        "doc_1b31e77fb24d25d7_0031_cdbd7015",
+        "doc_1b31e77fb24d25d7_0009_fbab20f0",
+        "doc_1b31e77fb24d25d7_0013_8052fbb5",
+        "doc_1b31e77fb24d25d7_0008_1bb2ec89"
+      ],
+      "retrieved_sources": [
+        "data/documents/agent/04_generative_agents.pdf",
+        "data/documents/agent/04_generative_agents.pdf",
+        "data/documents/agent/04_generative_agents.pdf",
+        "data/documents/agent/04_generative_agents.pdf",
+        "data/documents/agent/04_generative_agents.pdf",
+        "data/documents/agent/04_generative_agents.pdf",
+        "data/documents/agent/04_generative_agents.pdf",
+        "data/documents/agent/04_generative_agents.pdf",
+        "data/documents/agent/04_generative_agents.pdf",
+        "data/documents/agent/04_generative_agents.pdf"
+      ],
+      "expected_chunk_ids": [],
+      "expected_sources": [
+        "data/documents/agent/04_generative_agents.pdf"
+      ],
+      "num_retrieved": 10,
+      "num_expected": 1,
+      "hit": true,
+      "latency_ms": 224.85,
+      "search_ms": 224.85,
+      "rerank_ms": 0.0
+    },
+    {
+      "query": "HuggingGPT: solving AI tasks with ChatGPT and its friends in Hugging Face",
+      "category": "title_match",
+      "retrieved_ids": [
+        "doc_5add5f7ff9041299_0000_ee541016",
+        "doc_5add5f7ff9041299_0002_64490e78",
+        "doc_5add5f7ff9041299_0001_fcda62b4",
+        "doc_5add5f7ff9041299_0009_e96a2680",
+        "doc_5add5f7ff9041299_0072_d8902b46",
+        "doc_5add5f7ff9041299_0008_fd0bd42e",
+        "doc_5add5f7ff9041299_0105_caf73993",
+        "doc_6059b6f89fea9959_0074_a9a49889",
+        "doc_5add5f7ff9041299_0029_4dee5702",
+        "doc_5add5f7ff9041299_0010_e32d1718"
+      ],
+      "retrieved_sources": [
+        "data/documents/agent/05_hugginggpt.pdf",
+        "data/documents/agent/05_hugginggpt.pdf",
+        "data/documents/agent/05_hugginggpt.pdf",
+        "data/documents/agent/05_hugginggpt.pdf",
+        "data/documents/agent/05_hugginggpt.pdf",
+        "data/documents/agent/05_hugginggpt.pdf",
+        "data/documents/agent/05_hugginggpt.pdf",
+        "data/documents/agent/03_reflexion.pdf",
+        "data/documents/agent/05_hugginggpt.pdf",
+        "data/documents/agent/05_hugginggpt.pdf"
+      ],
+      "expected_chunk_ids": [],
+      "expected_sources": [
+        "data/documents/agent/05_hugginggpt.pdf"
+      ],
+      "num_retrieved": 10,
+      "num_expected": 1,
+      "hit": true,
+      "latency_ms": 263.53,
+      "search_ms": 263.53,
+      "rerank_ms": 0.0
+    },
+    {
+      "query": "哪篇论文提出了用双编码器分别编码问题和段落，通过点积相似度做开放域问答的检索？",
+      "category": "semantic",
+      "retrieved_ids": [
+        "doc_3e67fc1a9977715a_0004_1b89a2d5",
+        "doc_3e67fc1a9977715a_0058_6e55bfc5",
+        "doc_3e67fc1a9977715a_0011_8f3744df",
+        "doc_f1ee7e927c3fb31b_0015_cb858319",
+        "doc_3e67fc1a9977715a_0015_4468b8c6",
+        "doc_3e67fc1a9977715a_0000_629b8d4d",
+        "doc_3e67fc1a9977715a_0056_982d14af",
+        "doc_3e67fc1a9977715a_0014_c9d96c98",
+        "doc_3e67fc1a9977715a_0013_17e3e149",
+        "doc_3e67fc1a9977715a_0042_e4f7911f"
+      ],
+      "retrieved_sources": [
+        "data/documents/rag/02_dense_passage_retrieval.pdf",
+        "data/documents/rag/02_dense_passage_retrieval.pdf",
+        "data/documents/rag/02_dense_passage_retrieval.pdf",
+        "data/documents/rag/04_fusion_in_decoder.pdf",
+        "data/documents/rag/02_dense_passage_retrieval.pdf",
+        "data/documents/rag/02_dense_passage_retrieval.pdf",
+        "data/documents/rag/02_dense_passage_retrieval.pdf",
+        "data/documents/rag/02_dense_passage_retrieval.pdf",
+        "data/documents/rag/02_dense_passage_retrieval.pdf",
+        "data/documents/rag/02_dense_passage_retrieval.pdf"
+      ],
+      "expected_chunk_ids": [],
+      "expected_sources": [
+        "data/documents/rag/02_dense_passage_retrieval.pdf"
+      ],
+      "num_retrieved": 10,
+      "num_expected": 1,
+      "hit": true,
+      "latency_ms": 275.95,
+      "search_ms": 275.95,
+      "rerank_ms": 0.0
+    },
+    {
+      "query": "哪篇论文在预训练阶段就引入了检索机制，通过隐式文档检索增强语言模型？",
+      "category": "semantic",
+      "retrieved_ids": [
+        "doc_23e3249e9a1e7541_0052_ed92e347",
+        "doc_d9eaa1398abac0df_0076_02c7c6e2",
+        "doc_0ec1a7ab3de5514c_0001_c283be56",
+        "doc_3e67fc1a9977715a_0005_930a19d0",
+        "doc_0ec1a7ab3de5514c_0008_b72bfb21",
+        "doc_3e67fc1a9977715a_0009_af46c514",
+        "doc_3e67fc1a9977715a_0003_5b45e462",
+        "doc_3e67fc1a9977715a_0056_982d14af",
+        "doc_0ec1a7ab3de5514c_0005_7bef8b2d",
+        "doc_3e67fc1a9977715a_0011_8f3744df"
+      ],
+      "retrieved_sources": [
+        "data/documents/rag/01_rag_knowledge_intensive_nlp.pdf",
+        "data/documents/rag/05_self_rag.pdf",
+        "data/documents/rag/03_realm.pdf",
+        "data/documents/rag/02_dense_passage_retrieval.pdf",
+        "data/documents/rag/03_realm.pdf",
+        "data/documents/rag/02_dense_passage_retrieval.pdf",
+        "data/documents/rag/02_dense_passage_retrieval.pdf",
+        "data/documents/rag/02_dense_passage_retrieval.pdf",
+        "data/documents/rag/03_realm.pdf",
+        "data/documents/rag/02_dense_passage_retrieval.pdf"
+      ],
+      "expected_chunk_ids": [],
+      "expected_sources": [
+        "data/documents/rag/03_realm.pdf"
+      ],
+      "num_retrieved": 10,
+      "num_expected": 1,
+      "hit": true,
+      "latency_ms": 280.04,
+      "search_ms": 280.04,
+      "rerank_ms": 0.0
+    },
+    {
+      "query": "哪篇论文让语言模型自己学会调用外部工具（如计算器、搜索引擎），且不需要人工标注工具调用的数据？",
+      "category": "semantic",
+      "retrieved_ids": [
+        "doc_6d7483d94653008e_0001_2016606d",
+        "doc_6d7483d94653008e_0009_4ecd2700",
+        "doc_6d7483d94653008e_0071_e84648e7",
+        "doc_6d7483d94653008e_0065_690311ab",
+        "doc_6d7483d94653008e_0069_15adc0e5",
+        "doc_6d7483d94653008e_0013_edff6726",
+        "doc_6d7483d94653008e_0054_ded33af7",
+        "doc_6d7483d94653008e_0028_8fd186d6",
+        "doc_6d7483d94653008e_0000_82df99b5",
+        "doc_6d7483d94653008e_0012_7ff31cf2"
+      ],
+      "retrieved_sources": [
+        "data/documents/agent/02_toolformer.pdf",
+        "data/documents/agent/02_toolformer.pdf",
+        "data/documents/agent/02_toolformer.pdf",
+        "data/documents/agent/02_toolformer.pdf",
+        "data/documents/agent/02_toolformer.pdf",
+        "data/documents/agent/02_toolformer.pdf",
+        "data/documents/agent/02_toolformer.pdf",
+        "data/documents/agent/02_toolformer.pdf",
+        "data/documents/agent/02_toolformer.pdf",
+        "data/documents/agent/02_toolformer.pdf"
+      ],
+      "expected_chunk_ids": [],
+      "expected_sources": [
+        "data/documents/agent/02_toolformer.pdf"
+      ],
+      "num_retrieved": 10,
+      "num_expected": 1,
+      "hit": true,
+      "latency_ms": 293.68,
+      "search_ms": 293.68,
+      "rerank_ms": 0.0
+    },
+    {
+      "query": "哪篇论文提出用自我反思的方式让 Agent 从失败中学习，通过语言反馈而非梯度更新来改进？",
+      "category": "semantic",
+      "retrieved_ids": [
+        "doc_6059b6f89fea9959_0004_c992c916",
+        "doc_1b31e77fb24d25d7_0043_069fefd5",
+        "doc_6059b6f89fea9959_0032_9cb29f3c",
+        "doc_1b31e77fb24d25d7_0084_f7bcb87b",
+        "doc_6059b6f89fea9959_0033_730d316a",
+        "doc_6059b6f89fea9959_0083_c90ab422",
+        "doc_6059b6f89fea9959_0040_465662cb",
+        "doc_1b31e77fb24d25d7_0093_c05b1f42",
+        "doc_6059b6f89fea9959_0001_3ddf337e",
+        "doc_f285b0971ae4a790_0055_98427c7a"
+      ],
+      "retrieved_sources": [
+        "data/documents/agent/03_reflexion.pdf",
+        "data/documents/agent/04_generative_agents.pdf",
+        "data/documents/agent/03_reflexion.pdf",
+        "data/documents/agent/04_generative_agents.pdf",
+        "data/documents/agent/03_reflexion.pdf",
+        "data/documents/agent/03_reflexion.pdf",
+        "data/documents/agent/03_reflexion.pdf",
+        "data/documents/agent/04_generative_agents.pdf",
+        "data/documents/agent/03_reflexion.pdf",
+        "data/documents/agent/01_react.pdf"
+      ],
+      "expected_chunk_ids": [],
+      "expected_sources": [
+        "data/documents/agent/03_reflexion.pdf"
+      ],
+      "num_retrieved": 10,
+      "num_expected": 1,
+      "hit": true,
+      "latency_ms": 274.59,
+      "search_ms": 274.59,
+      "rerank_ms": 0.0
+    },
+    {
+      "query": "哪篇论文用人类反馈的强化学习（RLHF）来对齐语言模型，使其输出更符合人类指令？",
+      "category": "semantic",
+      "retrieved_ids": [
+        "doc_d9eaa1398abac0df_0018_aef17132",
+        "doc_c1984bb50a5b90fd_0021_3a6f627a",
+        "doc_c1984bb50a5b90fd_0099_edecb933",
+        "doc_c1984bb50a5b90fd_0098_9d03ceb9",
+        "doc_c1984bb50a5b90fd_0103_0d41e58e",
+        "doc_c1984bb50a5b90fd_0019_daf388e1",
+        "doc_c1984bb50a5b90fd_0115_9486addc",
+        "doc_c1984bb50a5b90fd_0194_1a50074c",
+        "doc_c1984bb50a5b90fd_0007_881f7b72",
+        "doc_c1984bb50a5b90fd_0193_875b9c6c"
+      ],
+      "retrieved_sources": [
+        "data/documents/rag/05_self_rag.pdf",
+        "data/documents/llm/05_instructgpt.pdf",
+        "data/documents/llm/05_instructgpt.pdf",
+        "data/documents/llm/05_instructgpt.pdf",
+        "data/documents/llm/05_instructgpt.pdf",
+        "data/documents/llm/05_instructgpt.pdf",
+        "data/documents/llm/05_instructgpt.pdf",
+        "data/documents/llm/05_instructgpt.pdf",
+        "data/documents/llm/05_instructgpt.pdf",
+        "data/documents/llm/05_instructgpt.pdf"
+      ],
+      "expected_chunk_ids": [],
+      "expected_sources": [
+        "data/documents/llm/05_instructgpt.pdf"
+      ],
+      "num_retrieved": 10,
+      "num_expected": 1,
+      "hit": true,
+      "latency_ms": 286.59,
+      "search_ms": 286.59,
+      "rerank_ms": 0.0
+    },
+    {
+      "query": "有哪些论文与 Transformer 自注意力架构直接相关？",
+      "category": "multi_doc",
+      "retrieved_ids": [
+        "doc_bdfaa68d8984f0dc_0006_27abb5d9",
+        "doc_bdfaa68d8984f0dc_0008_4f748a24",
+        "doc_0ec1a7ab3de5514c_0039_bda1d5f8",
+        "doc_0ec1a7ab3de5514c_0038_3b3e0b97",
+        "doc_bdfaa68d8984f0dc_0001_ab505a30",
+        "doc_bdfaa68d8984f0dc_0029_a8812157",
+        "doc_2e663675ae36ad12_0056_cac9c5c1",
+        "doc_5692a5514787a8c6_0023_57207275",
+        "doc_bdfaa68d8984f0dc_0044_0ee4cd48",
+        "doc_bdfaa68d8984f0dc_0031_dc0c5bc5"
+      ],
+      "retrieved_sources": [
+        "data/documents/llm/01_transformer_attention_is_all_you_need.pdf",
+        "data/documents/llm/01_transformer_attention_is_all_you_need.pdf",
+        "data/documents/rag/03_realm.pdf",
+        "data/documents/rag/03_realm.pdf",
+        "data/documents/llm/01_transformer_attention_is_all_you_need.pdf",
+        "data/documents/llm/01_transformer_attention_is_all_you_need.pdf",
+        "data/documents/llm/04_llama.pdf",
+        "data/documents/llm/02_bert.pdf",
+        "data/documents/llm/01_transformer_attention_is_all_you_need.pdf",
+        "data/documents/llm/01_transformer_attention_is_all_you_need.pdf"
+      ],
+      "expected_chunk_ids": [],
+      "expected_sources": [
+        "data/documents/llm/01_transformer_attention_is_all_you_need.pdf",
+        "data/documents/llm/02_bert.pdf",
+        "data/documents/llm/03_gpt3_few_shot_learners.pdf"
+      ],
+      "num_retrieved": 10,
+      "num_expected": 3,
+      "hit": true,
+      "latency_ms": 251.09,
+      "search_ms": 251.09,
+      "rerank_ms": 0.0
+    },
+    {
+      "query": "有哪些论文讨论了检索增强生成（RAG）或知识检索的方法？",
+      "category": "multi_doc",
+      "retrieved_ids": [
+        "doc_d9eaa1398abac0df_0020_c444f456",
+        "doc_23e3249e9a1e7541_0047_27956f84",
+        "doc_d9eaa1398abac0df_0006_f0537ae9",
+        "doc_23e3249e9a1e7541_0048_a293e15c",
+        "doc_23e3249e9a1e7541_0022_04268dd2",
+        "doc_23e3249e9a1e7541_0050_a8bcef75",
+        "doc_d9eaa1398abac0df_0009_52f78314",
+        "doc_23e3249e9a1e7541_0044_37b6fc7c",
+        "doc_d9eaa1398abac0df_0016_282b83b9",
+        "doc_23e3249e9a1e7541_0032_d32bf3b4"
+      ],
+      "retrieved_sources": [
+        "data/documents/rag/05_self_rag.pdf",
+        "data/documents/rag/01_rag_knowledge_intensive_nlp.pdf",
+        "data/documents/rag/05_self_rag.pdf",
+        "data/documents/rag/01_rag_knowledge_intensive_nlp.pdf",
+        "data/documents/rag/01_rag_knowledge_intensive_nlp.pdf",
+        "data/documents/rag/01_rag_knowledge_intensive_nlp.pdf",
+        "data/documents/rag/05_self_rag.pdf",
+        "data/documents/rag/01_rag_knowledge_intensive_nlp.pdf",
+        "data/documents/rag/05_self_rag.pdf",
+        "data/documents/rag/01_rag_knowledge_intensive_nlp.pdf"
+      ],
+      "expected_chunk_ids": [],
+      "expected_sources": [
+        "data/documents/rag/01_rag_knowledge_intensive_nlp.pdf",
+        "data/documents/rag/02_dense_passage_retrieval.pdf",
+        "data/documents/rag/03_realm.pdf",
+        "data/documents/rag/05_self_rag.pdf"
+      ],
+      "num_retrieved": 10,
+      "num_expected": 4,
+      "hit": true,
+      "latency_ms": 252.79,
+      "search_ms": 252.79,
+      "rerank_ms": 0.0
+    },
+    {
+      "query": "有哪些论文让 LLM 学会使用工具或与外部环境交互来完成任务？",
+      "category": "multi_doc",
+      "retrieved_ids": [
+        "doc_5add5f7ff9041299_0109_0c37df6a",
+        "doc_5add5f7ff9041299_0023_104c791a",
+        "doc_5add5f7ff9041299_0007_9710d065",
+        "doc_5add5f7ff9041299_0039_9497def2",
+        "doc_5add5f7ff9041299_0071_bdcca7dc",
+        "doc_5add5f7ff9041299_0067_9cb79eb7",
+        "doc_5add5f7ff9041299_0003_f91ab271",
+        "doc_5add5f7ff9041299_0063_1aaaad1b",
+        "doc_6d7483d94653008e_0001_2016606d",
+        "doc_5add5f7ff9041299_0064_683c40cb"
+      ],
+      "retrieved_sources": [
+        "data/documents/agent/05_hugginggpt.pdf",
+        "data/documents/agent/05_hugginggpt.pdf",
+        "data/documents/agent/05_hugginggpt.pdf",
+        "data/documents/agent/05_hugginggpt.pdf",
+        "data/documents/agent/05_hugginggpt.pdf",
+        "data/documents/agent/05_hugginggpt.pdf",
+        "data/documents/agent/05_hugginggpt.pdf",
+        "data/documents/agent/05_hugginggpt.pdf",
+        "data/documents/agent/02_toolformer.pdf",
+        "data/documents/agent/05_hugginggpt.pdf"
+      ],
+      "expected_chunk_ids": [],
+      "expected_sources": [
+        "data/documents/agent/01_react.pdf",
+        "data/documents/agent/02_toolformer.pdf",
+        "data/documents/agent/05_hugginggpt.pdf"
+      ],
+      "num_retrieved": 10,
+      "num_expected": 3,
+      "hit": true,
+      "latency_ms": 269.96,
+      "search_ms": 269.96,
+      "rerank_ms": 0.0
+    }
+  ],
+  "backends": [
+    "custom"
+  ],
+  "test_set_path": "data/golden_papers.json",
+  "total_queries": 23,
+  "pipeline": "Dense+Sparse+RRF"
+}

@@ -9,6 +9,7 @@ per-query details suitable for the dashboard and regression tests.
 from __future__ import annotations
 
 import json
+import time
 from dataclasses import asdict, dataclass, field
 from pathlib import Path
 from typing import TYPE_CHECKING, Any
@@ -18,6 +19,7 @@ from src.observability.logger import get_logger
 
 if TYPE_CHECKING:
     from src.core.query_engine.hybrid_search import HybridSearch
+    from src.core.query_engine.reranker import QueryReranker
     from src.core.settings import Settings
     from src.core.types import RetrievalResult
     from src.libs.evaluator.base_evaluator import BaseEvaluator
@@ -51,6 +53,7 @@ class EvalRunner:
         settings: "Settings",
         hybrid_search: "HybridSearch",
         evaluator: "BaseEvaluator",
+        reranker: "QueryReranker | None" = None,
     ):
         """Initialize the runner.
 
@@ -58,10 +61,12 @@ class EvalRunner:
             settings: Root configuration object.
             hybrid_search: Retrieval orchestrator used to answer each query.
             evaluator: Evaluator (or composite) computing the metrics.
+            reranker: Optional reranker applied after hybrid search.
         """
         self._settings = settings
         self._search = hybrid_search
         self._evaluator = evaluator
+        self._reranker = reranker
 
     def run(self, test_set_path: str | None = None) -> EvalReport:
         """Run the evaluation over the golden test set.
@@ -82,13 +87,27 @@ class EvalRunner:
 
         eval_inputs: list[EvalInput] = []
         per_query: list[dict[str, Any]] = []
+        latencies_ms: list[float] = []
 
         for case in test_cases:
             query = case.get("query", "")
             expected_chunk_ids = case.get("expected_chunk_ids") or []
             expected_sources = case.get("expected_sources") or []
+            category = case.get("category", "default")
 
+            start = time.perf_counter()
             results = self._safe_search(query)
+            search_ms = (time.perf_counter() - start) * 1000.0
+
+            rerank_ms = 0.0
+            if self._reranker and results:
+                r_start = time.perf_counter()
+                results = self._safe_rerank(query, results)
+                rerank_ms = (time.perf_counter() - r_start) * 1000.0
+
+            total_ms = search_ms + rerank_ms
+            latencies_ms.append(total_ms)
+
             retrieved_ids = [r.chunk_id for r in results]
             retrieved_sources = [self._resolve_source(r) for r in results]
             retrieved_texts = [r.text for r in results]
@@ -115,20 +134,29 @@ class EvalRunner:
             per_query.append(
                 {
                     "query": query,
+                    "category": category,
                     "retrieved_ids": retrieved_ids,
                     "retrieved_sources": retrieved_sources,
                     "expected_chunk_ids": expected_chunk_ids,
                     "expected_sources": expected_sources,
                     "num_retrieved": len(results),
+                    "num_expected": len(golden),
                     "hit": hit,
+                    "latency_ms": round(total_ms, 2),
+                    "search_ms": round(search_ms, 2),
+                    "rerank_ms": round(rerank_ms, 2),
                 }
             )
 
         result = self._evaluator.evaluate(eval_inputs)
         backends = result.details.get("providers") if result.details else None
 
+        avg_latency = sum(latencies_ms) / len(latencies_ms) if latencies_ms else 0.0
+        metrics = dict(result.metrics)
+        metrics["avg_latency_ms"] = round(avg_latency, 2)
+
         return EvalReport(
-            metrics=result.metrics,
+            metrics=metrics,
             per_query=per_query,
             backends=backends or [self._evaluator.provider_name],
             test_set_path=str(path),
@@ -142,6 +170,16 @@ class EvalRunner:
         except Exception as exc:  # noqa: BLE001 - one bad query must not abort the run
             logger.warning(f"Search failed for query '{query}': {exc}")
             return []
+
+    def _safe_rerank(
+        self, query: str, results: list["RetrievalResult"]
+    ) -> list["RetrievalResult"]:
+        """Run rerank, degrading to original results on failure."""
+        try:
+            return self._reranker.rerank(query, results)  # type: ignore[union-attr]
+        except Exception as exc:  # noqa: BLE001
+            logger.warning(f"Rerank failed for query '{query}': {exc}")
+            return results
 
     @staticmethod
     def _load_test_set(path: str) -> list[dict[str, Any]]:

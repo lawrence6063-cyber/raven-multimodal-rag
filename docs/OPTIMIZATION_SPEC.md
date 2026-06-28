@@ -91,14 +91,14 @@
 - **落点**：新增 `src/core/agent/`（agent 编排），复用现有 `HybridSearch` / `LLMFactory` / `TraceCollector`。
 - **验收**：在多跳问题上对比传统 RAG，答案完整度/正确率提升；trace 能看到多步检索决策。
 - **风险**：延迟与 token 成本上升；需做循环上限与降级。
-- **面试价值**：★★★★★（能讲清 Agentic RAG 设计是当前最稀缺的亮点）。
+- **工程价值**：★★★★★（能讲清 Agentic RAG 设计是当前最稀缺的亮点）。
 
 ---
 
 ## 4. P2 / P3 — 其他
 
 - **P2 公式提取**：`nougat` / `pix2tex` 提 LaTeX，或 VLM 转述；学术场景刚需。
-- **P3 ColPali / ColQwen 视觉 late-interaction**：整页当图编码、绕过解析，是多模态文档 RAG 前沿 SOTA。作为「下一代摄取」预研，可写进项目 roadmap 作为前沿延伸（面试加分），不必现在落地。
+- **P3 ColPali / ColQwen 视觉 late-interaction**：整页当图编码、绕过解析，是多模态文档 RAG 前沿 SOTA。作为「下一代摄取」预研，可写进项目 roadmap 作为前沿延伸，不必现在落地。
 
 ---
 

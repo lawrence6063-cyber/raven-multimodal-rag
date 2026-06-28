@@ -376,6 +376,6 @@ Dashboard 的 `TraceService` 无需改动即可展示（按 stages 渲染）；�
 
 ---
 
-## 附：面试叙事价值（OPTIMIZATION_SPEC §3 标 ★★★★★）
+## 附：工程价值（OPTIMIZATION_SPEC §3 标 ★★★★★）
 
-完成后可讲清：**Naive → Advanced/Modular → Agentic RAG** 的演进；route/rewrite/multi-hop/self-correction（Self-RAG / CRAG）的工程化落地；如何在「可插拔架构 + 严格降级 + trace 可观测」约束下控制 agent 的成本与可靠性——这是当前最稀缺的加分点。
+完成后可讲清：**Naive → Advanced/Modular → Agentic RAG** 的演进；route/rewrite/multi-hop/self-correction（Self-RAG / CRAG）的工程化落地；如何在「可插拔架构 + 严格降级 + trace 可观测」约束下控制 agent 的成本与可靠性——这是当前最稀缺的工程亮点。

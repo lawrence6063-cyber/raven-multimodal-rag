@@ -1,0 +1,519 @@
+{
+  "metrics": {
+    "custom.hit_rate": 1.0,
+    "custom.mrr": 0.9782608695652174,
+    "avg_latency_ms": 87438.32
+  },
+  "per_query": [
+    {
+      "query": "What is Dense Passage Retrieval (DPR) for open-domain question answering?",
+      "category": "title_match",
+      "retrieved_sources": [
+        "data/documents/rag/02_dense_passage_retrieval.pdf",
+        "data/documents/rag/02_dense_passage_retrieval.pdf",
+        "data/documents/rag/02_dense_passage_retrieval.pdf",
+        "data/documents/rag/02_dense_passage_retrieval.pdf",
+        "data/documents/rag/02_dense_passage_retrieval.pdf"
+      ],
+      "expected_sources": [
+        "data/documents/rag/02_dense_passage_retrieval.pdf"
+      ],
+      "num_retrieved": 5,
+      "num_expected": 1,
+      "hit": true,
+      "latency_ms": 87893.34,
+      "fallback": false,
+      "n_steps": 5
+    },
+    {
+      "query": "How does Retrieval-Augmented Generation combine a retriever with a generator for knowledge-intensive tasks?",
+      "category": "title_match",
+      "retrieved_sources": [
+        "data/documents/rag/01_rag_knowledge_intensive_nlp.pdf",
+        "data/documents/rag/01_rag_knowledge_intensive_nlp.pdf",
+        "data/documents/rag/01_rag_knowledge_intensive_nlp.pdf",
+        "data/documents/rag/01_rag_knowledge_intensive_nlp.pdf",
+        "data/documents/rag/01_rag_knowledge_intensive_nlp.pdf"
+      ],
+      "expected_sources": [
+        "data/documents/rag/01_rag_knowledge_intensive_nlp.pdf"
+      ],
+      "num_retrieved": 5,
+      "num_expected": 1,
+      "hit": true,
+      "latency_ms": 94227.58,
+      "fallback": false,
+      "n_steps": 5
+    },
+    {
+      "query": "REALM retrieval-augmented language model pre-training",
+      "category": "title_match",
+      "retrieved_sources": [
+        "data/documents/rag/03_realm.pdf",
+        "data/documents/rag/03_realm.pdf",
+        "data/documents/rag/03_realm.pdf",
+        "data/documents/rag/03_realm.pdf",
+        "data/documents/rag/03_realm.pdf"
+      ],
+      "expected_sources": [
+        "data/documents/rag/03_realm.pdf"
+      ],
+      "num_retrieved": 5,
+      "num_expected": 1,
+      "hit": true,
+      "latency_ms": 87092.58,
+      "fallback": false,
+      "n_steps": 5
+    },
+    {
+      "query": "Fusion-in-Decoder: leveraging passage retrieval with generative models for open domain QA",
+      "category": "title_match",
+      "retrieved_sources": [
+        "data/documents/rag/04_fusion_in_decoder.pdf",
+        "data/documents/rag/04_fusion_in_decoder.pdf",
+        "data/documents/rag/04_fusion_in_decoder.pdf",
+        "data/documents/rag/04_fusion_in_decoder.pdf",
+        "data/documents/rag/04_fusion_in_decoder.pdf"
+      ],
+      "expected_sources": [
+        "data/documents/rag/04_fusion_in_decoder.pdf"
+      ],
+      "num_retrieved": 5,
+      "num_expected": 1,
+      "hit": true,
+      "latency_ms": 69617.57,
+      "fallback": false,
+      "n_steps": 5
+    },
+    {
+      "query": "Self-RAG: learning to retrieve, generate and critique through self-reflection",
+      "category": "title_match",
+      "retrieved_sources": [
+        "data/documents/rag/05_self_rag.pdf",
+        "data/documents/rag/05_self_rag.pdf",
+        "data/documents/rag/05_self_rag.pdf",
+        "data/documents/rag/05_self_rag.pdf",
+        "data/documents/rag/05_self_rag.pdf"
+      ],
+      "expected_sources": [
+        "data/documents/rag/05_self_rag.pdf"
+      ],
+      "num_retrieved": 5,
+      "num_expected": 1,
+      "hit": true,
+      "latency_ms": 72474.7,
+      "fallback": false,
+      "n_steps": 5
+    },
+    {
+      "query": "Attention is all you need: the Transformer architecture with self-attention",
+      "category": "title_match",
+      "retrieved_sources": [
+        "data/documents/llm/01_transformer_attention_is_all_you_need.pdf",
+        "data/documents/llm/01_transformer_attention_is_all_you_need.pdf",
+        "data/documents/llm/01_transformer_attention_is_all_you_need.pdf",
+        "data/documents/llm/02_bert.pdf",
+        "data/documents/llm/01_transformer_attention_is_all_you_need.pdf",
+        "data/documents/llm/01_transformer_attention_is_all_you_need.pdf",
+        "data/documents/llm/01_transformer_attention_is_all_you_need.pdf",
+        "data/documents/llm/01_transformer_attention_is_all_you_need.pdf",
+        "data/documents/llm/01_transformer_attention_is_all_you_need.pdf",
+        "data/documents/llm/01_transformer_attention_is_all_you_need.pdf",
+        "data/documents/llm/04_llama.pdf",
+        "data/documents/llm/01_transformer_attention_is_all_you_need.pdf"
+      ],
+      "expected_sources": [
+        "data/documents/llm/01_transformer_attention_is_all_you_need.pdf"
+      ],
+      "num_retrieved": 12,
+      "num_expected": 1,
+      "hit": true,
+      "latency_ms": 140094.43,
+      "fallback": false,
+      "n_steps": 7
+    },
+    {
+      "query": "BERT: pre-training of deep bidirectional transformers for language understanding",
+      "category": "title_match",
+      "retrieved_sources": [
+        "data/documents/llm/02_bert.pdf",
+        "data/documents/llm/02_bert.pdf",
+        "data/documents/llm/02_bert.pdf",
+        "data/documents/llm/02_bert.pdf",
+        "data/documents/llm/03_gpt3_few_shot_learners.pdf"
+      ],
+      "expected_sources": [
+        "data/documents/llm/02_bert.pdf"
+      ],
+      "num_retrieved": 5,
+      "num_expected": 1,
+      "hit": true,
+      "latency_ms": 67884.62,
+      "fallback": false,
+      "n_steps": 5
+    },
+    {
+      "query": "GPT-3: language models are few-shot learners",
+      "category": "title_match",
+      "retrieved_sources": [
+        "data/documents/llm/03_gpt3_few_shot_learners.pdf",
+        "data/documents/llm/03_gpt3_few_shot_learners.pdf",
+        "data/documents/llm/03_gpt3_few_shot_learners.pdf"
+      ],
+      "expected_sources": [
+        "data/documents/llm/03_gpt3_few_shot_learners.pdf"
+      ],
+      "num_retrieved": 3,
+      "num_expected": 1,
+      "hit": true,
+      "latency_ms": 81271.06,
+      "fallback": false,
+      "n_steps": 5
+    },
+    {
+      "query": "LLaMA: open and efficient foundation language models",
+      "category": "title_match",
+      "retrieved_sources": [
+        "data/documents/llm/04_llama.pdf",
+        "data/documents/llm/04_llama.pdf",
+        "data/documents/llm/04_llama.pdf",
+        "data/documents/llm/04_llama.pdf"
+      ],
+      "expected_sources": [
+        "data/documents/llm/04_llama.pdf"
+      ],
+      "num_retrieved": 4,
+      "num_expected": 1,
+      "hit": true,
+      "latency_ms": 119654.77,
+      "fallback": false,
+      "n_steps": 5
+    },
+    {
+      "query": "InstructGPT: training language models to follow instructions with human feedback (RLHF)",
+      "category": "title_match",
+      "retrieved_sources": [
+        "data/documents/llm/05_instructgpt.pdf",
+        "data/documents/llm/05_instructgpt.pdf",
+        "data/documents/llm/05_instructgpt.pdf",
+        "data/documents/llm/05_instructgpt.pdf",
+        "data/documents/llm/05_instructgpt.pdf"
+      ],
+      "expected_sources": [
+        "data/documents/llm/05_instructgpt.pdf"
+      ],
+      "num_retrieved": 5,
+      "num_expected": 1,
+      "hit": true,
+      "latency_ms": 68636.07,
+      "fallback": false,
+      "n_steps": 5
+    },
+    {
+      "query": "ReAct: synergizing reasoning and acting in language models",
+      "category": "title_match",
+      "retrieved_sources": [
+        "data/documents/agent/01_react.pdf",
+        "data/documents/agent/01_react.pdf",
+        "data/documents/agent/01_react.pdf",
+        "data/documents/agent/01_react.pdf",
+        "data/documents/agent/02_toolformer.pdf"
+      ],
+      "expected_sources": [
+        "data/documents/agent/01_react.pdf"
+      ],
+      "num_retrieved": 5,
+      "num_expected": 1,
+      "hit": true,
+      "latency_ms": 88800.37,
+      "fallback": false,
+      "n_steps": 5
+    },
+    {
+      "query": "Toolformer: language models can teach themselves to use tools",
+      "category": "title_match",
+      "retrieved_sources": [
+        "data/documents/rag/05_self_rag.pdf",
+        "data/documents/agent/02_toolformer.pdf",
+        "data/documents/agent/02_toolformer.pdf",
+        "data/documents/agent/02_toolformer.pdf",
+        "data/documents/agent/02_toolformer.pdf"
+      ],
+      "expected_sources": [
+        "data/documents/agent/02_toolformer.pdf"
+      ],
+      "num_retrieved": 5,
+      "num_expected": 1,
+      "hit": true,
+      "latency_ms": 61194.16,
+      "fallback": false,
+      "n_steps": 5
+    },
+    {
+      "query": "Reflexion: language agents with verbal reinforcement learning",
+      "category": "title_match",
+      "retrieved_sources": [
+        "data/documents/agent/03_reflexion.pdf",
+        "data/documents/agent/03_reflexion.pdf",
+        "data/documents/agent/03_reflexion.pdf",
+        "data/documents/agent/03_reflexion.pdf",
+        "data/documents/agent/03_reflexion.pdf"
+      ],
+      "expected_sources": [
+        "data/documents/agent/03_reflexion.pdf"
+      ],
+      "num_retrieved": 5,
+      "num_expected": 1,
+      "hit": true,
+      "latency_ms": 65917.31,
+      "fallback": false,
+      "n_steps": 5
+    },
+    {
+      "query": "Generative Agents: interactive simulacra of human behavior",
+      "category": "title_match",
+      "retrieved_sources": [
+        "data/documents/agent/04_generative_agents.pdf",
+        "data/documents/agent/04_generative_agents.pdf",
+        "data/documents/agent/04_generative_agents.pdf",
+        "data/documents/agent/04_generative_agents.pdf",
+        "data/documents/agent/04_generative_agents.pdf"
+      ],
+      "expected_sources": [
+        "data/documents/agent/04_generative_agents.pdf"
+      ],
+      "num_retrieved": 5,
+      "num_expected": 1,
+      "hit": true,
+      "latency_ms": 75835.79,
+      "fallback": false,
+      "n_steps": 5
+    },
+    {
+      "query": "HuggingGPT: solving AI tasks with ChatGPT and its friends in Hugging Face",
+      "category": "title_match",
+      "retrieved_sources": [
+        "data/documents/agent/05_hugginggpt.pdf",
+        "data/documents/agent/05_hugginggpt.pdf",
+        "data/documents/agent/05_hugginggpt.pdf",
+        "data/documents/agent/05_hugginggpt.pdf",
+        "data/documents/agent/05_hugginggpt.pdf"
+      ],
+      "expected_sources": [
+        "data/documents/agent/05_hugginggpt.pdf"
+      ],
+      "num_retrieved": 5,
+      "num_expected": 1,
+      "hit": true,
+      "latency_ms": 72596.91,
+      "fallback": false,
+      "n_steps": 5
+    },
+    {
+      "query": "哪篇论文提出了用双编码器分别编码问题和段落，通过点积相似度做开放域问答的检索？",
+      "category": "semantic",
+      "retrieved_sources": [
+        "data/documents/rag/02_dense_passage_retrieval.pdf",
+        "data/documents/rag/02_dense_passage_retrieval.pdf",
+        "data/documents/rag/02_dense_passage_retrieval.pdf",
+        "data/documents/rag/02_dense_passage_retrieval.pdf",
+        "data/documents/rag/02_dense_passage_retrieval.pdf",
+        "data/documents/rag/01_rag_knowledge_intensive_nlp.pdf",
+        "data/documents/rag/02_dense_passage_retrieval.pdf",
+        "data/documents/rag/02_dense_passage_retrieval.pdf",
+        "data/documents/rag/02_dense_passage_retrieval.pdf",
+        "data/documents/rag/02_dense_passage_retrieval.pdf",
+        "data/documents/rag/02_dense_passage_retrieval.pdf",
+        "data/documents/rag/02_dense_passage_retrieval.pdf",
+        "data/documents/rag/02_dense_passage_retrieval.pdf",
+        "data/documents/rag/04_fusion_in_decoder.pdf",
+        "data/documents/rag/02_dense_passage_retrieval.pdf",
+        "data/documents/rag/02_dense_passage_retrieval.pdf"
+      ],
+      "expected_sources": [
+        "data/documents/rag/02_dense_passage_retrieval.pdf"
+      ],
+      "num_retrieved": 16,
+      "num_expected": 1,
+      "hit": true,
+      "latency_ms": 137187.07,
+      "fallback": false,
+      "n_steps": 7
+    },
+    {
+      "query": "哪篇论文在预训练阶段就引入了检索机制，通过隐式文档检索增强语言模型？",
+      "category": "semantic",
+      "retrieved_sources": [
+        "data/documents/rag/03_realm.pdf",
+        "data/documents/rag/05_self_rag.pdf",
+        "data/documents/rag/02_dense_passage_retrieval.pdf",
+        "data/documents/rag/01_rag_knowledge_intensive_nlp.pdf",
+        "data/documents/rag/02_dense_passage_retrieval.pdf"
+      ],
+      "expected_sources": [
+        "data/documents/rag/03_realm.pdf"
+      ],
+      "num_retrieved": 5,
+      "num_expected": 1,
+      "hit": true,
+      "latency_ms": 103490.06,
+      "fallback": false,
+      "n_steps": 5
+    },
+    {
+      "query": "哪篇论文让语言模型自己学会调用外部工具（如计算器、搜索引擎），且不需要人工标注工具调用的数据？",
+      "category": "semantic",
+      "retrieved_sources": [
+        "data/documents/agent/02_toolformer.pdf",
+        "data/documents/llm/02_bert.pdf",
+        "data/documents/llm/04_llama.pdf",
+        "data/documents/llm/03_gpt3_few_shot_learners.pdf",
+        "data/documents/agent/02_toolformer.pdf"
+      ],
+      "expected_sources": [
+        "data/documents/agent/02_toolformer.pdf"
+      ],
+      "num_retrieved": 5,
+      "num_expected": 1,
+      "hit": true,
+      "latency_ms": 78241.05,
+      "fallback": false,
+      "n_steps": 5
+    },
+    {
+      "query": "哪篇论文提出用自我反思的方式让 Agent 从失败中学习，通过语言反馈而非梯度更新来改进？",
+      "category": "semantic",
+      "retrieved_sources": [
+        "data/documents/agent/03_reflexion.pdf",
+        "data/documents/agent/03_reflexion.pdf",
+        "data/documents/agent/03_reflexion.pdf",
+        "data/documents/agent/03_reflexion.pdf",
+        "data/documents/agent/03_reflexion.pdf"
+      ],
+      "expected_sources": [
+        "data/documents/agent/03_reflexion.pdf"
+      ],
+      "num_retrieved": 5,
+      "num_expected": 1,
+      "hit": true,
+      "latency_ms": 71278.61,
+      "fallback": false,
+      "n_steps": 5
+    },
+    {
+      "query": "哪篇论文用人类反馈的强化学习（RLHF）来对齐语言模型，使其输出更符合人类指令？",
+      "category": "semantic",
+      "retrieved_sources": [
+        "data/documents/llm/05_instructgpt.pdf",
+        "data/documents/llm/05_instructgpt.pdf",
+        "data/documents/llm/05_instructgpt.pdf",
+        "data/documents/llm/05_instructgpt.pdf"
+      ],
+      "expected_sources": [
+        "data/documents/llm/05_instructgpt.pdf"
+      ],
+      "num_retrieved": 4,
+      "num_expected": 1,
+      "hit": true,
+      "latency_ms": 67273.05,
+      "fallback": false,
+      "n_steps": 5
+    },
+    {
+      "query": "有哪些论文与 Transformer 自注意力架构直接相关？",
+      "category": "multi_doc",
+      "retrieved_sources": [
+        "data/documents/llm/02_bert.pdf",
+        "data/documents/llm/01_transformer_attention_is_all_you_need.pdf",
+        "data/documents/llm/01_transformer_attention_is_all_you_need.pdf",
+        "data/documents/llm/01_transformer_attention_is_all_you_need.pdf",
+        "data/documents/llm/01_transformer_attention_is_all_you_need.pdf"
+      ],
+      "expected_sources": [
+        "data/documents/llm/01_transformer_attention_is_all_you_need.pdf",
+        "data/documents/llm/02_bert.pdf",
+        "data/documents/llm/03_gpt3_few_shot_learners.pdf"
+      ],
+      "num_retrieved": 5,
+      "num_expected": 3,
+      "hit": true,
+      "latency_ms": 85163.2,
+      "fallback": false,
+      "n_steps": 5
+    },
+    {
+      "query": "有哪些论文讨论了检索增强生成（RAG）或知识检索的方法？",
+      "category": "multi_doc",
+      "retrieved_sources": [
+        "data/documents/rag/05_self_rag.pdf",
+        "data/documents/rag/05_self_rag.pdf",
+        "data/documents/rag/05_self_rag.pdf",
+        "data/documents/rag/05_self_rag.pdf",
+        "data/documents/rag/05_self_rag.pdf",
+        "data/documents/rag/03_realm.pdf",
+        "data/documents/rag/04_fusion_in_decoder.pdf",
+        "data/documents/rag/04_fusion_in_decoder.pdf",
+        "data/documents/rag/03_realm.pdf",
+        "data/documents/rag/03_realm.pdf"
+      ],
+      "expected_sources": [
+        "data/documents/rag/01_rag_knowledge_intensive_nlp.pdf",
+        "data/documents/rag/02_dense_passage_retrieval.pdf",
+        "data/documents/rag/03_realm.pdf",
+        "data/documents/rag/05_self_rag.pdf"
+      ],
+      "num_retrieved": 10,
+      "num_expected": 4,
+      "hit": true,
+      "latency_ms": 118777.62,
+      "fallback": false,
+      "n_steps": 5
+    },
+    {
+      "query": "有哪些论文让 LLM 学会使用工具或与外部环境交互来完成任务？",
+      "category": "multi_doc",
+      "retrieved_sources": [
+        "data/documents/agent/01_react.pdf",
+        "data/documents/agent/02_toolformer.pdf",
+        "data/documents/agent/05_hugginggpt.pdf",
+        "data/documents/agent/05_hugginggpt.pdf",
+        "data/documents/agent/05_hugginggpt.pdf"
+      ],
+      "expected_sources": [
+        "data/documents/agent/01_react.pdf",
+        "data/documents/agent/02_toolformer.pdf",
+        "data/documents/agent/05_hugginggpt.pdf"
+      ],
+      "num_retrieved": 5,
+      "num_expected": 3,
+      "hit": true,
+      "latency_ms": 96479.55,
+      "fallback": false,
+      "n_steps": 5
+    }
+  ],
+  "backends": [
+    "composite(custom)"
+  ],
+  "test_set_path": "data/golden_papers.json",
+  "total_queries": 23,
+  "pipeline": "Agentic"
+}
+cuments/agent/02_toolformer.pdf",
+        "data/documents/agent/05_hugginggpt.pdf"
+      ],
+      "num_retrieved": 5,
+      "num_expected": 3,
+      "hit": true,
+      "latency_ms": 82182.71,
+      "fallback": false,
+      "n_steps": 5
+    }
+  ],
+  "backends": [
+    "composite(custom)"
+  ],
+  "test_set_path": "data/golden_papers.json",
+  "total_queries": 23,
+  "pipeline": "Agentic"
+}

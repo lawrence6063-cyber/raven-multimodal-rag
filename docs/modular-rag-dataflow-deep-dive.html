@@ -1,0 +1,823 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Modular RAG MCP Server 数据流深度教学 · 从一个文件到一句带引用的答案</title>
+<script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+<style>
+:root{
+  --bg:#0f172a; --bg2:#0b1120; --card:#1e293b; --border:#334155;
+  --accent:#38bdf8; --accent2:#a78bfa; --accent3:#34d399;
+  --text:#e2e8f0; --muted:#94a3b8; --danger:#f87171; --warning:#fbbf24;
+}
+*{margin:0;padding:0;box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;background:var(--bg);color:var(--text);line-height:1.75;}
+.layout{display:flex;max-width:1400px;margin:0 auto;}
+nav.toc{position:sticky;top:0;align-self:flex-start;height:100vh;overflow-y:auto;width:290px;flex-shrink:0;padding:1.5rem 1rem;border-right:1px solid var(--border);background:var(--bg2);font-size:.85rem;}
+nav.toc h3{color:var(--accent);font-size:.8rem;text-transform:uppercase;letter-spacing:.08em;margin:1.2rem 0 .5rem;padding-bottom:.3rem;border-bottom:1px solid var(--border);}
+nav.toc h3:first-child{margin-top:0;}
+nav.toc a{display:block;color:var(--muted);text-decoration:none;padding:.3rem .6rem;border-radius:6px;border-left:2px solid transparent;transition:all .15s;}
+nav.toc a:hover{color:var(--text);background:rgba(56,189,248,.08);border-left-color:var(--accent);}
+nav.toc a.sub{padding-left:1.4rem;font-size:.8rem;}
+main{flex:1;padding:2.5rem 3rem;min-width:0;max-width:1080px;}
+h1{font-size:2.2rem;background:linear-gradient(135deg,var(--accent),var(--accent2));-webkit-background-clip:text;-webkit-text-fill-color:transparent;margin-bottom:.5rem;line-height:1.3;}
+h2{font-size:1.55rem;color:var(--accent);margin:3rem 0 1rem;padding-bottom:.5rem;border-bottom:2px solid var(--border);scroll-margin-top:1rem;}
+h3{font-size:1.2rem;color:var(--accent2);margin:2rem 0 .6rem;scroll-margin-top:1rem;}
+h4{font-size:1.02rem;color:var(--accent3);margin:1.4rem 0 .5rem;}
+p{margin:.6rem 0;}
+.subtitle{color:var(--muted);font-size:1rem;margin-bottom:1.5rem;}
+.card{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:1.5rem;margin:1.2rem 0;}
+.hl{background:linear-gradient(135deg,rgba(56,189,248,.12),rgba(167,139,250,.12));border-left:4px solid var(--accent);padding:1rem 1.3rem;border-radius:0 8px 8px 0;margin:1rem 0;}
+.warn{background:rgba(251,191,36,.1);border-left:4px solid var(--warning);padding:1rem 1.3rem;border-radius:0 8px 8px 0;margin:1rem 0;}
+.danger{background:rgba(248,113,113,.1);border-left:4px solid var(--danger);padding:1rem 1.3rem;border-radius:0 8px 8px 0;margin:1rem 0;}
+.ok{background:rgba(52,211,153,.1);border-left:4px solid var(--accent3);padding:1rem 1.3rem;border-radius:0 8px 8px 0;margin:1rem 0;}
+code{background:#0b1120;padding:2px 7px;border-radius:5px;font-size:.85rem;color:var(--accent3);font-family:'SF Mono',Monaco,Menlo,monospace;}
+pre{background:#0b1120;border:1px solid var(--border);border-radius:10px;padding:1.2rem;overflow-x:auto;font-size:.82rem;line-height:1.65;margin:.8rem 0;font-family:'SF Mono',Monaco,Menlo,monospace;}
+pre code{background:none;padding:0;color:var(--text);}
+.cm{color:#64748b;}.kw{color:var(--accent2);}.fn{color:var(--accent);}.str{color:var(--accent3);}.ty{color:var(--warning);}.num{color:#f472b6;}
+.tag{display:inline-block;padding:1px 8px;border-radius:5px;font-size:.78rem;font-family:monospace;font-weight:600;white-space:nowrap;}
+.t-doc{background:rgba(56,189,248,.18);color:var(--accent);border:1px solid rgba(56,189,248,.4);}
+.t-chunk{background:rgba(167,139,250,.18);color:var(--accent2);border:1px solid rgba(167,139,250,.4);}
+.t-rec{background:rgba(244,114,182,.18);color:#f472b6;border:1px solid rgba(244,114,182,.4);}
+.t-ret{background:rgba(251,191,36,.18);color:var(--warning);border:1px solid rgba(251,191,36,.4);}
+.t-res{background:rgba(52,211,153,.18);color:var(--accent3);border:1px solid rgba(52,211,153,.4);}
+.t-ev{background:rgba(148,163,184,.18);color:var(--muted);border:1px solid rgba(148,163,184,.4);}
+table{width:100%;border-collapse:collapse;margin:1rem 0;font-size:.85rem;}
+th{background:var(--bg2);color:var(--accent);padding:.6rem .8rem;text-align:left;border:1px solid var(--border);}
+td{padding:.55rem .8rem;border:1px solid var(--border);vertical-align:top;}
+tr:nth-child(even) td{background:rgba(30,41,59,.4);}
+.step{display:flex;gap:1rem;margin:1.2rem 0;align-items:flex-start;}
+.step .num{flex-shrink:0;width:34px;height:34px;border-radius:50%;background:linear-gradient(135deg,var(--accent),var(--accent2));color:#0b1120;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:.9rem;}
+.step .body{flex:1;}
+.mermaid{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:1.5rem;margin:1.2rem 0;text-align:center;overflow-x:auto;}
+details{margin:1rem 0;border:1px solid var(--border);border-radius:10px;overflow:hidden;}
+details summary{cursor:pointer;padding:.8rem 1.2rem;background:var(--bg2);font-weight:600;color:var(--accent);list-style:none;user-select:none;}
+details summary::before{content:'▶';display:inline-block;margin-right:.6rem;transition:transform .2s;font-size:.7rem;}
+details[open] summary::before{transform:rotate(90deg);}
+details .dbody{padding:1rem 1.2rem;}
+.pipe-wrap{overflow-x:auto;margin:1.2rem 0;}
+body.oral-mode .hide-oral{display:none !important;}
+.oral-tpl{background:linear-gradient(135deg,rgba(52,211,153,.08),rgba(56,189,248,.08));border:1px dashed var(--accent3);border-radius:10px;padding:1.2rem 1.4rem;margin:1rem 0;}
+.oral-tpl .blank{color:var(--warning);font-weight:700;border-bottom:1px dashed var(--warning);}
+.topbar{position:sticky;top:0;z-index:50;display:flex;gap:.8rem;align-items:center;padding:.8rem 0 1rem;margin-bottom:1rem;border-bottom:1px solid var(--border);background:var(--bg);}
+.btn{cursor:pointer;padding:.45rem 1rem;border-radius:8px;border:1px solid var(--border);background:var(--card);color:var(--text);font-size:.85rem;transition:all .15s;}
+.btn:hover{border-color:var(--accent);color:var(--accent);}
+.btn.active{background:var(--accent);color:#0b1120;border-color:var(--accent);font-weight:600;}
+.legend{display:flex;flex-wrap:wrap;gap:.5rem;margin:1rem 0;}
+ul,ol{margin:.5rem 0 .5rem 1.4rem;}li{margin:.3rem 0;}
+.muted{color:var(--muted);}
+.path-badge{display:inline-block;font-size:.72rem;padding:1px 8px;border-radius:10px;background:rgba(56,189,248,.15);color:var(--accent);margin-left:.4rem;vertical-align:middle;}
+@media(max-width:980px){nav.toc{display:none;}main{padding:1.5rem;}}
+</style>
+</head>
+<body>
+<div class="layout">
+<nav class="toc">
+  <h3>导航</h3>
+  <a href="#cover">封面 · 学习目标</a>
+  <a href="#types">① 核心数据类型</a>
+  <h3>全局鸟瞰</h3>
+  <a href="#overview" class="sub">② 全局数据流总览</a>
+  <a href="#layers" class="sub">③ 分层依赖架构</a>
+  <h3>管道 A · 摄取</h3>
+  <a href="#ingest" class="sub">④ 摄取六阶段</a>
+  <a href="#ingest-seq" class="sub">⑤ 摄取时序图</a>
+  <a href="#ingest-types" class="sub">⑥ 摄取类型变换</a>
+  <h3>管道 B · 检索</h3>
+  <a href="#query" class="sub">⑦ HybridSearch 拆解</a>
+  <a href="#query-seq" class="sub">⑧ 检索时序 + RRF</a>
+  <a href="#query-types" class="sub">⑨ 检索类型变换</a>
+  <h3>增强路径</h3>
+  <a href="#agent" class="sub">⑩ Agentic RAG 五步</a>
+  <a href="#agent-tree" class="sub">⑪ Agent 决策树</a>
+  <a href="#mcp" class="sub">⑫ MCP 协议层</a>
+  <h3>深入细节</h3>
+  <a href="#factory" class="sub">⑬ 可插拔工厂</a>
+  <a href="#multimodal" class="sub">⑭ 多模态跨模态</a>
+  <a href="#observe" class="sub">⑮ 可观测 Trace</a>
+  <h3>专题与速查</h3>
+  <a href="#degrade" class="sub">⑯ 降级哲学</a>
+  <a href="#oral" class="sub">⑰ 口述练习模板</a>
+  <a href="#cheat" class="sub">⑱ 速查卡</a>
+</nav>
+<main>
+<div class="topbar hide-oral">
+  <button class="btn" id="oralBtn">🎤 口述模式</button>
+  <span class="muted" style="font-size:.8rem;">隐藏代码细节，只看流程图 + 口述模板</span>
+</div>
+
+<section id="cover">
+<h1>Modular RAG MCP Server 数据流深度教学</h1>
+<p class="subtitle">从一个 PDF 被喂进来，到一句带 <code>[n]</code> 引用的答案吐回客户端 —— 追踪数据在 7 大模块间流转的完整旅程</p>
+<div class="hl">
+<strong>这份文档要解决的问题：</strong>读完后，你应该能<strong>闭着眼睛口述</strong>——"当一个文档被 <code>ingest</code> 进来时，它变成了什么形状、经过哪些函数、最终落在哪里；当 MCP 客户端调用 <code>query_knowledge_hub</code> 时，一句话怎么变成向量、怎么和 BM25 融合、怎么变回一段带引用的 Markdown"。
+</div>
+<h3>这个项目是什么</h3>
+<p>Modular RAG MCP Server 是一个<strong>模块化、可插拔、可观测的检索增强生成（RAG）服务</strong>，对外通过 <strong>MCP（Model Context Protocol）</strong>以 stdio JSON-RPC 暴露 4 个工具，让任何 MCP 客户端（如 Claude Desktop）把"自己的知识库"接进来。它做两件事：</p>
+<ul>
+<li><strong>写（Ingestion）</strong>：把文档切块、精炼、富化、编码成稠密+稀疏双向量，存进 Chroma + BM25 索引。</li>
+<li><strong>读（Retrieval）</strong>：对一句查询做混合检索（语义 + 关键词 + RRF 融合 + 可选重排），返回带引用的答案；可选开启 <strong>Agentic RAG</strong> 让服务端 LLM 自主路由、分解、多跳、自省、合成。</li>
+</ul>
+<h3>阅读指引</h3>
+<ul>
+<li><strong>先读 ①</strong>：6 个核心数据类型是理解一切的钥匙，先内化它们的"形状"和"谁产生、谁消费"。</li>
+<li><strong>再读 ②③</strong>：建立"两条管道 + 分层依赖"的全局心智地图。</li>
+<li><strong>重点读 ④⑦</strong>：摄取管道与检索管道是两条主干，逐函数拆解。</li>
+<li><strong>进阶读 ⑩</strong>：Agentic RAG 是检索管道的"自主增强变奏"。</li>
+<li><strong>最后用 ⑰</strong>：点击右上角"口述模式"，对着填空模板练习复述。</li>
+</ul>
+<div class="legend">
+<span class="tag t-doc">Document</span>
+<span class="tag t-chunk">Chunk</span>
+<span class="tag t-rec">ChunkRecord</span>
+<span class="tag t-ret">RetrievalResult</span>
+<span class="tag t-res">MCPToolResult</span>
+<span class="tag t-ev">AgentResult</span>
+<span class="muted" style="font-size:.8rem;">← 全文用这套彩色标签标注数据形状</span>
+</div>
+</section>
+
+<section id="types">
+<h2>① 前置知识 · 6 个核心数据类型</h2>
+<p>整个系统就是这几种数据结构在<strong>变形、流动、配对</strong>。前四个是"单一真相源"，定义在零业务依赖的 <code>src/core/types.py</code>；后两个是对外响应/Agent 的聚合产物。</p>
+
+<h3><span class="tag t-doc">Document</span> —— 一份被解析好、等待切块的文档</h3>
+<p>由 <strong>Loader</strong> 产生（如 markitdown 把 PDF 转成纯文本），被 <strong>Splitter / Transform</strong> 消费。它是摄取管道的"入口形状"。</p>
+<pre class="hide-oral"><code><span class="kw">@dataclass</span>
+<span class="kw">class</span> <span class="ty">Document</span>:
+    id: <span class="ty">str</span>
+    text: <span class="ty">str</span>
+    metadata: <span class="ty">dict</span>[<span class="ty">str</span>, <span class="ty">Any</span>] = field(default_factory=<span class="ty">dict</span>)
+    <span class="cm"># collection 等信息后续被写进 metadata["collection"]</span></code></pre>
+
+<h3><span class="tag t-chunk">Chunk</span> —— 从 Document 切出来的一个文本块</h3>
+<p>由 <strong>Splitter</strong> 产生，被 <strong>Transform</strong>（精炼/富化/图像描述）就地增强，再被 <strong>Encoder</strong> 消费。<code>source_ref</code> 指回父 Document.id。</p>
+<pre class="hide-oral"><code><span class="kw">@dataclass</span>
+<span class="kw">class</span> <span class="ty">Chunk</span>:
+    id: <span class="ty">str</span>
+    text: <span class="ty">str</span>
+    metadata: <span class="ty">dict</span>[<span class="ty">str</span>, <span class="ty">Any</span>] = field(default_factory=<span class="ty">dict</span>)
+    source_ref: <span class="ty">str</span> = <span class="str">""</span>  <span class="cm"># 父 Document.id</span></code></pre>
+
+<h3><span class="tag t-rec">ChunkRecord</span> —— 算好向量、可入库的块 <span class="path-badge">最关键</span></h3>
+<p>由 <strong>Encoder</strong> 产生，被 <strong>VectorUpserter / BM25Indexer</strong> 消费。它<strong>同时携带稠密向量和稀疏向量</strong>，这正是"混合检索"在写入侧的根基。</p>
+<pre class="hide-oral"><code><span class="kw">@dataclass</span>
+<span class="kw">class</span> <span class="ty">ChunkRecord</span>:
+    id: <span class="ty">str</span>
+    text: <span class="ty">str</span>
+    metadata: <span class="ty">dict</span>[<span class="ty">str</span>, <span class="ty">Any</span>] = field(default_factory=<span class="ty">dict</span>)
+    dense_vector:  <span class="ty">list</span>[<span class="ty">float</span>]       = field(default_factory=<span class="ty">list</span>)  <span class="cm"># 语义向量</span>
+    sparse_vector: <span class="ty">dict</span>[<span class="ty">str</span>, <span class="ty">float</span>] = field(default_factory=<span class="ty">dict</span>)  <span class="cm"># term → 权重</span></code></pre>
+<div class="hl"><strong>双向量并存（理解的关键）：</strong>同一个块既有 <code>dense_vector</code>（喂向量库做语义相似）又有 <code>sparse_vector</code>（喂 BM25 做关键词匹配）。写入时两条索引各取所需；读取时两路结果再用 RRF 融合。整个"Hybrid"哲学就压缩在这一个数据结构里。</div>
+
+<h3><span class="tag t-ret">RetrievalResult</span> —— 检索侧贯穿全程的"结果原子"</h3>
+<p>被 <strong>DenseRetriever / SparseRetriever / RRFFusion / QueryReranker</strong> 全程传递。注意 <code>text</code> 默认为空——Sparse 路只返回 <code>chunk_id + score</code>，全文由 HybridSearch 事后补齐。</p>
+<pre class="hide-oral"><code><span class="kw">@dataclass</span>
+<span class="kw">class</span> <span class="ty">RetrievalResult</span>:
+    chunk_id: <span class="ty">str</span>
+    score: <span class="ty">float</span>
+    text: <span class="ty">str</span> = <span class="str">""</span>          <span class="cm"># Sparse 路先留空，_fill_missing_text 补全</span>
+    metadata: <span class="ty">dict</span>[<span class="ty">str</span>, <span class="ty">Any</span>] = field(default_factory=<span class="ty">dict</span>)</code></pre>
+
+<h3><span class="tag t-res">MCPToolResult</span> —— 对外的"双通道"响应</h3>
+<p>由 <strong>ResponseBuilder</strong> 产生，最终被 <code>server.py</code> 转成 SDK 的 <code>CallToolResult</code>。两个通道：<code>content[0]</code> 是人类可读 Markdown（含 <code>[n]</code> 标记），<code>structured_content.citations</code> 是机器可读结构化引用。</p>
+<pre class="hide-oral"><code><span class="cm"># src/core/response/mcp_types.py</span>
+<span class="ty">MCPToolResult</span> {
+    content: <span class="ty">list</span>[<span class="ty">TextContent</span> | <span class="ty">ImageContent</span>]  <span class="cm"># Markdown + 可选 Base64 图片</span>
+    structured_content: <span class="ty">dict</span>                       <span class="cm"># {query, citations[], answer?, fallback?}</span>
+    is_error: <span class="ty">bool</span>
+}</code></pre>
+<div class="warn"><strong>为什么双通道？</strong>低能力客户端只认 <code>content</code> 纯文本也能看到引用；高能力客户端可解析 <code>structured_content.citations</code> 做高亮跳转。一份响应同时照顾两端。</div>
+
+<h3><span class="tag t-ev">AgentResult</span> —— Agentic 管道的聚合产物</h3>
+<p>由 <strong>AgenticRAG.run()</strong> 产生。<code>answer</code> 是服务端合成答案，<code>results</code> 用于引用，<code>steps</code> 记录每步决策，<code>fallback</code> 标记是否降级。</p>
+<pre class="hide-oral"><code><span class="kw">@dataclass</span>
+<span class="kw">class</span> <span class="ty">AgentResult</span>:
+    answer: <span class="ty">str</span> = <span class="str">""</span>
+    results: <span class="ty">list</span>[<span class="ty">RetrievalResult</span>] = field(default_factory=<span class="ty">list</span>)
+    steps: <span class="ty">list</span>[<span class="ty">dict</span>] = field(default_factory=<span class="ty">list</span>)
+    fallback: <span class="ty">bool</span> = <span class="kw">False</span>  <span class="cm"># True = 降级为单次混合检索</span></code></pre>
+
+<table class="hide-oral">
+<tr><th>类型</th><th>谁产生</th><th>谁消费</th><th>关键字段</th></tr>
+<tr><td><span class="tag t-doc">Document</span></td><td>Loader</td><td>Splitter / Transform</td><td>text, metadata.collection</td></tr>
+<tr><td><span class="tag t-chunk">Chunk</span></td><td>Splitter</td><td>Transform / Encoder</td><td>source_ref, metadata</td></tr>
+<tr><td><span class="tag t-rec">ChunkRecord</span></td><td>Encoder</td><td>VectorUpserter / BM25Indexer</td><td>dense_vector + sparse_vector</td></tr>
+<tr><td><span class="tag t-ret">RetrievalResult</span></td><td>Retriever / Fusion</td><td>Reranker / ResponseBuilder</td><td>chunk_id, score, text</td></tr>
+<tr><td><span class="tag t-res">MCPToolResult</span></td><td>ResponseBuilder</td><td>server.py → SDK</td><td>content[], structured_content</td></tr>
+<tr><td><span class="tag t-ev">AgentResult</span></td><td>AgenticRAG</td><td>AgenticQueryTool</td><td>answer, results, steps, fallback</td></tr>
+</table>
+</section>
+
+<section id="overview">
+<h2>② 全局数据流总览 · 两条管道</h2>
+<p>这个系统只有<strong>两条主数据流</strong>。记牢它们，所有细节都是挂在这两条骨架上的肉。</p>
+<div class="hl">
+<strong>管道 A（写 / Ingestion）：</strong><code>File → Document → List[Chunk] → List[ChunkRecord](dense+sparse) → Chroma + BM25 索引</code><br>
+<strong>管道 B（读 / Retrieval）：</strong><code>query/image → ProcessedQuery → Dense+Sparse → RRF Fused → (rerank) → RetrievalResult → MCPToolResult</code>
+</div>
+<div class="mermaid">
+flowchart TB
+    subgraph A["管道 A · 摄取（离线 scripts/ingest.py）"]
+      F["File PDF/MD/图片"] --> L["Loader.load"]
+      L --> D["Document"]
+      D --> SP["DocumentChunker.split_document"]
+      SP --> CK["List Chunk"]
+      CK --> TR["Transform refine+enrich+caption"]
+      TR --> EN["BatchProcessor.process dense+sparse"]
+      EN --> CR["List ChunkRecord"]
+      CR --> UP["VectorUpserter.upsert"]
+      CR --> BM["BM25Indexer.build"]
+      UP --> CH[("Chroma 向量库")]
+      BM --> PK[("bm25 index.pkl")]
+    end
+    subgraph B["管道 B · 检索（在线 MCP 工具调用）"]
+      Q["query / image"] --> HS["HybridSearch.search"]
+      CH -.读.-> HS
+      PK -.读.-> HS
+      HS --> RR["List RetrievalResult"]
+      RR --> RK["QueryReranker.rerank 可选"]
+      RK --> RB["ResponseBuilder.build"]
+      RB --> MR["MCPToolResult Markdown+citations"]
+    end
+    A -.写入索引，被 B 读取.-> B
+</div>
+<div class="ok"><strong>对称之美：</strong>管道 A 的终点（Chroma + BM25）正是管道 B 的起点。写入侧造的"双向量"，读取侧用"双路检索 + RRF"对称地消费。理解这种对称，就理解了 Hybrid RAG 的全部。</div>
+</section>
+
+<section id="layers">
+<h2>③ 分层依赖架构</h2>
+<p>项目遵循"<strong>SDK 无关纯 Python 核心 + 薄 SDK 适配层</strong>"。依赖只能从外向内单向流动，最内层 <code>core/types</code> 零业务依赖，杜绝循环引用。</p>
+<div class="pipe-wrap hide-oral">
+<svg width="860" height="400" viewBox="0 0 860 400" xmlns="http://www.w3.org/2000/svg" font-family="monospace" font-size="13">
+  <rect x="20" y="20" width="820" height="62" rx="10" fill="#1e293b" stroke="#38bdf8" stroke-width="2"/>
+  <text x="35" y="44" fill="#38bdf8" font-weight="bold">① MCP 适配层  src/mcp_server/</text>
+  <text x="35" y="66" fill="#94a3b8">server.py（mcp SDK lowlevel.Server / stdio）· protocol_handler.py（JSON-RPC，零 SDK 依赖）· tools/*</text>
+  <rect x="20" y="94" width="820" height="72" rx="10" fill="#1e293b" stroke="#a78bfa" stroke-width="2"/>
+  <text x="35" y="118" fill="#a78bfa" font-weight="bold">② 业务编排层  src/core/{query_engine,agent,response} + src/ingestion/</text>
+  <text x="35" y="140" fill="#94a3b8">HybridSearch · AgenticRAG · ResponseBuilder · IngestionPipeline</text>
+  <text x="35" y="159" fill="#94a3b8">→ 组合下层能力，承载全部业务逻辑与降级策略</text>
+  <rect x="20" y="178" width="820" height="72" rx="10" fill="#1e293b" stroke="#34d399" stroke-width="2"/>
+  <text x="35" y="202" fill="#34d399" font-weight="bold">③ 可插拔能力层  src/libs/  （7 大工厂 + Base 抽象基类）</text>
+  <text x="35" y="224" fill="#94a3b8">VectorStore · Embedding · LLM · Evaluator · Splitter · Reranker · VisionLLM</text>
+  <text x="35" y="243" fill="#94a3b8">@register_xxx 装饰器注册 + _ensure_builtins_registered() 惰性注册</text>
+  <rect x="20" y="262" width="400" height="66" rx="10" fill="#0b1120" stroke="#fbbf24" stroke-width="2"/>
+  <text x="35" y="286" fill="#fbbf24" font-weight="bold">④ 核心契约  src/core/types.py</text>
+  <text x="35" y="307" fill="#94a3b8">Document/Chunk/ChunkRecord/RetrievalResult</text>
+  <text x="35" y="324" fill="#64748b">零业务依赖，被所有层共享</text>
+  <rect x="440" y="262" width="400" height="66" rx="10" fill="#0b1120" stroke="#f472b6" stroke-width="2"/>
+  <text x="455" y="286" fill="#f472b6" font-weight="bold">⑤ 横切可观测  src/core/trace/ + src/observability/</text>
+  <text x="455" y="307" fill="#94a3b8">TraceContext / TraceCollector / logger</text>
+  <text x="455" y="324" fill="#64748b">贯穿所有层，永不破坏主流程</text>
+  <text x="430" y="355" fill="#64748b" text-anchor="middle">▲ 依赖方向：外层依赖内层，内层永不反向依赖外层（无循环引用）</text>
+</svg>
+</div>
+<div class="hl"><strong>为什么 <code>protocol_handler.py</code> 要零 SDK 依赖？</strong>这样它能在<strong>没装 mcp SDK 的环境里被离线单测</strong>。JSON-RPC 错误码、参数校验、工具路由全部纯 Python；<code>server.py</code> 只是把 SDK 的 stdio 回调"翻译"进 ProtocolHandler。这是"可测试性优先"的典型设计。</div>
+</section>
+
+<section id="ingest">
+<h2>④ 管道 A · 摄取六阶段逐步拆解</h2>
+<p>入口是 <code>IngestionPipeline.run(file_path, collection, force, on_progress, trace)</code>（<code>src/ingestion/pipeline.py</code>）。它把一个文件变成入库向量记录，共 <strong>6 个阶段</strong>。</p>
+<div class="step"><div class="num">1</div><div class="body">
+<h4>integrity_check —— 去重闸门</h4>
+<p><code>SQLiteIntegrityChecker.compute_sha256(path)</code> 算文件哈希；若 <code>should_skip(file_hash)</code> 为真且非 <code>force</code>，直接返回 <code>{"status":"skipped"}</code>。保证同一文件不被重复摄取。成功/失败最终 <code>mark_success/mark_failed</code> 记账。</p>
+</div></div>
+<div class="step"><div class="num">2</div><div class="body">
+<h4>load —— 文件 → <span class="tag t-doc">Document</span></h4>
+<p><code>self._loader.load(str(path))</code>（Loader 由 <code>LoaderFactory.create(settings.loader)</code> 产出，默认 markitdown）。随后 <code>document.metadata["collection"] = collection</code>，后续检索的 collection 过滤就靠它。</p>
+</div></div>
+<div class="step"><div class="num">3</div><div class="body">
+<h4>split —— Document → <span class="tag t-chunk">List[Chunk]</span></h4>
+<p><code>DocumentChunker.split_document(document)</code>（Splitter 工厂，默认 recursive 递归字符切分）。每个 Chunk 的 <code>source_ref</code> 指回父文档。trace 记录 <code>chunks=len(chunks)</code>。</p>
+</div></div>
+<div class="step"><div class="num">4</div><div class="body">
+<h4>transform —— 三连就地增强（refine + enrich + caption）</h4>
+<p>三个 Transform 依次对 <code>List[Chunk]</code> 做 <code>.transform(chunks)</code>，链式返回新列表：</p>
+<ul>
+<li><code>ChunkRefiner.transform</code>：清洗/精炼文本。</li>
+<li><code>MetadataEnricher.transform</code>：补充元数据（标题、关键词等）。</li>
+<li><code>ImageCaptioner.transform</code>：对块内图片用 VisionLLM（qwen-vl-max）生成描述，写进 <code>metadata["image_captions"]</code>。</li>
+</ul>
+<p>trace 阶段名 <code>transform</code>，method 固定 <code>"refine+enrich+caption"</code>。</p>
+</div></div>
+<div class="step"><div class="num">5</div><div class="body">
+<h4>encode —— Chunk → <span class="tag t-rec">List[ChunkRecord]</span>（双向量 + 图像向量）</h4>
+<p><code>BatchProcessor.process(chunks)</code> 按 <code>batch_size</code> 分批：<strong>DenseEncoder</strong> 调 embedding API 算稠密向量，<strong>SparseEncoder</strong> 本地计算 tf 归一化得稀疏向量，合并成 ChunkRecord。随后 <code>ImageEncoder.encode_document(...)</code> 把文档内图片编码进<strong>共享多模态向量空间</strong>，追加为额外 ChunkRecord（<code>records.extend(image_records)</code>）。</p>
+</div></div>
+<div class="step"><div class="num">6</div><div class="body">
+<h4>store —— upsert + BM25 双写</h4>
+<p><code>VectorUpserter.upsert(records)</code>：ChunkRecord → VectorRecord 写进 Chroma（<strong>跳过没有 dense_vector 的记录</strong>）。<code>BM25Indexer.build(records)</code>：增量合并、重算 IDF、pickle 持久化。最后 <code>mark_success</code> 记账，trace method=<code>"chroma+bm25"</code>。</p>
+</div></div>
+<div class="warn"><strong>两套阶段名，有意区分：</strong><code>on_progress</code> 回调用面向用户的阶段名（integrity_check/load/split/transform/encode/store），trace 记录用更技术化的名字（load/split/transform/embed/upsert）。前者给人看进度，后者给可观测算耗时。</div>
+<details class="hide-oral">
+<summary>源码骨架：IngestionPipeline.run() 的 try/finally 结构</summary>
+<div class="dbody">
+<pre><code><span class="kw">try</span>:
+    document = self._loader.load(...)                   <span class="cm"># load</span>
+    chunks   = self._chunker.split_document(document)   <span class="cm"># split</span>
+    chunks   = self._refiner.transform(chunks)          <span class="cm"># transform x3</span>
+    chunks   = self._enricher.transform(chunks)
+    chunks   = self._captioner.transform(chunks)
+    records  = self._batch_processor.process(chunks)    <span class="cm"># encode</span>
+    records += self._image_encoder.encode_document(...)
+    self._upserter.upsert(records)                      <span class="cm"># store</span>
+    self._bm25.build(records)
+    self._integrity.mark_success(file_hash, ...)
+    <span class="kw">return</span> {<span class="str">"status"</span>: <span class="str">"success"</span>, <span class="str">"chunk_count"</span>: len(records), ...}
+<span class="kw">except</span> Exception <span class="kw">as</span> e:
+    self._integrity.mark_failed(file_hash, str(e))      <span class="cm"># 记账失败</span>
+    trace.record_stage(<span class="str">"error"</span>, method=type(e).__name__)
+    <span class="kw">raise</span>
+<span class="kw">finally</span>:
+    <span class="kw">if</span> own_trace:                                       <span class="cm"># 自己创建的 trace 才收尾</span>
+        trace.finish(); self._collector.collect(trace)</code></pre>
+</div>
+</details>
+</section>
+
+<section id="ingest-seq">
+<h2>⑤ 摄取时序图</h2>
+<div class="mermaid">
+sequenceDiagram
+    autonumber
+    participant CLI as scripts/ingest.py
+    participant PL as IngestionPipeline
+    participant IC as IntegrityChecker
+    participant LD as Loader
+    participant CH as DocumentChunker
+    participant TF as Transform x3
+    participant BP as BatchProcessor
+    participant UP as VectorUpserter
+    participant BM as BM25Indexer
+    participant TC as TraceCollector
+    CLI->>PL: run(file_path, collection)
+    PL->>IC: compute_sha256 / should_skip?
+    alt 已处理过
+        IC-->>PL: skip → {status:skipped}
+    else 新文件
+        PL->>LD: load() → Document
+        PL->>CH: split_document() → List Chunk
+        PL->>TF: refine→enrich→caption
+        PL->>BP: process() → List ChunkRecord
+        Note over BP: dense(API)+sparse(本地tf)+图像向量
+        PL->>UP: upsert(records) → Chroma
+        PL->>BM: build(records) → bm25.pkl
+        PL->>IC: mark_success(file_hash)
+    end
+    PL->>TC: finish()+collect(trace) → logs/traces.jsonl
+    PL-->>CLI: {status, chunk_count, doc_id}
+</div>
+</section>
+
+<section id="ingest-types">
+<h2>⑥ 摄取类型变换链路</h2>
+<p>盯住"形状"的变化，你就抓住了管道 A 的本质：</p>
+<div class="pipe-wrap">
+<svg width="980" height="150" viewBox="0 0 980 150" xmlns="http://www.w3.org/2000/svg" font-family="monospace" font-size="12">
+  <defs><marker id="ar" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto"><path d="M0,0 L8,3 L0,6 Z" fill="#64748b"/></marker></defs>
+  <rect x="10" y="50" width="100" height="50" rx="8" fill="#0b1120" stroke="#64748b"/>
+  <text x="60" y="72" fill="#e2e8f0" text-anchor="middle">File</text>
+  <text x="60" y="90" fill="#64748b" text-anchor="middle">bytes</text>
+  <line x1="112" y1="75" x2="160" y2="75" stroke="#64748b" marker-end="url(#ar)"/>
+  <text x="136" y="68" fill="#94a3b8" text-anchor="middle" font-size="10">load</text>
+  <rect x="162" y="50" width="110" height="50" rx="8" fill="#1e293b" stroke="#38bdf8"/>
+  <text x="217" y="72" fill="#38bdf8" text-anchor="middle">Document</text>
+  <text x="217" y="90" fill="#64748b" text-anchor="middle">id+text+meta</text>
+  <line x1="274" y1="75" x2="322" y2="75" stroke="#64748b" marker-end="url(#ar)"/>
+  <text x="298" y="68" fill="#94a3b8" text-anchor="middle" font-size="10">split</text>
+  <rect x="324" y="50" width="120" height="50" rx="8" fill="#1e293b" stroke="#a78bfa"/>
+  <text x="384" y="72" fill="#a78bfa" text-anchor="middle">List[Chunk]</text>
+  <text x="384" y="90" fill="#64748b" text-anchor="middle">+source_ref</text>
+  <line x1="446" y1="75" x2="494" y2="75" stroke="#64748b" marker-end="url(#ar)"/>
+  <text x="470" y="68" fill="#94a3b8" text-anchor="middle" font-size="10">transform</text>
+  <rect x="496" y="50" width="120" height="50" rx="8" fill="#1e293b" stroke="#a78bfa"/>
+  <text x="556" y="72" fill="#a78bfa" text-anchor="middle">List[Chunk]'</text>
+  <text x="556" y="90" fill="#64748b" text-anchor="middle">+captions</text>
+  <line x1="618" y1="75" x2="666" y2="75" stroke="#64748b" marker-end="url(#ar)"/>
+  <text x="642" y="68" fill="#94a3b8" text-anchor="middle" font-size="10">encode</text>
+  <rect x="668" y="40" width="140" height="70" rx="8" fill="#1e293b" stroke="#f472b6"/>
+  <text x="738" y="62" fill="#f472b6" text-anchor="middle">List[ChunkRecord]</text>
+  <text x="738" y="80" fill="#64748b" text-anchor="middle">+dense_vector</text>
+  <text x="738" y="96" fill="#64748b" text-anchor="middle">+sparse_vector</text>
+  <line x1="810" y1="75" x2="858" y2="75" stroke="#64748b" marker-end="url(#ar)"/>
+  <text x="834" y="68" fill="#94a3b8" text-anchor="middle" font-size="10">store</text>
+  <rect x="860" y="35" width="110" height="38" rx="8" fill="#0b1120" stroke="#34d399"/>
+  <text x="915" y="58" fill="#34d399" text-anchor="middle">Chroma</text>
+  <rect x="860" y="78" width="110" height="38" rx="8" fill="#0b1120" stroke="#34d399"/>
+  <text x="915" y="101" fill="#34d399" text-anchor="middle">bm25.pkl</text>
+</svg>
+</div>
+</section>
+
+<section id="query">
+<h2>⑦ 管道 B · HybridSearch 逐步拆解</h2>
+<p>核心是 <code>HybridSearch.search(query, top_k, filters, trace, image)</code>（<code>src/core/query_engine/hybrid_search.py</code>）。它支持<strong>三种查询模式</strong>，每步都打 trace。</p>
+<div class="card hide-oral">
+<strong>三种模式（跨模态路径 B）：</strong>
+<ul>
+<li><strong>纯文本</strong>：Dense(文本向量) + Sparse(关键词) + RRF（原始行为）。</li>
+<li><strong>纯图像</strong>：只走 Dense(图像向量)；BM25 对图片无意义，跳过。</li>
+<li><strong>文本+图像</strong>：Dense 用图像向量（视觉意图）驱动，Sparse 仍用文本关键词，再 RRF 融合。</li>
+</ul>
+</div>
+<div class="step"><div class="num">1</div><div class="body">
+<h4>query_processing —— query → ProcessedQuery</h4>
+<p><code>QueryProcessor.process(query, filters)</code>：抽取关键词（中英停用词过滤）+ 解析 inline filter（如 <code>collection:xxx</code>），合并进 <code>merged_filters</code>。trace 记录 <code>keywords</code>。</p>
+</div></div>
+<div class="step"><div class="num">2</div><div class="body">
+<h4>dense_retrieval —— 语义召回（图像向量优先）</h4>
+<pre class="hide-oral"><code><span class="kw">if</span> image <span class="kw">is not</span> <span class="kw">None</span>:
+    image_vector = self._dense.embed_image_query(image)   <span class="cm"># 跨模态</span>
+    dense_results = self._dense.retrieve_by_vector(image_vector, ...)
+<span class="kw">elif</span> query:
+    dense_results = self._dense.retrieve(query, top_k=k, ...)</code></pre>
+<p>整段包在 <code>try/except</code> 里——<strong>Dense 失败不抛错，降级为只用 Sparse 继续</strong>。</p>
+</div></div>
+<div class="step"><div class="num">3</div><div class="body">
+<h4>sparse_retrieval —— BM25 关键词召回</h4>
+<p>仅当 <code>processed.keywords</code> 非空时 <code>SparseRetriever.retrieve(keywords, top_k)</code>。它只返回 <code>chunk_id + score</code>，<strong>text 留空</strong>。同样 try/except 降级。</p>
+</div></div>
+<div class="step"><div class="num">4</div><div class="body">
+<h4>fusion —— 四分支融合策略</h4>
+<pre class="hide-oral"><code><span class="kw">if</span> dense_results <span class="kw">and</span> sparse_results:
+    fused = self._fusion.fuse(dense, sparse, top_k=k); method=<span class="str">"rrf"</span>
+<span class="kw">elif</span> dense_results:  fused = dense[:k];  method=<span class="str">"dense_only"</span>
+<span class="kw">elif</span> sparse_results: fused = sparse[:k]; method=<span class="str">"sparse_only"</span>
+<span class="kw">else</span>:               fused = [];         method=<span class="str">"empty"</span></code></pre>
+<p>两路都有才真正 RRF；只有一路就直接截断；都没有则空。融合方法名进 trace，方便事后诊断"为什么没结果"。</p>
+</div></div>
+<div class="step"><div class="num">5</div><div class="body">
+<h4>_fill_missing_text —— 给 Sparse 结果补全文</h4>
+<p>筛出 <code>text</code> 为空的 <code>chunk_id</code>，批量 <code>self._store.get_by_ids(missing_ids)</code> 回填全文与元数据。<strong>若全部已有 text 则跳过这次 IO</strong>；失败只警告不抛错。</p>
+</div></div>
+<div class="step"><div class="num">6</div><div class="body">
+<h4>_apply_metadata_filters —— 兜底元数据过滤</h4>
+<p>对不支持原生 filter 的向量库做事后过滤，最后 <code>return fused[:k]</code>。</p>
+</div></div>
+<h3>回到工具入口：query_knowledge_hub 怎么用它</h3>
+<p><code>QueryKnowledgeHubTool.run()</code>（<code>src/mcp_server/tools/query_knowledge_hub.py</code>）串起全链路：</p>
+<pre class="hide-oral"><code><span class="cm"># 1. 校验：query 和 image 至少一个</span>
+<span class="kw">if</span> <span class="kw">not</span> query <span class="kw">and</span> <span class="kw">not</span> image: <span class="kw">raise</span> JsonRpcError(INVALID_PARAMS, ...)
+<span class="cm"># 2. 图像安全校验（白名单路径 / Base64）</span>
+image_input = validate_query_image(image)
+<span class="cm"># 3. 混合检索</span>
+results = hybrid.search(query=query, top_k=top_k, filters=filters, trace=trace, image=image_input)
+<span class="cm"># 4. 可选重排（仅文本驱动）</span>
+<span class="kw">if</span> query <span class="kw">and</span> settings.rerank.enabled: results = reranker.rerank(query, results, trace=trace)
+<span class="cm"># 5. 构建双通道响应</span>
+result = self._builder.build(results, query)
+<span class="cm"># 6. 追加图片（多模态，失败不阻塞文本）</span>
+result.content.extend(self._multimodal.assemble(results))
+<span class="cm"># 7. 收尾 trace</span>
+trace.finish(); self._collector.collect(trace)</code></pre>
+</section>
+
+<section id="query-seq">
+<h2>⑧ 检索时序图 + RRF 算法</h2>
+<div class="mermaid">
+sequenceDiagram
+    autonumber
+    participant C as MCP Client
+    participant SV as server.py
+    participant PH as ProtocolHandler
+    participant T as QueryKnowledgeHubTool
+    participant HS as HybridSearch
+    participant DR as DenseRetriever
+    participant SR as SparseRetriever
+    participant FU as RRFFusion
+    participant RK as QueryReranker
+    participant RB as ResponseBuilder
+    C->>SV: tools/call query_knowledge_hub
+    SV->>PH: handle_tools_call(name, args)
+    PH->>T: run(query, top_k, collection, image)
+    T->>HS: search(...)
+    HS->>DR: retrieve(query) → dense[]
+    HS->>SR: retrieve(keywords) → sparse[] (无text)
+    HS->>FU: fuse(dense, sparse, k) → fused[]
+    HS->>HS: _fill_missing_text(fused)
+    HS-->>T: List RetrievalResult
+    opt rerank.enabled 且有文本
+        T->>RK: rerank(query, results)
+    end
+    T->>RB: build(results, query)
+    RB-->>T: MCPToolResult (Markdown+citations)
+    T-->>SV: payload
+    SV->>SV: _to_call_tool_result()
+    SV-->>C: CallToolResult
+</div>
+<h3>RRF（Reciprocal Rank Fusion）到底怎么算</h3>
+<div class="hl">公式：<code>RRF_score(d) = Σ 1/(k + rank_i)</code>，对文档 d 出现的每个结果列表累加，<code>k=60</code>（<code>settings.retrieval.rrf_k</code>）。</div>
+<pre class="hide-oral"><code><span class="kw">for</span> results <span class="kw">in</span> result_lists:               <span class="cm"># dense 列表、sparse 列表</span>
+    <span class="kw">for</span> rank, result <span class="kw">in</span> enumerate(results, start=<span class="num">1</span>):
+        rrf_score = <span class="num">1.0</span> / (self._k + rank)  <span class="cm"># 排名越靠前贡献越大</span>
+        scores[result.chunk_id] += rrf_score    <span class="cm"># 跨列表累加</span>
+ranked = sorted(scores.items(), key=..., reverse=<span class="kw">True</span>)[:top_k]</code></pre>
+<p><strong>为什么用 RRF 而非分数加权？</strong>Dense 的余弦相似度（0~1）和 BM25 分数（可能上百）<strong>量纲完全不同，无法直接相加</strong>。RRF 只看"排名"不看"原始分数"，天然免疫量纲差异，是混合检索的事实标准。</p>
+</section>
+
+<section id="query-types">
+<h2>⑨ 检索类型变换链路</h2>
+<div class="pipe-wrap">
+<svg width="980" height="160" viewBox="0 0 980 160" xmlns="http://www.w3.org/2000/svg" font-family="monospace" font-size="12">
+  <defs><marker id="ar2" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto"><path d="M0,0 L8,3 L0,6 Z" fill="#64748b"/></marker></defs>
+  <rect x="10" y="55" width="110" height="50" rx="8" fill="#0b1120" stroke="#64748b"/>
+  <text x="65" y="77" fill="#e2e8f0" text-anchor="middle">query/image</text>
+  <text x="65" y="95" fill="#64748b" text-anchor="middle">str/bytes</text>
+  <line x1="122" y1="80" x2="166" y2="80" stroke="#64748b" marker-end="url(#ar2)"/>
+  <text x="144" y="72" fill="#94a3b8" text-anchor="middle" font-size="9">process</text>
+  <rect x="168" y="55" width="120" height="50" rx="8" fill="#1e293b" stroke="#38bdf8"/>
+  <text x="228" y="77" fill="#38bdf8" text-anchor="middle">ProcessedQuery</text>
+  <text x="228" y="95" fill="#64748b" text-anchor="middle">keywords+filters</text>
+  <line x1="290" y1="80" x2="340" y2="55" stroke="#64748b" marker-end="url(#ar2)"/>
+  <line x1="290" y1="80" x2="340" y2="105" stroke="#64748b" marker-end="url(#ar2)"/>
+  <rect x="342" y="30" width="130" height="40" rx="8" fill="#1e293b" stroke="#a78bfa"/>
+  <text x="407" y="55" fill="#a78bfa" text-anchor="middle">dense results[]</text>
+  <rect x="342" y="90" width="130" height="40" rx="8" fill="#1e293b" stroke="#a78bfa"/>
+  <text x="407" y="115" fill="#a78bfa" text-anchor="middle">sparse results[]</text>
+  <line x1="474" y1="50" x2="524" y2="75" stroke="#64748b" marker-end="url(#ar2)"/>
+  <line x1="474" y1="110" x2="524" y2="85" stroke="#64748b" marker-end="url(#ar2)"/>
+  <rect x="526" y="55" width="110" height="50" rx="8" fill="#1e293b" stroke="#fbbf24"/>
+  <text x="581" y="77" fill="#fbbf24" text-anchor="middle">RRF fused[]</text>
+  <text x="581" y="95" fill="#64748b" text-anchor="middle">RetrievalResult</text>
+  <line x1="638" y1="80" x2="682" y2="80" stroke="#64748b" marker-end="url(#ar2)"/>
+  <text x="660" y="72" fill="#94a3b8" text-anchor="middle" font-size="9">rerank?</text>
+  <rect x="684" y="55" width="100" height="50" rx="8" fill="#1e293b" stroke="#fbbf24"/>
+  <text x="734" y="77" fill="#fbbf24" text-anchor="middle">reranked[]</text>
+  <text x="734" y="95" fill="#64748b" text-anchor="middle">（可选）</text>
+  <line x1="786" y1="80" x2="830" y2="80" stroke="#64748b" marker-end="url(#ar2)"/>
+  <text x="808" y="72" fill="#94a3b8" text-anchor="middle" font-size="9">build</text>
+  <rect x="832" y="50" width="140" height="60" rx="8" fill="#1e293b" stroke="#34d399"/>
+  <text x="902" y="74" fill="#34d399" text-anchor="middle">MCPToolResult</text>
+  <text x="902" y="92" fill="#64748b" text-anchor="middle">Markdown+citations</text>
+</svg>
+</div>
+<p>ResponseBuilder 把 <code>RetrievalResult[]</code> 交给 <code>CitationGenerator.generate()</code> 生成 1-based 引用（探测 source/page 多键，text 预览截 300 字符），再渲染成 <code>## Results for: "query"</code> + 编号列表 + <code>### References</code> 的 Markdown。空结果返回 <code>_EMPTY_HINT</code> 友好提示。</p>
+</section>
+
+<section id="agent">
+<h2>⑩ 增强路径 · Agentic RAG 五步闭环</h2>
+<p>当 <code>settings.agent.enabled=True</code> 时，<code>agentic_query</code> 工具不再直接返回段落，而是跑一个服务端自主智能体：</p>
+<div class="hl"><code>route → transform → (multi-hop retrieve → reflect)* → synthesize</code></div>
+<p>核心是 <code>AgenticRAG.run()</code>（<code>src/core/agent/agentic_rag.py</code>）。<strong>它永不抛错</strong>：任何失败都被全局 try/except 降级为单次混合检索（<code>fallback=True</code>）。</p>
+<div class="mermaid">
+flowchart TB
+    Q["query"] --> RT{"① route QueryRouter.decide"}
+    RT -->|need_retrieval=False 且有 direct_answer| DA["直接回答 AgentResult(answer)"]
+    RT -->|需要检索| TF["② transform QueryTransformer.transform 分解子查询"]
+    TF --> LOOP["③ 多跳循环 _retrieve_loop  hop < max_hops"]
+    LOOP --> RET["_retrieve(HybridSearch) → _maybe_rerank → _accumulate 去重累积"]
+    RET --> REF{"④ reflect Reflector.assess sufficient?"}
+    REF -->|不足 且有 follow_up 且 hop<max_hops| LOOP
+    REF -->|足够 / 到达上限| SY["⑤ synthesize AnswerSynthesizer.answer"]
+    SY --> AR["AgentResult answer+results+steps"]
+    LOOP -.任何异常.-> FB["_fallback 单次混合检索 fallback=True"]
+    RT -.异常.-> FB
+    FB --> AR
+</div>
+<table class="hide-oral">
+<tr><th>步</th><th>组件</th><th>做什么</th><th>失败时</th></tr>
+<tr><td>①route</td><td>QueryRouter</td><td>LLM 决定"是否检索 + 哪些 collection"（白名单校验）</td><td>降级 retrieve-all，never raises</td></tr>
+<tr><td>②transform</td><td>QueryTransformer</td><td>分解子查询，去重 + capped(max_subqueries)</td><td>回退原始 query</td></tr>
+<tr><td>③retrieve</td><td>HybridSearch + Reranker</td><td>多跳召回，_accumulate 按 chunk_id 去重保最高分</td><td>循环有 max_hops/max_context_chunks 硬上限</td></tr>
+<tr><td>④reflect</td><td>Reflector</td><td>CRAG/Self-RAG 充分性判定，不足给 follow_up_queries</td><td>保守返回 sufficient=True（停止循环）</td></tr>
+<tr><td>⑤synthesize</td><td>AnswerSynthesizer</td><td>LLM 基于 numbered context 合成带 [n] 答案</td><td>synthesize 关闭则 answer 空，只返回结果</td></tr>
+</table>
+<div class="warn"><strong>所有循环都有硬上限：</strong><code>max_hops</code>（默认 3）、<code>max_context_chunks</code>、<code>max_reflect_rounds</code>。而且 <strong>reflect 在最后一跳被跳过</strong>（<code>hop &lt; max_hops</code>）——没有"行动空间"就不浪费一次 LLM 调用。这是防止 Agent 无限循环 / 烧 token 的工程纪律。</div>
+<details class="hide-oral">
+<summary>_accumulate 去重累积的精妙之处</summary>
+<div class="dbody">
+<pre><code><span class="kw">for</span> r <span class="kw">in</span> results:
+    existing = seen.get(r.chunk_id)
+    <span class="kw">if</span> existing <span class="kw">is not</span> <span class="kw">None</span>:        <span class="cm"># 已见过：只在更高分时替换</span>
+        <span class="kw">if</span> r.score &gt; context[existing].score:
+            context[existing] = r
+        <span class="kw">continue</span>
+    <span class="kw">if</span> len(context) &gt;= max_chunks:    <span class="cm"># 预算用尽：丢弃</span>
+        <span class="kw">continue</span>
+    seen[r.chunk_id] = len(context); context.append(r); added += <span class="num">1</span></code></pre>
+<p>跨多跳累积上下文，同一个 chunk 只保留最高分版本，且总量受 <code>max_chunks</code> 约束。返回新增命中数用于 trace。</p>
+</div>
+</details>
+</section>
+
+<section id="agent-tree">
+<h2>⑪ Agent 决策树：一次 agentic_query 的命运</h2>
+<div class="mermaid">
+flowchart TB
+    S["agentic_query.run(query, image)"] --> V{"query 或 image 至少一个?"}
+    V -->|都没有| E["JsonRpcError -32602"]
+    V -->|有| EN{"settings.agent.enabled?"}
+    EN -->|False| DEL["委托 query_knowledge_hub（工具列表保持稳定）"]
+    EN -->|True| RUN["AgenticRAG.run()"]
+    RUN --> OK{"管道是否抛异常?"}
+    OK -->|正常| HAPPY["_run_agentic route→transform→hops→synthesize"]
+    OK -->|异常| FB["_fallback 单次混合检索 + best-effort 合成 fallback=True"]
+    HAPPY --> BR["_build_result answer+References+images"]
+    FB --> BR
+    DEL --> OUT["MCPToolResult"]
+    BR --> OUT
+</div>
+<p><code>AgenticQueryTool._build_result()</code> 把 <code>AgentResult</code> 组装成响应：<code>builder.build(results, query)</code> 先造引用，
+若有 <code>answer</code> 则用"答案 + <code>### References</code>"覆盖 <code>content[0]</code>，并把 <code>answer/fallback</code> 写进 <code>structured_content</code>，最后追加图片。</p>
+</section>
+
+<section id="mcp">
+<h2>⑫ MCP 协议层 · stdio JSON-RPC</h2>
+<p>对外只暴露 4 个工具。MCP 层分两半：<strong>纯 Python 的 <code>ProtocolHandler</code></strong>（可离线单测）+ <strong>薄 SDK 适配 <code>server.py</code></strong>。</p>
+<table>
+<tr><th>工具</th><th>必填参数</th><th>行为</th></tr>
+<tr><td><code>query_knowledge_hub</code></td><td>query 或 image（运行时校验）</td><td>混合检索 + 可选重排，返回段落</td></tr>
+<tr><td><code>agentic_query</code></td><td>query</td><td>自主 Agent 合成答案；agent 关闭时委托上一个</td></tr>
+<tr><td><code>list_collections</code></td><td>—</td><td>扫描 documents_dir 列出集合</td></tr>
+<tr><td><code>get_document_summary</code></td><td>（见 schema）</td><td>文档摘要</td></tr>
+</table>
+<h3>ProtocolHandler：零 SDK 依赖的 JSON-RPC 路由</h3>
+<pre class="hide-oral"><code><span class="cm"># PROTOCOL_VERSION = "2025-06-18"  SERVER_NAME = "modular-rag-mcp-server"</span>
+INVALID_REQUEST=-<span class="num">32600</span>  METHOD_NOT_FOUND=-<span class="num">32601</span>  INVALID_PARAMS=-<span class="num">32602</span>  INTERNAL_ERROR=-<span class="num">32603</span>
+
+<span class="kw">def</span> <span class="fn">handle_tools_call</span>(self, name, arguments):
+    spec = self._tools.get(name)
+    <span class="kw">if</span> spec <span class="kw">is</span> <span class="kw">None</span>: <span class="kw">raise</span> JsonRpcError(METHOD_NOT_FOUND, ...)  <span class="cm"># -32601</span>
+    self._validate_required(spec, args)                       <span class="cm"># 缺参 → -32602</span>
+    <span class="kw">try</span>:
+        result = spec.func(**args)
+    <span class="kw">except</span> JsonRpcError: <span class="kw">raise</span>                            <span class="cm"># 业务错误原样上抛</span>
+    <span class="kw">except</span> TypeError:   <span class="kw">raise</span> JsonRpcError(INVALID_PARAMS, ...)  <span class="cm"># 错误参数</span>
+    <span class="kw">except</span> Exception:   <span class="kw">raise</span> JsonRpcError(INTERNAL_ERROR, ...)  <span class="cm"># 不泄露堆栈</span></code></pre>
+<div class="danger"><strong>stdout 必须绝对干净：</strong>MCP 用 stdout 传协议消息，所以<strong>所有日志走 stderr，所有 trace 只写 <code>logs/traces.jsonl</code></strong>，绝不 print 到 stdout——否则会污染 JSON-RPC 帧，客户端直接报错。这是 stdio transport 的铁律。</div>
+<p><code>server.py</code> 用 SDK 的 <code>lowlevel.Server</code> + <code>@list_tools/@call_tool</code> 把回调接到 ProtocolHandler，<code>_to_call_tool_result()</code> 再把 dict 转成 SDK 的 <code>CallToolResult</code>（支持 ImageContent）。</p>
+</section>
+
+<section id="factory">
+<h2>⑬ 可插拔工厂 · 一次注册，到处替换</h2>
+<p>7 大能力（VectorStore / Embedding / LLM / Evaluator / Splitter / Reranker / VisionLLM）全部走同一套<strong>装饰器注册 + 惰性内建注册</strong>模式，配置里换个 <code>provider</code> 名就能切换实现。</p>
+<pre class="hide-oral"><code><span class="cm"># src/libs/vector_store/vector_store_factory.py</span>
+_VECTOR_STORE_REGISTRY: <span class="ty">dict</span>[<span class="ty">str</span>, <span class="ty">type</span>] = {}
+
+<span class="kw">def</span> <span class="fn">register_vector_store</span>(name):           <span class="cm"># 装饰器：注册一个实现</span>
+    <span class="kw">def</span> deco(cls): _VECTOR_STORE_REGISTRY[name] = cls; <span class="kw">return</span> cls
+    <span class="kw">return</span> deco
+
+<span class="kw">class</span> <span class="ty">VectorStoreFactory</span>:
+    <span class="kw">@staticmethod</span>
+    <span class="kw">def</span> <span class="fn">create</span>(settings):
+        _ensure_builtins_registered()             <span class="cm"># 惰性导入内建实现，触发注册</span>
+        cls = _VECTOR_STORE_REGISTRY[settings.provider]
+        <span class="kw">return</span> cls(settings)</code></pre>
+<div class="warn"><strong>惰性注册的坑（项目记忆）：</strong>装饰器只有在模块被 import 时才执行。若工厂在 <code>create()</code> 里不主动 <code>_ensure_builtins_registered()</code> 把内建实现 import 一遍，注册表就是空的、provider 找不到。这是"装饰器注册模式"最常见的踩坑点。</div>
+<p>所有实现都继承各自的 <code>Base*</code> 抽象基类（ABC）。例如 <code>BaseVectorStore</code> 约定 <code>upsert/query/delete/get_by_ids/provider_name</code>，并定义 <code>VectorRecord/QueryResult/VectorStoreError</code> 契约。<strong>编排层只依赖抽象，不依赖具体实现</strong>，这正是"模块化"的来源。</p>
+</section>
+
+<section id="multimodal">
+<h2>⑭ 多模态跨模态检索（路径 B）</h2>
+<p>项目用 DashScope <code>multimodal-embedding-v1</code> 把<strong>文字和图片编码进同一个 1024 维向量空间</strong>，于是"以文搜图 / 以图搜文 / 以图搜图"全都成立——它们在向量空间里本就是邻居。</p>
+<div class="mermaid">
+flowchart LR
+    subgraph 写入
+      IMG["文档内图片"] --> IE["ImageEncoder.encode_document"]
+      IE --> IV["图像向量 ChunkRecord"]
+      IV --> CH[("共享向量空间 Chroma")]
+    end
+    subgraph 检索
+      QI["查询图片"] --> EIQ["embed_image_query"]
+      EIQ --> RBV["retrieve_by_vector"]
+      RBV --> CH
+      CH --> RES["RetrievalResult（可能是图片块）"]
+    end
+</div>
+<p>检索侧在 <code>HybridSearch.search</code> 里：传了 <code>image</code> 就用 <code>embed_image_query</code> 得到图像向量、走 <code>retrieve_by_vector</code>；
+响应侧 <code>MultimodalAssembler.assemble(results)</code> 把命中块关联的图片读出来、转 Base64 <code>ImageContent</code> 追加进 <code>content</code>。</p>
+<div class="ok"><strong>降级安全：</strong>多模态是"增强"，不是"必需"。图像 embedding 拿不到时 <code>embed_image_query</code> 返回空 → 记 warning、忽略图像查询；图片组装失败 → 只警告，文本答案照常返回。</div>
+</section>
+
+<section id="observe">
+<h2>⑮ 可观测 Trace 体系</h2>
+<p>每次 query / ingestion 执行都带一个 <code>TraceContext</code>，累积带时长的 stages，结束时由 <code>TraceCollector</code> 落盘成 JSONL。</p>
+<pre class="hide-oral"><code><span class="cm"># src/core/trace/trace_context.py</span>
+trace = TraceContext(trace_type=<span class="str">"query"</span>)         <span class="cm"># 或 "ingestion"</span>
+<span class="kw">with</span> trace.stage(<span class="str">"dense_retrieval"</span>, method=<span class="str">"openai"</span>):  <span class="cm"># 自动计时</span>
+    ...
+trace.record_stage(<span class="str">"fusion"</span>, method=<span class="str">"rrf"</span>, results=<span class="num">12</span>)  <span class="cm"># 手动记一条</span>
+trace.finish()
+collector.collect(trace)                          <span class="cm"># enabled 时写 logs/traces.jsonl</span></code></pre>
+<table class="hide-oral">
+<tr><th>设计点</th><th>说明</th></tr>
+<tr><td>只记轻量字段</td><td>name/method/elapsed_ms + 计数/标志，<strong>绝不记密钥或原始 payload</strong></td></tr>
+<tr><td>永不破坏主流程</td><td><code>TraceCollector.collect</code> 内部 try/except 吞异常，trace 失败不影响检索/摄取</td></tr>
+<tr><td>不污染 stdout</td><td>只写 <code>logs/traces.jsonl</code>，保 MCP stdio 干净（见 ⑫）</td></tr>
+<tr><td>谁创建谁收尾</td><td>Pipeline 里 <code>own_trace</code> 标志决定是否 finish/collect，避免重复落盘</td></tr>
+</table>
+</section>
+
+<section id="degrade">
+<h2>⑯ 降级哲学 · 贯穿全系统的交叉切面</h2>
+<p>如果只记住这份文档的一句话，记这句：<strong>"增强功能失败一律降级，绝不崩溃"</strong>。它不是某个模块的特性，而是整个系统的设计信条。</p>
+<table>
+<tr><th>位置</th><th>失败场景</th><th>降级行为</th></tr>
+<tr><td>HybridSearch</td><td>Dense 召回异常</td><td>只用 Sparse 继续（反之亦然）</td></tr>
+<tr><td>QueryReranker</td><td>重排模型不可用</td><td>保持原序（rerank_fallback=True）</td></tr>
+<tr><td>AgenticRAG</td><td>任何环节抛错</td><td>全局降级为单次混合检索（fallback=True）</td></tr>
+<tr><td>QueryRouter</td><td>路由 LLM 失败</td><td>降级 retrieve-all，never raises</td></tr>
+<tr><td>QueryTransformer</td><td>子查询分解失败</td><td>回退原始 query</td></tr>
+<tr><td>Reflector</td><td>充分性判定失败</td><td>保守 sufficient=True，停止循环</td></tr>
+<tr><td>MultimodalAssembler</td><td>图片组装失败</td><td>只警告，文本答案照常</td></tr>
+<tr><td>TraceCollector</td><td>落盘异常</td><td>吞掉异常，主流程无感</td></tr>
+</table>
+<div class="hl"><strong>配套的"硬上限"纪律：</strong>Agent 所有循环都有 <code>max_hops / max_subqueries / max_context_chunks / max_reflect_rounds</code> 上限。降级保证"不崩"，上限保证"不失控烧钱"。两者合起来，才是生产级 RAG 的安全网。</div>
+<div class="card hide-oral">
+<strong>安全要点（贯穿）：</strong>
+<ul>
+<li><strong>图像输入白名单</strong>：<code>validate_query_image</code> 只接受 Base64 或 <code>data/</code> 目录下的本地路径，防路径穿越。</li>
+<li><strong>API Key 仅环境变量</strong>：<code>_resolve_api_keys</code> 按 provider 从 DASHSCOPE/OPENAI/DEEPSEEK/AZURE 环境变量回退，密钥不入配置文件、不进 trace。</li>
+<li><strong>错误不泄露堆栈</strong>：ProtocolHandler 把内部异常统一包成 <code>-32603 "Internal error"</code>。</li>
+</ul>
+</div>
+</section>
+
+<section id="oral">
+<h2>⑰ 口述练习模板</h2>
+<p>点击右上角"🎤 口述模式"隐藏代码，对着下面的填空把两条管道讲一遍。讲不出来的空，回到对应章节重读。</p>
+<div class="oral-tpl">
+<strong>管道 A（摄取）：</strong>当我运行 ingest，<span class="blank">________</span> 先算文件哈希去重；然后 Loader 把文件读成
+<span class="blank">________</span>，DocumentChunker 切成 <span class="blank">________</span>；接着三连 Transform 做
+<span class="blank">________ / ________ / ________</span>；BatchProcessor 把每块编码成同时带
+<span class="blank">________</span> 和 <span class="blank">________</span> 的 ChunkRecord；最后 VectorUpserter 写进
+<span class="blank">________</span>，BM25Indexer 写进 <span class="blank">________</span>。
+</div>
+<div class="oral-tpl">
+<strong>管道 B（检索）：</strong>客户端调 query_knowledge_hub，HybridSearch 先 <span class="blank">________</span> 抽关键词；
+Dense 走 <span class="blank">________</span> 召回，Sparse 走 <span class="blank">________</span> 召回；两路都有就用
+<span class="blank">________</span> 融合（公式 <span class="blank">________</span>，k=<span class="blank">____</span>）；Sparse 结果缺全文由
+<span class="blank">________</span> 补齐；可选 <span class="blank">________</span> 重排；最后 ResponseBuilder 造出
+<span class="blank">________</span>（content + structuredContent 双通道）。
+</div>
+<div class="oral-tpl">
+<strong>Agentic 增强：</strong>开启后五步是 <span class="blank">________ → ________ → ________ → ________ → ________</span>；
+任何一步出错都会 <span class="blank">________</span>（fallback=True）；所有循环受 <span class="blank">________</span> 上限约束。
+</div>
+</section>
+
+<section id="cheat">
+<h2>⑱ 速查卡</h2>
+<table>
+<tr><th>模块</th><th>职责</th><th>关键入口</th></tr>
+<tr><td><code>mcp_server/server</code></td><td>SDK stdio 适配</td><td>build_protocol_handler / run_stdio / _to_call_tool_result</td></tr>
+<tr><td><code>mcp_server/protocol_handler</code></td><td>纯 Python JSON-RPC 路由</td><td>handle_tools_list / handle_tools_call</td></tr>
+<tr><td><code>ingestion/pipeline</code></td><td>摄取六阶段编排</td><td>IngestionPipeline.run</td></tr>
+<tr><td><code>ingestion/embedding</code></td><td>双向量编码</td><td>BatchProcessor / DenseEncoder / SparseEncoder</td></tr>
+<tr><td><code>ingestion/storage</code></td><td>双索引写入</td><td>VectorUpserter.upsert / BM25Indexer.build</td></tr>
+<tr><td><code>query_engine/hybrid_search</code></td><td>混合检索编排</td><td>HybridSearch.search / _fill_missing_text</td></tr>
+<tr><td><code>query_engine/fusion</code></td><td>RRF 融合</td><td>RRFFusion.fuse（k=60）</td></tr>
+<tr><td><code>query_engine/reranker</code></td><td>重排（可降级）</td><td>QueryReranker.rerank</td></tr>
+<tr><td><code>agent/agentic_rag</code></td><td>自主检索编排</td><td>AgenticRAG.run / _run_agentic / _fallback</td></tr>
+<tr><td><code>agent/{router,transformer,reflector,answer_synthesizer}</code></td><td>Agent 子组件</td><td>decide / transform / assess / answer</td></tr>
+<tr><td><code>response/response_builder</code></td><td>双通道响应</td><td>ResponseBuilder.build / CitationGenerator</td></tr>
+<tr><td><code>core/trace</code></td><td>可观测</td><td>TraceContext / TraceCollector.collect</td></tr>
+<tr><td><code>libs/*_factory</code></td><td>7 大可插拔工厂</td><td>register_xxx / _ensure_builtins_registered</td></tr>
+<tr><td><code>core/types</code></td><td>核心契约</td><td>Document/Chunk/ChunkRecord/RetrievalResult</td></tr>
+</table>
+<div class="hl" style="margin-top:2rem;">
+<strong>恭喜读完。</strong>现在合上文档，从"一个 PDF 被 ingest"开始口述到"Chroma + BM25 落盘"，再从"客户端调 query"口述到"一段带引用的 Markdown"。卡壳处回到对应章节重读。掌握两条主管道后，Agentic RAG 只是检索管道的自主变奏。
+</div>
+</section>
+
+<footer style="margin-top:3rem;padding-top:1.5rem;border-top:1px solid var(--border);color:var(--muted);font-size:.85rem;">
+Modular RAG MCP Server 数据流深度教学 · 基于源码逐函数核实生成 · 所有模块名/函数名/类型名与实际代码一致
+</footer>
+</main>
+</div>
+<script>
+mermaid.initialize({
+  startOnLoad: true,
+  theme: 'dark',
+  themeVariables: {
+    background: '#1e293b', primaryColor: '#1e293b', primaryTextColor: '#e2e8f0',
+    primaryBorderColor: '#475569', lineColor: '#64748b', fontSize: '14px'
+  },
+  flowchart: { curve: 'basis', useMaxWidth: true },
+  sequence: { useMaxWidth: true }
+});
+const oralBtn = document.getElementById('oralBtn');
+oralBtn.addEventListener('click', () => {
+  document.body.classList.toggle('oral-mode');
+  const on = document.body.classList.contains('oral-mode');
+  oralBtn.classList.toggle('active', on);
+  oralBtn.textContent = on ? '📖 完整模式' : '🎤 口述模式';
+});
+const links = document.querySelectorAll('nav.toc a');
+const sections = document.querySelectorAll('main section');
+const obs = new IntersectionObserver((entries) => {
+  entries.forEach(e => {
+    if (e.isIntersecting) {
+      const id = e.target.id;
+      links.forEach(a => a.style.color =
+        a.getAttribute('href') === '#' + id ? 'var(--accent)' : '');
+    }
+  });
+}, { rootMargin: '-10% 0px -80% 0px' });
+sections.forEach(s => obs.observe(s));
+</script>
+</body>
+</html>

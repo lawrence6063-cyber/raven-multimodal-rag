@@ -1,65 +1,133 @@
 {
-  "_comment": "针对真实论文知识库的黄金测试集（与 data/documents/ 下 15 篇论文对应）。expected_sources 使用 source_path 完整路径，与 EvalRunner._resolve_source 解析一致。注意：tests/fixtures/golden_test_set.json 是给单测/E2E 内存语料用的，与此文件互不影响。",
+  "_comment": "针对真实论文知识库的黄金测试集（与 data/documents/ 下 15 篇论文对应）。expected_sources 使用 source_path 完整路径，与 EvalRunner._resolve_source 解析一致。注意：tests/fixtures/golden_test_set.json 是给单测/E2E 内存语料用的，与此文件互不影响。query 分三类：title_match（标题直接匹配，简单基线）、semantic（语义描述，不含论文标题，测试语义检索能力）、multi_doc（多正确答案，测试召回完备性）。",
   "test_cases": [
     {
       "query": "What is Dense Passage Retrieval (DPR) for open-domain question answering?",
-      "expected_sources": ["data/documents/rag/02_dense_passage_retrieval.pdf"]
+      "expected_sources": ["data/documents/rag/02_dense_passage_retrieval.pdf"],
+      "category": "title_match"
     },
     {
       "query": "How does Retrieval-Augmented Generation combine a retriever with a generator for knowledge-intensive tasks?",
-      "expected_sources": ["data/documents/rag/01_rag_knowledge_intensive_nlp.pdf"]
+      "expected_sources": ["data/documents/rag/01_rag_knowledge_intensive_nlp.pdf"],
+      "category": "title_match"
     },
     {
       "query": "REALM retrieval-augmented language model pre-training",
-      "expected_sources": ["data/documents/rag/03_realm.pdf"]
+      "expected_sources": ["data/documents/rag/03_realm.pdf"],
+      "category": "title_match"
     },
     {
       "query": "Fusion-in-Decoder: leveraging passage retrieval with generative models for open domain QA",
-      "expected_sources": ["data/documents/rag/04_fusion_in_decoder.pdf"]
+      "expected_sources": ["data/documents/rag/04_fusion_in_decoder.pdf"],
+      "category": "title_match"
     },
     {
       "query": "Self-RAG: learning to retrieve, generate and critique through self-reflection",
-      "expected_sources": ["data/documents/rag/05_self_rag.pdf"]
+      "expected_sources": ["data/documents/rag/05_self_rag.pdf"],
+      "category": "title_match"
     },
     {
       "query": "Attention is all you need: the Transformer architecture with self-attention",
-      "expected_sources": ["data/documents/llm/01_transformer_attention_is_all_you_need.pdf"]
+      "expected_sources": ["data/documents/llm/01_transformer_attention_is_all_you_need.pdf"],
+      "category": "title_match"
     },
     {
       "query": "BERT: pre-training of deep bidirectional transformers for language understanding",
-      "expected_sources": ["data/documents/llm/02_bert.pdf"]
+      "expected_sources": ["data/documents/llm/02_bert.pdf"],
+      "category": "title_match"
     },
     {
       "query": "GPT-3: language models are few-shot learners",
-      "expected_sources": ["data/documents/llm/03_gpt3_few_shot_learners.pdf"]
+      "expected_sources": ["data/documents/llm/03_gpt3_few_shot_learners.pdf"],
+      "category": "title_match"
     },
     {
       "query": "LLaMA: open and efficient foundation language models",
-      "expected_sources": ["data/documents/llm/04_llama.pdf"]
+      "expected_sources": ["data/documents/llm/04_llama.pdf"],
+      "category": "title_match"
     },
     {
       "query": "InstructGPT: training language models to follow instructions with human feedback (RLHF)",
-      "expected_sources": ["data/documents/llm/05_instructgpt.pdf"]
+      "expected_sources": ["data/documents/llm/05_instructgpt.pdf"],
+      "category": "title_match"
     },
     {
       "query": "ReAct: synergizing reasoning and acting in language models",
-      "expected_sources": ["data/documents/agent/01_react.pdf"]
+      "expected_sources": ["data/documents/agent/01_react.pdf"],
+      "category": "title_match"
     },
     {
       "query": "Toolformer: language models can teach themselves to use tools",
-      "expected_sources": ["data/documents/agent/02_toolformer.pdf"]
+      "expected_sources": ["data/documents/agent/02_toolformer.pdf"],
+      "category": "title_match"
     },
     {
       "query": "Reflexion: language agents with verbal reinforcement learning",
-      "expected_sources": ["data/documents/agent/03_reflexion.pdf"]
+      "expected_sources": ["data/documents/agent/03_reflexion.pdf"],
+      "category": "title_match"
     },
     {
       "query": "Generative Agents: interactive simulacra of human behavior",
-      "expected_sources": ["data/documents/agent/04_generative_agents.pdf"]
+      "expected_sources": ["data/documents/agent/04_generative_agents.pdf"],
+      "category": "title_match"
     },
     {
       "query": "HuggingGPT: solving AI tasks with ChatGPT and its friends in Hugging Face",
-      "expected_sources": ["data/documents/agent/05_hugginggpt.pdf"]
+      "expected_sources": ["data/documents/agent/05_hugginggpt.pdf"],
+      "category": "title_match"
+    },
+    {
+      "query": "哪篇论文提出了用双编码器分别编码问题和段落，通过点积相似度做开放域问答的检索？",
+      "expected_sources": ["data/documents/rag/02_dense_passage_retrieval.pdf"],
+      "category": "semantic"
+    },
+    {
+      "query": "哪篇论文在预训练阶段就引入了检索机制，通过隐式文档检索增强语言模型？",
+      "expected_sources": ["data/documents/rag/03_realm.pdf"],
+      "category": "semantic"
+    },
+    {
+      "query": "哪篇论文让语言模型自己学会调用外部工具（如计算器、搜索引擎），且不需要人工标注工具调用的数据？",
+      "expected_sources": ["data/documents/agent/02_toolformer.pdf"],
+      "category": "semantic"
+    },
+    {
+      "query": "哪篇论文提出用自我反思的方式让 Agent 从失败中学习，通过语言反馈而非梯度更新来改进？",
+      "expected_sources": ["data/documents/agent/03_reflexion.pdf"],
+      "category": "semantic"
+    },
+    {
+      "query": "哪篇论文用人类反馈的强化学习（RLHF）来对齐语言模型，使其输出更符合人类指令？",
+      "expected_sources": ["data/documents/llm/05_instructgpt.pdf"],
+      "category": "semantic"
+    },
+    {
+      "query": "有哪些论文与 Transformer 自注意力架构直接相关？",
+      "expected_sources": [
+        "data/documents/llm/01_transformer_attention_is_all_you_need.pdf",
+        "data/documents/llm/02_bert.pdf",
+        "data/documents/llm/03_gpt3_few_shot_learners.pdf"
+      ],
+      "category": "multi_doc"
+    },
+    {
+      "query": "有哪些论文讨论了检索增强生成（RAG）或知识检索的方法？",
+      "expected_sources": [
+        "data/documents/rag/01_rag_knowledge_intensive_nlp.pdf",
+        "data/documents/rag/02_dense_passage_retrieval.pdf",
+        "data/documents/rag/03_realm.pdf",
+        "data/documents/rag/05_self_rag.pdf"
+      ],
+      "category": "multi_doc"
+    },
+    {
+      "query": "有哪些论文让 LLM 学会使用工具或与外部环境交互来完成任务？",
+      "expected_sources": [
+        "data/documents/agent/01_react.pdf",
+        "data/documents/agent/02_toolformer.pdf",
+        "data/documents/agent/05_hugginggpt.pdf"
+      ],
+      "category": "multi_doc"
     }
   ]
 }
