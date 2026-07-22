@@ -2,20 +2,20 @@
 # See DEV_SPEC.md Section 5 for detailed field descriptions
 
 llm:
-  provider: "qwen"            # qwen(DashScope) | openai | azure | ollama | deepseek
-  model: "qwen3.7-max-preview"          # qwen3.7-max(最新旗舰) | qwen3-max | qwen-plus
-  api_key: "sk-691b8e8f59da4ee480df10d908eac862"                 # 填入 DashScope API Key（留空则回退环境变量）
+  provider: "deepseek"        # qwen(DashScope) | openai | azure | ollama | deepseek
+  model: "deepseek-v4-pro"    # DeepSeek 生成模型（兼容 OpenAI 协议，仅 chat 无 embedding）
+  api_key: "sk-7ea6a249a0534c1b80b87a107a119fcb"                 # 留空：从 DEEPSEEK_API_KEY 环境变量注入（禁止硬编码 key）
   azure_endpoint: ""
   deployment_name: ""
   api_version: "2024-02-01"
-  base_url: ""                # 留空自动用 DashScope 兼容地址
+  base_url: ""                # 留空自动用 https://api.deepseek.com/v1
   temperature: 0.0
   max_tokens: 4096
 
 embedding:
   provider: "qwen_multimodal"   # 路径B：图文统一向量空间（DashScope 多模态向量，非 OpenAI 兼容）
-  model: "tongyi-embedding-vision-plus"
-  api_key: "sk-691b8e8f59da4ee480df10d908eac862"                 # 同一个 DashScope API Key
+  model: "tongyi-embedding-vision-plus-2026-03-06"
+  api_key: "sk-691b8e8f59da4ee480df10d908eac862"                 # 留空：从 DASHSCOPE_API_KEY 环境变量注入（禁止硬编码 key）
   azure_endpoint: ""
   deployment_name: ""
   api_version: "2024-02-01"
@@ -39,16 +39,19 @@ splitter:
   chunk_overlap: 200
 
 retrieval:
-  top_k: 10
+  top_k: 30                    # 扩召回池，为 rerank 提供更大候选集（EVAL_OPTIMIZATION_SPEC 阶段1，原 10）
   dense_weight: 0.7
   sparse_weight: 0.3
   rrf_k: 60
 
 rerank:
-  enabled: true               # 精排：对粗排候选用 LLM 重排序，提升 top 结果质量
-  provider: "llm"              # none | cross_encoder | llm（llm 复用 qwen，零额外依赖）
-  model: ""
-  top_n: 5
+  enabled: true               # 精排：对粗排候选重排序，提升 top 结果质量
+  # cross_encoder：本地推理（ms-marco-MiniLM），实测 p95 0.71s 且精度更高，为默认。
+  # 需 pip install sentence-transformers（已在 .[eval] extras）。首用会下载 ~80MB 模型。
+  # 备选 provider: llm 复用 deepseek，零额外依赖但逐 query 一次 LLM 调用（p95≈38s，高精度模式）。
+  provider: "cross_encoder"    # none | cross_encoder | llm
+  model: ""                    # cross_encoder 留空默认 cross-encoder/ms-marco-MiniLM-L-6-v2
+  top_n: 20                    # 解开 @10 家族截断（EVAL_OPTIMIZATION_SPEC 阶段1，原 5）
 
 vision_llm:
   enabled: true
@@ -73,8 +76,10 @@ ingestion:
   image_embedding: true        # 将文档图片编码为独立多模态向量入库（跨模态检索）
 
 evaluation:
-  backends: ["custom"]         # custom | ragas
+  backends: ["ir", "custom"]   # ir(标准 IR 指标,主力) | custom(对照) | ragas(生成侧,需 key)
   golden_test_set: "data/golden_papers.json"   # 针对真实论文库；单测夹具在 tests/fixtures/
+  ks: [1, 3, 5, 10]            # IR 指标 @k 截断点
+  bootstrap_samples: 1000      # 消融显著性 bootstrap 重采样次数
 
 observability:
   trace_enabled: true

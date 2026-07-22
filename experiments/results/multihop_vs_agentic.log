@@ -1,0 +1,229 @@
+多跳 query 数: 8 | 对齐上下文预算 top_k=20 | rerank=True(cross_encoder)
+agentic 配置: route=True rewrite=True multihop=True reflect=True max_hops=3
+
+=== 对照组：单次混合检索 (single-shot) ===
+2026-07-21 11:18:27,373 [INFO] query_engine.hybrid_search: Dense: 20 results
+2026-07-21 11:18:27,445 [INFO] query_engine.hybrid_search: Sparse: 20 results
+2026-07-21 11:18:27,445 [INFO] query_engine.hybrid_search: Fused: 20 results
+2026-07-21 11:18:27,451 [INFO] query_engine.hybrid_search: Filled text for 11/11 chunks
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+Loading weights:   0%|          | 0/105 [00:00<?, ?it/s]Loading weights: 100%|██████████| 105/105 [00:00<00:00, 6674.27it/s]
+2026-07-21 11:18:44,280 [INFO] query_engine.reranker: Reranked 20 -> 20 results
+  [single] [1/8] ✅ RC=0.333 (1/3 papers) 18.8s | 哪些论文同时涉及检索增强（RAG）和 Agent 自主决策（如反思、工具调用）？...
+2026-07-21 11:18:45,112 [INFO] query_engine.hybrid_search: Dense: 20 results
+2026-07-21 11:18:45,116 [INFO] query_engine.hybrid_search: Sparse: 20 results
+2026-07-21 11:18:45,116 [INFO] query_engine.hybrid_search: Fused: 20 results
+2026-07-21 11:18:45,120 [INFO] query_engine.hybrid_search: Filled text for 10/10 chunks
+2026-07-21 11:18:45,232 [INFO] query_engine.reranker: Reranked 20 -> 20 results
+  [single] [2/8] ✅ RC=0.750 (3/4 papers) 1.0s | Which papers discuss both tool use/API calling a...
+2026-07-21 11:18:45,708 [INFO] query_engine.hybrid_search: Dense: 20 results
+2026-07-21 11:18:45,709 [INFO] query_engine.hybrid_search: Sparse: 20 results
+2026-07-21 11:18:45,709 [INFO] query_engine.hybrid_search: Fused: 20 results
+2026-07-21 11:18:45,714 [INFO] query_engine.hybrid_search: Filled text for 10/10 chunks
+2026-07-21 11:18:45,832 [INFO] query_engine.reranker: Reranked 20 -> 20 results
+  [single] [3/8] ❌ RC=0.000 (0/5 papers) 0.6s | 从预训练到对齐再到工具使用，LLM 能力演进路径上的关键论文有哪些？...
+2026-07-21 11:18:46,693 [INFO] query_engine.hybrid_search: Dense: 20 results
+2026-07-21 11:18:46,696 [INFO] query_engine.hybrid_search: Sparse: 20 results
+2026-07-21 11:18:46,696 [INFO] query_engine.hybrid_search: Fused: 20 results
+2026-07-21 11:18:46,702 [INFO] query_engine.hybrid_search: Filled text for 11/11 chunks
+2026-07-21 11:18:46,820 [INFO] query_engine.reranker: Reranked 20 -> 20 results
+  [single] [4/8] ✅ RC=0.600 (3/5 papers) 1.0s | Which papers propose Transformer-based architect...
+2026-07-21 11:18:47,298 [INFO] query_engine.hybrid_search: Dense: 20 results
+2026-07-21 11:18:47,300 [INFO] query_engine.hybrid_search: Sparse: 20 results
+2026-07-21 11:18:47,300 [INFO] query_engine.hybrid_search: Fused: 20 results
+2026-07-21 11:18:47,303 [INFO] query_engine.hybrid_search: Filled text for 13/13 chunks
+2026-07-21 11:18:47,392 [INFO] query_engine.reranker: Reranked 20 -> 20 results
+  [single] [5/8] ✅ RC=0.500 (2/4 papers) 0.6s | 有哪些论文讨论了 Agent 的长期记忆、经验回放或持久化知识存储？...
+2026-07-21 11:18:47,884 [INFO] query_engine.hybrid_search: Dense: 20 results
+2026-07-21 11:18:47,888 [INFO] query_engine.hybrid_search: Sparse: 20 results
+2026-07-21 11:18:47,888 [INFO] query_engine.hybrid_search: Fused: 20 results
+2026-07-21 11:18:47,893 [INFO] query_engine.hybrid_search: Filled text for 10/10 chunks
+2026-07-21 11:18:47,993 [INFO] query_engine.reranker: Reranked 20 -> 20 results
+  [single] [6/8] ✅ RC=1.000 (4/4 papers) 0.6s | Papers that combine vision-language models (CLIP...
+2026-07-21 11:18:48,536 [INFO] query_engine.hybrid_search: Dense: 20 results
+2026-07-21 11:18:48,537 [INFO] query_engine.hybrid_search: Sparse: 20 results
+2026-07-21 11:18:48,537 [INFO] query_engine.hybrid_search: Fused: 20 results
+2026-07-21 11:18:48,539 [INFO] query_engine.hybrid_search: Filled text for 10/10 chunks
+2026-07-21 11:18:48,661 [INFO] query_engine.reranker: Reranked 20 -> 20 results
+  [single] [7/8] ✅ RC=0.400 (2/5 papers) 0.7s | 哪些论文涉及大模型的高效微调方法（如 LoRA、指令微调）以及在工具使用或 Agent 场景的应...
+2026-07-21 11:18:49,239 [INFO] query_engine.hybrid_search: Dense: 20 results
+2026-07-21 11:18:49,241 [INFO] query_engine.hybrid_search: Sparse: 20 results
+2026-07-21 11:18:49,241 [INFO] query_engine.hybrid_search: Fused: 20 results
+2026-07-21 11:18:49,246 [INFO] query_engine.hybrid_search: Filled text for 11/11 chunks
+2026-07-21 11:18:49,346 [INFO] query_engine.reranker: Reranked 20 -> 20 results
+  [single] [8/8] ✅ RC=1.000 (4/4 papers) 0.7s | Which papers discuss collaborative multi-agent s...
+
+=== 实验组：Agentic RAG ===
+2026-07-21 11:18:57,090 [INFO] query_engine.hybrid_search: Dense: 20 results
+2026-07-21 11:18:57,091 [INFO] query_engine.hybrid_search: Sparse: 20 results
+2026-07-21 11:18:57,091 [INFO] query_engine.hybrid_search: Fused: 20 results
+2026-07-21 11:18:57,092 [INFO] query_engine.hybrid_search: Filled text for 11/11 chunks
+2026-07-21 11:18:57,253 [INFO] query_engine.reranker: Reranked 20 -> 20 results
+  [agentic] [1/8] ✅ RC=0.333 (1/3 papers) 45.3s | 哪些论文同时涉及检索增强（RAG）和 Agent 自主决策（如反思、工具调用）？...
+2026-07-21 11:19:50,495 [INFO] query_engine.hybrid_search: Dense: 20 results
+2026-07-21 11:19:50,499 [INFO] query_engine.hybrid_search: Sparse: 20 results
+2026-07-21 11:19:50,499 [INFO] query_engine.hybrid_search: Fused: 20 results
+2026-07-21 11:19:50,500 [INFO] query_engine.hybrid_search: Filled text for 10/10 chunks
+2026-07-21 11:19:50,710 [INFO] query_engine.reranker: Reranked 20 -> 20 results
+  [agentic] [2/8] ✅ RC=0.750 (3/4 papers) 65.2s | Which papers discuss both tool use/API calling a...
+2026-07-21 11:20:51,237 [INFO] query_engine.hybrid_search: Dense: 20 results
+2026-07-21 11:20:51,238 [INFO] query_engine.hybrid_search: Sparse: 20 results
+2026-07-21 11:20:51,238 [INFO] query_engine.hybrid_search: Fused: 20 results
+2026-07-21 11:20:51,243 [INFO] query_engine.hybrid_search: Filled text for 10/10 chunks
+2026-07-21 11:20:51,435 [INFO] query_engine.reranker: Reranked 20 -> 20 results
+2026-07-21 11:20:51,818 [INFO] query_engine.hybrid_search: Dense: 20 results
+2026-07-21 11:20:51,819 [INFO] query_engine.hybrid_search: Sparse: 20 results
+2026-07-21 11:20:51,819 [INFO] query_engine.hybrid_search: Fused: 20 results
+2026-07-21 11:20:51,823 [INFO] query_engine.hybrid_search: Filled text for 10/10 chunks
+2026-07-21 11:20:51,900 [INFO] query_engine.reranker: Reranked 20 -> 20 results
+2026-07-21 11:20:52,662 [INFO] query_engine.hybrid_search: Dense: 20 results
+2026-07-21 11:20:52,662 [INFO] query_engine.hybrid_search: Sparse: 20 results
+2026-07-21 11:20:52,662 [INFO] query_engine.hybrid_search: Fused: 20 results
+2026-07-21 11:20:52,663 [INFO] query_engine.hybrid_search: Filled text for 11/11 chunks
+2026-07-21 11:20:52,773 [INFO] query_engine.reranker: Reranked 20 -> 20 results
+2026-07-21 11:21:00,543 [INFO] query_engine.hybrid_search: Dense: 20 results
+2026-07-21 11:21:00,544 [INFO] query_engine.hybrid_search: Sparse: 20 results
+2026-07-21 11:21:00,544 [INFO] query_engine.hybrid_search: Fused: 20 results
+2026-07-21 11:21:00,546 [INFO] query_engine.hybrid_search: Filled text for 12/12 chunks
+2026-07-21 11:21:00,700 [INFO] query_engine.reranker: Reranked 20 -> 20 results
+2026-07-21 11:21:01,036 [INFO] query_engine.hybrid_search: Dense: 20 results
+2026-07-21 11:21:01,038 [INFO] query_engine.hybrid_search: Sparse: 20 results
+2026-07-21 11:21:01,038 [INFO] query_engine.hybrid_search: Fused: 20 results
+2026-07-21 11:21:01,040 [INFO] query_engine.hybrid_search: Filled text for 10/10 chunks
+2026-07-21 11:21:01,150 [INFO] query_engine.reranker: Reranked 20 -> 20 results
+2026-07-21 11:21:23,319 [INFO] query_engine.hybrid_search: Dense: 20 results
+2026-07-21 11:21:23,322 [INFO] query_engine.hybrid_search: Sparse: 20 results
+2026-07-21 11:21:23,322 [INFO] query_engine.hybrid_search: Fused: 20 results
+2026-07-21 11:21:23,324 [INFO] query_engine.hybrid_search: Filled text for 10/10 chunks
+2026-07-21 11:21:23,468 [INFO] query_engine.reranker: Reranked 20 -> 20 results
+2026-07-21 11:21:23,820 [INFO] query_engine.hybrid_search: Dense: 20 results
+2026-07-21 11:21:23,830 [INFO] query_engine.hybrid_search: Sparse: 20 results
+2026-07-21 11:21:23,830 [INFO] query_engine.hybrid_search: Fused: 20 results
+2026-07-21 11:21:23,834 [INFO] query_engine.hybrid_search: Filled text for 10/10 chunks
+2026-07-21 11:21:23,913 [INFO] query_engine.reranker: Reranked 20 -> 20 results
+  [agentic] [3/8] ✅ RC=0.400 (2/5 papers) 63.1s | 从预训练到对齐再到工具使用，LLM 能力演进路径上的关键论文有哪些？...
+2026-07-21 11:21:54,358 [INFO] query_engine.hybrid_search: Dense: 20 results
+2026-07-21 11:21:54,360 [INFO] query_engine.hybrid_search: Sparse: 20 results
+2026-07-21 11:21:54,360 [INFO] query_engine.hybrid_search: Fused: 20 results
+2026-07-21 11:21:54,362 [INFO] query_engine.hybrid_search: Filled text for 11/11 chunks
+2026-07-21 11:21:54,560 [INFO] query_engine.reranker: Reranked 20 -> 20 results
+2026-07-21 11:22:49,598 [INFO] query_engine.hybrid_search: Dense: 20 results
+2026-07-21 11:22:49,601 [INFO] query_engine.hybrid_search: Sparse: 20 results
+2026-07-21 11:22:49,601 [INFO] query_engine.hybrid_search: Fused: 20 results
+2026-07-21 11:22:49,603 [INFO] query_engine.hybrid_search: Filled text for 14/14 chunks
+2026-07-21 11:22:49,758 [INFO] query_engine.reranker: Reranked 20 -> 20 results
+2026-07-21 11:22:50,152 [INFO] query_engine.hybrid_search: Dense: 20 results
+2026-07-21 11:22:50,153 [INFO] query_engine.hybrid_search: Sparse: 20 results
+2026-07-21 11:22:50,153 [INFO] query_engine.hybrid_search: Fused: 20 results
+2026-07-21 11:22:50,154 [INFO] query_engine.hybrid_search: Filled text for 13/13 chunks
+2026-07-21 11:22:50,227 [INFO] query_engine.reranker: Reranked 20 -> 20 results
+2026-07-21 11:22:50,629 [INFO] query_engine.hybrid_search: Dense: 20 results
+2026-07-21 11:22:50,637 [INFO] query_engine.hybrid_search: Sparse: 20 results
+2026-07-21 11:22:50,637 [INFO] query_engine.hybrid_search: Fused: 20 results
+2026-07-21 11:22:50,640 [INFO] query_engine.hybrid_search: Filled text for 11/11 chunks
+2026-07-21 11:22:50,723 [INFO] query_engine.reranker: Reranked 20 -> 20 results
+2026-07-21 11:23:16,235 [INFO] query_engine.hybrid_search: Dense: 20 results
+2026-07-21 11:23:16,239 [INFO] query_engine.hybrid_search: Sparse: 20 results
+2026-07-21 11:23:16,239 [INFO] query_engine.hybrid_search: Fused: 20 results
+2026-07-21 11:23:16,241 [INFO] query_engine.hybrid_search: Filled text for 11/11 chunks
+2026-07-21 11:23:16,383 [INFO] query_engine.reranker: Reranked 20 -> 20 results
+2026-07-21 11:23:17,150 [INFO] query_engine.hybrid_search: Dense: 20 results
+2026-07-21 11:23:17,154 [INFO] query_engine.hybrid_search: Sparse: 20 results
+2026-07-21 11:23:17,155 [INFO] query_engine.hybrid_search: Fused: 20 results
+2026-07-21 11:23:17,157 [INFO] query_engine.hybrid_search: Filled text for 16/16 chunks
+2026-07-21 11:23:17,263 [INFO] query_engine.reranker: Reranked 20 -> 20 results
+2026-07-21 11:23:17,688 [INFO] query_engine.hybrid_search: Dense: 20 results
+2026-07-21 11:23:17,690 [INFO] query_engine.hybrid_search: Sparse: 20 results
+2026-07-21 11:23:17,690 [INFO] query_engine.hybrid_search: Fused: 20 results
+2026-07-21 11:23:17,692 [INFO] query_engine.hybrid_search: Filled text for 14/14 chunks
+2026-07-21 11:23:17,790 [INFO] query_engine.reranker: Reranked 20 -> 20 results
+  [agentic] [4/8] ✅ RC=0.600 (3/5 papers) 115.8s | Which papers propose Transformer-based architect...
+2026-07-21 11:23:57,815 [INFO] query_engine.hybrid_search: Dense: 20 results
+2026-07-21 11:23:57,816 [INFO] query_engine.hybrid_search: Sparse: 20 results
+2026-07-21 11:23:57,816 [INFO] query_engine.hybrid_search: Fused: 20 results
+2026-07-21 11:23:57,819 [INFO] query_engine.hybrid_search: Filled text for 13/13 chunks
+2026-07-21 11:23:57,943 [INFO] query_engine.reranker: Reranked 18 -> 18 results
+2026-07-21 11:23:58,332 [INFO] query_engine.hybrid_search: Dense: 20 results
+2026-07-21 11:23:58,333 [INFO] query_engine.hybrid_search: Sparse: 20 results
+2026-07-21 11:23:58,333 [INFO] query_engine.hybrid_search: Fused: 20 results
+2026-07-21 11:23:58,334 [INFO] query_engine.hybrid_search: Filled text for 11/11 chunks
+2026-07-21 11:23:58,423 [INFO] query_engine.reranker: Reranked 20 -> 20 results
+2026-07-21 11:23:58,830 [INFO] query_engine.hybrid_search: Dense: 20 results
+2026-07-21 11:23:58,831 [INFO] query_engine.hybrid_search: Sparse: 20 results
+2026-07-21 11:23:58,831 [INFO] query_engine.hybrid_search: Fused: 20 results
+2026-07-21 11:23:58,834 [INFO] query_engine.hybrid_search: Filled text for 11/11 chunks
+2026-07-21 11:23:58,964 [INFO] query_engine.reranker: Reranked 16 -> 16 results
+  [agentic] [5/8] ✅ RC=0.500 (2/4 papers) 58.8s | 有哪些论文讨论了 Agent 的长期记忆、经验回放或持久化知识存储？...
+2026-07-21 11:24:58,241 [INFO] query_engine.hybrid_search: Dense: 20 results
+2026-07-21 11:24:58,247 [INFO] query_engine.hybrid_search: Sparse: 20 results
+2026-07-21 11:24:58,247 [INFO] query_engine.hybrid_search: Fused: 20 results
+2026-07-21 11:24:58,251 [INFO] query_engine.hybrid_search: Filled text for 10/10 chunks
+2026-07-21 11:24:58,412 [INFO] query_engine.reranker: Reranked 20 -> 20 results
+  [agentic] [6/8] ✅ RC=0.750 (3/4 papers) 76.4s | Papers that combine vision-language models (CLIP...
+2026-07-21 11:26:08,882 [INFO] query_engine.hybrid_search: Dense: 20 results
+2026-07-21 11:26:08,883 [INFO] query_engine.hybrid_search: Sparse: 20 results
+2026-07-21 11:26:08,883 [INFO] query_engine.hybrid_search: Fused: 20 results
+2026-07-21 11:26:08,886 [INFO] query_engine.hybrid_search: Filled text for 11/11 chunks
+2026-07-21 11:26:09,047 [INFO] query_engine.reranker: Reranked 20 -> 20 results
+2026-07-21 11:26:09,411 [INFO] query_engine.hybrid_search: Dense: 20 results
+2026-07-21 11:26:09,411 [INFO] query_engine.hybrid_search: Sparse: 20 results
+2026-07-21 11:26:09,411 [INFO] query_engine.hybrid_search: Fused: 20 results
+2026-07-21 11:26:09,413 [INFO] query_engine.hybrid_search: Filled text for 10/10 chunks
+2026-07-21 11:26:09,501 [INFO] query_engine.reranker: Reranked 20 -> 20 results
+2026-07-21 11:26:28,895 [INFO] query_engine.hybrid_search: Dense: 20 results
+2026-07-21 11:26:28,895 [INFO] query_engine.hybrid_search: Sparse: 20 results
+2026-07-21 11:26:28,895 [INFO] query_engine.hybrid_search: Fused: 20 results
+2026-07-21 11:26:28,896 [INFO] query_engine.hybrid_search: Filled text for 10/10 chunks
+2026-07-21 11:26:29,041 [INFO] query_engine.reranker: Reranked 20 -> 20 results
+2026-07-21 11:26:29,412 [INFO] query_engine.hybrid_search: Dense: 20 results
+2026-07-21 11:26:29,413 [INFO] query_engine.hybrid_search: Sparse: 20 results
+2026-07-21 11:26:29,413 [INFO] query_engine.hybrid_search: Fused: 20 results
+2026-07-21 11:26:29,418 [INFO] query_engine.hybrid_search: Filled text for 10/10 chunks
+2026-07-21 11:26:29,511 [INFO] query_engine.reranker: Reranked 20 -> 20 results
+2026-07-21 11:26:29,896 [INFO] query_engine.hybrid_search: Dense: 20 results
+2026-07-21 11:26:29,897 [INFO] query_engine.hybrid_search: Sparse: 20 results
+2026-07-21 11:26:29,897 [INFO] query_engine.hybrid_search: Fused: 20 results
+2026-07-21 11:26:29,898 [INFO] query_engine.hybrid_search: Filled text for 10/10 chunks
+2026-07-21 11:26:29,980 [INFO] query_engine.reranker: Reranked 20 -> 20 results
+2026-07-21 11:26:46,639 [INFO] query_engine.hybrid_search: Dense: 20 results
+2026-07-21 11:26:46,643 [INFO] query_engine.hybrid_search: Sparse: 20 results
+2026-07-21 11:26:46,643 [INFO] query_engine.hybrid_search: Fused: 20 results
+2026-07-21 11:26:46,649 [INFO] query_engine.hybrid_search: Filled text for 10/10 chunks
+2026-07-21 11:26:46,801 [INFO] query_engine.reranker: Reranked 20 -> 20 results
+2026-07-21 11:26:47,182 [INFO] query_engine.hybrid_search: Dense: 20 results
+2026-07-21 11:26:47,186 [INFO] query_engine.hybrid_search: Sparse: 20 results
+2026-07-21 11:26:47,186 [INFO] query_engine.hybrid_search: Fused: 20 results
+2026-07-21 11:26:47,190 [INFO] query_engine.hybrid_search: Filled text for 10/10 chunks
+2026-07-21 11:26:47,320 [INFO] query_engine.reranker: Reranked 20 -> 20 results
+2026-07-21 11:26:47,693 [INFO] query_engine.hybrid_search: Dense: 20 results
+2026-07-21 11:26:47,695 [INFO] query_engine.hybrid_search: Sparse: 20 results
+2026-07-21 11:26:47,695 [INFO] query_engine.hybrid_search: Fused: 20 results
+2026-07-21 11:26:47,697 [INFO] query_engine.hybrid_search: Filled text for 10/10 chunks
+2026-07-21 11:26:47,794 [INFO] query_engine.reranker: Reranked 20 -> 20 results
+  [agentic] [7/8] ✅ RC=0.600 (3/5 papers) 79.4s | 哪些论文涉及大模型的高效微调方法（如 LoRA、指令微调）以及在工具使用或 Agent 场景的应...
+2026-07-21 11:27:19,523 [INFO] query_engine.hybrid_search: Dense: 20 results
+2026-07-21 11:27:19,525 [INFO] query_engine.hybrid_search: Sparse: 20 results
+2026-07-21 11:27:19,526 [INFO] query_engine.hybrid_search: Fused: 20 results
+2026-07-21 11:27:19,531 [INFO] query_engine.hybrid_search: Filled text for 10/10 chunks
+2026-07-21 11:27:19,679 [INFO] query_engine.reranker: Reranked 20 -> 20 results
+2026-07-21 11:27:20,065 [INFO] query_engine.hybrid_search: Dense: 20 results
+2026-07-21 11:27:20,067 [INFO] query_engine.hybrid_search: Sparse: 20 results
+2026-07-21 11:27:20,067 [INFO] query_engine.hybrid_search: Fused: 20 results
+2026-07-21 11:27:20,069 [INFO] query_engine.hybrid_search: Filled text for 10/10 chunks
+2026-07-21 11:27:20,167 [INFO] query_engine.reranker: Reranked 20 -> 20 results
+  [agentic] [8/8] ✅ RC=0.500 (2/4 papers) 77.9s | Which papers discuss collaborative multi-agent s...
+
+==================================================================
+Recall Completeness 对比（单次混合检索 vs Agentic RAG）
+==================================================================
+多跳 query 数: 8  |  对齐 top_k=20
+                RecallCompl.   HitRate    AvgLatency
+single-shot           0.5729    87.50%         3.0s
+agentic               0.5542   100.00%        72.7s
+------------------------------------------------------------------
+ΔRecallCompleteness = -0.0187  (配对 bootstrap 95% CI [-0.1938, +0.1500])
+ΔHitRate            = +0.1250
+符号检验            = win 2 / tie 4 / loss 2
+==================================================================
+
+✅ 结果已写入 experiments/results/multihop_singleshot_vs_agentic.json

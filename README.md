@@ -172,7 +172,11 @@ python scripts/ingest.py --path tests/fixtures/sample_documents/ --collection de
 python scripts/query.py --query "介绍一下混合检索" --verbose
 
 # 运行评估（离线无 Key 时检索降级、指标输出 0.0，仍可跑通）
-python scripts/evaluate.py --backends custom
+# ir 后端离线计算标准 IR 指标：recall/precision/mrr/map/ndcg@{1,3,5,10}
+python scripts/evaluate.py --backends ir,custom --k 1,3,5,10
+
+# 消融显著性对比（bootstrap 95% CI + paired permutation p-value）
+bash scripts/run_ablation.sh
 ```
 
 ### 4. `settings.yaml` 字段说明
@@ -187,7 +191,7 @@ python scripts/evaluate.py --backends custom
 | `rerank` | `enabled` / `provider` / `top_n` | 精排开关与后端（none/cross_encoder/llm） |
 | `vision_llm` | `enabled` / `provider` / `model` | 多模态图片描述（Image Captioning）；`provider` 支持 qwen_vision(qwen-vl-max)/azure_vision |
 | `ingestion` | `batch_size` / `bm25_index_path` / `image_embedding` / `*_enricher` | 摄取批大小、BM25 路径、图片向量入库开关、可选 LLM 增强 |
-| `evaluation` | `backends` / `golden_test_set` | 评估后端组合（custom/ragas）与黄金测试集路径 |
+| `evaluation` | `backends` / `golden_test_set` / `ks` / `bootstrap_samples` | 评估后端组合（ir/custom/ragas）、黄金测试集路径、IR 指标 @k 截断点、消融 bootstrap 次数 |
 | `observability` | `trace_enabled` / `log_file` / `log_level` | 链路追踪开关、JSON Lines 日志文件、日志级别 |
 | `agent` | `enabled` / `max_hops` / `max_subqueries` / `max_reflect_rounds` / `max_context_chunks` | Agentic RAG 开关与硬上限 |
 

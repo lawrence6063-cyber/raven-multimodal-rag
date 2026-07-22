@@ -21,6 +21,7 @@ dependencies = [
     "pymupdf>=1.24.0",
     "pdfplumber>=0.11.0",
     "streamlit>=1.30.0",
+    "numpy>=1.24.0",
 ]
 
 [project.optional-dependencies]
@@ -28,6 +29,15 @@ dev = [
     "pytest>=7.4.0",
     "pytest-cov>=4.1.0",
     "pytest-asyncio>=0.21.0",
+]
+# eval: 可选评估依赖。pytrec_eval 用于 IR 指标金标准交叉校验；beir 用于公开基准锚定；
+# ragas 用于生成侧真跑（faithfulness/answer_relevancy 等）；sentence-transformers 用于
+# cross-encoder 精排（阶段3 低延迟方案，本地推理）。核心 IR 指标仅依赖 numpy。
+eval = [
+    "pytrec_eval>=0.5",
+    "beir>=2.0.0",
+    "ragas>=0.1.0",
+    "sentence-transformers>=2.2.0",
 ]
 
 [tool.setuptools.packages.find]

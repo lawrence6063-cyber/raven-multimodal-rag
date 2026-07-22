@@ -17,6 +17,7 @@ class EvalInput:
     retrieved_texts: list[str] = field(default_factory=list)
     answer: str = ""
     contexts: list[str] = field(default_factory=list)
+    relevance: dict[str, int] = field(default_factory=dict)  # id -> grade(0..3)，缺省命中视为 1
 
 
 @dataclass

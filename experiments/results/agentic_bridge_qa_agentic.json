@@ -1,0 +1,3315 @@
+{
+  "experiment": "agentic_composition_qa_arm",
+  "dataset": "data/agentic_bridge_qa.json",
+  "dataset_sha256": "770cc4f49eab7683b0ea5e076963b99150b90b968acbaa8371fb1f0eff3946cd",
+  "config": {
+    "arm": "agentic",
+    "split": "test",
+    "retrieval_top_k": 20,
+    "context_budget": 20,
+    "llm_provider": "deepseek",
+    "llm_model": "deepseek-v4-pro",
+    "embedding_provider": "qwen_multimodal",
+    "embedding_model": "tongyi-embedding-vision-plus-2026-03-06",
+    "rerank_provider": "cross_encoder",
+    "max_hops": 3,
+    "max_subqueries": 3,
+    "max_reflect_rounds": 2
+  },
+  "rows": [
+    {
+      "case_id": "composition-007",
+      "query": "What does LoRA’s reparametrization train while keeping pre-trained weights frozen, and what trade-off does Chinchilla formulate under a fixed FLOPs budget?",
+      "answer": "The provided passages do not contain sufficient information to answer this question.",
+      "retrieved_chunk_ids": [
+        "doc_5692a5514787a8c6_0001_43820473",
+        "doc_2e663675ae36ad12_0015_fb2c95a2",
+        "doc_5692a5514787a8c6_0017_d5f66915",
+        "doc_2e663675ae36ad12_0043_40f57b78",
+        "doc_5692a5514787a8c6_0069_6f2976e6",
+        "doc_2e663675ae36ad12_0006_9caafe57",
+        "doc_97fd272f1fdfc186_0038_049c5ff2",
+        "doc_97fd272f1fdfc186_0229_cc4f1e00",
+        "doc_5692a5514787a8c6_0093_34367540",
+        "doc_2e663675ae36ad12_0059_eb7e0fd5",
+        "doc_c1984bb50a5b90fd_0195_dcb87160",
+        "doc_97fd272f1fdfc186_0042_1331d8a8",
+        "doc_97fd272f1fdfc186_0332_1c346943",
+        "doc_2e663675ae36ad12_0004_a0361904",
+        "doc_97fd272f1fdfc186_0201_4b5f116f",
+        "doc_97fd272f1fdfc186_0215_0c419421",
+        "doc_c1984bb50a5b90fd_0188_ef5dbcba",
+        "doc_97fd272f1fdfc186_0230_647cad62",
+        "doc_2e663675ae36ad12_0000_9b6f632a",
+        "doc_2e663675ae36ad12_0032_644c72e1"
+      ],
+      "retrieved_sources": [
+        "data/documents/llm/02_bert.pdf",
+        "data/documents/llm/04_llama.pdf",
+        "data/documents/llm/02_bert.pdf",
+        "data/documents/llm/04_llama.pdf",
+        "data/documents/llm/02_bert.pdf",
+        "data/documents/llm/04_llama.pdf",
+        "data/documents/llm/03_gpt3_few_shot_learners.pdf",
+        "data/documents/llm/03_gpt3_few_shot_learners.pdf",
+        "data/documents/llm/02_bert.pdf",
+        "data/documents/llm/04_llama.pdf",
+        "data/documents/llm/05_instructgpt.pdf",
+        "data/documents/llm/03_gpt3_few_shot_learners.pdf",
+        "data/documents/llm/03_gpt3_few_shot_learners.pdf",
+        "data/documents/llm/04_llama.pdf",
+        "data/documents/llm/03_gpt3_few_shot_learners.pdf",
+        "data/documents/llm/03_gpt3_few_shot_learners.pdf",
+        "data/documents/llm/05_instructgpt.pdf",
+        "data/documents/llm/03_gpt3_few_shot_learners.pdf",
+        "data/documents/llm/04_llama.pdf",
+        "data/documents/llm/04_llama.pdf"
+      ],
+      "used_citation_ids": [],
+      "cited_chunk_ids": [],
+      "latency_ms": 66200.96,
+      "retrieval_calls": 6,
+      "llm_calls": 5,
+      "fallback": false,
+      "steps": [
+        {
+          "stage": "route",
+          "need_retrieval": true,
+          "collections": [
+            "llm"
+          ]
+        },
+        {
+          "stage": "rewrite",
+          "n_subqueries": 2
+        },
+        {
+          "stage": "hop_1",
+          "subqueries": [
+            "LoRA reparametrization trainable parameters low-rank matrices while pre-trained weights frozen",
+            "Chinchilla trade-off model size vs training tokens under fixed FLOPs budget"
+          ],
+          "new_hits": 28,
+          "candidate_count": 28,
+          "context_size": 20
+        },
+        {
+          "stage": "reflect_1",
+          "sufficient": false,
+          "n_followup": 2
+        },
+        {
+          "stage": "hop_2",
+          "subqueries": [
+            "LoRA reparametrization low-rank weight matrices training frozen pre-trained weights",
+            "Chinchilla compute trade-off model size data tokens fixed FLOPs Hoffmann 2022"
+          ],
+          "new_hits": 6,
+          "candidate_count": 34,
+          "context_size": 20
+        },
+        {
+          "stage": "reflect_2",
+          "sufficient": false,
+          "n_followup": 2
+        },
+        {
+          "stage": "hop_3",
+          "subqueries": [
+            "LoRA reparametrization train low-rank matrices frozen pre-trained weights",
+            "Chinchilla scaling laws trade-off model size training tokens fixed FLOPs budget"
+          ],
+          "new_hits": 6,
+          "candidate_count": 40,
+          "context_size": 20
+        },
+        {
+          "stage": "synthesize",
+          "answer_len": 84,
+          "n_citations": 0
+        }
+      ],
+      "audit": {
+        "candidate_count": 94,
+        "unique_candidate_count": 40,
+        "request_count": 6,
+        "selected_count": 20,
+        "selected_by_request": {
+          "hop-1-request-1": [
+            "doc_5692a5514787a8c6_0001_43820473",
+            "doc_97fd272f1fdfc186_0038_049c5ff2",
+            "doc_97fd272f1fdfc186_0332_1c346943",
+            "doc_97fd272f1fdfc186_0201_4b5f116f",
+            "doc_c1984bb50a5b90fd_0188_ef5dbcba",
+            "doc_2e663675ae36ad12_0000_9b6f632a"
+          ],
+          "hop-1-request-2": [
+            "doc_2e663675ae36ad12_0015_fb2c95a2",
+            "doc_97fd272f1fdfc186_0229_cc4f1e00",
+            "doc_2e663675ae36ad12_0004_a0361904",
+            "doc_97fd272f1fdfc186_0215_0c419421",
+            "doc_97fd272f1fdfc186_0230_647cad62",
+            "doc_2e663675ae36ad12_0032_644c72e1"
+          ],
+          "hop-2-request-1": [
+            "doc_5692a5514787a8c6_0017_d5f66915",
+            "doc_5692a5514787a8c6_0093_34367540"
+          ],
+          "hop-2-request-2": [
+            "doc_2e663675ae36ad12_0043_40f57b78",
+            "doc_2e663675ae36ad12_0059_eb7e0fd5"
+          ],
+          "hop-3-request-1": [
+            "doc_5692a5514787a8c6_0069_6f2976e6",
+            "doc_c1984bb50a5b90fd_0195_dcb87160"
+          ],
+          "hop-3-request-2": [
+            "doc_2e663675ae36ad12_0006_9caafe57",
+            "doc_97fd272f1fdfc186_0042_1331d8a8"
+          ]
+        }
+      },
+      "error": "",
+      "metrics": {
+        "evidence_chain_complete": 0.0,
+        "evidence_recall": 0.0,
+        "answer_fact_f1": 0.02631578947368421,
+        "citation_precision": 0.0,
+        "citation_recall": 0.0,
+        "invalid_citation_rate": 0.0
+      }
+    },
+    {
+      "case_id": "composition-008",
+      "query": "Why might scaling up a language model's size, dataset, and compute according to the power-law relationship not fix the misalignment issue where the standard next-token prediction objective differs from following user instructions helpfully and safely?",
+      "answer": "Scaling up a language model does not inherently make it better at following a user's intent because the default next-token prediction objective is only a proxy for the actual goal of following instructions helpfully and safely [4]. As a result, larger models can still generate outputs that are untruthful, toxic, or not helpful [8], since the training objective remains different from the desired behavior regardless of model size [3].",
+      "retrieved_chunk_ids": [
+        "doc_97fd272f1fdfc186_0054_efd3ea46",
+        "doc_2e663675ae36ad12_0001_ef37cd85",
+        "doc_c1984bb50a5b90fd_0005_b5746118",
+        "doc_c1984bb50a5b90fd_0118_ef1908ca",
+        "doc_2e663675ae36ad12_0059_eb7e0fd5",
+        "doc_2e663675ae36ad12_0057_e262d7c3",
+        "doc_97fd272f1fdfc186_0037_e05a7f29",
+        "doc_c1984bb50a5b90fd_0001_5a3fd893",
+        "doc_97fd272f1fdfc186_0051_1875a00e",
+        "doc_c1984bb50a5b90fd_0021_3a6f627a",
+        "doc_5692a5514787a8c6_0030_370124da",
+        "doc_c1984bb50a5b90fd_0003_f608da5e",
+        "doc_c1984bb50a5b90fd_0132_a3d86a91",
+        "doc_c1984bb50a5b90fd_0101_4178e1e4",
+        "doc_5692a5514787a8c6_0029_7e2739a4",
+        "doc_5692a5514787a8c6_0088_212e69e5"
+      ],
+      "retrieved_sources": [
+        "data/documents/llm/03_gpt3_few_shot_learners.pdf",
+        "data/documents/llm/04_llama.pdf",
+        "data/documents/llm/05_instructgpt.pdf",
+        "data/documents/llm/05_instructgpt.pdf",
+        "data/documents/llm/04_llama.pdf",
+        "data/documents/llm/04_llama.pdf",
+        "data/documents/llm/03_gpt3_few_shot_learners.pdf",
+        "data/documents/llm/05_instructgpt.pdf",
+        "data/documents/llm/03_gpt3_few_shot_learners.pdf",
+        "data/documents/llm/05_instructgpt.pdf",
+        "data/documents/llm/02_bert.pdf",
+        "data/documents/llm/05_instructgpt.pdf",
+        "data/documents/llm/05_instructgpt.pdf",
+        "data/documents/llm/05_instructgpt.pdf",
+        "data/documents/llm/02_bert.pdf",
+        "data/documents/llm/02_bert.pdf"
+      ],
+      "used_citation_ids": [
+        3,
+        4,
+        8
+      ],
+      "cited_chunk_ids": [
+        "doc_c1984bb50a5b90fd_0005_b5746118",
+        "doc_c1984bb50a5b90fd_0118_ef1908ca",
+        "doc_c1984bb50a5b90fd_0001_5a3fd893"
+      ],
+      "latency_ms": 43560.04,
+      "retrieval_calls": 1,
+      "llm_calls": 4,
+      "fallback": false,
+      "steps": [
+        {
+          "stage": "route",
+          "need_retrieval": true,
+          "collections": [
+            "llm"
+          ]
+        },
+        {
+          "stage": "rewrite",
+          "n_subqueries": 1
+        },
+        {
+          "stage": "hop_1",
+          "subqueries": [
+            "scaling language model size dataset compute power-law relationship does not fix misalignment next-token prediction vs following user instructions helpfully safely"
+          ],
+          "new_hits": 16,
+          "candidate_count": 16,
+          "context_size": 16
+        },
+        {
+          "stage": "reflect_1",
+          "sufficient": true,
+          "n_followup": 0
+        },
+        {
+          "stage": "synthesize",
+          "answer_len": 436,
+          "n_citations": 3
+        }
+      ],
+      "audit": {
+        "candidate_count": 16,
+        "unique_candidate_count": 16,
+        "request_count": 1,
+        "selected_count": 16,
+        "selected_by_request": {
+          "hop-1-request-1": [
+            "doc_97fd272f1fdfc186_0054_efd3ea46",
+            "doc_2e663675ae36ad12_0001_ef37cd85",
+            "doc_c1984bb50a5b90fd_0005_b5746118",
+            "doc_c1984bb50a5b90fd_0118_ef1908ca",
+            "doc_2e663675ae36ad12_0059_eb7e0fd5",
+            "doc_2e663675ae36ad12_0057_e262d7c3",
+            "doc_97fd272f1fdfc186_0037_e05a7f29",
+            "doc_c1984bb50a5b90fd_0001_5a3fd893",
+            "doc_97fd272f1fdfc186_0051_1875a00e",
+            "doc_c1984bb50a5b90fd_0021_3a6f627a",
+            "doc_5692a5514787a8c6_0030_370124da",
+            "doc_c1984bb50a5b90fd_0003_f608da5e",
+            "doc_c1984bb50a5b90fd_0132_a3d86a91",
+            "doc_c1984bb50a5b90fd_0101_4178e1e4",
+            "doc_5692a5514787a8c6_0029_7e2739a4",
+            "doc_5692a5514787a8c6_0088_212e69e5"
+          ]
+        }
+      },
+      "error": "",
+      "metrics": {
+        "evidence_chain_complete": 0.0,
+        "evidence_recall": 0.5,
+        "answer_fact_f1": 0.19297099555787822,
+        "citation_precision": 0.3333333333333333,
+        "citation_recall": 0.5,
+        "invalid_citation_rate": 0.0
+      }
+    },
+    {
+      "case_id": "composition-009",
+      "query": "How does chain-of-thought prompting circumvent the limitations of earlier reasoning methods, and what empirical scaling patterns were observed for Transformer language models?",
+      "answer": "The provided passages do not contain sufficient information to answer this question.",
+      "retrieved_chunk_ids": [
+        "doc_2e663675ae36ad12_0087_ce6ba0de",
+        "doc_2e663675ae36ad12_0059_eb7e0fd5",
+        "doc_97fd272f1fdfc186_0023_59049dbf",
+        "doc_97fd272f1fdfc186_0196_8f1d718b",
+        "doc_97fd272f1fdfc186_0154_078d14af",
+        "doc_97fd272f1fdfc186_0198_403abc9e",
+        "doc_97fd272f1fdfc186_0029_9fc01529",
+        "doc_2e663675ae36ad12_0057_e262d7c3",
+        "doc_c1984bb50a5b90fd_0093_a8a77a31",
+        "doc_97fd272f1fdfc186_0037_e05a7f29",
+        "doc_97fd272f1fdfc186_0306_b8820fec",
+        "doc_5692a5514787a8c6_0063_73236905",
+        "doc_2e663675ae36ad12_0025_c9d17352",
+        "doc_97fd272f1fdfc186_0016_125a9c3c",
+        "doc_2e663675ae36ad12_0069_46702ac9",
+        "doc_2e663675ae36ad12_0058_d4790078",
+        "doc_2e663675ae36ad12_0017_5726145b",
+        "doc_97fd272f1fdfc186_0054_efd3ea46",
+        "doc_97fd272f1fdfc186_0096_411cf91b",
+        "doc_2e663675ae36ad12_0001_ef37cd85"
+      ],
+      "retrieved_sources": [
+        "data/documents/llm/04_llama.pdf",
+        "data/documents/llm/04_llama.pdf",
+        "data/documents/llm/03_gpt3_few_shot_learners.pdf",
+        "data/documents/llm/03_gpt3_few_shot_learners.pdf",
+        "data/documents/llm/03_gpt3_few_shot_learners.pdf",
+        "data/documents/llm/03_gpt3_few_shot_learners.pdf",
+        "data/documents/llm/03_gpt3_few_shot_learners.pdf",
+        "data/documents/llm/04_llama.pdf",
+        "data/documents/llm/05_instructgpt.pdf",
+        "data/documents/llm/03_gpt3_few_shot_learners.pdf",
+        "data/documents/llm/03_gpt3_few_shot_learners.pdf",
+        "data/documents/llm/02_bert.pdf",
+        "data/documents/llm/04_llama.pdf",
+        "data/documents/llm/03_gpt3_few_shot_learners.pdf",
+        "data/documents/llm/04_llama.pdf",
+        "data/documents/llm/04_llama.pdf",
+        "data/documents/llm/04_llama.pdf",
+        "data/documents/llm/03_gpt3_few_shot_learners.pdf",
+        "data/documents/llm/03_gpt3_few_shot_learners.pdf",
+        "data/documents/llm/04_llama.pdf"
+      ],
+      "used_citation_ids": [],
+      "cited_chunk_ids": [],
+      "latency_ms": 48912.41,
+      "retrieval_calls": 4,
+      "llm_calls": 5,
+      "fallback": false,
+      "steps": [
+        {
+          "stage": "route",
+          "need_retrieval": true,
+          "collections": [
+            "llm"
+          ]
+        },
+        {
+          "stage": "rewrite",
+          "n_subqueries": 2
+        },
+        {
+          "stage": "hop_1",
+          "subqueries": [
+            "chain-of-thought prompting circumvents limitations of earlier reasoning methods",
+            "empirical scaling patterns observed for Transformer language models"
+          ],
+          "new_hits": 29,
+          "candidate_count": 29,
+          "context_size": 20
+        },
+        {
+          "stage": "reflect_1",
+          "sufficient": false,
+          "n_followup": 2
+        },
+        {
+          "stage": "hop_2",
+          "subqueries": [
+            "chain-of-thought prompting circumvents limitations of standard few-shot reasoning",
+            "chain-of-thought scaling patterns Transformer language models"
+          ],
+          "new_hits": 6,
+          "candidate_count": 35,
+          "context_size": 20
+        },
+        {
+          "stage": "reflect_2",
+          "sufficient": false,
+          "n_followup": 2
+        },
+        {
+          "stage": "synthesize",
+          "answer_len": 84,
+          "n_citations": 0
+        }
+      ],
+      "audit": {
+        "candidate_count": 52,
+        "unique_candidate_count": 35,
+        "request_count": 4,
+        "selected_count": 20,
+        "selected_by_request": {
+          "hop-1-request-1": [
+            "doc_2e663675ae36ad12_0087_ce6ba0de",
+            "doc_97fd272f1fdfc186_0154_078d14af",
+            "doc_c1984bb50a5b90fd_0093_a8a77a31",
+            "doc_97fd272f1fdfc186_0306_b8820fec",
+            "doc_2e663675ae36ad12_0025_c9d17352",
+            "doc_2e663675ae36ad12_0069_46702ac9",
+            "doc_2e663675ae36ad12_0017_5726145b",
+            "doc_97fd272f1fdfc186_0096_411cf91b"
+          ],
+          "hop-1-request-2": [
+            "doc_2e663675ae36ad12_0059_eb7e0fd5",
+            "doc_97fd272f1fdfc186_0198_403abc9e",
+            "doc_97fd272f1fdfc186_0037_e05a7f29",
+            "doc_5692a5514787a8c6_0063_73236905",
+            "doc_97fd272f1fdfc186_0016_125a9c3c",
+            "doc_2e663675ae36ad12_0058_d4790078",
+            "doc_97fd272f1fdfc186_0054_efd3ea46",
+            "doc_2e663675ae36ad12_0001_ef37cd85"
+          ],
+          "hop-2-request-1": [
+            "doc_97fd272f1fdfc186_0023_59049dbf",
+            "doc_97fd272f1fdfc186_0029_9fc01529"
+          ],
+          "hop-2-request-2": [
+            "doc_97fd272f1fdfc186_0196_8f1d718b",
+            "doc_2e663675ae36ad12_0057_e262d7c3"
+          ]
+        }
+      },
+      "error": "",
+      "metrics": {
+        "evidence_chain_complete": 0.0,
+        "evidence_recall": 0.0,
+        "answer_fact_f1": 0.029411764705882356,
+        "citation_precision": 0.0,
+        "citation_recall": 0.0,
+        "invalid_citation_rate": 0.0
+      }
+    },
+    {
+      "case_id": "composition-010",
+      "query": "Which model architecture relies entirely on an attention mechanism instead of recurrence, and what recent trend in training such models has led to dense language models with over 500 billion parameters?",
+      "answer": "{\"answer\": \"The Transformer architecture relies entirely on an attention mechanism instead of recurrence [8]. A recent trend in training such models is the substantial increase in the capacity (scaling) of transformer language models [2].\", \"citations\": [",
+      "retrieved_chunk_ids": [
+        "doc_bdfaa68d8984f0dc_0006_27abb5d9",
+        "doc_97fd272f1fdfc186_0016_125a9c3c",
+        "doc_97fd272f1fdfc186_0051_1875a00e",
+        "doc_2e663675ae36ad12_0059_eb7e0fd5",
+        "doc_2e663675ae36ad12_0085_6476f691",
+        "doc_97fd272f1fdfc186_0196_8f1d718b",
+        "doc_2e663675ae36ad12_0057_e262d7c3",
+        "doc_bdfaa68d8984f0dc_0001_ab505a30",
+        "doc_97fd272f1fdfc186_0037_e05a7f29",
+        "doc_2e663675ae36ad12_0058_d4790078",
+        "doc_5692a5514787a8c6_0063_73236905",
+        "doc_97fd272f1fdfc186_0058_a1151924",
+        "doc_97fd272f1fdfc186_0197_369dc766",
+        "doc_2e663675ae36ad12_0001_ef37cd85",
+        "doc_bdfaa68d8984f0dc_0039_90c92c03",
+        "doc_97fd272f1fdfc186_0042_1331d8a8",
+        "doc_bdfaa68d8984f0dc_0008_4f748a24",
+        "doc_97fd272f1fdfc186_0054_efd3ea46",
+        "doc_2e663675ae36ad12_0056_cac9c5c1",
+        "doc_97fd272f1fdfc186_0209_4ebdbd52"
+      ],
+      "retrieved_sources": [
+        "data/documents/llm/01_transformer_attention_is_all_you_need.pdf",
+        "data/documents/llm/03_gpt3_few_shot_learners.pdf",
+        "data/documents/llm/03_gpt3_few_shot_learners.pdf",
+        "data/documents/llm/04_llama.pdf",
+        "data/documents/llm/04_llama.pdf",
+        "data/documents/llm/03_gpt3_few_shot_learners.pdf",
+        "data/documents/llm/04_llama.pdf",
+        "data/documents/llm/01_transformer_attention_is_all_you_need.pdf",
+        "data/documents/llm/03_gpt3_few_shot_learners.pdf",
+        "data/documents/llm/04_llama.pdf",
+        "data/documents/llm/02_bert.pdf",
+        "data/documents/llm/03_gpt3_few_shot_learners.pdf",
+        "data/documents/llm/03_gpt3_few_shot_learners.pdf",
+        "data/documents/llm/04_llama.pdf",
+        "data/documents/llm/01_transformer_attention_is_all_you_need.pdf",
+        "data/documents/llm/03_gpt3_few_shot_learners.pdf",
+        "data/documents/llm/01_transformer_attention_is_all_you_need.pdf",
+        "data/documents/llm/03_gpt3_few_shot_learners.pdf",
+        "data/documents/llm/04_llama.pdf",
+        "data/documents/llm/03_gpt3_few_shot_learners.pdf"
+      ],
+      "used_citation_ids": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20
+      ],
+      "cited_chunk_ids": [
+        "doc_bdfaa68d8984f0dc_0006_27abb5d9",
+        "doc_97fd272f1fdfc186_0016_125a9c3c",
+        "doc_97fd272f1fdfc186_0051_1875a00e",
+        "doc_2e663675ae36ad12_0059_eb7e0fd5",
+        "doc_2e663675ae36ad12_0085_6476f691",
+        "doc_97fd272f1fdfc186_0196_8f1d718b",
+        "doc_2e663675ae36ad12_0057_e262d7c3",
+        "doc_bdfaa68d8984f0dc_0001_ab505a30",
+        "doc_97fd272f1fdfc186_0037_e05a7f29",
+        "doc_2e663675ae36ad12_0058_d4790078",
+        "doc_5692a5514787a8c6_0063_73236905",
+        "doc_97fd272f1fdfc186_0058_a1151924",
+        "doc_97fd272f1fdfc186_0197_369dc766",
+        "doc_2e663675ae36ad12_0001_ef37cd85",
+        "doc_bdfaa68d8984f0dc_0039_90c92c03",
+        "doc_97fd272f1fdfc186_0042_1331d8a8",
+        "doc_bdfaa68d8984f0dc_0008_4f748a24",
+        "doc_97fd272f1fdfc186_0054_efd3ea46",
+        "doc_2e663675ae36ad12_0056_cac9c5c1",
+        "doc_97fd272f1fdfc186_0209_4ebdbd52"
+      ],
+      "latency_ms": 120197.64,
+      "retrieval_calls": 7,
+      "llm_calls": 5,
+      "fallback": false,
+      "steps": [
+        {
+          "stage": "route",
+          "need_retrieval": true,
+          "collections": [
+            "llm"
+          ]
+        },
+        {
+          "stage": "rewrite",
+          "n_subqueries": 2
+        },
+        {
+          "stage": "hop_1",
+          "subqueries": [
+            "model architecture uses only attention mechanism instead of recurrent neural networks",
+            "training trend enabling dense language models with over 500 billion parameters scaling laws"
+          ],
+          "new_hits": 40,
+          "candidate_count": 40,
+          "context_size": 20
+        },
+        {
+          "stage": "reflect_1",
+          "sufficient": false,
+          "n_followup": 3
+        },
+        {
+          "stage": "hop_2",
+          "subqueries": [
+            "dense language models over 500 billion parameters training trend",
+            "scaling laws transformer models 500B",
+            "Megatron-Turing NLG 530B parameter trend"
+          ],
+          "new_hits": 16,
+          "candidate_count": 56,
+          "context_size": 20
+        },
+        {
+          "stage": "reflect_2",
+          "sufficient": false,
+          "n_followup": 2
+        },
+        {
+          "stage": "hop_3",
+          "subqueries": [
+            "transformer dense language models over 500 billion parameters scaling",
+            "scaling trend large language models 500B parameters"
+          ],
+          "new_hits": 3,
+          "candidate_count": 59,
+          "context_size": 20
+        },
+        {
+          "stage": "synthesize",
+          "answer_len": 255,
+          "n_citations": 20
+        }
+      ],
+      "audit": {
+        "candidate_count": 131,
+        "unique_candidate_count": 59,
+        "request_count": 7,
+        "selected_count": 20,
+        "selected_by_request": {
+          "hop-1-request-1": [
+            "doc_bdfaa68d8984f0dc_0006_27abb5d9",
+            "doc_bdfaa68d8984f0dc_0001_ab505a30",
+            "doc_bdfaa68d8984f0dc_0039_90c92c03",
+            "doc_bdfaa68d8984f0dc_0008_4f748a24",
+            "doc_2e663675ae36ad12_0056_cac9c5c1"
+          ],
+          "hop-1-request-2": [
+            "doc_97fd272f1fdfc186_0016_125a9c3c",
+            "doc_97fd272f1fdfc186_0037_e05a7f29",
+            "doc_97fd272f1fdfc186_0042_1331d8a8",
+            "doc_97fd272f1fdfc186_0054_efd3ea46",
+            "doc_97fd272f1fdfc186_0209_4ebdbd52"
+          ],
+          "hop-2-request-1": [
+            "doc_97fd272f1fdfc186_0051_1875a00e",
+            "doc_2e663675ae36ad12_0058_d4790078"
+          ],
+          "hop-2-request-2": [
+            "doc_2e663675ae36ad12_0059_eb7e0fd5",
+            "doc_5692a5514787a8c6_0063_73236905"
+          ],
+          "hop-2-request-3": [
+            "doc_2e663675ae36ad12_0085_6476f691",
+            "doc_97fd272f1fdfc186_0058_a1151924"
+          ],
+          "hop-3-request-1": [
+            "doc_97fd272f1fdfc186_0196_8f1d718b",
+            "doc_97fd272f1fdfc186_0197_369dc766"
+          ],
+          "hop-3-request-2": [
+            "doc_2e663675ae36ad12_0057_e262d7c3",
+            "doc_2e663675ae36ad12_0001_ef37cd85"
+          ]
+        }
+      },
+      "error": "",
+      "metrics": {
+        "evidence_chain_complete": 0.0,
+        "evidence_recall": 0.5,
+        "answer_fact_f1": 0.2852173913043478,
+        "citation_precision": 0.05,
+        "citation_recall": 0.5,
+        "invalid_citation_rate": 0.0
+      }
+    },
+    {
+      "case_id": "composition-011",
+      "query": "How does LLaMA's pre-training incorporate scaling laws, and what limitation of scaling up model size alone does chain-of-thought prompting address?",
+      "answer": "LLaMA's pre-training incorporates scaling laws by taking inspiration from the Chinchilla scaling laws [1], with the approach of training smaller models on more tokens to achieve better performance at lower inference cost [12][17]. The provided passages do not contain sufficient information to answer the second part of the question about chain-of-thought prompting.",
+      "retrieved_chunk_ids": [
+        "doc_2e663675ae36ad12_0006_9caafe57",
+        "doc_97fd272f1fdfc186_0159_29aab02c",
+        "doc_2e663675ae36ad12_0001_ef37cd85",
+        "doc_97fd272f1fdfc186_0165_3d5ff7c1",
+        "doc_2e663675ae36ad12_0087_ce6ba0de",
+        "doc_97fd272f1fdfc186_0042_1331d8a8",
+        "doc_97fd272f1fdfc186_0209_4ebdbd52",
+        "doc_97fd272f1fdfc186_0037_e05a7f29",
+        "doc_2e663675ae36ad12_0057_e262d7c3",
+        "doc_97fd272f1fdfc186_0196_8f1d718b",
+        "doc_97fd272f1fdfc186_0212_72e8350d",
+        "doc_2e663675ae36ad12_0004_a0361904",
+        "doc_97fd272f1fdfc186_0192_76b5d303",
+        "doc_2e663675ae36ad12_0069_46702ac9",
+        "doc_97fd272f1fdfc186_0054_efd3ea46",
+        "doc_97fd272f1fdfc186_0001_434130b0",
+        "doc_2e663675ae36ad12_0003_bdcc64be",
+        "doc_c1984bb50a5b90fd_0241_c8b39b63",
+        "doc_2e663675ae36ad12_0074_43d5cd01",
+        "doc_c1984bb50a5b90fd_0093_a8a77a31"
+      ],
+      "retrieved_sources": [
+        "data/documents/llm/04_llama.pdf",
+        "data/documents/llm/03_gpt3_few_shot_learners.pdf",
+        "data/documents/llm/04_llama.pdf",
+        "data/documents/llm/03_gpt3_few_shot_learners.pdf",
+        "data/documents/llm/04_llama.pdf",
+        "data/documents/llm/03_gpt3_few_shot_learners.pdf",
+        "data/documents/llm/03_gpt3_few_shot_learners.pdf",
+        "data/documents/llm/03_gpt3_few_shot_learners.pdf",
+        "data/documents/llm/04_llama.pdf",
+        "data/documents/llm/03_gpt3_few_shot_learners.pdf",
+        "data/documents/llm/03_gpt3_few_shot_learners.pdf",
+        "data/documents/llm/04_llama.pdf",
+        "data/documents/llm/03_gpt3_few_shot_learners.pdf",
+        "data/documents/llm/04_llama.pdf",
+        "data/documents/llm/03_gpt3_few_shot_learners.pdf",
+        "data/documents/llm/03_gpt3_few_shot_learners.pdf",
+        "data/documents/llm/04_llama.pdf",
+        "data/documents/llm/05_instructgpt.pdf",
+        "data/documents/llm/04_llama.pdf",
+        "data/documents/llm/05_instructgpt.pdf"
+      ],
+      "used_citation_ids": [
+        1,
+        12,
+        17
+      ],
+      "cited_chunk_ids": [
+        "doc_2e663675ae36ad12_0006_9caafe57",
+        "doc_2e663675ae36ad12_0004_a0361904",
+        "doc_2e663675ae36ad12_0003_bdcc64be"
+      ],
+      "latency_ms": 73538.99,
+      "retrieval_calls": 6,
+      "llm_calls": 5,
+      "fallback": false,
+      "steps": [
+        {
+          "stage": "route",
+          "need_retrieval": true,
+          "collections": [
+            "llm"
+          ]
+        },
+        {
+          "stage": "rewrite",
+          "n_subqueries": 2
+        },
+        {
+          "stage": "hop_1",
+          "subqueries": [
+            "LLaMA pre-training scaling laws incorporation compute-optimal training",
+            "chain-of-thought prompting addresses limitation of scaling model size alone"
+          ],
+          "new_hits": 23,
+          "candidate_count": 23,
+          "context_size": 20
+        },
+        {
+          "stage": "reflect_1",
+          "sufficient": false,
+          "n_followup": 2
+        },
+        {
+          "stage": "hop_2",
+          "subqueries": [
+            "chain-of-thought prompting limitation scaling model size",
+            "what limitation of scaling up model size does chain-of-thought address"
+          ],
+          "new_hits": 6,
+          "candidate_count": 29,
+          "context_size": 20
+        },
+        {
+          "stage": "reflect_2",
+          "sufficient": false,
+          "n_followup": 2
+        },
+        {
+          "stage": "hop_3",
+          "subqueries": [
+            "chain-of-thought prompting limitation scaling model size reasoning",
+            "LLaMA pre-training Chinchilla scaling laws data size compute allocation"
+          ],
+          "new_hits": 9,
+          "candidate_count": 38,
+          "context_size": 20
+        },
+        {
+          "stage": "synthesize",
+          "answer_len": 366,
+          "n_citations": 3
+        }
+      ],
+      "audit": {
+        "candidate_count": 82,
+        "unique_candidate_count": 38,
+        "request_count": 6,
+        "selected_count": 20,
+        "selected_by_request": {
+          "hop-1-request-1": [
+            "doc_2e663675ae36ad12_0006_9caafe57",
+            "doc_97fd272f1fdfc186_0209_4ebdbd52",
+            "doc_97fd272f1fdfc186_0192_76b5d303",
+            "doc_97fd272f1fdfc186_0054_efd3ea46",
+            "doc_2e663675ae36ad12_0003_bdcc64be",
+            "doc_2e663675ae36ad12_0074_43d5cd01"
+          ],
+          "hop-1-request-2": [
+            "doc_97fd272f1fdfc186_0159_29aab02c",
+            "doc_97fd272f1fdfc186_0037_e05a7f29",
+            "doc_2e663675ae36ad12_0069_46702ac9",
+            "doc_97fd272f1fdfc186_0001_434130b0",
+            "doc_c1984bb50a5b90fd_0241_c8b39b63",
+            "doc_c1984bb50a5b90fd_0093_a8a77a31"
+          ],
+          "hop-2-request-1": [
+            "doc_2e663675ae36ad12_0001_ef37cd85",
+            "doc_2e663675ae36ad12_0057_e262d7c3"
+          ],
+          "hop-2-request-2": [
+            "doc_97fd272f1fdfc186_0165_3d5ff7c1",
+            "doc_97fd272f1fdfc186_0196_8f1d718b"
+          ],
+          "hop-3-request-1": [
+            "doc_2e663675ae36ad12_0087_ce6ba0de",
+            "doc_97fd272f1fdfc186_0212_72e8350d"
+          ],
+          "hop-3-request-2": [
+            "doc_97fd272f1fdfc186_0042_1331d8a8",
+            "doc_2e663675ae36ad12_0004_a0361904"
+          ]
+        }
+      },
+      "error": "",
+      "metrics": {
+        "evidence_chain_complete": 0.0,
+        "evidence_recall": 0.5,
+        "answer_fact_f1": 0.16230801162308012,
+        "citation_precision": 0.3333333333333333,
+        "citation_recall": 0.5,
+        "invalid_citation_rate": 0.0
+      }
+    },
+    {
+      "case_id": "composition-012",
+      "query": "What techniques help mitigate the sequential bottleneck in recurrent neural networks, and what role does the linear model play in LLaMA’s CommonCrawl preprocessing?",
+      "answer": "Convolutional neural networks are used as the basic building block, computing hidden representations in parallel for all input and output positions, which reduces sequential computation [3]. In LLaMA's CommonCrawl preprocessing, a fastText linear classifier is used for language identification to remove non-English pages [2].",
+      "retrieved_chunk_ids": [
+        "doc_bdfaa68d8984f0dc_0042_a64f5466",
+        "doc_2e663675ae36ad12_0007_670956ee",
+        "doc_bdfaa68d8984f0dc_0007_fa38213e",
+        "doc_2e663675ae36ad12_0004_a0361904",
+        "doc_2e663675ae36ad12_0056_cac9c5c1",
+        "doc_2e663675ae36ad12_0000_9b6f632a",
+        "doc_bdfaa68d8984f0dc_0004_ae954d04",
+        "doc_2e663675ae36ad12_0019_95c8a6cc",
+        "doc_97fd272f1fdfc186_0311_08a0f7b4",
+        "doc_2e663675ae36ad12_0033_334da35c",
+        "doc_2e663675ae36ad12_0072_2e9d7808",
+        "doc_2e663675ae36ad12_0023_25b9a923",
+        "doc_bdfaa68d8984f0dc_0049_dbcde8aa",
+        "doc_97fd272f1fdfc186_0039_3a03f3c1",
+        "doc_bdfaa68d8984f0dc_0005_416274e9",
+        "doc_2e663675ae36ad12_0044_c570bdd3",
+        "doc_bdfaa68d8984f0dc_0043_6b11efaa",
+        "doc_97fd272f1fdfc186_0042_1331d8a8",
+        "doc_bdfaa68d8984f0dc_0044_0ee4cd48",
+        "doc_97fd272f1fdfc186_0041_1e612e4f"
+      ],
+      "retrieved_sources": [
+        "data/documents/llm/01_transformer_attention_is_all_you_need.pdf",
+        "data/documents/llm/04_llama.pdf",
+        "data/documents/llm/01_transformer_attention_is_all_you_need.pdf",
+        "data/documents/llm/04_llama.pdf",
+        "data/documents/llm/04_llama.pdf",
+        "data/documents/llm/04_llama.pdf",
+        "data/documents/llm/01_transformer_attention_is_all_you_need.pdf",
+        "data/documents/llm/04_llama.pdf",
+        "data/documents/llm/03_gpt3_few_shot_learners.pdf",
+        "data/documents/llm/04_llama.pdf",
+        "data/documents/llm/04_llama.pdf",
+        "data/documents/llm/04_llama.pdf",
+        "data/documents/llm/01_transformer_attention_is_all_you_need.pdf",
+        "data/documents/llm/03_gpt3_few_shot_learners.pdf",
+        "data/documents/llm/01_transformer_attention_is_all_you_need.pdf",
+        "data/documents/llm/04_llama.pdf",
+        "data/documents/llm/01_transformer_attention_is_all_you_need.pdf",
+        "data/documents/llm/03_gpt3_few_shot_learners.pdf",
+        "data/documents/llm/01_transformer_attention_is_all_you_need.pdf",
+        "data/documents/llm/03_gpt3_few_shot_learners.pdf"
+      ],
+      "used_citation_ids": [
+        2,
+        3
+      ],
+      "cited_chunk_ids": [
+        "doc_2e663675ae36ad12_0007_670956ee",
+        "doc_bdfaa68d8984f0dc_0007_fa38213e"
+      ],
+      "latency_ms": 36239.65,
+      "retrieval_calls": 2,
+      "llm_calls": 4,
+      "fallback": false,
+      "steps": [
+        {
+          "stage": "route",
+          "need_retrieval": true,
+          "collections": [
+            "llm"
+          ]
+        },
+        {
+          "stage": "rewrite",
+          "n_subqueries": 2
+        },
+        {
+          "stage": "hop_1",
+          "subqueries": [
+            "techniques to mitigate sequential bottleneck in recurrent neural networks",
+            "role of linear model in LLaMA CommonCrawl preprocessing"
+          ],
+          "new_hits": 33,
+          "candidate_count": 33,
+          "context_size": 20
+        },
+        {
+          "stage": "reflect_1",
+          "sufficient": true,
+          "n_followup": 0
+        },
+        {
+          "stage": "synthesize",
+          "answer_len": 326,
+          "n_citations": 2
+        }
+      ],
+      "audit": {
+        "candidate_count": 33,
+        "unique_candidate_count": 33,
+        "request_count": 2,
+        "selected_count": 20,
+        "selected_by_request": {
+          "hop-1-request-1": [
+            "doc_bdfaa68d8984f0dc_0042_a64f5466",
+            "doc_bdfaa68d8984f0dc_0007_fa38213e",
+            "doc_2e663675ae36ad12_0056_cac9c5c1",
+            "doc_bdfaa68d8984f0dc_0004_ae954d04",
+            "doc_97fd272f1fdfc186_0311_08a0f7b4",
+            "doc_2e663675ae36ad12_0072_2e9d7808",
+            "doc_bdfaa68d8984f0dc_0049_dbcde8aa",
+            "doc_bdfaa68d8984f0dc_0005_416274e9",
+            "doc_bdfaa68d8984f0dc_0043_6b11efaa",
+            "doc_bdfaa68d8984f0dc_0044_0ee4cd48"
+          ],
+          "hop-1-request-2": [
+            "doc_2e663675ae36ad12_0007_670956ee",
+            "doc_2e663675ae36ad12_0004_a0361904",
+            "doc_2e663675ae36ad12_0000_9b6f632a",
+            "doc_2e663675ae36ad12_0019_95c8a6cc",
+            "doc_2e663675ae36ad12_0033_334da35c",
+            "doc_2e663675ae36ad12_0023_25b9a923",
+            "doc_97fd272f1fdfc186_0039_3a03f3c1",
+            "doc_2e663675ae36ad12_0044_c570bdd3",
+            "doc_97fd272f1fdfc186_0042_1331d8a8",
+            "doc_97fd272f1fdfc186_0041_1e612e4f"
+          ]
+        }
+      },
+      "error": "",
+      "metrics": {
+        "evidence_chain_complete": 1.0,
+        "evidence_recall": 1.0,
+        "answer_fact_f1": 0.19018567639257292,
+        "citation_precision": 0.5,
+        "citation_recall": 0.5,
+        "invalid_citation_rate": 0.0
+      }
+    },
+    {
+      "case_id": "composition-013",
+      "query": "What practical applications does integrating function calling unlock for LLMs, and how many APIs, tool-use dialogues, and API calls does the API-Bank evaluation system contain?",
+      "answer": "Integrating function calling enables LLMs to access up-to-date information [1]. The API-Bank evaluation system contains 73 APIs, 314 tool-use dialogues, and 753 API calls [14].",
+      "retrieved_chunk_ids": [
+        "doc_493d43589b1e749c_0003_d7f8b390",
+        "doc_493d43589b1e749c_0088_6f304eeb",
+        "doc_61e65633db1e073d_0003_54f8fa15",
+        "doc_fe4332cc5f3997a0_0009_c025f64f",
+        "doc_493d43589b1e749c_0004_4e7f8da7",
+        "doc_50f55a8595310730_0004_6f612c08",
+        "doc_619006a4cfcdd1d2_0032_7c06c663",
+        "doc_493d43589b1e749c_0018_965c3d31",
+        "doc_50f55a8595310730_0019_bcbafaa3",
+        "doc_1aeae54095cdae3a_0001_6c12c9b6",
+        "doc_5add5f7ff9041299_0001_fcda62b4",
+        "doc_619006a4cfcdd1d2_0004_7696c167",
+        "doc_97fd272f1fdfc186_0167_ff3d1d5f",
+        "doc_619006a4cfcdd1d2_0007_fcec9308",
+        "doc_5add5f7ff9041299_0008_fd0bd42e",
+        "doc_619006a4cfcdd1d2_0057_1ea53915",
+        "doc_5add5f7ff9041299_0007_9710d065",
+        "doc_619006a4cfcdd1d2_0045_2ad2073f",
+        "doc_97fd272f1fdfc186_0009_a27a0891",
+        "doc_619006a4cfcdd1d2_0030_8064edce"
+      ],
+      "retrieved_sources": [
+        "data/documents/mcp/08_toolace.pdf",
+        "data/documents/mcp/08_toolace.pdf",
+        "data/documents/mcp/06_restgpt.pdf",
+        "data/documents/mcp/10_t_eval.pdf",
+        "data/documents/mcp/08_toolace.pdf",
+        "data/documents/mcp/05_toolkengpt.pdf",
+        "data/documents/mcp/04_api_bank.pdf",
+        "data/documents/mcp/08_toolace.pdf",
+        "data/documents/mcp/05_toolkengpt.pdf",
+        "data/documents/mcp/02_gorilla.pdf",
+        "data/documents/agent/05_hugginggpt.pdf",
+        "data/documents/mcp/04_api_bank.pdf",
+        "data/documents/llm/03_gpt3_few_shot_learners.pdf",
+        "data/documents/mcp/04_api_bank.pdf",
+        "data/documents/agent/05_hugginggpt.pdf",
+        "data/documents/mcp/04_api_bank.pdf",
+        "data/documents/agent/05_hugginggpt.pdf",
+        "data/documents/mcp/04_api_bank.pdf",
+        "data/documents/llm/03_gpt3_few_shot_learners.pdf",
+        "data/documents/mcp/04_api_bank.pdf"
+      ],
+      "used_citation_ids": [
+        1,
+        14
+      ],
+      "cited_chunk_ids": [
+        "doc_493d43589b1e749c_0003_d7f8b390",
+        "doc_619006a4cfcdd1d2_0007_fcec9308"
+      ],
+      "latency_ms": 84947.49,
+      "retrieval_calls": 5,
+      "llm_calls": 5,
+      "fallback": false,
+      "steps": [
+        {
+          "stage": "route",
+          "need_retrieval": true,
+          "collections": [
+            "llm",
+            "agent"
+          ]
+        },
+        {
+          "stage": "rewrite",
+          "n_subqueries": 2
+        },
+        {
+          "stage": "hop_1",
+          "subqueries": [
+            "practical applications of integrating function calling into large language models",
+            "API-Bank evaluation system number of APIs tool-use dialogues API calls"
+          ],
+          "new_hits": 40,
+          "candidate_count": 40,
+          "context_size": 20
+        },
+        {
+          "stage": "reflect_1",
+          "sufficient": false,
+          "n_followup": 2
+        },
+        {
+          "stage": "hop_2",
+          "subqueries": [
+            "practical applications enabled by integrating function calling into LLMs",
+            "function calling use cases LLM real-world applications"
+          ],
+          "new_hits": 19,
+          "candidate_count": 59,
+          "context_size": 20
+        },
+        {
+          "stage": "reflect_2",
+          "sufficient": false,
+          "n_followup": 1
+        },
+        {
+          "stage": "hop_3",
+          "subqueries": [
+            "practical applications of integrating function calling LLMs real-world use cases"
+          ],
+          "new_hits": 2,
+          "candidate_count": 61,
+          "context_size": 20
+        },
+        {
+          "stage": "synthesize",
+          "answer_len": 176,
+          "n_citations": 2
+        }
+      ],
+      "audit": {
+        "candidate_count": 100,
+        "unique_candidate_count": 61,
+        "request_count": 5,
+        "selected_count": 20,
+        "selected_by_request": {
+          "hop-1-request-1": [
+            "doc_493d43589b1e749c_0003_d7f8b390",
+            "doc_50f55a8595310730_0004_6f612c08",
+            "doc_5add5f7ff9041299_0001_fcda62b4",
+            "doc_97fd272f1fdfc186_0167_ff3d1d5f",
+            "doc_5add5f7ff9041299_0008_fd0bd42e",
+            "doc_5add5f7ff9041299_0007_9710d065",
+            "doc_97fd272f1fdfc186_0009_a27a0891"
+          ],
+          "hop-1-request-2": [
+            "doc_493d43589b1e749c_0088_6f304eeb",
+            "doc_619006a4cfcdd1d2_0032_7c06c663",
+            "doc_619006a4cfcdd1d2_0004_7696c167",
+            "doc_619006a4cfcdd1d2_0007_fcec9308",
+            "doc_619006a4cfcdd1d2_0057_1ea53915",
+            "doc_619006a4cfcdd1d2_0045_2ad2073f",
+            "doc_619006a4cfcdd1d2_0030_8064edce"
+          ],
+          "hop-2-request-1": [
+            "doc_61e65633db1e073d_0003_54f8fa15",
+            "doc_493d43589b1e749c_0018_965c3d31"
+          ],
+          "hop-2-request-2": [
+            "doc_fe4332cc5f3997a0_0009_c025f64f",
+            "doc_50f55a8595310730_0019_bcbafaa3"
+          ],
+          "hop-3-request-1": [
+            "doc_493d43589b1e749c_0004_4e7f8da7",
+            "doc_1aeae54095cdae3a_0001_6c12c9b6"
+          ]
+        }
+      },
+      "error": "",
+      "metrics": {
+        "evidence_chain_complete": 1.0,
+        "evidence_recall": 1.0,
+        "answer_fact_f1": 0.4666666666666667,
+        "citation_precision": 1.0,
+        "citation_recall": 1.0,
+        "invalid_citation_rate": 0.0
+      }
+    },
+    {
+      "case_id": "composition-014",
+      "query": "What makes real-world function calls diverse and complex, and which two primary research paradigms for tool integration with LLMs have been developed to address these challenges?",
+      "answer": "Real-world function calls are diverse and complex because they are driven by the varied functionalities of APIs and the broad range of tasks, and because APIs undergo rapid updates that demand robust zero-shot generalization [1]. To address these challenges, two primary research paradigms for tool integration with LLMs have been developed: (1) fine-tuning LLMs to learn specific tools [2], and (2) tuning-free approaches that enable tool use without LLM fine-tuning [6].",
+      "retrieved_chunk_ids": [
+        "doc_493d43589b1e749c_0004_4e7f8da7",
+        "doc_50f55a8595310730_0006_8ba70298",
+        "doc_fe4332cc5f3997a0_0042_5ddf0e9c",
+        "doc_889bebece19855d7_0084_b2720396",
+        "doc_5add5f7ff9041299_0031_48834680",
+        "doc_493d43589b1e749c_0067_2e805fe4",
+        "doc_50f55a8595310730_0008_3b8fa54f",
+        "doc_493d43589b1e749c_0007_b3b06242",
+        "doc_493d43589b1e749c_0005_8b1151ff",
+        "doc_50f55a8595310730_0071_59720f38",
+        "doc_1aeae54095cdae3a_0048_ab1ca041",
+        "doc_61e65633db1e073d_0003_54f8fa15",
+        "doc_50f55a8595310730_0012_30462282",
+        "doc_fe4332cc5f3997a0_0046_b7064823",
+        "doc_493d43589b1e749c_0009_756f8b3c",
+        "doc_493d43589b1e749c_0003_d7f8b390",
+        "doc_295299721d67b250_0022_8b64b87d",
+        "doc_fe4332cc5f3997a0_0009_c025f64f",
+        "doc_1b31e77fb24d25d7_0024_b436e093",
+        "doc_5add5f7ff9041299_0030_97c7a42b"
+      ],
+      "retrieved_sources": [
+        "data/documents/mcp/08_toolace.pdf",
+        "data/documents/mcp/05_toolkengpt.pdf",
+        "data/documents/mcp/10_t_eval.pdf",
+        "data/documents/mcp/01_tool_learning_survey.pdf",
+        "data/documents/agent/05_hugginggpt.pdf",
+        "data/documents/mcp/08_toolace.pdf",
+        "data/documents/mcp/05_toolkengpt.pdf",
+        "data/documents/mcp/08_toolace.pdf",
+        "data/documents/mcp/08_toolace.pdf",
+        "data/documents/mcp/05_toolkengpt.pdf",
+        "data/documents/mcp/02_gorilla.pdf",
+        "data/documents/mcp/06_restgpt.pdf",
+        "data/documents/mcp/05_toolkengpt.pdf",
+        "data/documents/mcp/10_t_eval.pdf",
+        "data/documents/mcp/08_toolace.pdf",
+        "data/documents/mcp/08_toolace.pdf",
+        "data/documents/mcp/03_toolllm.pdf",
+        "data/documents/mcp/10_t_eval.pdf",
+        "data/documents/agent/04_generative_agents.pdf",
+        "data/documents/agent/05_hugginggpt.pdf"
+      ],
+      "used_citation_ids": [
+        1,
+        2,
+        6
+      ],
+      "cited_chunk_ids": [
+        "doc_493d43589b1e749c_0004_4e7f8da7",
+        "doc_50f55a8595310730_0006_8ba70298",
+        "doc_493d43589b1e749c_0067_2e805fe4"
+      ],
+      "latency_ms": 96619.24,
+      "retrieval_calls": 7,
+      "llm_calls": 5,
+      "fallback": false,
+      "steps": [
+        {
+          "stage": "route",
+          "need_retrieval": true,
+          "collections": [
+            "agent",
+            "mcp"
+          ]
+        },
+        {
+          "stage": "rewrite",
+          "n_subqueries": 2
+        },
+        {
+          "stage": "hop_1",
+          "subqueries": [
+            "characteristics that make real-world function calls diverse and complex",
+            "two primary research paradigms for tool integration with LLMs to address diverse and complex function calls"
+          ],
+          "new_hits": 39,
+          "candidate_count": 39,
+          "context_size": 20
+        },
+        {
+          "stage": "reflect_1",
+          "sufficient": false,
+          "n_followup": 2
+        },
+        {
+          "stage": "hop_2",
+          "subqueries": [
+            "second paradigm tool integration LLM external tools without fine-tuning",
+            "LLM tool calling approaches prompting zero-shot"
+          ],
+          "new_hits": 32,
+          "candidate_count": 71,
+          "context_size": 20
+        },
+        {
+          "stage": "reflect_2",
+          "sufficient": false,
+          "n_followup": 3
+        },
+        {
+          "stage": "hop_3",
+          "subqueries": [
+            "second paradigm LLM tool integration prompting",
+            "two primary research approaches tool augmented LLMs fine-tuning prompting",
+            "LLM tool use paradigms fine-tuning vs prompting"
+          ],
+          "new_hits": 26,
+          "candidate_count": 97,
+          "context_size": 20
+        },
+        {
+          "stage": "synthesize",
+          "answer_len": 472,
+          "n_citations": 3
+        }
+      ],
+      "audit": {
+        "candidate_count": 140,
+        "unique_candidate_count": 97,
+        "request_count": 7,
+        "selected_count": 20,
+        "selected_by_request": {
+          "hop-1-request-1": [
+            "doc_493d43589b1e749c_0004_4e7f8da7",
+            "doc_493d43589b1e749c_0007_b3b06242",
+            "doc_493d43589b1e749c_0009_756f8b3c",
+            "doc_295299721d67b250_0022_8b64b87d",
+            "doc_1b31e77fb24d25d7_0024_b436e093"
+          ],
+          "hop-1-request-2": [
+            "doc_50f55a8595310730_0006_8ba70298",
+            "doc_493d43589b1e749c_0005_8b1151ff",
+            "doc_493d43589b1e749c_0003_d7f8b390",
+            "doc_fe4332cc5f3997a0_0009_c025f64f",
+            "doc_5add5f7ff9041299_0030_97c7a42b"
+          ],
+          "hop-2-request-1": [
+            "doc_fe4332cc5f3997a0_0042_5ddf0e9c",
+            "doc_50f55a8595310730_0071_59720f38"
+          ],
+          "hop-2-request-2": [
+            "doc_889bebece19855d7_0084_b2720396",
+            "doc_1aeae54095cdae3a_0048_ab1ca041"
+          ],
+          "hop-3-request-1": [
+            "doc_5add5f7ff9041299_0031_48834680",
+            "doc_61e65633db1e073d_0003_54f8fa15"
+          ],
+          "hop-3-request-2": [
+            "doc_493d43589b1e749c_0067_2e805fe4",
+            "doc_50f55a8595310730_0012_30462282"
+          ],
+          "hop-3-request-3": [
+            "doc_50f55a8595310730_0008_3b8fa54f",
+            "doc_fe4332cc5f3997a0_0046_b7064823"
+          ]
+        }
+      },
+      "error": "",
+      "metrics": {
+        "evidence_chain_complete": 1.0,
+        "evidence_recall": 1.0,
+        "answer_fact_f1": 0.3622986036519871,
+        "citation_precision": 0.6666666666666666,
+        "citation_recall": 1.0,
+        "invalid_citation_rate": 0.0
+      }
+    },
+    {
+      "case_id": "composition-015",
+      "query": "According to the passage, what is the remaining performance gap of Lynx from GPT-4 in API usage, and what makes scaling risk assessment for language model agents difficult?",
+      "answer": "The provided passages do not contain sufficient information to answer this question.",
+      "retrieved_chunk_ids": [
+        "doc_6d7483d94653008e_0057_4c32e562",
+        "doc_6059b6f89fea9959_0001_3ddf337e",
+        "doc_1b31e77fb24d25d7_0057_02296da7",
+        "doc_6059b6f89fea9959_0067_3317b8e3",
+        "doc_1b31e77fb24d25d7_0130_e2de58eb",
+        "doc_6d7483d94653008e_0042_2fea14af",
+        "doc_1b31e77fb24d25d7_0131_c8a27b9a",
+        "doc_5add5f7ff9041299_0053_ca643d3d",
+        "doc_1b31e77fb24d25d7_0016_c9ba1e2b",
+        "doc_6d7483d94653008e_0003_77babbb6",
+        "doc_6d7483d94653008e_0052_6da67f49",
+        "doc_1b31e77fb24d25d7_0133_ed5cb92c",
+        "doc_6d7483d94653008e_0035_24823952",
+        "doc_f285b0971ae4a790_0105_59a3f5ef",
+        "doc_6d7483d94653008e_0055_e29888ce",
+        "doc_6059b6f89fea9959_0038_b928ca2d",
+        "doc_6d7483d94653008e_0060_79a77a90",
+        "doc_f285b0971ae4a790_0098_59648469",
+        "doc_6d7483d94653008e_0011_53593baf",
+        "doc_1b31e77fb24d25d7_0134_85fd533d"
+      ],
+      "retrieved_sources": [
+        "data/documents/agent/02_toolformer.pdf",
+        "data/documents/agent/03_reflexion.pdf",
+        "data/documents/agent/04_generative_agents.pdf",
+        "data/documents/agent/03_reflexion.pdf",
+        "data/documents/agent/04_generative_agents.pdf",
+        "data/documents/agent/02_toolformer.pdf",
+        "data/documents/agent/04_generative_agents.pdf",
+        "data/documents/agent/05_hugginggpt.pdf",
+        "data/documents/agent/04_generative_agents.pdf",
+        "data/documents/agent/02_toolformer.pdf",
+        "data/documents/agent/02_toolformer.pdf",
+        "data/documents/agent/04_generative_agents.pdf",
+        "data/documents/agent/02_toolformer.pdf",
+        "data/documents/agent/01_react.pdf",
+        "data/documents/agent/02_toolformer.pdf",
+        "data/documents/agent/03_reflexion.pdf",
+        "data/documents/agent/02_toolformer.pdf",
+        "data/documents/agent/01_react.pdf",
+        "data/documents/agent/02_toolformer.pdf",
+        "data/documents/agent/04_generative_agents.pdf"
+      ],
+      "used_citation_ids": [],
+      "cited_chunk_ids": [],
+      "latency_ms": 40375.51,
+      "retrieval_calls": 5,
+      "llm_calls": 5,
+      "fallback": false,
+      "steps": [
+        {
+          "stage": "route",
+          "need_retrieval": true,
+          "collections": [
+            "agent"
+          ]
+        },
+        {
+          "stage": "rewrite",
+          "n_subqueries": 2
+        },
+        {
+          "stage": "hop_1",
+          "subqueries": [
+            "Lynx remaining performance gap from GPT-4 in API usage",
+            "scaling risk assessment for language model agents difficulty"
+          ],
+          "new_hits": 31,
+          "candidate_count": 31,
+          "context_size": 20
+        },
+        {
+          "stage": "reflect_1",
+          "sufficient": false,
+          "n_followup": 2
+        },
+        {
+          "stage": "hop_2",
+          "subqueries": [
+            "Lynx GPT-4 API usage performance gap",
+            "scaling risk assessment language model agents difficulty"
+          ],
+          "new_hits": 5,
+          "candidate_count": 36,
+          "context_size": 20
+        },
+        {
+          "stage": "reflect_2",
+          "sufficient": false,
+          "n_followup": 2
+        },
+        {
+          "stage": "hop_3",
+          "subqueries": [
+            "scaling risk assessment language model agents difficulties"
+          ],
+          "new_hits": 2,
+          "candidate_count": 38,
+          "context_size": 20
+        },
+        {
+          "stage": "synthesize",
+          "answer_len": 84,
+          "n_citations": 0
+        }
+      ],
+      "audit": {
+        "candidate_count": 80,
+        "unique_candidate_count": 38,
+        "request_count": 5,
+        "selected_count": 20,
+        "selected_by_request": {
+          "hop-1-request-1": [
+            "doc_6d7483d94653008e_0057_4c32e562",
+            "doc_6d7483d94653008e_0042_2fea14af",
+            "doc_6d7483d94653008e_0052_6da67f49",
+            "doc_6d7483d94653008e_0035_24823952",
+            "doc_6d7483d94653008e_0055_e29888ce",
+            "doc_6d7483d94653008e_0060_79a77a90",
+            "doc_6d7483d94653008e_0011_53593baf"
+          ],
+          "hop-1-request-2": [
+            "doc_6059b6f89fea9959_0001_3ddf337e",
+            "doc_1b31e77fb24d25d7_0131_c8a27b9a",
+            "doc_1b31e77fb24d25d7_0133_ed5cb92c",
+            "doc_f285b0971ae4a790_0105_59a3f5ef",
+            "doc_6059b6f89fea9959_0038_b928ca2d",
+            "doc_f285b0971ae4a790_0098_59648469",
+            "doc_1b31e77fb24d25d7_0134_85fd533d"
+          ],
+          "hop-2-request-1": [
+            "doc_1b31e77fb24d25d7_0057_02296da7",
+            "doc_5add5f7ff9041299_0053_ca643d3d"
+          ],
+          "hop-2-request-2": [
+            "doc_6059b6f89fea9959_0067_3317b8e3",
+            "doc_1b31e77fb24d25d7_0016_c9ba1e2b"
+          ],
+          "hop-3-request-1": [
+            "doc_1b31e77fb24d25d7_0130_e2de58eb",
+            "doc_6d7483d94653008e_0003_77babbb6"
+          ]
+        }
+      },
+      "error": "",
+      "metrics": {
+        "evidence_chain_complete": 0.0,
+        "evidence_recall": 0.0,
+        "answer_fact_f1": 0.024390243902439025,
+        "citation_precision": 0.0,
+        "citation_recall": 0.0,
+        "invalid_citation_rate": 0.0
+      }
+    },
+    {
+      "case_id": "composition-016",
+      "query": "What limitation do offline plan-then-execute methods and ReAct share in API-augmented LLMs, and what process does ToolACE's Tool Self-Evolution Synthesis (TSS) employ to create tools?",
+      "answer": "The provided passages do not contain sufficient information to answer this question.",
+      "retrieved_chunk_ids": [
+        "doc_61e65633db1e073d_0007_3942250e",
+        "doc_493d43589b1e749c_0007_b3b06242",
+        "doc_61e65633db1e073d_0076_8b0b1362",
+        "doc_493d43589b1e749c_0013_bfcea80d",
+        "doc_493d43589b1e749c_0070_7665b646",
+        "doc_61e65633db1e073d_0059_5071cb3d",
+        "doc_493d43589b1e749c_0012_c28a9112",
+        "doc_493d43589b1e749c_0011_0d86d723",
+        "doc_61e65633db1e073d_0057_82c3366c",
+        "doc_493d43589b1e749c_0009_756f8b3c",
+        "doc_61e65633db1e073d_0077_3f417e00",
+        "doc_889bebece19855d7_0323_76b74736",
+        "doc_493d43589b1e749c_0010_25a3c6d4",
+        "doc_f285b0971ae4a790_0100_ccd7a261",
+        "doc_889bebece19855d7_0210_59dba89e",
+        "doc_493d43589b1e749c_0001_f5485e38",
+        "doc_295299721d67b250_0007_90d8e4f5",
+        "doc_6d7483d94653008e_0066_b22f2c85",
+        "doc_f285b0971ae4a790_0099_0e865719",
+        "doc_6d7483d94653008e_0068_74751b07"
+      ],
+      "retrieved_sources": [
+        "data/documents/mcp/06_restgpt.pdf",
+        "data/documents/mcp/08_toolace.pdf",
+        "data/documents/mcp/06_restgpt.pdf",
+        "data/documents/mcp/08_toolace.pdf",
+        "data/documents/mcp/08_toolace.pdf",
+        "data/documents/mcp/06_restgpt.pdf",
+        "data/documents/mcp/08_toolace.pdf",
+        "data/documents/mcp/08_toolace.pdf",
+        "data/documents/mcp/06_restgpt.pdf",
+        "data/documents/mcp/08_toolace.pdf",
+        "data/documents/mcp/06_restgpt.pdf",
+        "data/documents/mcp/01_tool_learning_survey.pdf",
+        "data/documents/mcp/08_toolace.pdf",
+        "data/documents/agent/01_react.pdf",
+        "data/documents/mcp/01_tool_learning_survey.pdf",
+        "data/documents/mcp/08_toolace.pdf",
+        "data/documents/mcp/03_toolllm.pdf",
+        "data/documents/agent/02_toolformer.pdf",
+        "data/documents/agent/01_react.pdf",
+        "data/documents/agent/02_toolformer.pdf"
+      ],
+      "used_citation_ids": [],
+      "cited_chunk_ids": [],
+      "latency_ms": 80140.47,
+      "retrieval_calls": 8,
+      "llm_calls": 5,
+      "fallback": false,
+      "steps": [
+        {
+          "stage": "route",
+          "need_retrieval": true,
+          "collections": [
+            "agent",
+            "llm"
+          ]
+        },
+        {
+          "stage": "rewrite",
+          "n_subqueries": 2
+        },
+        {
+          "stage": "hop_1",
+          "subqueries": [
+            "shared limitation between offline plan-then-execute methods and ReAct in API-augmented LLMs",
+            "ToolACE Tool Self-Evolution Synthesis TSS process for creating tools"
+          ],
+          "new_hits": 40,
+          "candidate_count": 40,
+          "context_size": 20
+        },
+        {
+          "stage": "reflect_1",
+          "sufficient": false,
+          "n_followup": 3
+        },
+        {
+          "stage": "hop_2",
+          "subqueries": [
+            "offline plan-then-execute ReAct shared limitation API-augmented LLMs",
+            "Tool Self-Evolution Synthesis process creating tools",
+            "ToolACE TSS automated tool generation method"
+          ],
+          "new_hits": 19,
+          "candidate_count": 59,
+          "context_size": 20
+        },
+        {
+          "stage": "reflect_2",
+          "sufficient": false,
+          "n_followup": 3
+        },
+        {
+          "stage": "hop_3",
+          "subqueries": [
+            "shared limitation offline plan-then-execute ReAct API-augmented LLMs",
+            "Tool Self-Evolution Synthesis process steps create tools",
+            "ToolACE TSS self-evolve update generated APIs details"
+          ],
+          "new_hits": 16,
+          "candidate_count": 75,
+          "context_size": 20
+        },
+        {
+          "stage": "synthesize",
+          "answer_len": 84,
+          "n_citations": 0
+        }
+      ],
+      "audit": {
+        "candidate_count": 160,
+        "unique_candidate_count": 75,
+        "request_count": 8,
+        "selected_count": 20,
+        "selected_by_request": {
+          "hop-1-request-1": [
+            "doc_61e65633db1e073d_0007_3942250e",
+            "doc_61e65633db1e073d_0057_82c3366c",
+            "doc_295299721d67b250_0007_90d8e4f5",
+            "doc_f285b0971ae4a790_0099_0e865719"
+          ],
+          "hop-1-request-2": [
+            "doc_493d43589b1e749c_0007_b3b06242",
+            "doc_493d43589b1e749c_0009_756f8b3c",
+            "doc_6d7483d94653008e_0066_b22f2c85",
+            "doc_6d7483d94653008e_0068_74751b07"
+          ],
+          "hop-2-request-1": [
+            "doc_61e65633db1e073d_0076_8b0b1362",
+            "doc_61e65633db1e073d_0077_3f417e00"
+          ],
+          "hop-2-request-2": [
+            "doc_493d43589b1e749c_0013_bfcea80d",
+            "doc_889bebece19855d7_0323_76b74736"
+          ],
+          "hop-2-request-3": [
+            "doc_493d43589b1e749c_0070_7665b646",
+            "doc_493d43589b1e749c_0010_25a3c6d4"
+          ],
+          "hop-3-request-1": [
+            "doc_61e65633db1e073d_0059_5071cb3d",
+            "doc_f285b0971ae4a790_0100_ccd7a261"
+          ],
+          "hop-3-request-2": [
+            "doc_493d43589b1e749c_0012_c28a9112",
+            "doc_889bebece19855d7_0210_59dba89e"
+          ],
+          "hop-3-request-3": [
+            "doc_493d43589b1e749c_0011_0d86d723",
+            "doc_493d43589b1e749c_0001_f5485e38"
+          ]
+        }
+      },
+      "error": "",
+      "metrics": {
+        "evidence_chain_complete": 1.0,
+        "evidence_recall": 1.0,
+        "answer_fact_f1": 0.08210180623973728,
+        "citation_precision": 0.0,
+        "citation_recall": 0.0,
+        "invalid_citation_rate": 0.0
+      }
+    },
+    {
+      "case_id": "composition-017",
+      "query": "How does the ToolACE dataset compare to ToolLLM in terms of tool coverage, and what three research questions does API-Bank aim to answer regarding the use of tools by large language models?",
+      "answer": "The provided passages do not contain sufficient information to answer this question.",
+      "retrieved_chunk_ids": [
+        "doc_6d7483d94653008e_0050_aa2108b2",
+        "doc_6d7483d94653008e_0012_7ff31cf2",
+        "doc_6d7483d94653008e_0044_d61dcaa4",
+        "doc_6d7483d94653008e_0032_5eded07f",
+        "doc_5add5f7ff9041299_0003_f91ab271",
+        "doc_6d7483d94653008e_0039_9ce7a401",
+        "doc_6d7483d94653008e_0055_e29888ce",
+        "doc_6d7483d94653008e_0043_385b4671",
+        "doc_1b31e77fb24d25d7_0030_67a99b7e",
+        "doc_6d7483d94653008e_0054_ded33af7",
+        "doc_6d7483d94653008e_0040_3a1450c6",
+        "doc_6d7483d94653008e_0093_ff8fa32d",
+        "doc_6d7483d94653008e_0036_8462e631",
+        "doc_6d7483d94653008e_0042_2fea14af",
+        "doc_6d7483d94653008e_0009_4ecd2700",
+        "doc_6d7483d94653008e_0011_53593baf",
+        "doc_6d7483d94653008e_0000_82df99b5",
+        "doc_6d7483d94653008e_0016_cd364b7c",
+        "doc_6d7483d94653008e_0060_79a77a90",
+        "doc_5add5f7ff9041299_0031_48834680"
+      ],
+      "retrieved_sources": [
+        "data/documents/agent/02_toolformer.pdf",
+        "data/documents/agent/02_toolformer.pdf",
+        "data/documents/agent/02_toolformer.pdf",
+        "data/documents/agent/02_toolformer.pdf",
+        "data/documents/agent/05_hugginggpt.pdf",
+        "data/documents/agent/02_toolformer.pdf",
+        "data/documents/agent/02_toolformer.pdf",
+        "data/documents/agent/02_toolformer.pdf",
+        "data/documents/agent/04_generative_agents.pdf",
+        "data/documents/agent/02_toolformer.pdf",
+        "data/documents/agent/02_toolformer.pdf",
+        "data/documents/agent/02_toolformer.pdf",
+        "data/documents/agent/02_toolformer.pdf",
+        "data/documents/agent/02_toolformer.pdf",
+        "data/documents/agent/02_toolformer.pdf",
+        "data/documents/agent/02_toolformer.pdf",
+        "data/documents/agent/02_toolformer.pdf",
+        "data/documents/agent/02_toolformer.pdf",
+        "data/documents/agent/02_toolformer.pdf",
+        "data/documents/agent/05_hugginggpt.pdf"
+      ],
+      "used_citation_ids": [],
+      "cited_chunk_ids": [],
+      "latency_ms": 32852.79,
+      "retrieval_calls": 5,
+      "llm_calls": 5,
+      "fallback": false,
+      "steps": [
+        {
+          "stage": "route",
+          "need_retrieval": true,
+          "collections": [
+            "agent"
+          ]
+        },
+        {
+          "stage": "rewrite",
+          "n_subqueries": 2
+        },
+        {
+          "stage": "hop_1",
+          "subqueries": [
+            "ToolACE dataset vs ToolLLM tool coverage comparison",
+            "API-Bank research questions about large language model tool use"
+          ],
+          "new_hits": 32,
+          "candidate_count": 32,
+          "context_size": 20
+        },
+        {
+          "stage": "reflect_1",
+          "sufficient": false,
+          "n_followup": 2
+        },
+        {
+          "stage": "hop_2",
+          "subqueries": [
+            "ToolACE dataset tool coverage comparison ToolLLM",
+            "API-Bank three research questions large language models tool use"
+          ],
+          "new_hits": 6,
+          "candidate_count": 38,
+          "context_size": 20
+        },
+        {
+          "stage": "reflect_2",
+          "sufficient": false,
+          "n_followup": 2
+        },
+        {
+          "stage": "hop_3",
+          "subqueries": [
+            "API-Bank three research questions tools large language models"
+          ],
+          "new_hits": 5,
+          "candidate_count": 43,
+          "context_size": 20
+        },
+        {
+          "stage": "synthesize",
+          "answer_len": 84,
+          "n_citations": 0
+        }
+      ],
+      "audit": {
+        "candidate_count": 85,
+        "unique_candidate_count": 43,
+        "request_count": 5,
+        "selected_count": 20,
+        "selected_by_request": {
+          "hop-1-request-1": [
+            "doc_6d7483d94653008e_0050_aa2108b2",
+            "doc_6d7483d94653008e_0039_9ce7a401",
+            "doc_6d7483d94653008e_0040_3a1450c6",
+            "doc_6d7483d94653008e_0036_8462e631",
+            "doc_6d7483d94653008e_0009_4ecd2700",
+            "doc_6d7483d94653008e_0000_82df99b5",
+            "doc_6d7483d94653008e_0060_79a77a90"
+          ],
+          "hop-1-request-2": [
+            "doc_6d7483d94653008e_0012_7ff31cf2",
+            "doc_6d7483d94653008e_0055_e29888ce",
+            "doc_6d7483d94653008e_0093_ff8fa32d",
+            "doc_6d7483d94653008e_0042_2fea14af",
+            "doc_6d7483d94653008e_0011_53593baf",
+            "doc_6d7483d94653008e_0016_cd364b7c",
+            "doc_5add5f7ff9041299_0031_48834680"
+          ],
+          "hop-2-request-1": [
+            "doc_6d7483d94653008e_0044_d61dcaa4",
+            "doc_6d7483d94653008e_0043_385b4671"
+          ],
+          "hop-2-request-2": [
+            "doc_6d7483d94653008e_0032_5eded07f",
+            "doc_1b31e77fb24d25d7_0030_67a99b7e"
+          ],
+          "hop-3-request-1": [
+            "doc_5add5f7ff9041299_0003_f91ab271",
+            "doc_6d7483d94653008e_0054_ded33af7"
+          ]
+        }
+      },
+      "error": "",
+      "metrics": {
+        "evidence_chain_complete": 0.0,
+        "evidence_recall": 0.0,
+        "answer_fact_f1": 0.043478260869565216,
+        "citation_precision": 0.0,
+        "citation_recall": 0.0,
+        "invalid_citation_rate": 0.0
+      }
+    },
+    {
+      "case_id": "composition-018",
+      "query": "Why is swift adaptation important for large language models when new tools emerge, and how does WebGPT’s approach to web browsing support a similar end-to-end improvement?",
+      "answer": "The rapid emergence of new tools introduces additional complexity, which increases the need to empower LLMs with swift adaptation [1]. This is further motivated by the fact that LLM fine-tuning is costly and tuned models struggle to generalize to emergent or updated tools [19]. WebGPT’s approach supports a similar end-to-end improvement by fine-tuning a language model to use a text-based web-browsing environment, treating the LLM as a policy for decision making [6][8]. This allows the model to directly optimize answer quality via imitation learning and reinforcement learning, yielding end-to-end gains in question-answering [6].",
+      "retrieved_chunk_ids": [
+        "doc_50f55a8595310730_0005_afdfc13e",
+        "doc_619006a4cfcdd1d2_0063_3c692f82",
+        "doc_61e65633db1e073d_0003_54f8fa15",
+        "doc_acad8d9fd55a30b9_0005_015cd2d0",
+        "doc_889bebece19855d7_0211_70e0b056",
+        "doc_acad8d9fd55a30b9_0058_6893e9ea",
+        "doc_fe4332cc5f3997a0_0003_102c4c2b",
+        "doc_f285b0971ae4a790_0098_59648469",
+        "doc_295299721d67b250_0004_37cce61b",
+        "doc_acad8d9fd55a30b9_0052_fe6f7799",
+        "doc_619006a4cfcdd1d2_0004_7696c167",
+        "doc_c1984bb50a5b90fd_0119_4fe4e4f7",
+        "doc_61e65633db1e073d_0014_d8f5cb4b",
+        "doc_396a0fadeb4cd40f_0150_8ba331f0",
+        "doc_50f55a8595310730_0008_3b8fa54f",
+        "doc_1b31e77fb24d25d7_0031_cdbd7015",
+        "doc_2e663675ae36ad12_0125_0e079982",
+        "doc_c1984bb50a5b90fd_0113_0eddad74",
+        "doc_50f55a8595310730_0013_25c11699",
+        "doc_889bebece19855d7_0113_9b885679"
+      ],
+      "retrieved_sources": [
+        "data/documents/mcp/05_toolkengpt.pdf",
+        "data/documents/mcp/04_api_bank.pdf",
+        "data/documents/mcp/06_restgpt.pdf",
+        "data/documents/mcp/07_webgpt.pdf",
+        "data/documents/mcp/01_tool_learning_survey.pdf",
+        "data/documents/mcp/07_webgpt.pdf",
+        "data/documents/mcp/10_t_eval.pdf",
+        "data/documents/agent/01_react.pdf",
+        "data/documents/mcp/03_toolllm.pdf",
+        "data/documents/mcp/07_webgpt.pdf",
+        "data/documents/mcp/04_api_bank.pdf",
+        "data/documents/llm/05_instructgpt.pdf",
+        "data/documents/mcp/06_restgpt.pdf",
+        "data/documents/rag/10_rag_survey.pdf",
+        "data/documents/mcp/05_toolkengpt.pdf",
+        "data/documents/agent/04_generative_agents.pdf",
+        "data/documents/llm/04_llama.pdf",
+        "data/documents/llm/05_instructgpt.pdf",
+        "data/documents/mcp/05_toolkengpt.pdf",
+        "data/documents/mcp/01_tool_learning_survey.pdf"
+      ],
+      "used_citation_ids": [
+        1,
+        6,
+        8,
+        19
+      ],
+      "cited_chunk_ids": [
+        "doc_50f55a8595310730_0005_afdfc13e",
+        "doc_acad8d9fd55a30b9_0058_6893e9ea",
+        "doc_f285b0971ae4a790_0098_59648469",
+        "doc_50f55a8595310730_0013_25c11699"
+      ],
+      "latency_ms": 63247.2,
+      "retrieval_calls": 2,
+      "llm_calls": 4,
+      "fallback": false,
+      "steps": [
+        {
+          "stage": "route",
+          "need_retrieval": true,
+          "collections": [
+            "llm",
+            "agent"
+          ]
+        },
+        {
+          "stage": "rewrite",
+          "n_subqueries": 2
+        },
+        {
+          "stage": "hop_1",
+          "subqueries": [
+            "swift adaptation importance for large language models with emerging new tools",
+            "WebGPT approach to web browsing enabling end-to-end improvement large language models"
+          ],
+          "new_hits": 39,
+          "candidate_count": 39,
+          "context_size": 20
+        },
+        {
+          "stage": "reflect_1",
+          "sufficient": true,
+          "n_followup": 0
+        },
+        {
+          "stage": "synthesize",
+          "answer_len": 635,
+          "n_citations": 4
+        }
+      ],
+      "audit": {
+        "candidate_count": 40,
+        "unique_candidate_count": 39,
+        "request_count": 2,
+        "selected_count": 20,
+        "selected_by_request": {
+          "hop-1-request-1": [
+            "doc_50f55a8595310730_0005_afdfc13e",
+            "doc_61e65633db1e073d_0003_54f8fa15",
+            "doc_889bebece19855d7_0211_70e0b056",
+            "doc_fe4332cc5f3997a0_0003_102c4c2b",
+            "doc_295299721d67b250_0004_37cce61b",
+            "doc_619006a4cfcdd1d2_0004_7696c167",
+            "doc_61e65633db1e073d_0014_d8f5cb4b",
+            "doc_50f55a8595310730_0008_3b8fa54f",
+            "doc_2e663675ae36ad12_0125_0e079982",
+            "doc_50f55a8595310730_0013_25c11699"
+          ],
+          "hop-1-request-2": [
+            "doc_619006a4cfcdd1d2_0063_3c692f82",
+            "doc_acad8d9fd55a30b9_0005_015cd2d0",
+            "doc_acad8d9fd55a30b9_0058_6893e9ea",
+            "doc_f285b0971ae4a790_0098_59648469",
+            "doc_acad8d9fd55a30b9_0052_fe6f7799",
+            "doc_c1984bb50a5b90fd_0119_4fe4e4f7",
+            "doc_396a0fadeb4cd40f_0150_8ba331f0",
+            "doc_1b31e77fb24d25d7_0031_cdbd7015",
+            "doc_c1984bb50a5b90fd_0113_0eddad74",
+            "doc_889bebece19855d7_0113_9b885679"
+          ]
+        }
+      },
+      "error": "",
+      "metrics": {
+        "evidence_chain_complete": 1.0,
+        "evidence_recall": 1.0,
+        "answer_fact_f1": 0.22151937984496126,
+        "citation_precision": 0.25,
+        "citation_recall": 0.5,
+        "invalid_citation_rate": 0.0
+      }
+    },
+    {
+      "case_id": "composition-019",
+      "query": "How does BLIP's approach of using a captioner and filter (CapFilt) relate to the open-world visual understanding capabilities that LLaVA inherits from language-augmented foundation vision models?",
+      "answer": "The provided passages do not contain sufficient information to answer this question.",
+      "retrieved_chunk_ids": [],
+      "retrieved_sources": [],
+      "used_citation_ids": [],
+      "cited_chunk_ids": [],
+      "latency_ms": 19360.61,
+      "retrieval_calls": 2,
+      "llm_calls": 3,
+      "fallback": false,
+      "steps": [
+        {
+          "stage": "route",
+          "need_retrieval": true,
+          "collections": [
+            "multimodal"
+          ]
+        },
+        {
+          "stage": "rewrite",
+          "n_subqueries": 2
+        },
+        {
+          "stage": "hop_1",
+          "subqueries": [
+            "BLIP CapFilt captioner and filter approach for open-world visual understanding",
+            "LLaVA open-world visual understanding capabilities inherited from language-augmented foundation vision models"
+          ],
+          "new_hits": 0,
+          "candidate_count": 0,
+          "context_size": 0
+        },
+        {
+          "stage": "synthesize",
+          "answer_len": 84,
+          "n_citations": 0
+        }
+      ],
+      "audit": {
+        "candidate_count": 0,
+        "unique_candidate_count": 0,
+        "request_count": 2,
+        "selected_count": 0,
+        "selected_by_request": {
+          "hop-1-request-1": [],
+          "hop-1-request-2": []
+        }
+      },
+      "error": "",
+      "metrics": {
+        "evidence_chain_complete": 0.0,
+        "evidence_recall": 0.0,
+        "answer_fact_f1": 0.04,
+        "citation_precision": 0.0,
+        "citation_recall": 0.0,
+        "invalid_citation_rate": 0.0
+      }
+    },
+    {
+      "case_id": "composition-020",
+      "query": "Why is vision-language alignment particularly challenging when keeping large language models frozen, and how does Qwen-VL attempt to overcome the inherent limitation of text-only LLMs?",
+      "answer": "The provided passages do not contain sufficient information to answer this question.",
+      "retrieved_chunk_ids": [],
+      "retrieved_sources": [],
+      "used_citation_ids": [],
+      "cited_chunk_ids": [],
+      "latency_ms": 15471.33,
+      "retrieval_calls": 2,
+      "llm_calls": 3,
+      "fallback": false,
+      "steps": [
+        {
+          "stage": "route",
+          "need_retrieval": true,
+          "collections": [
+            "multimodal"
+          ]
+        },
+        {
+          "stage": "rewrite",
+          "n_subqueries": 2
+        },
+        {
+          "stage": "hop_1",
+          "subqueries": [
+            "challenges of vision-language alignment when keeping large language models frozen",
+            "Qwen-VL method to overcome limitation of text-only LLMs for vision-language tasks"
+          ],
+          "new_hits": 0,
+          "candidate_count": 0,
+          "context_size": 0
+        },
+        {
+          "stage": "synthesize",
+          "answer_len": 84,
+          "n_citations": 0
+        }
+      ],
+      "audit": {
+        "candidate_count": 0,
+        "unique_candidate_count": 0,
+        "request_count": 2,
+        "selected_count": 0,
+        "selected_by_request": {
+          "hop-1-request-1": [],
+          "hop-1-request-2": []
+        }
+      },
+      "error": "",
+      "metrics": {
+        "evidence_chain_complete": 0.0,
+        "evidence_recall": 0.0,
+        "answer_fact_f1": 0.1111111111111111,
+        "citation_precision": 0.0,
+        "citation_recall": 0.0,
+        "invalid_citation_rate": 0.0
+      }
+    },
+    {
+      "case_id": "composition-021",
+      "query": "What role does language play as a universal interface for a general-purpose assistant, and how does LLaVA's performance on visual reasoning and VQA benchmarks compare to InstructBLIP's?",
+      "answer": "Language serves as a universal interface for a general-purpose assistant by enabling large language models to act as a controller that manages and coordinates AI models [11]. LLaVA's visual instruction tuning yields strong visual reasoning capabilities, and it outperforms InstructBLIP on conversational-style visual reasoning benchmarks [7].",
+      "retrieved_chunk_ids": [
+        "doc_dc8bace378a282ea_0003_e2bd93f0",
+        "doc_b7074a6dad218e0d_0017_a8809dfd",
+        "doc_b7074a6dad218e0d_0005_89e4a983",
+        "doc_b7074a6dad218e0d_0037_002cf051",
+        "doc_b7074a6dad218e0d_0027_bb118e0b",
+        "doc_5add5f7ff9041299_0001_fcda62b4",
+        "doc_b7074a6dad218e0d_0006_4f0652e3",
+        "doc_b4eca60ae9d3c154_0028_ec6a4984",
+        "doc_dc8bace378a282ea_0008_4b234d22",
+        "doc_b7074a6dad218e0d_0023_181c91d2",
+        "doc_5add5f7ff9041299_0072_d8902b46",
+        "doc_b7074a6dad218e0d_0040_fc8aedaf",
+        "doc_5add5f7ff9041299_0007_9710d065",
+        "doc_dc8bace378a282ea_0044_4639d412",
+        "doc_889bebece19855d7_0139_7c49bb28",
+        "doc_dc8bace378a282ea_0041_acfce09e",
+        "doc_f285b0971ae4a790_0101_dfc60542",
+        "doc_2e663675ae36ad12_0023_25b9a923",
+        "doc_b7074a6dad218e0d_0101_1df08087",
+        "doc_2e663675ae36ad12_0021_500bd6ab"
+      ],
+      "retrieved_sources": [
+        "data/documents/multimodal/06_llava.pdf",
+        "data/documents/multimodal/10_llava15.pdf",
+        "data/documents/multimodal/10_llava15.pdf",
+        "data/documents/multimodal/10_llava15.pdf",
+        "data/documents/multimodal/10_llava15.pdf",
+        "data/documents/agent/05_hugginggpt.pdf",
+        "data/documents/multimodal/10_llava15.pdf",
+        "data/documents/multimodal/08_qwen_vl.pdf",
+        "data/documents/multimodal/06_llava.pdf",
+        "data/documents/multimodal/10_llava15.pdf",
+        "data/documents/agent/05_hugginggpt.pdf",
+        "data/documents/multimodal/10_llava15.pdf",
+        "data/documents/agent/05_hugginggpt.pdf",
+        "data/documents/multimodal/06_llava.pdf",
+        "data/documents/mcp/01_tool_learning_survey.pdf",
+        "data/documents/multimodal/06_llava.pdf",
+        "data/documents/agent/01_react.pdf",
+        "data/documents/llm/04_llama.pdf",
+        "data/documents/multimodal/10_llava15.pdf",
+        "data/documents/llm/04_llama.pdf"
+      ],
+      "used_citation_ids": [
+        7,
+        11
+      ],
+      "cited_chunk_ids": [
+        "doc_b7074a6dad218e0d_0006_4f0652e3",
+        "doc_5add5f7ff9041299_0072_d8902b46"
+      ],
+      "latency_ms": 87343.49,
+      "retrieval_calls": 5,
+      "llm_calls": 5,
+      "fallback": false,
+      "steps": [
+        {
+          "stage": "route",
+          "need_retrieval": true,
+          "collections": [
+            "multimodal",
+            "llm"
+          ]
+        },
+        {
+          "stage": "rewrite",
+          "n_subqueries": 2
+        },
+        {
+          "stage": "hop_1",
+          "subqueries": [
+            "role of language as a universal interface for general-purpose AI assistant multimodal interaction",
+            "LLaVA vs InstructBLIP performance comparison visual reasoning VQA benchmarks"
+          ],
+          "new_hits": 40,
+          "candidate_count": 40,
+          "context_size": 20
+        },
+        {
+          "stage": "reflect_1",
+          "sufficient": false,
+          "n_followup": 3
+        },
+        {
+          "stage": "hop_2",
+          "subqueries": [
+            "LLaVA vs InstructBLIP VQA benchmark accuracy comparison",
+            "LLaVA InstructBLIP visual reasoning benchmark results",
+            "LLaVA and InstructBLIP performance on VQAv2, GQA, TextVQA, MM-Vet"
+          ],
+          "new_hits": 31,
+          "candidate_count": 71,
+          "context_size": 20
+        },
+        {
+          "stage": "reflect_2",
+          "sufficient": true,
+          "n_followup": 0
+        },
+        {
+          "stage": "synthesize",
+          "answer_len": 342,
+          "n_citations": 2
+        }
+      ],
+      "audit": {
+        "candidate_count": 100,
+        "unique_candidate_count": 71,
+        "request_count": 5,
+        "selected_count": 20,
+        "selected_by_request": {
+          "hop-1-request-1": [
+            "doc_dc8bace378a282ea_0003_e2bd93f0",
+            "doc_5add5f7ff9041299_0001_fcda62b4",
+            "doc_5add5f7ff9041299_0072_d8902b46",
+            "doc_5add5f7ff9041299_0007_9710d065",
+            "doc_889bebece19855d7_0139_7c49bb28",
+            "doc_f285b0971ae4a790_0101_dfc60542",
+            "doc_b7074a6dad218e0d_0101_1df08087"
+          ],
+          "hop-1-request-2": [
+            "doc_b7074a6dad218e0d_0017_a8809dfd",
+            "doc_b7074a6dad218e0d_0006_4f0652e3",
+            "doc_b7074a6dad218e0d_0040_fc8aedaf",
+            "doc_dc8bace378a282ea_0044_4639d412",
+            "doc_dc8bace378a282ea_0041_acfce09e",
+            "doc_2e663675ae36ad12_0023_25b9a923",
+            "doc_2e663675ae36ad12_0021_500bd6ab"
+          ],
+          "hop-2-request-1": [
+            "doc_b7074a6dad218e0d_0005_89e4a983",
+            "doc_b4eca60ae9d3c154_0028_ec6a4984"
+          ],
+          "hop-2-request-2": [
+            "doc_b7074a6dad218e0d_0037_002cf051",
+            "doc_dc8bace378a282ea_0008_4b234d22"
+          ],
+          "hop-2-request-3": [
+            "doc_b7074a6dad218e0d_0027_bb118e0b",
+            "doc_b7074a6dad218e0d_0023_181c91d2"
+          ]
+        }
+      },
+      "error": "",
+      "metrics": {
+        "evidence_chain_complete": 0.0,
+        "evidence_recall": 0.5,
+        "answer_fact_f1": 0.32761788120024493,
+        "citation_precision": 0.5,
+        "citation_recall": 0.5,
+        "invalid_citation_rate": 0.0
+      }
+    },
+    {
+      "case_id": "composition-022",
+      "query": "What broad objective in artificial intelligence motivates the LLaVA assistant, and how does the Vision Transformer's patch-size approach differ from the earlier model by Cordonnier et al. (2020) to support tasks that require higher image resolution?",
+      "answer": "The provided passages do not contain sufficient information to answer this question.",
+      "retrieved_chunk_ids": [],
+      "retrieved_sources": [],
+      "used_citation_ids": [],
+      "cited_chunk_ids": [],
+      "latency_ms": 15681.5,
+      "retrieval_calls": 2,
+      "llm_calls": 3,
+      "fallback": false,
+      "steps": [
+        {
+          "stage": "route",
+          "need_retrieval": true,
+          "collections": [
+            "multimodal"
+          ]
+        },
+        {
+          "stage": "rewrite",
+          "n_subqueries": 2
+        },
+        {
+          "stage": "hop_1",
+          "subqueries": [
+            "broad objective in artificial intelligence motivating LLaVA assistant",
+            "Vision Transformer patch-size approach comparison Cordonnier et al. 2020 higher image resolution"
+          ],
+          "new_hits": 0,
+          "candidate_count": 0,
+          "context_size": 0
+        },
+        {
+          "stage": "synthesize",
+          "answer_len": 84,
+          "n_citations": 0
+        }
+      ],
+      "audit": {
+        "candidate_count": 0,
+        "unique_candidate_count": 0,
+        "request_count": 2,
+        "selected_count": 0,
+        "selected_by_request": {
+          "hop-1-request-1": [],
+          "hop-1-request-2": []
+        }
+      },
+      "error": "",
+      "metrics": {
+        "evidence_chain_complete": 0.0,
+        "evidence_recall": 0.0,
+        "answer_fact_f1": 0.13383458646616542,
+        "citation_precision": 0.0,
+        "citation_recall": 0.0,
+        "invalid_citation_rate": 0.0
+      }
+    },
+    {
+      "case_id": "composition-023",
+      "query": "What is the central concept that recent large multimodal models are converging on, and what early work by Mori et al. (1999) explored a similar approach of learning from image–text pairs?",
+      "answer": "The provided passages do not contain sufficient information to answer this question.",
+      "retrieved_chunk_ids": [],
+      "retrieved_sources": [],
+      "used_citation_ids": [],
+      "cited_chunk_ids": [],
+      "latency_ms": 23718.37,
+      "retrieval_calls": 2,
+      "llm_calls": 3,
+      "fallback": false,
+      "steps": [
+        {
+          "stage": "route",
+          "need_retrieval": true,
+          "collections": [
+            "multimodal"
+          ]
+        },
+        {
+          "stage": "rewrite",
+          "n_subqueries": 2
+        },
+        {
+          "stage": "hop_1",
+          "subqueries": [
+            "central concept that recent large multimodal models are converging on image-text learning",
+            "Mori et al. 1999 image-text pairs learning"
+          ],
+          "new_hits": 0,
+          "candidate_count": 0,
+          "context_size": 0
+        },
+        {
+          "stage": "synthesize",
+          "answer_len": 84,
+          "n_citations": 0
+        }
+      ],
+      "audit": {
+        "candidate_count": 0,
+        "unique_candidate_count": 0,
+        "request_count": 2,
+        "selected_count": 0,
+        "selected_by_request": {
+          "hop-1-request-1": [],
+          "hop-1-request-2": []
+        }
+      },
+      "error": "",
+      "metrics": {
+        "evidence_chain_complete": 0.0,
+        "evidence_recall": 0.0,
+        "answer_fact_f1": 0.05263157894736842,
+        "citation_precision": 0.0,
+        "citation_recall": 0.0,
+        "invalid_citation_rate": 0.0
+      }
+    },
+    {
+      "case_id": "composition-024",
+      "query": "Why does the Vision Transformer succeed on large datasets despite lacking CNN inductive biases, and what does Qwen-VL argue is crucial for large vision-language models to handle complex real-world visuals?",
+      "answer": "The provided passages do not contain sufficient information to answer this question.",
+      "retrieved_chunk_ids": [],
+      "retrieved_sources": [],
+      "used_citation_ids": [],
+      "cited_chunk_ids": [],
+      "latency_ms": 12342.17,
+      "retrieval_calls": 2,
+      "llm_calls": 3,
+      "fallback": false,
+      "steps": [
+        {
+          "stage": "route",
+          "need_retrieval": true,
+          "collections": [
+            "multimodal"
+          ]
+        },
+        {
+          "stage": "rewrite",
+          "n_subqueries": 2
+        },
+        {
+          "stage": "hop_1",
+          "subqueries": [
+            "Vision Transformer success on large datasets without convolutional inductive biases",
+            "Qwen-VL argument critical factor for vision-language models to handle complex real-world visuals"
+          ],
+          "new_hits": 0,
+          "candidate_count": 0,
+          "context_size": 0
+        },
+        {
+          "stage": "synthesize",
+          "answer_len": 84,
+          "n_citations": 0
+        }
+      ],
+      "audit": {
+        "candidate_count": 0,
+        "unique_candidate_count": 0,
+        "request_count": 2,
+        "selected_count": 0,
+        "selected_by_request": {
+          "hop-1-request-1": [],
+          "hop-1-request-2": []
+        }
+      },
+      "error": "",
+      "metrics": {
+        "evidence_chain_complete": 0.0,
+        "evidence_recall": 0.0,
+        "answer_fact_f1": 0.11764705882352941,
+        "citation_precision": 0.0,
+        "citation_recall": 0.0,
+        "invalid_citation_rate": 0.0
+      }
+    },
+    {
+      "case_id": "composition-025",
+      "query": "RETRO uses a chunked cross-attention mechanism and a frozen retriever to incorporate retrieved text, providing a constant gain over what parameter range? And how does REPLUG LSR's training approach differ from RETRO's adaptation of the language model to the retriever?",
+      "answer": "The provided passages do not contain sufficient information to answer this question.",
+      "retrieved_chunk_ids": [
+        "doc_3e67fc1a9977715a_0042_e4f7911f",
+        "doc_0ec1a7ab3de5514c_0008_b72bfb21",
+        "doc_0ec1a7ab3de5514c_0006_8c9accbe",
+        "doc_d9eaa1398abac0df_0001_27f75f1e",
+        "doc_0ec1a7ab3de5514c_0005_7bef8b2d",
+        "doc_d9eaa1398abac0df_0047_a2702760",
+        "doc_0ec1a7ab3de5514c_0019_79f0635b",
+        "doc_3e67fc1a9977715a_0051_a621cfcd",
+        "doc_0ec1a7ab3de5514c_0020_d1e0feec",
+        "doc_d9eaa1398abac0df_0005_67a2b590",
+        "doc_3e67fc1a9977715a_0076_1f5a539c",
+        "doc_d9eaa1398abac0df_0020_c444f456",
+        "doc_0ec1a7ab3de5514c_0017_82b6df7f",
+        "doc_0ec1a7ab3de5514c_0001_c283be56",
+        "doc_d9eaa1398abac0df_0040_8b5b16bc",
+        "doc_3e67fc1a9977715a_0032_a6de7ce1",
+        "doc_23e3249e9a1e7541_0043_70cc9039",
+        "doc_0ec1a7ab3de5514c_0043_a4720a27",
+        "doc_23e3249e9a1e7541_0042_c9d1bf86",
+        "doc_23e3249e9a1e7541_0054_519ff764"
+      ],
+      "retrieved_sources": [
+        "data/documents/rag/02_dense_passage_retrieval.pdf",
+        "data/documents/rag/03_realm.pdf",
+        "data/documents/rag/03_realm.pdf",
+        "data/documents/rag/05_self_rag.pdf",
+        "data/documents/rag/03_realm.pdf",
+        "data/documents/rag/05_self_rag.pdf",
+        "data/documents/rag/03_realm.pdf",
+        "data/documents/rag/02_dense_passage_retrieval.pdf",
+        "data/documents/rag/03_realm.pdf",
+        "data/documents/rag/05_self_rag.pdf",
+        "data/documents/rag/02_dense_passage_retrieval.pdf",
+        "data/documents/rag/05_self_rag.pdf",
+        "data/documents/rag/03_realm.pdf",
+        "data/documents/rag/03_realm.pdf",
+        "data/documents/rag/05_self_rag.pdf",
+        "data/documents/rag/02_dense_passage_retrieval.pdf",
+        "data/documents/rag/01_rag_knowledge_intensive_nlp.pdf",
+        "data/documents/rag/03_realm.pdf",
+        "data/documents/rag/01_rag_knowledge_intensive_nlp.pdf",
+        "data/documents/rag/01_rag_knowledge_intensive_nlp.pdf"
+      ],
+      "used_citation_ids": [],
+      "cited_chunk_ids": [],
+      "latency_ms": 51457.56,
+      "retrieval_calls": 6,
+      "llm_calls": 5,
+      "fallback": false,
+      "steps": [
+        {
+          "stage": "route",
+          "need_retrieval": true,
+          "collections": [
+            "rag"
+          ]
+        },
+        {
+          "stage": "rewrite",
+          "n_subqueries": 2
+        },
+        {
+          "stage": "hop_1",
+          "subqueries": [
+            "RETRO chunked cross-attention frozen retriever constant gain parameter range",
+            "REPLUG LSR training approach compared to RETRO language model adaptation retriever"
+          ],
+          "new_hits": 26,
+          "candidate_count": 26,
+          "context_size": 20
+        },
+        {
+          "stage": "reflect_1",
+          "sufficient": false,
+          "n_followup": 3
+        },
+        {
+          "stage": "hop_2",
+          "subqueries": [
+            "REPLUG LSR training approach language model adaptation retriever",
+            "REPLUG LSR vs RETRO retrieval-augmented model difference"
+          ],
+          "new_hits": 14,
+          "candidate_count": 40,
+          "context_size": 20
+        },
+        {
+          "stage": "reflect_2",
+          "sufficient": false,
+          "n_followup": 3
+        },
+        {
+          "stage": "hop_3",
+          "subqueries": [
+            "REPLUG LSR training approach difference from RETRO language model retriever adaptation",
+            "RETRO REPLUG LSR retrieval-augmented training comparison"
+          ],
+          "new_hits": 6,
+          "candidate_count": 46,
+          "context_size": 20
+        },
+        {
+          "stage": "synthesize",
+          "answer_len": 84,
+          "n_citations": 0
+        }
+      ],
+      "audit": {
+        "candidate_count": 95,
+        "unique_candidate_count": 46,
+        "request_count": 6,
+        "selected_count": 20,
+        "selected_by_request": {
+          "hop-1-request-1": [
+            "doc_3e67fc1a9977715a_0042_e4f7911f",
+            "doc_0ec1a7ab3de5514c_0019_79f0635b",
+            "doc_0ec1a7ab3de5514c_0017_82b6df7f",
+            "doc_d9eaa1398abac0df_0040_8b5b16bc",
+            "doc_23e3249e9a1e7541_0043_70cc9039",
+            "doc_23e3249e9a1e7541_0042_c9d1bf86"
+          ],
+          "hop-1-request-2": [
+            "doc_0ec1a7ab3de5514c_0008_b72bfb21",
+            "doc_3e67fc1a9977715a_0051_a621cfcd",
+            "doc_0ec1a7ab3de5514c_0001_c283be56",
+            "doc_3e67fc1a9977715a_0032_a6de7ce1",
+            "doc_0ec1a7ab3de5514c_0043_a4720a27",
+            "doc_23e3249e9a1e7541_0054_519ff764"
+          ],
+          "hop-2-request-1": [
+            "doc_0ec1a7ab3de5514c_0006_8c9accbe",
+            "doc_0ec1a7ab3de5514c_0020_d1e0feec"
+          ],
+          "hop-2-request-2": [
+            "doc_d9eaa1398abac0df_0001_27f75f1e",
+            "doc_d9eaa1398abac0df_0005_67a2b590"
+          ],
+          "hop-3-request-1": [
+            "doc_0ec1a7ab3de5514c_0005_7bef8b2d",
+            "doc_3e67fc1a9977715a_0076_1f5a539c"
+          ],
+          "hop-3-request-2": [
+            "doc_d9eaa1398abac0df_0047_a2702760",
+            "doc_d9eaa1398abac0df_0020_c444f456"
+          ]
+        }
+      },
+      "error": "",
+      "metrics": {
+        "evidence_chain_complete": 0.0,
+        "evidence_recall": 0.0,
+        "answer_fact_f1": 0.07994579945799457,
+        "citation_precision": 0.0,
+        "citation_recall": 0.0,
+        "invalid_citation_rate": 0.0
+      }
+    },
+    {
+      "case_id": "composition-026",
+      "query": "What problem does REALM identify with storing world knowledge implicitly in neural network parameters, and what limitation of the canonical RAG setup related to a language model's context window does GraphRAG address?",
+      "answer": "REALM identifies that storing world knowledge implicitly in neural network parameters makes it difficult to determine what knowledge is stored [1] and requires ever-larger networks to cover more facts [6]. The provided passages do not contain information about GraphRAG or its addressed limitation of the canonical RAG setup's context window.",
+      "retrieved_chunk_ids": [
+        "doc_0ec1a7ab3de5514c_0004_7a7044e4",
+        "doc_23e3249e9a1e7541_0012_0842355d",
+        "doc_d9eaa1398abac0df_0013_76eb2d09",
+        "doc_23e3249e9a1e7541_0045_45f9dca8",
+        "doc_d9eaa1398abac0df_0014_50ad2593",
+        "doc_0ec1a7ab3de5514c_0001_c283be56",
+        "doc_23e3249e9a1e7541_0089_261640aa",
+        "doc_d9eaa1398abac0df_0093_bc3ed9a1",
+        "doc_23e3249e9a1e7541_0038_3d55c8f5",
+        "doc_d9eaa1398abac0df_0001_27f75f1e",
+        "doc_23e3249e9a1e7541_0003_4f460415",
+        "doc_23e3249e9a1e7541_0029_cf6e332d",
+        "doc_0ec1a7ab3de5514c_0009_315daf1d",
+        "doc_d9eaa1398abac0df_0016_282b83b9",
+        "doc_0ec1a7ab3de5514c_0065_33c700c2",
+        "doc_d9eaa1398abac0df_0070_56f64c00",
+        "doc_0ec1a7ab3de5514c_0028_3df6b278",
+        "doc_23e3249e9a1e7541_0015_b02fc0c0",
+        "doc_0ec1a7ab3de5514c_0020_d1e0feec",
+        "doc_d9eaa1398abac0df_0020_c444f456"
+      ],
+      "retrieved_sources": [
+        "data/documents/rag/03_realm.pdf",
+        "data/documents/rag/01_rag_knowledge_intensive_nlp.pdf",
+        "data/documents/rag/05_self_rag.pdf",
+        "data/documents/rag/01_rag_knowledge_intensive_nlp.pdf",
+        "data/documents/rag/05_self_rag.pdf",
+        "data/documents/rag/03_realm.pdf",
+        "data/documents/rag/01_rag_knowledge_intensive_nlp.pdf",
+        "data/documents/rag/05_self_rag.pdf",
+        "data/documents/rag/01_rag_knowledge_intensive_nlp.pdf",
+        "data/documents/rag/05_self_rag.pdf",
+        "data/documents/rag/01_rag_knowledge_intensive_nlp.pdf",
+        "data/documents/rag/01_rag_knowledge_intensive_nlp.pdf",
+        "data/documents/rag/03_realm.pdf",
+        "data/documents/rag/05_self_rag.pdf",
+        "data/documents/rag/03_realm.pdf",
+        "data/documents/rag/05_self_rag.pdf",
+        "data/documents/rag/03_realm.pdf",
+        "data/documents/rag/01_rag_knowledge_intensive_nlp.pdf",
+        "data/documents/rag/03_realm.pdf",
+        "data/documents/rag/05_self_rag.pdf"
+      ],
+      "used_citation_ids": [
+        1,
+        6
+      ],
+      "cited_chunk_ids": [
+        "doc_0ec1a7ab3de5514c_0004_7a7044e4",
+        "doc_0ec1a7ab3de5514c_0001_c283be56"
+      ],
+      "latency_ms": 65704.39,
+      "retrieval_calls": 5,
+      "llm_calls": 5,
+      "fallback": false,
+      "steps": [
+        {
+          "stage": "route",
+          "need_retrieval": true,
+          "collections": [
+            "rag"
+          ]
+        },
+        {
+          "stage": "rewrite",
+          "n_subqueries": 2
+        },
+        {
+          "stage": "hop_1",
+          "subqueries": [
+            "REALM problem with storing world knowledge implicitly in neural network parameters",
+            "GraphRAG addresses context window limitation in canonical RAG setup"
+          ],
+          "new_hits": 38,
+          "candidate_count": 38,
+          "context_size": 20
+        },
+        {
+          "stage": "reflect_1",
+          "sufficient": false,
+          "n_followup": 2
+        },
+        {
+          "stage": "hop_2",
+          "subqueries": [
+            "GraphRAG context window limitation canonical RAG",
+            "GraphRAG address RAG context window"
+          ],
+          "new_hits": 6,
+          "candidate_count": 44,
+          "context_size": 20
+        },
+        {
+          "stage": "reflect_2",
+          "sufficient": false,
+          "n_followup": 2
+        },
+        {
+          "stage": "hop_3",
+          "subqueries": [
+            "GraphRAG address limited context window retrieval augmented generation"
+          ],
+          "new_hits": 7,
+          "candidate_count": 51,
+          "context_size": 20
+        },
+        {
+          "stage": "synthesize",
+          "answer_len": 342,
+          "n_citations": 2
+        }
+      ],
+      "audit": {
+        "candidate_count": 97,
+        "unique_candidate_count": 51,
+        "request_count": 5,
+        "selected_count": 20,
+        "selected_by_request": {
+          "hop-1-request-1": [
+            "doc_0ec1a7ab3de5514c_0004_7a7044e4",
+            "doc_0ec1a7ab3de5514c_0001_c283be56",
+            "doc_23e3249e9a1e7541_0003_4f460415",
+            "doc_0ec1a7ab3de5514c_0009_315daf1d",
+            "doc_0ec1a7ab3de5514c_0065_33c700c2",
+            "doc_0ec1a7ab3de5514c_0028_3df6b278",
+            "doc_0ec1a7ab3de5514c_0020_d1e0feec"
+          ],
+          "hop-1-request-2": [
+            "doc_23e3249e9a1e7541_0012_0842355d",
+            "doc_23e3249e9a1e7541_0089_261640aa",
+            "doc_23e3249e9a1e7541_0029_cf6e332d",
+            "doc_d9eaa1398abac0df_0016_282b83b9",
+            "doc_d9eaa1398abac0df_0070_56f64c00",
+            "doc_23e3249e9a1e7541_0015_b02fc0c0",
+            "doc_d9eaa1398abac0df_0020_c444f456"
+          ],
+          "hop-2-request-1": [
+            "doc_d9eaa1398abac0df_0013_76eb2d09",
+            "doc_d9eaa1398abac0df_0093_bc3ed9a1"
+          ],
+          "hop-2-request-2": [
+            "doc_23e3249e9a1e7541_0045_45f9dca8",
+            "doc_23e3249e9a1e7541_0038_3d55c8f5"
+          ],
+          "hop-3-request-1": [
+            "doc_d9eaa1398abac0df_0014_50ad2593",
+            "doc_d9eaa1398abac0df_0001_27f75f1e"
+          ]
+        }
+      },
+      "error": "",
+      "metrics": {
+        "evidence_chain_complete": 0.0,
+        "evidence_recall": 0.5,
+        "answer_fact_f1": 0.392252554521885,
+        "citation_precision": 0.5,
+        "citation_recall": 0.5,
+        "invalid_citation_rate": 0.0
+      }
+    },
+    {
+      "case_id": "composition-027",
+      "query": "What issue relevant to hallucinations do both parametric-memory-only pre-trained language models and conventional RAG approaches that treat all retrieved document content equally encounter?",
+      "answer": "Both parametric-memory-only pre-trained language models and conventional RAG approaches that treat all retrieved document content equally encounter the issue of generating hallucinated or factually ungrounded outputs when their knowledge source is inadequate. Parametric-memory-only LLMs inevitably exhibit hallucinations because the accuracy of generated texts cannot be secured solely by the parametric knowledge they encapsulate [3], while conventional RAG models (instruction-tuned) continue to generate plausible answers even when retrieved passages are not relevant, indicating the answers may not be factually grounded [16].",
+      "retrieved_chunk_ids": [
+        "doc_23e3249e9a1e7541_0002_7af48c2c",
+        "doc_23e3249e9a1e7541_0001_bc0879c3",
+        "doc_975aa1fd3c1b6031_0001_c2acbd40",
+        "doc_23e3249e9a1e7541_0007_ae01749d",
+        "doc_23e3249e9a1e7541_0003_4f460415",
+        "doc_23e3249e9a1e7541_0055_b57ba879",
+        "doc_23e3249e9a1e7541_0051_1181a28a",
+        "doc_396a0fadeb4cd40f_0004_1c0d2dbe",
+        "doc_d9eaa1398abac0df_0115_ffc52d21",
+        "doc_23e3249e9a1e7541_0022_04268dd2",
+        "doc_975aa1fd3c1b6031_0005_5d260346",
+        "doc_3c24ff147c4912a9_0002_1f6938f4",
+        "doc_23e3249e9a1e7541_0096_1166fa67",
+        "doc_23e3249e9a1e7541_0006_3f1fc994",
+        "doc_23e3249e9a1e7541_0009_1911cceb",
+        "doc_d9eaa1398abac0df_0116_e1302c68",
+        "doc_396a0fadeb4cd40f_0114_fafd4709",
+        "doc_1aeae54095cdae3a_0048_ab1ca041",
+        "doc_975aa1fd3c1b6031_0011_139f78f3",
+        "doc_a78f64448a86d91b_0091_fbb8da12"
+      ],
+      "retrieved_sources": [
+        "data/documents/rag/01_rag_knowledge_intensive_nlp.pdf",
+        "data/documents/rag/01_rag_knowledge_intensive_nlp.pdf",
+        "data/documents/rag/08_crag.pdf",
+        "data/documents/rag/01_rag_knowledge_intensive_nlp.pdf",
+        "data/documents/rag/01_rag_knowledge_intensive_nlp.pdf",
+        "data/documents/rag/01_rag_knowledge_intensive_nlp.pdf",
+        "data/documents/rag/01_rag_knowledge_intensive_nlp.pdf",
+        "data/documents/rag/10_rag_survey.pdf",
+        "data/documents/rag/05_self_rag.pdf",
+        "data/documents/rag/01_rag_knowledge_intensive_nlp.pdf",
+        "data/documents/rag/08_crag.pdf",
+        "data/documents/rag/07_replug.pdf",
+        "data/documents/rag/01_rag_knowledge_intensive_nlp.pdf",
+        "data/documents/rag/01_rag_knowledge_intensive_nlp.pdf",
+        "data/documents/rag/01_rag_knowledge_intensive_nlp.pdf",
+        "data/documents/rag/05_self_rag.pdf",
+        "data/documents/rag/10_rag_survey.pdf",
+        "data/documents/mcp/02_gorilla.pdf",
+        "data/documents/rag/08_crag.pdf",
+        "data/documents/multimodal/07_minigpt4.pdf"
+      ],
+      "used_citation_ids": [
+        3,
+        16
+      ],
+      "cited_chunk_ids": [
+        "doc_975aa1fd3c1b6031_0001_c2acbd40",
+        "doc_d9eaa1398abac0df_0116_e1302c68"
+      ],
+      "latency_ms": 111647.21,
+      "retrieval_calls": 1,
+      "llm_calls": 4,
+      "fallback": false,
+      "steps": [
+        {
+          "stage": "route",
+          "need_retrieval": true,
+          "collections": [
+            "rag",
+            "llm"
+          ]
+        },
+        {
+          "stage": "rewrite",
+          "n_subqueries": 1
+        },
+        {
+          "stage": "hop_1",
+          "subqueries": [
+            "common hallucination issue parametric-memory-only pre-trained language models conventional RAG treat all retrieved content equally"
+          ],
+          "new_hits": 20,
+          "candidate_count": 20,
+          "context_size": 20
+        },
+        {
+          "stage": "reflect_1",
+          "sufficient": true,
+          "n_followup": 0
+        },
+        {
+          "stage": "synthesize",
+          "answer_len": 631,
+          "n_citations": 2
+        }
+      ],
+      "audit": {
+        "candidate_count": 20,
+        "unique_candidate_count": 20,
+        "request_count": 1,
+        "selected_count": 20,
+        "selected_by_request": {
+          "hop-1-request-1": [
+            "doc_23e3249e9a1e7541_0002_7af48c2c",
+            "doc_23e3249e9a1e7541_0001_bc0879c3",
+            "doc_975aa1fd3c1b6031_0001_c2acbd40",
+            "doc_23e3249e9a1e7541_0007_ae01749d",
+            "doc_23e3249e9a1e7541_0003_4f460415",
+            "doc_23e3249e9a1e7541_0055_b57ba879",
+            "doc_23e3249e9a1e7541_0051_1181a28a",
+            "doc_396a0fadeb4cd40f_0004_1c0d2dbe",
+            "doc_d9eaa1398abac0df_0115_ffc52d21",
+            "doc_23e3249e9a1e7541_0022_04268dd2",
+            "doc_975aa1fd3c1b6031_0005_5d260346",
+            "doc_3c24ff147c4912a9_0002_1f6938f4",
+            "doc_23e3249e9a1e7541_0096_1166fa67",
+            "doc_23e3249e9a1e7541_0006_3f1fc994",
+            "doc_23e3249e9a1e7541_0009_1911cceb",
+            "doc_d9eaa1398abac0df_0116_e1302c68",
+            "doc_396a0fadeb4cd40f_0114_fafd4709",
+            "doc_1aeae54095cdae3a_0048_ab1ca041",
+            "doc_975aa1fd3c1b6031_0011_139f78f3",
+            "doc_a78f64448a86d91b_0091_fbb8da12"
+          ]
+        }
+      },
+      "error": "",
+      "metrics": {
+        "evidence_chain_complete": 0.0,
+        "evidence_recall": 0.5,
+        "answer_fact_f1": 0.15200242718446602,
+        "citation_precision": 0.0,
+        "citation_recall": 0.0,
+        "invalid_citation_rate": 0.0
+      }
+    },
+    {
+      "case_id": "composition-028",
+      "query": "What computational strategy does REALM use to make large-scale neural retrieval feasible during pre-training, and how does SELF-RAG use critique tokens to improve final output?",
+      "answer": "REALM uses asynchronous MIPS refreshes to make large-scale neural retrieval feasible during pre-training, where the trainer sends a parameter snapshot to an index builder that constructs a new index in the background while training continues [13]. SELF-RAG uses critique tokens, called reflection tokens, to self-evaluate retrieved passages and its own generations, deciding when retrieval is needed and improving factuality and overall generation quality [6, 8, 14].",
+      "retrieved_chunk_ids": [
+        "doc_0ec1a7ab3de5514c_0005_7bef8b2d",
+        "doc_d9eaa1398abac0df_0005_67a2b590",
+        "doc_0ec1a7ab3de5514c_0038_3b3e0b97",
+        "doc_d9eaa1398abac0df_0020_c444f456",
+        "doc_0ec1a7ab3de5514c_0008_b72bfb21",
+        "doc_d9eaa1398abac0df_0070_56f64c00",
+        "doc_0ec1a7ab3de5514c_0020_d1e0feec",
+        "doc_d9eaa1398abac0df_0019_53a2fb8a",
+        "doc_0ec1a7ab3de5514c_0002_33235815",
+        "doc_d9eaa1398abac0df_0006_f0537ae9",
+        "doc_0ec1a7ab3de5514c_0050_41883141",
+        "doc_d9eaa1398abac0df_0001_27f75f1e",
+        "doc_0ec1a7ab3de5514c_0025_6af161d6",
+        "doc_d9eaa1398abac0df_0002_3dd848c0",
+        "doc_0ec1a7ab3de5514c_0004_7a7044e4",
+        "doc_d9eaa1398abac0df_0009_52f78314",
+        "doc_0ec1a7ab3de5514c_0001_c283be56",
+        "doc_d9eaa1398abac0df_0025_2de6a690",
+        "doc_0ec1a7ab3de5514c_0000_50dba397",
+        "doc_d9eaa1398abac0df_0094_c42d661d"
+      ],
+      "retrieved_sources": [
+        "data/documents/rag/03_realm.pdf",
+        "data/documents/rag/05_self_rag.pdf",
+        "data/documents/rag/03_realm.pdf",
+        "data/documents/rag/05_self_rag.pdf",
+        "data/documents/rag/03_realm.pdf",
+        "data/documents/rag/05_self_rag.pdf",
+        "data/documents/rag/03_realm.pdf",
+        "data/documents/rag/05_self_rag.pdf",
+        "data/documents/rag/03_realm.pdf",
+        "data/documents/rag/05_self_rag.pdf",
+        "data/documents/rag/03_realm.pdf",
+        "data/documents/rag/05_self_rag.pdf",
+        "data/documents/rag/03_realm.pdf",
+        "data/documents/rag/05_self_rag.pdf",
+        "data/documents/rag/03_realm.pdf",
+        "data/documents/rag/05_self_rag.pdf",
+        "data/documents/rag/03_realm.pdf",
+        "data/documents/rag/05_self_rag.pdf",
+        "data/documents/rag/03_realm.pdf",
+        "data/documents/rag/05_self_rag.pdf"
+      ],
+      "used_citation_ids": [
+        6,
+        8,
+        13,
+        14
+      ],
+      "cited_chunk_ids": [
+        "doc_d9eaa1398abac0df_0070_56f64c00",
+        "doc_d9eaa1398abac0df_0019_53a2fb8a",
+        "doc_0ec1a7ab3de5514c_0025_6af161d6",
+        "doc_d9eaa1398abac0df_0002_3dd848c0"
+      ],
+      "latency_ms": 51809.37,
+      "retrieval_calls": 2,
+      "llm_calls": 4,
+      "fallback": false,
+      "steps": [
+        {
+          "stage": "route",
+          "need_retrieval": true,
+          "collections": [
+            "rag"
+          ]
+        },
+        {
+          "stage": "rewrite",
+          "n_subqueries": 2
+        },
+        {
+          "stage": "hop_1",
+          "subqueries": [
+            "REALM Retrieval-Augmented Language Model computational strategy large-scale neural retrieval pre-training efficient retrieval",
+            "SELF-RAG Self-Reflective Retrieval-Augmented Generation critique tokens mechanism improve final output quality"
+          ],
+          "new_hits": 40,
+          "candidate_count": 40,
+          "context_size": 20
+        },
+        {
+          "stage": "reflect_1",
+          "sufficient": true,
+          "n_followup": 0
+        },
+        {
+          "stage": "synthesize",
+          "answer_len": 467,
+          "n_citations": 4
+        }
+      ],
+      "audit": {
+        "candidate_count": 40,
+        "unique_candidate_count": 40,
+        "request_count": 2,
+        "selected_count": 20,
+        "selected_by_request": {
+          "hop-1-request-1": [
+            "doc_0ec1a7ab3de5514c_0005_7bef8b2d",
+            "doc_0ec1a7ab3de5514c_0038_3b3e0b97",
+            "doc_0ec1a7ab3de5514c_0008_b72bfb21",
+            "doc_0ec1a7ab3de5514c_0020_d1e0feec",
+            "doc_0ec1a7ab3de5514c_0002_33235815",
+            "doc_0ec1a7ab3de5514c_0050_41883141",
+            "doc_0ec1a7ab3de5514c_0025_6af161d6",
+            "doc_0ec1a7ab3de5514c_0004_7a7044e4",
+            "doc_0ec1a7ab3de5514c_0001_c283be56",
+            "doc_0ec1a7ab3de5514c_0000_50dba397"
+          ],
+          "hop-1-request-2": [
+            "doc_d9eaa1398abac0df_0005_67a2b590",
+            "doc_d9eaa1398abac0df_0020_c444f456",
+            "doc_d9eaa1398abac0df_0070_56f64c00",
+            "doc_d9eaa1398abac0df_0019_53a2fb8a",
+            "doc_d9eaa1398abac0df_0006_f0537ae9",
+            "doc_d9eaa1398abac0df_0001_27f75f1e",
+            "doc_d9eaa1398abac0df_0002_3dd848c0",
+            "doc_d9eaa1398abac0df_0009_52f78314",
+            "doc_d9eaa1398abac0df_0025_2de6a690",
+            "doc_d9eaa1398abac0df_0094_c42d661d"
+          ]
+        }
+      },
+      "error": "",
+      "metrics": {
+        "evidence_chain_complete": 0.0,
+        "evidence_recall": 0.5,
+        "answer_fact_f1": 0.256259204712813,
+        "citation_precision": 0.0,
+        "citation_recall": 0.0,
+        "invalid_citation_rate": 0.0
+      }
+    },
+    {
+      "case_id": "composition-029",
+      "query": "How does REALM incorporate retrieved documents into its predictions, and what findings from Fusion-in-Decoder support the ability of generative models to combine evidence from multiple passages?",
+      "answer": "REALM incorporates retrieved documents by attending over them to help inform its predictions [1]. Fusion-in-Decoder combines evidence from multiple passages by independently encoding each passage, then concatenating their representations and performing evidence fusion in the decoder only [6]. It scales to large numbers of passages and benefits from the increased evidence [14], with performance improving as the number of retrieved passages grows [20].",
+      "retrieved_chunk_ids": [
+        "doc_0ec1a7ab3de5514c_0005_7bef8b2d",
+        "doc_f1ee7e927c3fb31b_0006_e568ecea",
+        "doc_0ec1a7ab3de5514c_0046_4b136f6c",
+        "doc_f1ee7e927c3fb31b_0022_b04818b3",
+        "doc_23e3249e9a1e7541_0094_95bf86cb",
+        "doc_f1ee7e927c3fb31b_0016_896159c8",
+        "doc_0ec1a7ab3de5514c_0043_a4720a27",
+        "doc_f1ee7e927c3fb31b_0005_ff314d6f",
+        "doc_0ec1a7ab3de5514c_0038_3b3e0b97",
+        "doc_f1ee7e927c3fb31b_0000_ba5a7782",
+        "doc_0ec1a7ab3de5514c_0019_79f0635b",
+        "doc_f1ee7e927c3fb31b_0017_ea4566ff",
+        "doc_0ec1a7ab3de5514c_0067_f33c9dd1",
+        "doc_f1ee7e927c3fb31b_0011_5c313eee",
+        "doc_0ec1a7ab3de5514c_0050_41883141",
+        "doc_f1ee7e927c3fb31b_0015_cb858319",
+        "doc_0ec1a7ab3de5514c_0047_f86b0992",
+        "doc_f1ee7e927c3fb31b_0004_576f88b7",
+        "doc_0ec1a7ab3de5514c_0048_937d8d01",
+        "doc_f1ee7e927c3fb31b_0024_55ec82fd"
+      ],
+      "retrieved_sources": [
+        "data/documents/rag/03_realm.pdf",
+        "data/documents/rag/04_fusion_in_decoder.pdf",
+        "data/documents/rag/03_realm.pdf",
+        "data/documents/rag/04_fusion_in_decoder.pdf",
+        "data/documents/rag/01_rag_knowledge_intensive_nlp.pdf",
+        "data/documents/rag/04_fusion_in_decoder.pdf",
+        "data/documents/rag/03_realm.pdf",
+        "data/documents/rag/04_fusion_in_decoder.pdf",
+        "data/documents/rag/03_realm.pdf",
+        "data/documents/rag/04_fusion_in_decoder.pdf",
+        "data/documents/rag/03_realm.pdf",
+        "data/documents/rag/04_fusion_in_decoder.pdf",
+        "data/documents/rag/03_realm.pdf",
+        "data/documents/rag/04_fusion_in_decoder.pdf",
+        "data/documents/rag/03_realm.pdf",
+        "data/documents/rag/04_fusion_in_decoder.pdf",
+        "data/documents/rag/03_realm.pdf",
+        "data/documents/rag/04_fusion_in_decoder.pdf",
+        "data/documents/rag/03_realm.pdf",
+        "data/documents/rag/04_fusion_in_decoder.pdf"
+      ],
+      "used_citation_ids": [
+        1,
+        6,
+        14,
+        20
+      ],
+      "cited_chunk_ids": [
+        "doc_0ec1a7ab3de5514c_0005_7bef8b2d",
+        "doc_f1ee7e927c3fb31b_0016_896159c8",
+        "doc_f1ee7e927c3fb31b_0011_5c313eee",
+        "doc_f1ee7e927c3fb31b_0024_55ec82fd"
+      ],
+      "latency_ms": 43929.21,
+      "retrieval_calls": 2,
+      "llm_calls": 4,
+      "fallback": false,
+      "steps": [
+        {
+          "stage": "route",
+          "need_retrieval": true,
+          "collections": [
+            "rag"
+          ]
+        },
+        {
+          "stage": "rewrite",
+          "n_subqueries": 2
+        },
+        {
+          "stage": "hop_1",
+          "subqueries": [
+            "REALM model incorporating retrieved documents into predictions mechanism",
+            "Fusion-in-Decoder findings on combining evidence from multiple passages in generative models"
+          ],
+          "new_hits": 39,
+          "candidate_count": 39,
+          "context_size": 20
+        },
+        {
+          "stage": "reflect_1",
+          "sufficient": true,
+          "n_followup": 0
+        },
+        {
+          "stage": "synthesize",
+          "answer_len": 454,
+          "n_citations": 4
+        }
+      ],
+      "audit": {
+        "candidate_count": 40,
+        "unique_candidate_count": 39,
+        "request_count": 2,
+        "selected_count": 20,
+        "selected_by_request": {
+          "hop-1-request-1": [
+            "doc_0ec1a7ab3de5514c_0005_7bef8b2d",
+            "doc_0ec1a7ab3de5514c_0046_4b136f6c",
+            "doc_23e3249e9a1e7541_0094_95bf86cb",
+            "doc_0ec1a7ab3de5514c_0043_a4720a27",
+            "doc_0ec1a7ab3de5514c_0038_3b3e0b97",
+            "doc_0ec1a7ab3de5514c_0019_79f0635b",
+            "doc_0ec1a7ab3de5514c_0067_f33c9dd1",
+            "doc_0ec1a7ab3de5514c_0050_41883141",
+            "doc_0ec1a7ab3de5514c_0047_f86b0992",
+            "doc_0ec1a7ab3de5514c_0048_937d8d01"
+          ],
+          "hop-1-request-2": [
+            "doc_f1ee7e927c3fb31b_0006_e568ecea",
+            "doc_f1ee7e927c3fb31b_0022_b04818b3",
+            "doc_f1ee7e927c3fb31b_0016_896159c8",
+            "doc_f1ee7e927c3fb31b_0005_ff314d6f",
+            "doc_f1ee7e927c3fb31b_0000_ba5a7782",
+            "doc_f1ee7e927c3fb31b_0017_ea4566ff",
+            "doc_f1ee7e927c3fb31b_0011_5c313eee",
+            "doc_f1ee7e927c3fb31b_0015_cb858319",
+            "doc_f1ee7e927c3fb31b_0004_576f88b7",
+            "doc_f1ee7e927c3fb31b_0024_55ec82fd"
+          ]
+        }
+      },
+      "error": "",
+      "metrics": {
+        "evidence_chain_complete": 1.0,
+        "evidence_recall": 1.0,
+        "answer_fact_f1": 0.23709585933068633,
+        "citation_precision": 0.25,
+        "citation_recall": 0.5,
+        "invalid_citation_rate": 0.0
+      }
+    },
+    {
+      "case_id": "composition-030",
+      "query": "How do GraphRAG and REALM each use the notion of model performance to guide retrieval or evaluation in their respective approaches?",
+      "answer": "The provided passages do not contain information about GraphRAG. Regarding REALM, it uses model performance to guide retrieval: the retriever is trained with a performance-based signal from unsupervised text, rewarding retrievals that improve the language model's perplexity (or prediction accuracy) and penalizing uninformative ones [5][7].",
+      "retrieved_chunk_ids": [
+        "doc_3e67fc1a9977715a_0057_b90ddf99",
+        "doc_0ec1a7ab3de5514c_0038_3b3e0b97",
+        "doc_d9eaa1398abac0df_0061_29a03be3",
+        "doc_d9eaa1398abac0df_0013_76eb2d09",
+        "doc_0ec1a7ab3de5514c_0006_8c9accbe",
+        "doc_d9eaa1398abac0df_0005_67a2b590",
+        "doc_0ec1a7ab3de5514c_0026_ab963fed",
+        "doc_d9eaa1398abac0df_0002_3dd848c0",
+        "doc_0ec1a7ab3de5514c_0005_7bef8b2d",
+        "doc_3e67fc1a9977715a_0032_a6de7ce1",
+        "doc_d9eaa1398abac0df_0066_b7fa65e4",
+        "doc_23e3249e9a1e7541_0049_81a72284",
+        "doc_d9eaa1398abac0df_0019_53a2fb8a",
+        "doc_23e3249e9a1e7541_0007_ae01749d",
+        "doc_d9eaa1398abac0df_0025_2de6a690",
+        "doc_0ec1a7ab3de5514c_0002_33235815",
+        "doc_d9eaa1398abac0df_0055_b67b4d70",
+        "doc_0ec1a7ab3de5514c_0035_b5b9ca75",
+        "doc_23e3249e9a1e7541_0052_ed92e347",
+        "doc_0ec1a7ab3de5514c_0009_315daf1d"
+      ],
+      "retrieved_sources": [
+        "data/documents/rag/02_dense_passage_retrieval.pdf",
+        "data/documents/rag/03_realm.pdf",
+        "data/documents/rag/05_self_rag.pdf",
+        "data/documents/rag/05_self_rag.pdf",
+        "data/documents/rag/03_realm.pdf",
+        "data/documents/rag/05_self_rag.pdf",
+        "data/documents/rag/03_realm.pdf",
+        "data/documents/rag/05_self_rag.pdf",
+        "data/documents/rag/03_realm.pdf",
+        "data/documents/rag/02_dense_passage_retrieval.pdf",
+        "data/documents/rag/05_self_rag.pdf",
+        "data/documents/rag/01_rag_knowledge_intensive_nlp.pdf",
+        "data/documents/rag/05_self_rag.pdf",
+        "data/documents/rag/01_rag_knowledge_intensive_nlp.pdf",
+        "data/documents/rag/05_self_rag.pdf",
+        "data/documents/rag/03_realm.pdf",
+        "data/documents/rag/05_self_rag.pdf",
+        "data/documents/rag/03_realm.pdf",
+        "data/documents/rag/01_rag_knowledge_intensive_nlp.pdf",
+        "data/documents/rag/03_realm.pdf"
+      ],
+      "used_citation_ids": [
+        5,
+        7
+      ],
+      "cited_chunk_ids": [
+        "doc_0ec1a7ab3de5514c_0006_8c9accbe",
+        "doc_0ec1a7ab3de5514c_0026_ab963fed"
+      ],
+      "latency_ms": 37080.59,
+      "retrieval_calls": 7,
+      "llm_calls": 5,
+      "fallback": false,
+      "steps": [
+        {
+          "stage": "route",
+          "need_retrieval": true,
+          "collections": [
+            "rag"
+          ]
+        },
+        {
+          "stage": "rewrite",
+          "n_subqueries": 2
+        },
+        {
+          "stage": "hop_1",
+          "subqueries": [
+            "GraphRAG model performance guidance for retrieval or evaluation",
+            "REALM model performance retrieval evaluation guidance"
+          ],
+          "new_hits": 36,
+          "candidate_count": 36,
+          "context_size": 20
+        },
+        {
+          "stage": "reflect_1",
+          "sufficient": false,
+          "n_followup": 2
+        },
+        {
+          "stage": "hop_2",
+          "subqueries": [
+            "GraphRAG retrieval guided by model performance",
+            "GraphRAG evaluation using model performance"
+          ],
+          "new_hits": 12,
+          "candidate_count": 48,
+          "context_size": 20
+        },
+        {
+          "stage": "reflect_2",
+          "sufficient": false,
+          "n_followup": 3
+        },
+        {
+          "stage": "hop_3",
+          "subqueries": [
+            "GraphRAG model performance retrieval guidance",
+            "GraphRAG graph-based retrieval evaluation generation quality",
+            "GraphRAG perplexity reward training retriever"
+          ],
+          "new_hits": 15,
+          "candidate_count": 63,
+          "context_size": 20
+        },
+        {
+          "stage": "synthesize",
+          "answer_len": 341,
+          "n_citations": 2
+        }
+      ],
+      "audit": {
+        "candidate_count": 119,
+        "unique_candidate_count": 63,
+        "request_count": 7,
+        "selected_count": 20,
+        "selected_by_request": {
+          "hop-1-request-1": [
+            "doc_3e67fc1a9977715a_0057_b90ddf99",
+            "doc_d9eaa1398abac0df_0002_3dd848c0",
+            "doc_d9eaa1398abac0df_0025_2de6a690",
+            "doc_d9eaa1398abac0df_0055_b67b4d70",
+            "doc_23e3249e9a1e7541_0052_ed92e347"
+          ],
+          "hop-1-request-2": [
+            "doc_0ec1a7ab3de5514c_0038_3b3e0b97",
+            "doc_0ec1a7ab3de5514c_0005_7bef8b2d",
+            "doc_0ec1a7ab3de5514c_0002_33235815",
+            "doc_0ec1a7ab3de5514c_0035_b5b9ca75",
+            "doc_0ec1a7ab3de5514c_0009_315daf1d"
+          ],
+          "hop-2-request-1": [
+            "doc_d9eaa1398abac0df_0061_29a03be3",
+            "doc_3e67fc1a9977715a_0032_a6de7ce1"
+          ],
+          "hop-2-request-2": [
+            "doc_d9eaa1398abac0df_0013_76eb2d09",
+            "doc_d9eaa1398abac0df_0066_b7fa65e4"
+          ],
+          "hop-3-request-1": [
+            "doc_0ec1a7ab3de5514c_0006_8c9accbe",
+            "doc_23e3249e9a1e7541_0049_81a72284"
+          ],
+          "hop-3-request-2": [
+            "doc_d9eaa1398abac0df_0005_67a2b590",
+            "doc_d9eaa1398abac0df_0019_53a2fb8a"
+          ],
+          "hop-3-request-3": [
+            "doc_0ec1a7ab3de5514c_0026_ab963fed",
+            "doc_23e3249e9a1e7541_0007_ae01749d"
+          ]
+        }
+      },
+      "error": "",
+      "metrics": {
+        "evidence_chain_complete": 0.0,
+        "evidence_recall": 0.5,
+        "answer_fact_f1": 0.36426779857225544,
+        "citation_precision": 0.5,
+        "citation_recall": 0.5,
+        "invalid_citation_rate": 0.0
+      }
+    }
+  ],
+  "summary": {
+    "evidence_chain_complete": 0.25,
+    "evidence_recall": 0.4166666666666667,
+    "answer_fact_f1": 0.18131376877338842,
+    "citation_precision": 0.2034722222222222,
+    "citation_recall": 0.2708333333333333,
+    "invalid_citation_rate": 0.0,
+    "n_cases": 24,
+    "failure_rate": 0.0,
+    "fallback_rate": 0.0,
+    "avg_latency_ms": 55099.09125,
+    "p50_latency_ms": 51457.56,
+    "p95_latency_ms": 111647.21,
+    "avg_retrieval_calls": 4.0,
+    "avg_llm_calls": 4.333333333333333
+  }
+}

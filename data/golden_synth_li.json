@@ -1,0 +1,3587 @@
+{
+  "description": "Curated chunk-level graded golden set; questions authored over body chunks, chunk_ids aligned with the vector store.",
+  "test_cases": [
+    {
+      "query": "What downsides of parametric-memory-only pre-trained language models does RAG aim to address?",
+      "expected_chunk_ids": [
+        "doc_23e3249e9a1e7541_0003_4f460415"
+      ],
+      "expected_sources": [
+        "data/documents/rag/01_rag_knowledge_intensive_nlp.pdf"
+      ],
+      "relevance": {
+        "doc_23e3249e9a1e7541_0003_4f460415": 3,
+        "doc_23e3249e9a1e7541_0001_bc0879c3": 1,
+        "doc_23e3249e9a1e7541_0002_7af48c2c": 1,
+        "doc_23e3249e9a1e7541_0004_c40d2e8b": 1,
+        "doc_23e3249e9a1e7541_0005_202b1ce1": 1
+      },
+      "category": "semantic",
+      "source": "curated_synth"
+    },
+    {
+      "query": "What inherent limitations of large language models does Toolformer aim to overcome that cannot be solved by scaling alone?",
+      "expected_chunk_ids": [
+        "doc_6d7483d94653008e_0003_77babbb6"
+      ],
+      "expected_sources": [
+        "data/documents/agent/02_toolformer.pdf"
+      ],
+      "relevance": {
+        "doc_6d7483d94653008e_0003_77babbb6": 3,
+        "doc_6d7483d94653008e_0001_2016606d": 1,
+        "doc_6d7483d94653008e_0002_25a68723": 1,
+        "doc_6d7483d94653008e_0004_69b7435e": 1,
+        "doc_6d7483d94653008e_0005_dd37645c": 1
+      },
+      "category": "semantic",
+      "source": "curated_synth"
+    },
+    {
+      "query": "In dense passage retrieval, why can learnable dense encodings match semantically related terms better than sparse term-matching methods?",
+      "expected_chunk_ids": [
+        "doc_3e67fc1a9977715a_0003_5b45e462"
+      ],
+      "expected_sources": [
+        "data/documents/rag/02_dense_passage_retrieval.pdf"
+      ],
+      "relevance": {
+        "doc_3e67fc1a9977715a_0003_5b45e462": 3,
+        "doc_3e67fc1a9977715a_0001_479cf5af": 1,
+        "doc_3e67fc1a9977715a_0002_3f76d451": 1,
+        "doc_3e67fc1a9977715a_0004_1b89a2d5": 1,
+        "doc_3e67fc1a9977715a_0005_930a19d0": 1
+      },
+      "category": "semantic",
+      "source": "curated_synth"
+    },
+    {
+      "query": "What pre-training objective does BERT use to overcome the unidirectionality constraint of standard language models?",
+      "expected_chunk_ids": [
+        "doc_5692a5514787a8c6_0003_13b5f0ba"
+      ],
+      "expected_sources": [
+        "data/documents/llm/02_bert.pdf"
+      ],
+      "relevance": {
+        "doc_5692a5514787a8c6_0003_13b5f0ba": 3,
+        "doc_5692a5514787a8c6_0001_43820473": 1,
+        "doc_5692a5514787a8c6_0002_829d00b1": 1,
+        "doc_5692a5514787a8c6_0004_08069ef7": 1,
+        "doc_5692a5514787a8c6_0005_cf153df2": 1
+      },
+      "category": "semantic",
+      "source": "curated_synth"
+    },
+    {
+      "query": "What unintended behaviors of large language models does InstructGPT aim to reduce through fine-tuning?",
+      "expected_chunk_ids": [
+        "doc_c1984bb50a5b90fd_0003_f608da5e"
+      ],
+      "expected_sources": [
+        "data/documents/llm/05_instructgpt.pdf"
+      ],
+      "relevance": {
+        "doc_c1984bb50a5b90fd_0003_f608da5e": 3,
+        "doc_c1984bb50a5b90fd_0001_5a3fd893": 1,
+        "doc_c1984bb50a5b90fd_0002_0689ce69": 1,
+        "doc_c1984bb50a5b90fd_0004_9b50fd8f": 1,
+        "doc_c1984bb50a5b90fd_0005_b5746118": 1
+      },
+      "category": "semantic",
+      "source": "curated_synth"
+    },
+    {
+      "query": "What capabilities does the generative agents architecture add to a large language model to store and reflect on experiences?",
+      "expected_chunk_ids": [
+        "doc_1b31e77fb24d25d7_0003_90a9e9c7"
+      ],
+      "expected_sources": [
+        "data/documents/agent/04_generative_agents.pdf"
+      ],
+      "relevance": {
+        "doc_1b31e77fb24d25d7_0003_90a9e9c7": 3,
+        "doc_1b31e77fb24d25d7_0001_91006afb": 1,
+        "doc_1b31e77fb24d25d7_0002_66428fd7": 1,
+        "doc_1b31e77fb24d25d7_0004_0ed680f4": 1,
+        "doc_1b31e77fb24d25d7_0005_edb18667": 1
+      },
+      "category": "semantic",
+      "source": "curated_synth"
+    },
+    {
+      "query": "What capabilities do large language models like ChatGPT gain from large-scale pre-training and reinforcement learning from human feedback?",
+      "expected_chunk_ids": [
+        "doc_5add5f7ff9041299_0003_f91ab271"
+      ],
+      "expected_sources": [
+        "data/documents/agent/05_hugginggpt.pdf"
+      ],
+      "relevance": {
+        "doc_5add5f7ff9041299_0003_f91ab271": 3,
+        "doc_5add5f7ff9041299_0001_fcda62b4": 1,
+        "doc_5add5f7ff9041299_0002_64490e78": 1,
+        "doc_5add5f7ff9041299_0004_d8e8c95b": 1,
+        "doc_5add5f7ff9041299_0005_c5819312": 1
+      },
+      "category": "semantic",
+      "source": "curated_synth"
+    },
+    {
+      "query": "What limitation of the autoregressive left-to-right token generation mechanism does Tree of Thoughts question?",
+      "expected_chunk_ids": [
+        "doc_79c5237e3f63953a_0003_ad612f5a"
+      ],
+      "expected_sources": [
+        "data/documents/agent/06_tree_of_thoughts.pdf"
+      ],
+      "relevance": {
+        "doc_79c5237e3f63953a_0003_ad612f5a": 3,
+        "doc_79c5237e3f63953a_0001_835c1bda": 1,
+        "doc_79c5237e3f63953a_0002_a80929d4": 1,
+        "doc_79c5237e3f63953a_0004_fd85ffc4": 1,
+        "doc_79c5237e3f63953a_0005_05f1138d": 1
+      },
+      "category": "semantic",
+      "source": "curated_synth"
+    },
+    {
+      "query": "What problem with existing multi-agent systems oversimplifying complex workflows does MetaGPT identify?",
+      "expected_chunk_ids": [
+        "doc_17582e47647fac8e_0003_1cf2562b"
+      ],
+      "expected_sources": [
+        "data/documents/agent/09_metagpt.pdf"
+      ],
+      "relevance": {
+        "doc_17582e47647fac8e_0003_1cf2562b": 3,
+        "doc_17582e47647fac8e_0001_fbe8bcca": 1,
+        "doc_17582e47647fac8e_0002_eb29972c": 1,
+        "doc_17582e47647fac8e_0004_1e9f0e66": 1,
+        "doc_17582e47647fac8e_0005_c1ccde48": 1
+      },
+      "category": "semantic",
+      "source": "curated_synth"
+    },
+    {
+      "query": "What trend of training ever-larger dense language models motivates the Chinchilla study?",
+      "expected_chunk_ids": [
+        "doc_3fd3632a8ef48171_0003_8bf31caa"
+      ],
+      "expected_sources": [
+        "data/documents/llm/07_chinchilla.pdf"
+      ],
+      "relevance": {
+        "doc_3fd3632a8ef48171_0003_8bf31caa": 3,
+        "doc_3fd3632a8ef48171_0001_8100d458": 1,
+        "doc_3fd3632a8ef48171_0002_0ecb773c": 1,
+        "doc_3fd3632a8ef48171_0004_845e353f": 1,
+        "doc_3fd3632a8ef48171_0005_85271ff5": 1
+      },
+      "category": "semantic",
+      "source": "curated_synth"
+    },
+    {
+      "query": "What is the major downside of full fine-tuning for adapting large pre-trained language models that LoRA addresses?",
+      "expected_chunk_ids": [
+        "doc_e9a0d3128767db61_0003_df8fe1c9"
+      ],
+      "expected_sources": [
+        "data/documents/llm/08_lora.pdf"
+      ],
+      "relevance": {
+        "doc_e9a0d3128767db61_0003_df8fe1c9": 3,
+        "doc_e9a0d3128767db61_0001_d2468c02": 1,
+        "doc_e9a0d3128767db61_0002_1207060e": 1,
+        "doc_e9a0d3128767db61_0004_ca5842c5": 1,
+        "doc_e9a0d3128767db61_0005_a74cdef8": 1
+      },
+      "category": "semantic",
+      "source": "curated_synth"
+    },
+    {
+      "query": "What open problems for tool learning does the tool learning survey highlight for future research?",
+      "expected_chunk_ids": [
+        "doc_889bebece19855d7_0003_64998f4c"
+      ],
+      "expected_sources": [
+        "data/documents/mcp/01_tool_learning_survey.pdf"
+      ],
+      "relevance": {
+        "doc_889bebece19855d7_0003_64998f4c": 3,
+        "doc_889bebece19855d7_0001_732fa707": 1,
+        "doc_889bebece19855d7_0002_33b57b68": 1,
+        "doc_889bebece19855d7_0004_7454cc4a": 1,
+        "doc_889bebece19855d7_0005_30d4296c": 1
+      },
+      "category": "semantic",
+      "source": "curated_synth"
+    },
+    {
+      "query": "What fundamental limitations of large language models regarding fixed weights and static computation does Gorilla identify?",
+      "expected_chunk_ids": [
+        "doc_1aeae54095cdae3a_0003_9764da4f"
+      ],
+      "expected_sources": [
+        "data/documents/mcp/02_gorilla.pdf"
+      ],
+      "relevance": {
+        "doc_1aeae54095cdae3a_0003_9764da4f": 3,
+        "doc_1aeae54095cdae3a_0001_6c12c9b6": 1,
+        "doc_1aeae54095cdae3a_0002_223b086a": 1,
+        "doc_1aeae54095cdae3a_0004_1b3a25fb": 1,
+        "doc_1aeae54095cdae3a_0005_2feb4a5d": 1
+      },
+      "category": "semantic",
+      "source": "curated_synth"
+    },
+    {
+      "query": "What zero-shot generalization ability does ToolLLaMA demonstrate on the out-of-distribution dataset APIBench?",
+      "expected_chunk_ids": [
+        "doc_295299721d67b250_0003_6defa7b7"
+      ],
+      "expected_sources": [
+        "data/documents/mcp/03_toolllm.pdf"
+      ],
+      "relevance": {
+        "doc_295299721d67b250_0003_6defa7b7": 3,
+        "doc_295299721d67b250_0001_95ef2102": 1,
+        "doc_295299721d67b250_0002_db00c7ef": 1,
+        "doc_295299721d67b250_0004_37cce61b": 1,
+        "doc_295299721d67b250_0005_d07b487a": 1
+      },
+      "category": "semantic",
+      "source": "curated_synth"
+    },
+    {
+      "query": "What aspects such as domain and API diversity does API-Bank consider important when constructing its benchmark?",
+      "expected_chunk_ids": [
+        "doc_619006a4cfcdd1d2_0003_c813775d"
+      ],
+      "expected_sources": [
+        "data/documents/mcp/04_api_bank.pdf"
+      ],
+      "relevance": {
+        "doc_619006a4cfcdd1d2_0003_c813775d": 3,
+        "doc_619006a4cfcdd1d2_0001_17db93f1": 1,
+        "doc_619006a4cfcdd1d2_0002_7f7b6c0f": 1,
+        "doc_619006a4cfcdd1d2_0004_7696c167": 1,
+        "doc_619006a4cfcdd1d2_0005_4048c248": 1
+      },
+      "category": "semantic",
+      "source": "curated_synth"
+    },
+    {
+      "query": "What research direction involving external tools/APIs does RestGPT investigate to enhance LLM capabilities?",
+      "expected_chunk_ids": [
+        "doc_61e65633db1e073d_0003_54f8fa15"
+      ],
+      "expected_sources": [
+        "data/documents/mcp/06_restgpt.pdf"
+      ],
+      "relevance": {
+        "doc_61e65633db1e073d_0003_54f8fa15": 3,
+        "doc_61e65633db1e073d_0001_d6399413": 1,
+        "doc_61e65633db1e073d_0002_b6cf97d7": 1,
+        "doc_61e65633db1e073d_0004_fea6fb21": 1,
+        "doc_61e65633db1e073d_0005_52305231": 1
+      },
+      "category": "semantic",
+      "source": "curated_synth"
+    },
+    {
+      "query": "What capabilities does integrating function calling unlock for LLMs according to ToolACE?",
+      "expected_chunk_ids": [
+        "doc_493d43589b1e749c_0003_d7f8b390"
+      ],
+      "expected_sources": [
+        "data/documents/mcp/08_toolace.pdf"
+      ],
+      "relevance": {
+        "doc_493d43589b1e749c_0003_d7f8b390": 3,
+        "doc_493d43589b1e749c_0001_f5485e38": 1,
+        "doc_493d43589b1e749c_0002_9af16da3": 1,
+        "doc_493d43589b1e749c_0004_4e7f8da7": 1,
+        "doc_493d43589b1e749c_0005_8b1151ff": 1
+      },
+      "category": "semantic",
+      "source": "curated_synth"
+    },
+    {
+      "query": "What does tool utilization empower large language models to do according to T-Eval?",
+      "expected_chunk_ids": [
+        "doc_fe4332cc5f3997a0_0003_102c4c2b"
+      ],
+      "expected_sources": [
+        "data/documents/mcp/10_t_eval.pdf"
+      ],
+      "relevance": {
+        "doc_fe4332cc5f3997a0_0003_102c4c2b": 3,
+        "doc_fe4332cc5f3997a0_0001_0819f690": 1,
+        "doc_fe4332cc5f3997a0_0002_f4365488": 1,
+        "doc_fe4332cc5f3997a0_0004_4e054b8d": 1,
+        "doc_fe4332cc5f3997a0_0005_f4b9afbd": 1
+      },
+      "category": "semantic",
+      "source": "curated_synth"
+    },
+    {
+      "query": "What architectural trend regarding convolutions and self-attention in computer vision does the Vision Transformer paper discuss?",
+      "expected_chunk_ids": [
+        "doc_8ce7b83971a14508_0003_a915c483"
+      ],
+      "expected_sources": [
+        "data/documents/multimodal/02_vit.pdf"
+      ],
+      "relevance": {
+        "doc_8ce7b83971a14508_0003_a915c483": 3,
+        "doc_8ce7b83971a14508_0001_5aa8162e": 1,
+        "doc_8ce7b83971a14508_0002_979f81bd": 1,
+        "doc_8ce7b83971a14508_0004_13e7de39": 1,
+        "doc_8ce7b83971a14508_0005_b3069ed8": 1
+      },
+      "category": "semantic",
+      "source": "curated_synth"
+    },
+    {
+      "query": "What types of image and video tasks can a single Flamingo model adapt to with few-shot learning?",
+      "expected_chunk_ids": [
+        "doc_27af622bf50987fd_0003_48405d21"
+      ],
+      "expected_sources": [
+        "data/documents/multimodal/04_flamingo.pdf"
+      ],
+      "relevance": {
+        "doc_27af622bf50987fd_0003_48405d21": 3,
+        "doc_27af622bf50987fd_0001_0ced07ff": 1,
+        "doc_27af622bf50987fd_0002_a3dd344a": 1,
+        "doc_27af622bf50987fd_0004_fac473f5": 1,
+        "doc_27af622bf50987fd_0005_8ab19a23": 1
+      },
+      "category": "semantic",
+      "source": "curated_synth"
+    },
+    {
+      "query": "What high computation cost problem in vision-language pre-training does BLIP-2 aim to address?",
+      "expected_chunk_ids": [
+        "doc_6bc5d399d6127a64_0003_d847728d"
+      ],
+      "expected_sources": [
+        "data/documents/multimodal/05_blip2.pdf"
+      ],
+      "relevance": {
+        "doc_6bc5d399d6127a64_0003_d847728d": 3,
+        "doc_6bc5d399d6127a64_0001_b1f753cb": 1,
+        "doc_6bc5d399d6127a64_0002_879d1cdb": 1,
+        "doc_6bc5d399d6127a64_0004_a0890f59": 1,
+        "doc_6bc5d399d6127a64_0005_4021b25e": 1
+      },
+      "category": "semantic",
+      "source": "curated_synth"
+    },
+    {
+      "query": "What core aspiration in AI regarding a general-purpose multi-modal assistant motivates LLaVA?",
+      "expected_chunk_ids": [
+        "doc_dc8bace378a282ea_0003_e2bd93f0"
+      ],
+      "expected_sources": [
+        "data/documents/multimodal/06_llava.pdf"
+      ],
+      "relevance": {
+        "doc_dc8bace378a282ea_0003_e2bd93f0": 3,
+        "doc_dc8bace378a282ea_0001_7e5441a6": 1,
+        "doc_dc8bace378a282ea_0002_69aac8f3": 1,
+        "doc_dc8bace378a282ea_0004_8ff1c7f5": 1,
+        "doc_dc8bace378a282ea_0005_dfc17e7b": 1
+      },
+      "category": "semantic",
+      "source": "curated_synth"
+    },
+    {
+      "query": "What multimodal capabilities of GPT-4 motivate the development of MiniGPT-4?",
+      "expected_chunk_ids": [
+        "doc_a78f64448a86d91b_0003_4123fc3b"
+      ],
+      "expected_sources": [
+        "data/documents/multimodal/07_minigpt4.pdf"
+      ],
+      "relevance": {
+        "doc_a78f64448a86d91b_0003_4123fc3b": 3,
+        "doc_a78f64448a86d91b_0001_7cf7e314": 1,
+        "doc_a78f64448a86d91b_0002_f4ff6e03": 1,
+        "doc_a78f64448a86d91b_0004_ae32185b": 1,
+        "doc_a78f64448a86d91b_0005_b9b5175b": 1
+      },
+      "category": "semantic",
+      "source": "curated_synth"
+    },
+    {
+      "query": "How does the RETRO paper define the language modelling task as conditional next-token prediction?",
+      "expected_chunk_ids": [
+        "doc_1b3e89b589b73d51_0003_30feb4be"
+      ],
+      "expected_sources": [
+        "data/documents/rag/06_retro.pdf"
+      ],
+      "relevance": {
+        "doc_1b3e89b589b73d51_0003_30feb4be": 3,
+        "doc_1b3e89b589b73d51_0001_be4a05ff": 1,
+        "doc_1b3e89b589b73d51_0002_09518063": 1,
+        "doc_1b3e89b589b73d51_0004_fde916d4": 1,
+        "doc_1b3e89b589b73d51_0005_80fced9f": 1
+      },
+      "category": "semantic",
+      "source": "curated_synth"
+    },
+    {
+      "query": "Why do large language models inevitably manifest hallucinations, motivating CRAG?",
+      "expected_chunk_ids": [
+        "doc_975aa1fd3c1b6031_0003_1c57429a"
+      ],
+      "expected_sources": [
+        "data/documents/rag/08_crag.pdf"
+      ],
+      "relevance": {
+        "doc_975aa1fd3c1b6031_0003_1c57429a": 3,
+        "doc_975aa1fd3c1b6031_0001_c2acbd40": 1,
+        "doc_975aa1fd3c1b6031_0002_e2198c27": 1,
+        "doc_975aa1fd3c1b6031_0004_f708f0af": 1,
+        "doc_975aa1fd3c1b6031_0005_5d260346": 1
+      },
+      "category": "semantic",
+      "source": "curated_synth"
+    },
+    {
+      "query": "What limitation of the canonical RAG setup regarding a language model's context window does GraphRAG address?",
+      "expected_chunk_ids": [
+        "doc_730f1a9f38d16689_0003_f2266671"
+      ],
+      "expected_sources": [
+        "data/documents/rag/09_graphrag.pdf"
+      ],
+      "relevance": {
+        "doc_730f1a9f38d16689_0003_f2266671": 3,
+        "doc_730f1a9f38d16689_0001_70b70645": 1,
+        "doc_730f1a9f38d16689_0002_a9c87cad": 1,
+        "doc_730f1a9f38d16689_0004_a8158030": 1,
+        "doc_730f1a9f38d16689_0005_d50236c8": 1
+      },
+      "category": "semantic",
+      "source": "curated_synth"
+    },
+    {
+      "query": "What need for challenging benchmarks reflecting real-world applications of language models does SWE-bench address?",
+      "expected_chunk_ids": [
+        "doc_f7e8e1df64129742_0003_1b1a8f7c"
+      ],
+      "expected_sources": [
+        "data/documents/agent/08_swe_bench.pdf"
+      ],
+      "relevance": {
+        "doc_f7e8e1df64129742_0003_1b1a8f7c": 3,
+        "doc_f7e8e1df64129742_0001_fd8932d9": 1,
+        "doc_f7e8e1df64129742_0002_d65cce50": 1,
+        "doc_f7e8e1df64129742_0004_2446ff34": 1,
+        "doc_f7e8e1df64129742_0005_6a90f728": 1
+      },
+      "category": "semantic",
+      "source": "curated_synth"
+    },
+    {
+      "query": "What unique feature of human intelligence combining actions with verbal reasoning does ReAct draw on?",
+      "expected_chunk_ids": [
+        "doc_f285b0971ae4a790_0004_07be5c74"
+      ],
+      "expected_sources": [
+        "data/documents/agent/01_react.pdf"
+      ],
+      "relevance": {
+        "doc_f285b0971ae4a790_0004_07be5c74": 3,
+        "doc_f285b0971ae4a790_0002_a3856754": 1,
+        "doc_f285b0971ae4a790_0003_4cc3c317": 1,
+        "doc_f285b0971ae4a790_0005_1d992549": 1,
+        "doc_f285b0971ae4a790_0006_67bdccc1": 1
+      },
+      "category": "semantic",
+      "source": "curated_synth"
+    },
+    {
+      "query": "What kinds of external tools (such as a calculator, QA system, or search) does Toolformer learn to call via API?",
+      "expected_chunk_ids": [
+        "doc_6d7483d94653008e_0004_69b7435e"
+      ],
+      "expected_sources": [
+        "data/documents/agent/02_toolformer.pdf"
+      ],
+      "relevance": {
+        "doc_6d7483d94653008e_0004_69b7435e": 3,
+        "doc_6d7483d94653008e_0002_25a68723": 1,
+        "doc_6d7483d94653008e_0003_77babbb6": 1,
+        "doc_6d7483d94653008e_0005_dd37645c": 1,
+        "doc_6d7483d94653008e_0006_21f7b96b": 1
+      },
+      "category": "semantic",
+      "source": "curated_synth"
+    },
+    {
+      "query": "By how much does the DPR dense retriever outperform a Lucene-BM25 system on open-domain QA in top-20 passage retrieval accuracy?",
+      "expected_chunk_ids": [
+        "doc_3e67fc1a9977715a_0004_1b89a2d5"
+      ],
+      "expected_sources": [
+        "data/documents/rag/02_dense_passage_retrieval.pdf"
+      ],
+      "relevance": {
+        "doc_3e67fc1a9977715a_0004_1b89a2d5": 3,
+        "doc_3e67fc1a9977715a_0002_3f76d451": 1,
+        "doc_3e67fc1a9977715a_0003_5b45e462": 1,
+        "doc_3e67fc1a9977715a_0005_930a19d0": 1,
+        "doc_3e67fc1a9977715a_0006_d42a4f79": 1
+      },
+      "category": "semantic",
+      "source": "curated_synth"
+    },
+    {
+      "query": "What is the Reflexion approach, and how does it convert environment feedback into verbal feedback for an LLM agent?",
+      "expected_chunk_ids": [
+        "doc_6059b6f89fea9959_0004_c992c916"
+      ],
+      "expected_sources": [
+        "data/documents/agent/03_reflexion.pdf"
+      ],
+      "relevance": {
+        "doc_6059b6f89fea9959_0004_c992c916": 3,
+        "doc_6059b6f89fea9959_0002_035d3f29": 1,
+        "doc_6059b6f89fea9959_0003_ff35dd06": 1,
+        "doc_6059b6f89fea9959_0005_307ec994": 1,
+        "doc_6059b6f89fea9959_0006_edadb20e": 1
+      },
+      "category": "semantic",
+      "source": "curated_synth"
+    },
+    {
+      "query": "What does BERT stand for, and how does it pretrain deep bidirectional representations from unlabeled text?",
+      "expected_chunk_ids": [
+        "doc_5692a5514787a8c6_0004_08069ef7"
+      ],
+      "expected_sources": [
+        "data/documents/llm/02_bert.pdf"
+      ],
+      "relevance": {
+        "doc_5692a5514787a8c6_0004_08069ef7": 3,
+        "doc_5692a5514787a8c6_0002_829d00b1": 1,
+        "doc_5692a5514787a8c6_0003_13b5f0ba": 1,
+        "doc_5692a5514787a8c6_0005_cf153df2": 1,
+        "doc_5692a5514787a8c6_0006_92a84793": 1
+      },
+      "category": "semantic",
+      "source": "curated_synth"
+    },
+    {
+      "query": "What problem with storing world knowledge implicitly in neural network parameters does REALM address?",
+      "expected_chunk_ids": [
+        "doc_0ec1a7ab3de5514c_0004_7a7044e4"
+      ],
+      "expected_sources": [
+        "data/documents/rag/03_realm.pdf"
+      ],
+      "relevance": {
+        "doc_0ec1a7ab3de5514c_0004_7a7044e4": 3,
+        "doc_0ec1a7ab3de5514c_0002_33235815": 1,
+        "doc_0ec1a7ab3de5514c_0003_180161a1": 1,
+        "doc_0ec1a7ab3de5514c_0005_7bef8b2d": 1,
+        "doc_0ec1a7ab3de5514c_0006_8c9accbe": 1
+      },
+      "category": "semantic",
+      "source": "curated_synth"
+    },
+    {
+      "query": "In Fusion-in-Decoder, how does a generative encoder-decoder model produce the answer, and how does it scale with the number of retrieved passages?",
+      "expected_chunk_ids": [
+        "doc_f1ee7e927c3fb31b_0004_576f88b7"
+      ],
+      "expected_sources": [
+        "data/documents/rag/04_fusion_in_decoder.pdf"
+      ],
+      "relevance": {
+        "doc_f1ee7e927c3fb31b_0004_576f88b7": 3,
+        "doc_f1ee7e927c3fb31b_0002_732bc4a6": 1,
+        "doc_f1ee7e927c3fb31b_0003_c7f15fa3": 1,
+        "doc_f1ee7e927c3fb31b_0005_ff314d6f": 1,
+        "doc_f1ee7e927c3fb31b_0006_e568ecea": 1
+      },
+      "category": "semantic",
+      "source": "curated_synth"
+    },
+    {
+      "query": "What problem with standard RAG methods introducing off-topic passages does SELF-RAG aim to solve?",
+      "expected_chunk_ids": [
+        "doc_d9eaa1398abac0df_0004_b6351b19"
+      ],
+      "expected_sources": [
+        "data/documents/rag/05_self_rag.pdf"
+      ],
+      "relevance": {
+        "doc_d9eaa1398abac0df_0004_b6351b19": 3,
+        "doc_d9eaa1398abac0df_0002_3dd848c0": 1,
+        "doc_d9eaa1398abac0df_0003_4cc3c317": 1,
+        "doc_d9eaa1398abac0df_0005_67a2b590": 1,
+        "doc_d9eaa1398abac0df_0006_f0537ae9": 1
+      },
+      "category": "semantic",
+      "source": "curated_synth"
+    },
+    {
+      "query": "What is the focus of LLaMA regarding inference budget, and how does LLaMA-13B compare to GPT-3 on benchmarks?",
+      "expected_chunk_ids": [
+        "doc_2e663675ae36ad12_0004_a0361904"
+      ],
+      "expected_sources": [
+        "data/documents/llm/04_llama.pdf"
+      ],
+      "relevance": {
+        "doc_2e663675ae36ad12_0004_a0361904": 3,
+        "doc_2e663675ae36ad12_0002_a37c1836": 1,
+        "doc_2e663675ae36ad12_0003_bdcc64be": 1,
+        "doc_2e663675ae36ad12_0005_0f246a6e": 1,
+        "doc_2e663675ae36ad12_0006_9caafe57": 1
+      },
+      "category": "semantic",
+      "source": "curated_synth"
+    },
+    {
+      "query": "Which dual-process theory of human cognition (System 1 and System 2) inspires the Tree of Thoughts approach?",
+      "expected_chunk_ids": [
+        "doc_79c5237e3f63953a_0004_fd85ffc4"
+      ],
+      "expected_sources": [
+        "data/documents/agent/06_tree_of_thoughts.pdf"
+      ],
+      "relevance": {
+        "doc_79c5237e3f63953a_0004_fd85ffc4": 3,
+        "doc_79c5237e3f63953a_0002_a80929d4": 1,
+        "doc_79c5237e3f63953a_0003_ad612f5a": 1,
+        "doc_79c5237e3f63953a_0005_05f1138d": 1,
+        "doc_79c5237e3f63953a_0006_05f1138d": 1
+      },
+      "category": "semantic",
+      "source": "curated_synth"
+    },
+    {
+      "query": "What grand challenge for the AI community regarding embodied agents in open-ended worlds does VOYAGER address?",
+      "expected_chunk_ids": [
+        "doc_769a4e33ddeeb738_0004_741540cd"
+      ],
+      "expected_sources": [
+        "data/documents/agent/07_voyager.pdf"
+      ],
+      "relevance": {
+        "doc_769a4e33ddeeb738_0004_741540cd": 3,
+        "doc_769a4e33ddeeb738_0002_1f3c2273": 1,
+        "doc_769a4e33ddeeb738_0003_0a6c89fc": 1,
+        "doc_769a4e33ddeeb738_0005_cc4e611b": 1,
+        "doc_769a4e33ddeeb738_0006_7da245ca": 1
+      },
+      "category": "semantic",
+      "source": "curated_synth"
+    },
+    {
+      "query": "What concept from human collaboration (Standardized Operating Procedures) does MetaGPT incorporate for task decomposition?",
+      "expected_chunk_ids": [
+        "doc_17582e47647fac8e_0004_1e9f0e66"
+      ],
+      "expected_sources": [
+        "data/documents/agent/09_metagpt.pdf"
+      ],
+      "relevance": {
+        "doc_17582e47647fac8e_0004_1e9f0e66": 3,
+        "doc_17582e47647fac8e_0002_eb29972c": 1,
+        "doc_17582e47647fac8e_0003_1cf2562b": 1,
+        "doc_17582e47647fac8e_0005_c1ccde48": 1,
+        "doc_17582e47647fac8e_0006_a9b14666": 1
+      },
+      "category": "semantic",
+      "source": "curated_synth"
+    },
+    {
+      "query": "Why is accurately estimating the best model hyperparameters for a given compute budget critical, according to Chinchilla?",
+      "expected_chunk_ids": [
+        "doc_3fd3632a8ef48171_0004_845e353f"
+      ],
+      "expected_sources": [
+        "data/documents/llm/07_chinchilla.pdf"
+      ],
+      "relevance": {
+        "doc_3fd3632a8ef48171_0004_845e353f": 3,
+        "doc_3fd3632a8ef48171_0002_0ecb773c": 1,
+        "doc_3fd3632a8ef48171_0003_8bf31caa": 1,
+        "doc_3fd3632a8ef48171_0005_85271ff5": 1,
+        "doc_3fd3632a8ef48171_0006_a84d8c67": 1
+      },
+      "category": "semantic",
+      "source": "curated_synth"
+    },
+    {
+      "query": "In LoRA's reparametrization, which matrices are trained while the pre-trained weights are kept frozen?",
+      "expected_chunk_ids": [
+        "doc_e9a0d3128767db61_0004_ca5842c5"
+      ],
+      "expected_sources": [
+        "data/documents/llm/08_lora.pdf"
+      ],
+      "relevance": {
+        "doc_e9a0d3128767db61_0004_ca5842c5": 3,
+        "doc_e9a0d3128767db61_0002_1207060e": 1,
+        "doc_e9a0d3128767db61_0003_df8fe1c9": 1,
+        "doc_e9a0d3128767db61_0005_a74cdef8": 1,
+        "doc_e9a0d3128767db61_0006_71d54631": 1
+      },
+      "category": "semantic",
+      "source": "curated_synth"
+    },
+    {
+      "query": "Which factors (model architecture, size, compute, data) does the scaling laws paper investigate for their effect on language modeling loss?",
+      "expected_chunk_ids": [
+        "doc_a41bd7877fd1a6bc_0004_40f97b55"
+      ],
+      "expected_sources": [
+        "data/documents/llm/10_scaling_laws.pdf"
+      ],
+      "relevance": {
+        "doc_a41bd7877fd1a6bc_0004_40f97b55": 3,
+        "doc_a41bd7877fd1a6bc_0002_f6754c7d": 1,
+        "doc_a41bd7877fd1a6bc_0003_dd90a3f1": 1,
+        "doc_a41bd7877fd1a6bc_0005_b2ac729f": 1,
+        "doc_a41bd7877fd1a6bc_0006_720f47e2": 1
+      },
+      "category": "semantic",
+      "source": "curated_synth"
+    },
+    {
+      "query": "How does empowering LLMs to use search technologies and computational tools expand their knowledge space according to Gorilla?",
+      "expected_chunk_ids": [
+        "doc_1aeae54095cdae3a_0004_1b3a25fb"
+      ],
+      "expected_sources": [
+        "data/documents/mcp/02_gorilla.pdf"
+      ],
+      "relevance": {
+        "doc_1aeae54095cdae3a_0004_1b3a25fb": 3,
+        "doc_1aeae54095cdae3a_0002_223b086a": 1,
+        "doc_1aeae54095cdae3a_0003_9764da4f": 1,
+        "doc_1aeae54095cdae3a_0005_2feb4a5d": 1,
+        "doc_1aeae54095cdae3a_0006_dc119cce": 1
+      },
+      "category": "semantic",
+      "source": "curated_synth"
+    },
+    {
+      "query": "What is the goal of tool learning as described in ToolLLM regarding LLMs interacting with APIs?",
+      "expected_chunk_ids": [
+        "doc_295299721d67b250_0004_37cce61b"
+      ],
+      "expected_sources": [
+        "data/documents/mcp/03_toolllm.pdf"
+      ],
+      "relevance": {
+        "doc_295299721d67b250_0004_37cce61b": 3,
+        "doc_295299721d67b250_0002_db00c7ef": 1,
+        "doc_295299721d67b250_0003_6defa7b7": 1,
+        "doc_295299721d67b250_0005_d07b487a": 1,
+        "doc_295299721d67b250_0006_8c0c261a": 1
+      },
+      "category": "semantic",
+      "source": "curated_synth"
+    },
+    {
+      "query": "What three pivotal questions about LLM tool use does API-Bank aim to answer?",
+      "expected_chunk_ids": [
+        "doc_619006a4cfcdd1d2_0004_7696c167"
+      ],
+      "expected_sources": [
+        "data/documents/mcp/04_api_bank.pdf"
+      ],
+      "relevance": {
+        "doc_619006a4cfcdd1d2_0004_7696c167": 3,
+        "doc_619006a4cfcdd1d2_0002_7f7b6c0f": 1,
+        "doc_619006a4cfcdd1d2_0003_c813775d": 1,
+        "doc_619006a4cfcdd1d2_0005_4048c248": 1,
+        "doc_619006a4cfcdd1d2_0006_1a36f476": 1
+      },
+      "category": "semantic",
+      "source": "curated_synth"
+    },
+    {
+      "query": "What growing interest in LLMs interacting with the real world through tools does ToolkenGPT describe?",
+      "expected_chunk_ids": [
+        "doc_50f55a8595310730_0004_6f612c08"
+      ],
+      "expected_sources": [
+        "data/documents/mcp/05_toolkengpt.pdf"
+      ],
+      "relevance": {
+        "doc_50f55a8595310730_0004_6f612c08": 3,
+        "doc_50f55a8595310730_0002_5d766d5f": 1,
+        "doc_50f55a8595310730_0003_c9234967": 1,
+        "doc_50f55a8595310730_0005_afdfc13e": 1,
+        "doc_50f55a8595310730_0006_8ba70298": 1
+      },
+      "category": "semantic",
+      "source": "curated_synth"
+    },
+    {
+      "query": "What limitation of existing API-augmented LLMs regarding the number of specially designed tools does RestGPT identify?",
+      "expected_chunk_ids": [
+        "doc_61e65633db1e073d_0004_fea6fb21"
+      ],
+      "expected_sources": [
+        "data/documents/mcp/06_restgpt.pdf"
+      ],
+      "relevance": {
+        "doc_61e65633db1e073d_0004_fea6fb21": 3,
+        "doc_61e65633db1e073d_0002_b6cf97d7": 1,
+        "doc_61e65633db1e073d_0003_54f8fa15": 1,
+        "doc_61e65633db1e073d_0005_52305231": 1,
+        "doc_61e65633db1e073d_0006_81d306ff": 1
+      },
+      "category": "semantic",
+      "source": "curated_synth"
+    },
+    {
+      "query": "Why are function calls in real-world applications often diverse and complex according to ToolACE?",
+      "expected_chunk_ids": [
+        "doc_493d43589b1e749c_0004_4e7f8da7"
+      ],
+      "expected_sources": [
+        "data/documents/mcp/08_toolace.pdf"
+      ],
+      "relevance": {
+        "doc_493d43589b1e749c_0004_4e7f8da7": 3,
+        "doc_493d43589b1e749c_0002_9af16da3": 1,
+        "doc_493d43589b1e749c_0003_d7f8b390": 1,
+        "doc_493d43589b1e749c_0005_8b1151ff": 1,
+        "doc_493d43589b1e749c_0006_18af5997": 1
+      },
+      "category": "semantic",
+      "source": "curated_synth"
+    },
+    {
+      "query": "What development of semi-autonomous real-world agents like WebGPT and AutoGPT does ToolEmu build on?",
+      "expected_chunk_ids": [
+        "doc_2d746c512086bd47_0004_1404a178"
+      ],
+      "expected_sources": [
+        "data/documents/mcp/09_tool_emu.pdf"
+      ],
+      "relevance": {
+        "doc_2d746c512086bd47_0004_1404a178": 3,
+        "doc_2d746c512086bd47_0002_de768f92": 1,
+        "doc_2d746c512086bd47_0003_89cc6e8d": 1,
+        "doc_2d746c512086bd47_0005_e9b95de5": 1,
+        "doc_2d746c512086bd47_0006_2a880d08": 1
+      },
+      "category": "semantic",
+      "source": "curated_synth"
+    },
+    {
+      "query": "What limitation of evaluating tool use based only on the final output does T-Eval identify?",
+      "expected_chunk_ids": [
+        "doc_fe4332cc5f3997a0_0004_4e054b8d"
+      ],
+      "expected_sources": [
+        "data/documents/mcp/10_t_eval.pdf"
+      ],
+      "relevance": {
+        "doc_fe4332cc5f3997a0_0004_4e054b8d": 3,
+        "doc_fe4332cc5f3997a0_0002_f4365488": 1,
+        "doc_fe4332cc5f3997a0_0003_102c4c2b": 1,
+        "doc_fe4332cc5f3997a0_0005_f4b9afbd": 1,
+        "doc_fe4332cc5f3997a0_0006_ad647333": 1
+      },
+      "category": "semantic",
+      "source": "curated_synth"
+    },
+    {
+      "query": "How has the 'text-to-text' standardized input-output interface enabled task-agnostic zero-shot transfer, as noted by CLIP?",
+      "expected_chunk_ids": [
+        "doc_6478b6e571a7d6fc_0004_4246147e"
+      ],
+      "expected_sources": [
+        "data/documents/multimodal/01_clip.pdf"
+      ],
+      "relevance": {
+        "doc_6478b6e571a7d6fc_0004_4246147e": 3,
+        "doc_6478b6e571a7d6fc_0002_b999b2d9": 1,
+        "doc_6478b6e571a7d6fc_0003_31e375da": 1,
+        "doc_6478b6e571a7d6fc_0005_01810355": 1,
+        "doc_6478b6e571a7d6fc_0006_b5be6514": 1
+      },
+      "category": "semantic",
+      "source": "curated_synth"
+    },
+    {
+      "query": "How does the Vision Transformer (ViT) treat image patches when applying a standard Transformer to images?",
+      "expected_chunk_ids": [
+        "doc_8ce7b83971a14508_0004_13e7de39"
+      ],
+      "expected_sources": [
+        "data/documents/multimodal/02_vit.pdf"
+      ],
+      "relevance": {
+        "doc_8ce7b83971a14508_0004_13e7de39": 3,
+        "doc_8ce7b83971a14508_0002_979f81bd": 1,
+        "doc_8ce7b83971a14508_0003_a915c483": 1,
+        "doc_8ce7b83971a14508_0005_b3069ed8": 1,
+        "doc_8ce7b83971a14508_0006_34dd0c9d": 1
+      },
+      "category": "semantic",
+      "source": "curated_synth"
+    },
+    {
+      "query": "What is the role of the Q-Former (Querying Transformer) in BLIP-2's two-stage bootstrapping of frozen image and language models?",
+      "expected_chunk_ids": [
+        "doc_6bc5d399d6127a64_0004_a0890f59"
+      ],
+      "expected_sources": [
+        "data/documents/multimodal/05_blip2.pdf"
+      ],
+      "relevance": {
+        "doc_6bc5d399d6127a64_0004_a0890f59": 3,
+        "doc_6bc5d399d6127a64_0002_879d1cdb": 1,
+        "doc_6bc5d399d6127a64_0003_d847728d": 1,
+        "doc_6bc5d399d6127a64_0005_4021b25e": 1,
+        "doc_6bc5d399d6127a64_0006_bcdf594d": 1
+      },
+      "category": "semantic",
+      "source": "curated_synth"
+    },
+    {
+      "query": "What open-world visual understanding capabilities of language-augmented foundation vision models does LLaVA build upon?",
+      "expected_chunk_ids": [
+        "doc_dc8bace378a282ea_0004_8ff1c7f5"
+      ],
+      "expected_sources": [
+        "data/documents/multimodal/06_llava.pdf"
+      ],
+      "relevance": {
+        "doc_dc8bace378a282ea_0004_8ff1c7f5": 3,
+        "doc_dc8bace378a282ea_0002_69aac8f3": 1,
+        "doc_dc8bace378a282ea_0003_e2bd93f0": 1,
+        "doc_dc8bace378a282ea_0005_dfc17e7b": 1,
+        "doc_dc8bace378a282ea_0006_29618799": 1
+      },
+      "category": "semantic",
+      "source": "curated_synth"
+    },
+    {
+      "query": "What does MiniGPT-4 conjecture is the source of GPT-4's advanced vision-language capabilities?",
+      "expected_chunk_ids": [
+        "doc_a78f64448a86d91b_0004_ae32185b"
+      ],
+      "expected_sources": [
+        "data/documents/multimodal/07_minigpt4.pdf"
+      ],
+      "relevance": {
+        "doc_a78f64448a86d91b_0004_ae32185b": 3,
+        "doc_a78f64448a86d91b_0002_f4ff6e03": 1,
+        "doc_a78f64448a86d91b_0003_4123fc3b": 1,
+        "doc_a78f64448a86d91b_0005_b9b5175b": 1,
+        "doc_a78f64448a86d91b_0006_ace1af47": 1
+      },
+      "category": "semantic",
+      "source": "curated_synth"
+    },
+    {
+      "query": "What limitation of native large language models living in a pure-text world does Qwen-VL address?",
+      "expected_chunk_ids": [
+        "doc_b4eca60ae9d3c154_0004_642caa69"
+      ],
+      "expected_sources": [
+        "data/documents/multimodal/08_qwen_vl.pdf"
+      ],
+      "relevance": {
+        "doc_b4eca60ae9d3c154_0004_642caa69": 3,
+        "doc_b4eca60ae9d3c154_0002_7dc64a83": 1,
+        "doc_b4eca60ae9d3c154_0003_93127065": 1,
+        "doc_b4eca60ae9d3c154_0005_79c2e2c7": 1,
+        "doc_b4eca60ae9d3c154_0006_ddd67b84": 1
+      },
+      "category": "semantic",
+      "source": "curated_synth"
+    },
+    {
+      "query": "How do shallow alignment methods like InstructBLIP and MiniGPT-4 connect a vision encoder and language model, and what is their limitation?",
+      "expected_chunk_ids": [
+        "doc_bf4a205fbfb39717_0004_2e048734"
+      ],
+      "expected_sources": [
+        "data/documents/multimodal/09_cogvlm.pdf"
+      ],
+      "relevance": {
+        "doc_bf4a205fbfb39717_0004_2e048734": 3,
+        "doc_bf4a205fbfb39717_0002_12fdd973": 1,
+        "doc_bf4a205fbfb39717_0003_15cf3904": 1,
+        "doc_bf4a205fbfb39717_0005_fd0da400": 1,
+        "doc_bf4a205fbfb39717_0006_2a776cf9": 1
+      },
+      "category": "semantic",
+      "source": "curated_synth"
+    },
+    {
+      "query": "What central concept known as visual instruction tuning are recent studies on large multimodal models converging on?",
+      "expected_chunk_ids": [
+        "doc_b7074a6dad218e0d_0004_d3903423"
+      ],
+      "expected_sources": [
+        "data/documents/multimodal/10_llava15.pdf"
+      ],
+      "relevance": {
+        "doc_b7074a6dad218e0d_0004_d3903423": 3,
+        "doc_b7074a6dad218e0d_0002_e699c7ce": 1,
+        "doc_b7074a6dad218e0d_0003_e11ee4a8": 1,
+        "doc_b7074a6dad218e0d_0005_89e4a983": 1,
+        "doc_b7074a6dad218e0d_0006_4f0652e3": 1
+      },
+      "category": "semantic",
+      "source": "curated_synth"
+    },
+    {
+      "query": "What two factors contribute to the benefits of increasing the number of parameters in language models, according to RETRO?",
+      "expected_chunk_ids": [
+        "doc_1b3e89b589b73d51_0004_fde916d4"
+      ],
+      "expected_sources": [
+        "data/documents/rag/06_retro.pdf"
+      ],
+      "relevance": {
+        "doc_1b3e89b589b73d51_0004_fde916d4": 3,
+        "doc_1b3e89b589b73d51_0002_09518063": 1,
+        "doc_1b3e89b589b73d51_0003_30feb4be": 1,
+        "doc_1b3e89b589b73d51_0005_80fced9f": 1,
+        "doc_1b3e89b589b73d51_0006_905e79d9": 1
+      },
+      "category": "semantic",
+      "source": "curated_synth"
+    },
+    {
+      "query": "How does REPLUG treat the language model when augmenting it with retrieval, and how are retrieved documents used?",
+      "expected_chunk_ids": [
+        "doc_3c24ff147c4912a9_0004_ce6d61d1"
+      ],
+      "expected_sources": [
+        "data/documents/rag/07_replug.pdf"
+      ],
+      "relevance": {
+        "doc_3c24ff147c4912a9_0004_ce6d61d1": 3,
+        "doc_3c24ff147c4912a9_0002_1f6938f4": 1,
+        "doc_3c24ff147c4912a9_0003_91618258": 1,
+        "doc_3c24ff147c4912a9_0005_0c291127": 1,
+        "doc_3c24ff147c4912a9_0006_be020096": 1
+      },
+      "category": "semantic",
+      "source": "curated_synth"
+    },
+    {
+      "query": "What kind of sensemaking queries requiring global understanding of an entire dataset does conventional vector RAG fail to support?",
+      "expected_chunk_ids": [
+        "doc_730f1a9f38d16689_0004_a8158030"
+      ],
+      "expected_sources": [
+        "data/documents/rag/09_graphrag.pdf"
+      ],
+      "relevance": {
+        "doc_730f1a9f38d16689_0004_a8158030": 3,
+        "doc_730f1a9f38d16689_0002_a9c87cad": 1,
+        "doc_730f1a9f38d16689_0003_f2266671": 1,
+        "doc_730f1a9f38d16689_0005_d50236c8": 1,
+        "doc_730f1a9f38d16689_0006_726f5279": 1
+      },
+      "category": "semantic",
+      "source": "curated_synth"
+    },
+    {
+      "query": "How does Retrieval-Augmented Generation (RAG) reduce hallucinations in LLMs by referencing external knowledge?",
+      "expected_chunk_ids": [
+        "doc_396a0fadeb4cd40f_0004_1c0d2dbe"
+      ],
+      "expected_sources": [
+        "data/documents/rag/10_rag_survey.pdf"
+      ],
+      "relevance": {
+        "doc_396a0fadeb4cd40f_0004_1c0d2dbe": 3,
+        "doc_396a0fadeb4cd40f_0002_ce16c4b6": 1,
+        "doc_396a0fadeb4cd40f_0003_63a3752b": 1,
+        "doc_396a0fadeb4cd40f_0005_32b06a5e": 1,
+        "doc_396a0fadeb4cd40f_0006_59c32993": 1
+      },
+      "category": "semantic",
+      "source": "curated_synth"
+    },
+    {
+      "query": "How does SWE-bench source its task instances from real-world Python repositories?",
+      "expected_chunk_ids": [
+        "doc_f7e8e1df64129742_0004_2446ff34"
+      ],
+      "expected_sources": [
+        "data/documents/agent/08_swe_bench.pdf"
+      ],
+      "relevance": {
+        "doc_f7e8e1df64129742_0004_2446ff34": 3,
+        "doc_f7e8e1df64129742_0002_d65cce50": 1,
+        "doc_f7e8e1df64129742_0003_1b1a8f7c": 1,
+        "doc_f7e8e1df64129742_0005_6a90f728": 1,
+        "doc_f7e8e1df64129742_0006_385eb01c": 1
+      },
+      "category": "semantic",
+      "source": "curated_synth"
+    },
+    {
+      "query": "How does the synergy between acting and reasoning help humans learn new tasks and make robust decisions according to ReAct?",
+      "expected_chunk_ids": [
+        "doc_f285b0971ae4a790_0005_1d992549"
+      ],
+      "expected_sources": [
+        "data/documents/agent/01_react.pdf"
+      ],
+      "relevance": {
+        "doc_f285b0971ae4a790_0005_1d992549": 3,
+        "doc_f285b0971ae4a790_0003_4cc3c317": 1,
+        "doc_f285b0971ae4a790_0004_07be5c74": 1,
+        "doc_f285b0971ae4a790_0006_67bdccc1": 1,
+        "doc_f285b0971ae4a790_0007_77df56c8": 1
+      },
+      "category": "semantic",
+      "source": "curated_synth"
+    },
+    {
+      "query": "Why does the inherently sequential nature of recurrent models preclude parallelization within training examples?",
+      "expected_chunk_ids": [
+        "doc_bdfaa68d8984f0dc_0005_416274e9"
+      ],
+      "expected_sources": [
+        "data/documents/llm/01_transformer_attention_is_all_you_need.pdf"
+      ],
+      "relevance": {
+        "doc_bdfaa68d8984f0dc_0005_416274e9": 3,
+        "doc_bdfaa68d8984f0dc_0003_91fdb7bf": 1,
+        "doc_bdfaa68d8984f0dc_0004_ae954d04": 1,
+        "doc_bdfaa68d8984f0dc_0006_27abb5d9": 1,
+        "doc_bdfaa68d8984f0dc_0007_fa38213e": 1
+      },
+      "category": "semantic",
+      "source": "curated_synth"
+    },
+    {
+      "query": "What simplified two-stage framework (retriever then reader) do reading comprehension advances suggest for open-domain QA?",
+      "expected_chunk_ids": [
+        "doc_3e67fc1a9977715a_0005_930a19d0"
+      ],
+      "expected_sources": [
+        "data/documents/rag/02_dense_passage_retrieval.pdf"
+      ],
+      "relevance": {
+        "doc_3e67fc1a9977715a_0005_930a19d0": 3,
+        "doc_3e67fc1a9977715a_0003_5b45e462": 1,
+        "doc_3e67fc1a9977715a_0004_1b89a2d5": 1,
+        "doc_3e67fc1a9977715a_0006_d42a4f79": 1,
+        "doc_3e67fc1a9977715a_0007_48aac34a": 1
+      },
+      "category": "semantic",
+      "source": "curated_synth"
+    },
+    {
+      "query": "What three ways for generating reflective feedback (binary, heuristic, self-evaluation) does Reflexion explore?",
+      "expected_chunk_ids": [
+        "doc_6059b6f89fea9959_0005_307ec994"
+      ],
+      "expected_sources": [
+        "data/documents/agent/03_reflexion.pdf"
+      ],
+      "relevance": {
+        "doc_6059b6f89fea9959_0005_307ec994": 3,
+        "doc_6059b6f89fea9959_0003_ff35dd06": 1,
+        "doc_6059b6f89fea9959_0004_c992c916": 1,
+        "doc_6059b6f89fea9959_0006_edadb20e": 1,
+        "doc_6059b6f89fea9959_0007_631fe9b2": 1
+      },
+      "category": "semantic",
+      "source": "curated_synth"
+    },
+    {
+      "query": "What GLUE score and SQuAD v1.1 Test F1 does BERT achieve as new state-of-the-art results?",
+      "expected_chunk_ids": [
+        "doc_5692a5514787a8c6_0005_cf153df2"
+      ],
+      "expected_sources": [
+        "data/documents/llm/02_bert.pdf"
+      ],
+      "relevance": {
+        "doc_5692a5514787a8c6_0005_cf153df2": 3,
+        "doc_5692a5514787a8c6_0003_13b5f0ba": 1,
+        "doc_5692a5514787a8c6_0004_08069ef7": 1,
+        "doc_5692a5514787a8c6_0006_92a84793": 1,
+        "doc_5692a5514787a8c6_0007_51f53376": 1
+      },
+      "category": "semantic",
+      "source": "curated_synth"
+    },
+    {
+      "query": "How does REALM use a retriever to retrieve documents from a corpus like Wikipedia before making each prediction?",
+      "expected_chunk_ids": [
+        "doc_0ec1a7ab3de5514c_0005_7bef8b2d"
+      ],
+      "expected_sources": [
+        "data/documents/rag/03_realm.pdf"
+      ],
+      "relevance": {
+        "doc_0ec1a7ab3de5514c_0005_7bef8b2d": 3,
+        "doc_0ec1a7ab3de5514c_0003_180161a1": 1,
+        "doc_0ec1a7ab3de5514c_0004_7a7044e4": 1,
+        "doc_0ec1a7ab3de5514c_0006_8c9accbe": 1,
+        "doc_0ec1a7ab3de5514c_0007_f479d79b": 1
+      },
+      "category": "semantic",
+      "source": "curated_synth"
+    },
+    {
+      "query": "What retrieval techniques (sparse TF/IDF vs dense embeddings) and extractive models does Fusion-in-Decoder discuss for open-domain QA?",
+      "expected_chunk_ids": [
+        "doc_f1ee7e927c3fb31b_0005_ff314d6f"
+      ],
+      "expected_sources": [
+        "data/documents/rag/04_fusion_in_decoder.pdf"
+      ],
+      "relevance": {
+        "doc_f1ee7e927c3fb31b_0005_ff314d6f": 3,
+        "doc_f1ee7e927c3fb31b_0003_c7f15fa3": 1,
+        "doc_f1ee7e927c3fb31b_0004_576f88b7": 1,
+        "doc_f1ee7e927c3fb31b_0006_e568ecea": 1,
+        "doc_f1ee7e927c3fb31b_0007_48a4a99b": 1
+      },
+      "category": "semantic",
+      "source": "curated_synth"
+    },
+    {
+      "query": "What are reflection tokens in SELF-RAG, and how does generating them make the LM controllable during inference?",
+      "expected_chunk_ids": [
+        "doc_d9eaa1398abac0df_0005_67a2b590"
+      ],
+      "expected_sources": [
+        "data/documents/rag/05_self_rag.pdf"
+      ],
+      "relevance": {
+        "doc_d9eaa1398abac0df_0005_67a2b590": 3,
+        "doc_d9eaa1398abac0df_0003_4cc3c317": 1,
+        "doc_d9eaa1398abac0df_0004_b6351b19": 1,
+        "doc_d9eaa1398abac0df_0006_f0537ae9": 1,
+        "doc_d9eaa1398abac0df_0007_f06f37b4": 1
+      },
+      "category": "semantic",
+      "source": "curated_synth"
+    },
+    {
+      "query": "What distinguishes LLaMA's training data from models like Chinchilla, PaLM, or GPT-3?",
+      "expected_chunk_ids": [
+        "doc_2e663675ae36ad12_0005_0f246a6e"
+      ],
+      "expected_sources": [
+        "data/documents/llm/04_llama.pdf"
+      ],
+      "relevance": {
+        "doc_2e663675ae36ad12_0005_0f246a6e": 3,
+        "doc_2e663675ae36ad12_0003_bdcc64be": 1,
+        "doc_2e663675ae36ad12_0004_a0361904": 1,
+        "doc_2e663675ae36ad12_0006_9caafe57": 1,
+        "doc_2e663675ae36ad12_0007_670956ee": 1
+      },
+      "category": "semantic",
+      "source": "curated_synth"
+    },
+    {
+      "query": "Why is the standard language modeling objective of predicting the next token described as misaligned in InstructGPT?",
+      "expected_chunk_ids": [
+        "doc_c1984bb50a5b90fd_0005_b5746118"
+      ],
+      "expected_sources": [
+        "data/documents/llm/05_instructgpt.pdf"
+      ],
+      "relevance": {
+        "doc_c1984bb50a5b90fd_0005_b5746118": 3,
+        "doc_c1984bb50a5b90fd_0003_f608da5e": 1,
+        "doc_c1984bb50a5b90fd_0004_9b50fd8f": 1,
+        "doc_c1984bb50a5b90fd_0006_e026a37d": 1,
+        "doc_c1984bb50a5b90fd_0007_881f7b72": 1
+      },
+      "category": "semantic",
+      "source": "curated_synth"
+    },
+    {
+      "query": "Why is Minecraft chosen as the environment for VOYAGER, given it imposes no predefined end goal or fixed storyline?",
+      "expected_chunk_ids": [
+        "doc_769a4e33ddeeb738_0005_cc4e611b"
+      ],
+      "expected_sources": [
+        "data/documents/agent/07_voyager.pdf"
+      ],
+      "relevance": {
+        "doc_769a4e33ddeeb738_0005_cc4e611b": 3,
+        "doc_769a4e33ddeeb738_0003_0a6c89fc": 1,
+        "doc_769a4e33ddeeb738_0004_741540cd": 1,
+        "doc_769a4e33ddeeb738_0006_7da245ca": 1,
+        "doc_769a4e33ddeeb738_0007_4a0474d7": 1
+      },
+      "category": "semantic",
+      "source": "curated_synth"
+    },
+    {
+      "query": "What kind of structured outputs does MetaGPT require agents to generate within its meta-programming framework?",
+      "expected_chunk_ids": [
+        "doc_17582e47647fac8e_0005_c1ccde48"
+      ],
+      "expected_sources": [
+        "data/documents/agent/09_metagpt.pdf"
+      ],
+      "relevance": {
+        "doc_17582e47647fac8e_0005_c1ccde48": 3,
+        "doc_17582e47647fac8e_0003_1cf2562b": 1,
+        "doc_17582e47647fac8e_0004_1e9f0e66": 1,
+        "doc_17582e47647fac8e_0006_a9b14666": 1,
+        "doc_17582e47647fac8e_0007_1f306164": 1
+      },
+      "category": "semantic",
+      "source": "curated_synth"
+    },
+    {
+      "query": "What limitation of scaling up model size alone for challenging reasoning tasks does chain-of-thought prompting address?",
+      "expected_chunk_ids": [
+        "doc_7d9f878c23b460e4_0005_18901d73"
+      ],
+      "expected_sources": [
+        "data/documents/llm/06_chain_of_thought.pdf"
+      ],
+      "relevance": {
+        "doc_7d9f878c23b460e4_0005_18901d73": 3,
+        "doc_7d9f878c23b460e4_0003_6a4a8694": 1,
+        "doc_7d9f878c23b460e4_0004_a1705990": 1,
+        "doc_7d9f878c23b460e4_0006_1a027f80": 1,
+        "doc_7d9f878c23b460e4_0007_33718767": 1
+      },
+      "category": "semantic",
+      "source": "curated_synth"
+    },
+    {
+      "query": "What does Chinchilla conclude about the number of training tokens needed for compute-optimal large language models compared to Kaplan et al. (2020)?",
+      "expected_chunk_ids": [
+        "doc_3fd3632a8ef48171_0005_85271ff5"
+      ],
+      "expected_sources": [
+        "data/documents/llm/07_chinchilla.pdf"
+      ],
+      "relevance": {
+        "doc_3fd3632a8ef48171_0005_85271ff5": 3,
+        "doc_3fd3632a8ef48171_0003_8bf31caa": 1,
+        "doc_3fd3632a8ef48171_0004_845e353f": 1,
+        "doc_3fd3632a8ef48171_0006_a84d8c67": 1,
+        "doc_3fd3632a8ef48171_0007_10178e69": 1
+      },
+      "category": "semantic",
+      "source": "curated_synth"
+    },
+    {
+      "query": "What hypothesis about the low intrinsic rank of weight changes during model adaptation motivates the LoRA approach?",
+      "expected_chunk_ids": [
+        "doc_e9a0d3128767db61_0005_a74cdef8"
+      ],
+      "expected_sources": [
+        "data/documents/llm/08_lora.pdf"
+      ],
+      "relevance": {
+        "doc_e9a0d3128767db61_0005_a74cdef8": 3,
+        "doc_e9a0d3128767db61_0003_df8fe1c9": 1,
+        "doc_e9a0d3128767db61_0004_ca5842c5": 1,
+        "doc_e9a0d3128767db61_0006_71d54631": 1,
+        "doc_e9a0d3128767db61_0007_9176cc55": 1
+      },
+      "category": "semantic",
+      "source": "curated_synth"
+    },
+    {
+      "query": "What goal of training helpful, honest, and harmless AI systems without full human supervision motivates Constitutional AI?",
+      "expected_chunk_ids": [
+        "doc_9a456a07ad346e33_0005_ce0ae2ab"
+      ],
+      "expected_sources": [
+        "data/documents/llm/09_constitutional_ai.pdf"
+      ],
+      "relevance": {
+        "doc_9a456a07ad346e33_0005_ce0ae2ab": 3,
+        "doc_9a456a07ad346e33_0003_5e30f6aa": 1,
+        "doc_9a456a07ad346e33_0004_bcf588e2": 1,
+        "doc_9a456a07ad346e33_0006_add41bb5": 1,
+        "doc_9a456a07ad346e33_0007_bc7bcd50": 1
+      },
+      "category": "semantic",
+      "source": "curated_synth"
+    },
+    {
+      "query": "What limitation of prior tool-integration work regarding a small well-documented set of APIs does Gorilla aim to overcome?",
+      "expected_chunk_ids": [
+        "doc_1aeae54095cdae3a_0005_2feb4a5d"
+      ],
+      "expected_sources": [
+        "data/documents/mcp/02_gorilla.pdf"
+      ],
+      "relevance": {
+        "doc_1aeae54095cdae3a_0005_2feb4a5d": 3,
+        "doc_1aeae54095cdae3a_0003_9764da4f": 1,
+        "doc_1aeae54095cdae3a_0004_1b3a25fb": 1,
+        "doc_1aeae54095cdae3a_0006_dc119cce": 1,
+        "doc_1aeae54095cdae3a_0007_ef89fd0b": 1
+      },
+      "category": "semantic",
+      "source": "curated_synth"
+    },
+    {
+      "query": "By how many points does Lynx surpass Alpaca's tool utilization performance according to API-Bank?",
+      "expected_chunk_ids": [
+        "doc_619006a4cfcdd1d2_0005_4048c248"
+      ],
+      "expected_sources": [
+        "data/documents/mcp/04_api_bank.pdf"
+      ],
+      "relevance": {
+        "doc_619006a4cfcdd1d2_0005_4048c248": 3,
+        "doc_619006a4cfcdd1d2_0003_c813775d": 1,
+        "doc_619006a4cfcdd1d2_0004_7696c167": 1,
+        "doc_619006a4cfcdd1d2_0006_1a36f476": 1,
+        "doc_619006a4cfcdd1d2_0007_fcec9308": 1
+      },
+      "category": "semantic",
+      "source": "curated_synth"
+    },
+    {
+      "query": "Why does the rapid emergence of new tools and APIs make swift adaptation important for tool learning in ToolkenGPT?",
+      "expected_chunk_ids": [
+        "doc_50f55a8595310730_0005_afdfc13e"
+      ],
+      "expected_sources": [
+        "data/documents/mcp/05_toolkengpt.pdf"
+      ],
+      "relevance": {
+        "doc_50f55a8595310730_0005_afdfc13e": 3,
+        "doc_50f55a8595310730_0003_c9234967": 1,
+        "doc_50f55a8595310730_0004_6f612c08": 1,
+        "doc_50f55a8595310730_0006_8ba70298": 1,
+        "doc_50f55a8595310730_0007_e69937c8": 1
+      },
+      "category": "semantic",
+      "source": "curated_synth"
+    },
+    {
+      "query": "What text-based web-browsing environment does WebGPT create to improve retrieval and synthesis end-to-end?",
+      "expected_chunk_ids": [
+        "doc_acad8d9fd55a30b9_0005_015cd2d0"
+      ],
+      "expected_sources": [
+        "data/documents/mcp/07_webgpt.pdf"
+      ],
+      "relevance": {
+        "doc_acad8d9fd55a30b9_0005_015cd2d0": 3,
+        "doc_acad8d9fd55a30b9_0003_50d2026d": 1,
+        "doc_acad8d9fd55a30b9_0004_047e603a": 1,
+        "doc_acad8d9fd55a30b9_0006_d53dd5e4": 1,
+        "doc_acad8d9fd55a30b9_0007_5c2f7036": 1
+      },
+      "category": "semantic",
+      "source": "curated_synth"
+    },
+    {
+      "query": "What limitation of current tool-augmented LLMs regarding simple single-turn function-calling tasks does ToolACE identify?",
+      "expected_chunk_ids": [
+        "doc_493d43589b1e749c_0005_8b1151ff"
+      ],
+      "expected_sources": [
+        "data/documents/mcp/08_toolace.pdf"
+      ],
+      "relevance": {
+        "doc_493d43589b1e749c_0005_8b1151ff": 3,
+        "doc_493d43589b1e749c_0003_d7f8b390": 1,
+        "doc_493d43589b1e749c_0004_4e7f8da7": 1,
+        "doc_493d43589b1e749c_0006_18af5997": 1,
+        "doc_493d43589b1e749c_0007_b3b06242": 1
+      },
+      "category": "semantic",
+      "source": "curated_synth"
+    },
+    {
+      "query": "Why is identifying the risks associated with LM agents challenging due to their long-tail, open-ended nature according to ToolEmu?",
+      "expected_chunk_ids": [
+        "doc_2d746c512086bd47_0005_e9b95de5"
+      ],
+      "expected_sources": [
+        "data/documents/mcp/09_tool_emu.pdf"
+      ],
+      "relevance": {
+        "doc_2d746c512086bd47_0005_e9b95de5": 3,
+        "doc_2d746c512086bd47_0003_89cc6e8d": 1,
+        "doc_2d746c512086bd47_0004_1404a178": 1,
+        "doc_2d746c512086bd47_0006_2a880d08": 1,
+        "doc_2d746c512086bd47_0007_0481dbb9": 1
+      },
+      "category": "semantic",
+      "source": "curated_synth"
+    },
+    {
+      "query": "How does T-Eval decompose the evaluation of tool-use ability into sub-tasks, differing from holistic approaches?",
+      "expected_chunk_ids": [
+        "doc_fe4332cc5f3997a0_0005_f4b9afbd"
+      ],
+      "expected_sources": [
+        "data/documents/mcp/10_t_eval.pdf"
+      ],
+      "relevance": {
+        "doc_fe4332cc5f3997a0_0005_f4b9afbd": 3,
+        "doc_fe4332cc5f3997a0_0003_102c4c2b": 1,
+        "doc_fe4332cc5f3997a0_0004_4e054b8d": 1,
+        "doc_fe4332cc5f3997a0_0006_ad647333": 1,
+        "doc_fe4332cc5f3997a0_0007_0d294330": 1
+      },
+      "category": "semantic",
+      "source": "curated_synth"
+    },
+    {
+      "query": "What question about whether web-scale pre-training could yield a breakthrough in computer vision does CLIP raise?",
+      "expected_chunk_ids": [
+        "doc_6478b6e571a7d6fc_0005_01810355"
+      ],
+      "expected_sources": [
+        "data/documents/multimodal/01_clip.pdf"
+      ],
+      "relevance": {
+        "doc_6478b6e571a7d6fc_0005_01810355": 3,
+        "doc_6478b6e571a7d6fc_0003_31e375da": 1,
+        "doc_6478b6e571a7d6fc_0004_4246147e": 1,
+        "doc_6478b6e571a7d6fc_0006_b5be6514": 1,
+        "doc_6478b6e571a7d6fc_0007_65eeed2b": 1
+      },
+      "category": "semantic",
+      "source": "curated_synth"
+    },
+    {
+      "query": "What does ViT find about the trade-off between the inductive bias of CNNs and large-scale training data?",
+      "expected_chunk_ids": [
+        "doc_8ce7b83971a14508_0005_b3069ed8"
+      ],
+      "expected_sources": [
+        "data/documents/multimodal/02_vit.pdf"
+      ],
+      "relevance": {
+        "doc_8ce7b83971a14508_0005_b3069ed8": 3,
+        "doc_8ce7b83971a14508_0003_a915c483": 1,
+        "doc_8ce7b83971a14508_0004_13e7de39": 1,
+        "doc_8ce7b83971a14508_0006_34dd0c9d": 1,
+        "doc_8ce7b83971a14508_0007_c558453b": 1
+      },
+      "category": "semantic",
+      "source": "curated_synth"
+    },
+    {
+      "query": "What is the Multimodal mixture of Encoder-Decoder (MED) architecture in BLIP, and in what modes can it operate?",
+      "expected_chunk_ids": [
+        "doc_63e0335cdd57c3d9_0005_489a61a2"
+      ],
+      "expected_sources": [
+        "data/documents/multimodal/03_blip.pdf"
+      ],
+      "relevance": {
+        "doc_63e0335cdd57c3d9_0005_489a61a2": 3,
+        "doc_63e0335cdd57c3d9_0003_ad3094f7": 1,
+        "doc_63e0335cdd57c3d9_0004_9cdbe91c": 1,
+        "doc_63e0335cdd57c3d9_0006_24230ce8": 1,
+        "doc_63e0335cdd57c3d9_0007_7b4db6b2": 1
+      },
+      "category": "semantic",
+      "source": "curated_synth"
+    },
+    {
+      "query": "How can language serve as a universal interface for a general-purpose assistant according to LLaVA?",
+      "expected_chunk_ids": [
+        "doc_dc8bace378a282ea_0005_dfc17e7b"
+      ],
+      "expected_sources": [
+        "data/documents/multimodal/06_llava.pdf"
+      ],
+      "relevance": {
+        "doc_dc8bace378a282ea_0005_dfc17e7b": 3,
+        "doc_dc8bace378a282ea_0003_e2bd93f0": 1,
+        "doc_dc8bace378a282ea_0004_8ff1c7f5": 1,
+        "doc_dc8bace378a282ea_0006_29618799": 1,
+        "doc_dc8bace378a282ea_0007_e2de04cb": 1
+      },
+      "category": "semantic",
+      "source": "curated_synth"
+    },
+    {
+      "query": "What promising potential in solving real-world vision-central problems do large-scale vision-language models show according to Qwen-VL?",
+      "expected_chunk_ids": [
+        "doc_b4eca60ae9d3c154_0005_79c2e2c7"
+      ],
+      "expected_sources": [
+        "data/documents/multimodal/08_qwen_vl.pdf"
+      ],
+      "relevance": {
+        "doc_b4eca60ae9d3c154_0005_79c2e2c7": 3,
+        "doc_b4eca60ae9d3c154_0003_93127065": 1,
+        "doc_b4eca60ae9d3c154_0004_642caa69": 1,
+        "doc_b4eca60ae9d3c154_0006_ddd67b84": 1,
+        "doc_b4eca60ae9d3c154_0007_f20fbb3c": 1
+      },
+      "category": "semantic",
+      "source": "curated_synth"
+    },
+    {
+      "query": "What semi-parametric approach does RETRO propose to augment language models without significantly increasing computation?",
+      "expected_chunk_ids": [
+        "doc_1b3e89b589b73d51_0005_80fced9f"
+      ],
+      "expected_sources": [
+        "data/documents/rag/06_retro.pdf"
+      ],
+      "relevance": {
+        "doc_1b3e89b589b73d51_0005_80fced9f": 3,
+        "doc_1b3e89b589b73d51_0003_30feb4be": 1,
+        "doc_1b3e89b589b73d51_0004_fde916d4": 1,
+        "doc_1b3e89b589b73d51_0006_905e79d9": 1,
+        "doc_1b3e89b589b73d51_0007_dfb90209": 1
+      },
+      "category": "semantic",
+      "source": "curated_synth"
+    },
+    {
+      "query": "What is REPLUG LSR (LM-Supervised Retrieval), and how does it differ from prior work that adapts language models to the retriever?",
+      "expected_chunk_ids": [
+        "doc_3c24ff147c4912a9_0005_0c291127"
+      ],
+      "expected_sources": [
+        "data/documents/rag/07_replug.pdf"
+      ],
+      "relevance": {
+        "doc_3c24ff147c4912a9_0005_0c291127": 3,
+        "doc_3c24ff147c4912a9_0003_91618258": 1,
+        "doc_3c24ff147c4912a9_0004_ce6d61d1": 1,
+        "doc_3c24ff147c4912a9_0006_be020096": 1,
+        "doc_3c24ff147c4912a9_0007_4079d51a": 1
+      },
+      "category": "semantic",
+      "source": "curated_synth"
+    },
+    {
+      "query": "On what does the effectiveness of the RAG framework depend, according to CRAG?",
+      "expected_chunk_ids": [
+        "doc_975aa1fd3c1b6031_0005_5d260346"
+      ],
+      "expected_sources": [
+        "data/documents/rag/08_crag.pdf"
+      ],
+      "relevance": {
+        "doc_975aa1fd3c1b6031_0005_5d260346": 3,
+        "doc_975aa1fd3c1b6031_0003_1c57429a": 1,
+        "doc_975aa1fd3c1b6031_0004_f708f0af": 1,
+        "doc_975aa1fd3c1b6031_0006_18309216": 1,
+        "doc_975aa1fd3c1b6031_0007_3264b034": 1
+      },
+      "category": "semantic",
+      "source": "curated_synth"
+    },
+    {
+      "query": "What sensemaking tasks in complex domains like scientific discovery do LLMs like GPT and Llama excel at according to GraphRAG?",
+      "expected_chunk_ids": [
+        "doc_730f1a9f38d16689_0005_d50236c8"
+      ],
+      "expected_sources": [
+        "data/documents/rag/09_graphrag.pdf"
+      ],
+      "relevance": {
+        "doc_730f1a9f38d16689_0005_d50236c8": 3,
+        "doc_730f1a9f38d16689_0003_f2266671": 1,
+        "doc_730f1a9f38d16689_0004_a8158030": 1,
+        "doc_730f1a9f38d16689_0006_726f5279": 1,
+        "doc_730f1a9f38d16689_0007_5710082f": 1
+      },
+      "category": "semantic",
+      "source": "curated_synth"
+    },
+    {
+      "query": "How does SWE-bench differ from existing coding benchmarks like HumanEval that involve self-contained problems?",
+      "expected_chunk_ids": [
+        "doc_f7e8e1df64129742_0005_6a90f728"
+      ],
+      "expected_sources": [
+        "data/documents/agent/08_swe_bench.pdf"
+      ],
+      "relevance": {
+        "doc_f7e8e1df64129742_0005_6a90f728": 3,
+        "doc_f7e8e1df64129742_0003_1b1a8f7c": 1,
+        "doc_f7e8e1df64129742_0004_2446ff34": 1,
+        "doc_f7e8e1df64129742_0006_385eb01c": 1,
+        "doc_f7e8e1df64129742_0007_6e55cc3f": 1
+      },
+      "category": "semantic",
+      "source": "curated_synth"
+    },
+    {
+      "query": "What does the Transformer propose to rely on entirely, instead of recurrence, to draw global dependencies between input and output?",
+      "expected_chunk_ids": [
+        "doc_bdfaa68d8984f0dc_0006_27abb5d9"
+      ],
+      "expected_sources": [
+        "data/documents/llm/01_transformer_attention_is_all_you_need.pdf"
+      ],
+      "relevance": {
+        "doc_bdfaa68d8984f0dc_0006_27abb5d9": 3,
+        "doc_bdfaa68d8984f0dc_0004_ae954d04": 1,
+        "doc_bdfaa68d8984f0dc_0005_416274e9": 1,
+        "doc_bdfaa68d8984f0dc_0007_fa38213e": 1,
+        "doc_bdfaa68d8984f0dc_0008_4f748a24": 1
+      },
+      "category": "semantic",
+      "source": "curated_synth"
+    },
+    {
+      "query": "In the RAG approach, which algorithm is used to find the top-K documents, and how is the document treated as a latent variable during prediction?",
+      "expected_chunk_ids": [
+        "doc_23e3249e9a1e7541_0006_3f1fc994"
+      ],
+      "expected_sources": [
+        "data/documents/rag/01_rag_knowledge_intensive_nlp.pdf"
+      ],
+      "relevance": {
+        "doc_23e3249e9a1e7541_0006_3f1fc994": 3,
+        "doc_23e3249e9a1e7541_0004_c40d2e8b": 1,
+        "doc_23e3249e9a1e7541_0005_202b1ce1": 1,
+        "doc_23e3249e9a1e7541_0007_ae01749d": 1,
+        "doc_23e3249e9a1e7541_0008_804d6298": 1
+      },
+      "category": "semantic",
+      "source": "curated_synth"
+    },
+    {
+      "query": "What advantages does Reflexion offer compared to traditional RL approaches like policy or value-based learning?",
+      "expected_chunk_ids": [
+        "doc_6059b6f89fea9959_0006_edadb20e"
+      ],
+      "expected_sources": [
+        "data/documents/agent/03_reflexion.pdf"
+      ],
+      "relevance": {
+        "doc_6059b6f89fea9959_0006_edadb20e": 3,
+        "doc_6059b6f89fea9959_0004_c992c916": 1,
+        "doc_6059b6f89fea9959_0005_307ec994": 1,
+        "doc_6059b6f89fea9959_0007_631fe9b2": 1,
+        "doc_6059b6f89fea9959_0008_a2b8e1bd": 1
+      },
+      "category": "semantic",
+      "source": "curated_synth"
+    },
+    {
+      "query": "What sentence-level and token-level NLP tasks does BERT's language model pre-training aim to improve?",
+      "expected_chunk_ids": [
+        "doc_5692a5514787a8c6_0006_92a84793"
+      ],
+      "expected_sources": [
+        "data/documents/llm/02_bert.pdf"
+      ],
+      "relevance": {
+        "doc_5692a5514787a8c6_0006_92a84793": 3,
+        "doc_5692a5514787a8c6_0004_08069ef7": 1,
+        "doc_5692a5514787a8c6_0005_cf153df2": 1,
+        "doc_5692a5514787a8c6_0007_51f53376": 1,
+        "doc_5692a5514787a8c6_0008_07d6cad6": 1
+      },
+      "category": "semantic",
+      "source": "curated_synth"
+    },
+    {
+      "query": "What performance-based signal from unsupervised text does REALM use to train its retriever?",
+      "expected_chunk_ids": [
+        "doc_0ec1a7ab3de5514c_0006_8c9accbe"
+      ],
+      "expected_sources": [
+        "data/documents/rag/03_realm.pdf"
+      ],
+      "relevance": {
+        "doc_0ec1a7ab3de5514c_0006_8c9accbe": 3,
+        "doc_0ec1a7ab3de5514c_0004_7a7044e4": 1,
+        "doc_0ec1a7ab3de5514c_0005_7bef8b2d": 1,
+        "doc_0ec1a7ab3de5514c_0007_f479d79b": 1,
+        "doc_0ec1a7ab3de5514c_0008_b72bfb21": 1
+      },
+      "category": "semantic",
+      "source": "curated_synth"
+    },
+    {
+      "query": "What benchmarks does the Fusion-in-Decoder method set new state-of-the-art results on, and how does performance change with more passages?",
+      "expected_chunk_ids": [
+        "doc_f1ee7e927c3fb31b_0006_e568ecea"
+      ],
+      "expected_sources": [
+        "data/documents/rag/04_fusion_in_decoder.pdf"
+      ],
+      "relevance": {
+        "doc_f1ee7e927c3fb31b_0006_e568ecea": 3,
+        "doc_f1ee7e927c3fb31b_0004_576f88b7": 1,
+        "doc_f1ee7e927c3fb31b_0005_ff314d6f": 1,
+        "doc_f1ee7e927c3fb31b_0007_48a4a99b": 1,
+        "doc_f1ee7e927c3fb31b_0008_f8d31cc6": 1
+      },
+      "category": "semantic",
+      "source": "curated_synth"
+    },
+    {
+      "query": "What three steps involving retrieval, relevance evaluation, and critique tokens does SELF-RAG follow?",
+      "expected_chunk_ids": [
+        "doc_d9eaa1398abac0df_0006_f0537ae9"
+      ],
+      "expected_sources": [
+        "data/documents/rag/05_self_rag.pdf"
+      ],
+      "relevance": {
+        "doc_d9eaa1398abac0df_0006_f0537ae9": 3,
+        "doc_d9eaa1398abac0df_0004_b6351b19": 1,
+        "doc_d9eaa1398abac0df_0005_67a2b590": 1,
+        "doc_d9eaa1398abac0df_0007_f06f37b4": 1,
+        "doc_d9eaa1398abac0df_0008_e05c7d2a": 1
+      },
+      "category": "semantic",
+      "source": "curated_synth"
+    },
+    {
+      "query": "What scaling laws and standard training approach does LLaMA's pre-training follow?",
+      "expected_chunk_ids": [
+        "doc_2e663675ae36ad12_0006_9caafe57"
+      ],
+      "expected_sources": [
+        "data/documents/llm/04_llama.pdf"
+      ],
+      "relevance": {
+        "doc_2e663675ae36ad12_0006_9caafe57": 3,
+        "doc_2e663675ae36ad12_0004_a0361904": 1,
+        "doc_2e663675ae36ad12_0005_0f246a6e": 1,
+        "doc_2e663675ae36ad12_0007_670956ee": 1,
+        "doc_2e663675ae36ad12_0008_4e4a3614": 1
+      },
+      "category": "semantic",
+      "source": "curated_synth"
+    },
+    {
+      "query": "What three properties (helpful, honest, harmless) does InstructGPT want aligned language models to satisfy?",
+      "expected_chunk_ids": [
+        "doc_c1984bb50a5b90fd_0006_e026a37d"
+      ],
+      "expected_sources": [
+        "data/documents/llm/05_instructgpt.pdf"
+      ],
+      "relevance": {
+        "doc_c1984bb50a5b90fd_0006_e026a37d": 3,
+        "doc_c1984bb50a5b90fd_0004_9b50fd8f": 1,
+        "doc_c1984bb50a5b90fd_0005_b5746118": 1,
+        "doc_c1984bb50a5b90fd_0007_881f7b72": 1,
+        "doc_c1984bb50a5b90fd_0008_db88f9bb": 1
+      },
+      "category": "semantic",
+      "source": "curated_synth"
+    },
+    {
+      "query": "What long-standing vision of computational agents serving as believable proxies of human behavior does the generative agents work pursue?",
+      "expected_chunk_ids": [
+        "doc_1b31e77fb24d25d7_0006_8c9a13a1"
+      ],
+      "expected_sources": [
+        "data/documents/agent/04_generative_agents.pdf"
+      ],
+      "relevance": {
+        "doc_1b31e77fb24d25d7_0006_8c9a13a1": 3,
+        "doc_1b31e77fb24d25d7_0004_0ed680f4": 1,
+        "doc_1b31e77fb24d25d7_0005_edb18667": 1,
+        "doc_1b31e77fb24d25d7_0007_5aa6d01a": 1,
+        "doc_1b31e77fb24d25d7_0008_1bb2ec89": 1
+      },
+      "category": "semantic",
+      "source": "curated_synth"
+    },
+    {
+      "query": "In HuggingGPT, what role does the LLM play in planning tasks and coordinating expert models from Hugging Face?",
+      "expected_chunk_ids": [
+        "doc_5add5f7ff9041299_0006_c9a6d30c"
+      ],
+      "expected_sources": [
+        "data/documents/agent/05_hugginggpt.pdf"
+      ],
+      "relevance": {
+        "doc_5add5f7ff9041299_0006_c9a6d30c": 3,
+        "doc_5add5f7ff9041299_0004_d8e8c95b": 1,
+        "doc_5add5f7ff9041299_0005_c5819312": 1,
+        "doc_5add5f7ff9041299_0007_9710d065": 1,
+        "doc_5add5f7ff9041299_0008_fd0bd42e": 1
+      },
+      "category": "semantic",
+      "source": "curated_synth"
+    },
+    {
+      "query": "What three abilities (refine skills, commit to memory, self-driven exploration) does VOYAGER aim to achieve?",
+      "expected_chunk_ids": [
+        "doc_769a4e33ddeeb738_0006_7da245ca"
+      ],
+      "expected_sources": [
+        "data/documents/agent/07_voyager.pdf"
+      ],
+      "relevance": {
+        "doc_769a4e33ddeeb738_0006_7da245ca": 3,
+        "doc_769a4e33ddeeb738_0004_741540cd": 1,
+        "doc_769a4e33ddeeb738_0005_cc4e611b": 1,
+        "doc_769a4e33ddeeb738_0007_4a0474d7": 1,
+        "doc_769a4e33ddeeb738_0008_44da9713": 1
+      },
+      "category": "semantic",
+      "source": "curated_synth"
+    },
+    {
+      "query": "How do structured intermediate outputs in MetaGPT help reduce hallucinations during multi-agent collaboration?",
+      "expected_chunk_ids": [
+        "doc_17582e47647fac8e_0006_a9b14666"
+      ],
+      "expected_sources": [
+        "data/documents/agent/09_metagpt.pdf"
+      ],
+      "relevance": {
+        "doc_17582e47647fac8e_0006_a9b14666": 3,
+        "doc_17582e47647fac8e_0004_1e9f0e66": 1,
+        "doc_17582e47647fac8e_0005_c1ccde48": 1,
+        "doc_17582e47647fac8e_0007_1f306164": 1,
+        "doc_17582e47647fac8e_0008_68161187": 1
+      },
+      "category": "semantic",
+      "source": "curated_synth"
+    },
+    {
+      "query": "What is AutoGen, and how does it let developers build LLM applications via multiple conversing agents?",
+      "expected_chunk_ids": [
+        "doc_fcf8b1acae6b1bd6_0006_4ebfe003"
+      ],
+      "expected_sources": [
+        "data/documents/agent/10_autogen.pdf"
+      ],
+      "relevance": {
+        "doc_fcf8b1acae6b1bd6_0006_4ebfe003": 3,
+        "doc_fcf8b1acae6b1bd6_0004_95a1efd1": 1,
+        "doc_fcf8b1acae6b1bd6_0005_c297d6ab": 1,
+        "doc_fcf8b1acae6b1bd6_0007_4cce0898": 1,
+        "doc_fcf8b1acae6b1bd6_0008_b59db902": 1
+      },
+      "category": "semantic",
+      "source": "curated_synth"
+    },
+    {
+      "query": "What two ideas motivate the chain-of-thought method for unlocking reasoning in large language models?",
+      "expected_chunk_ids": [
+        "doc_7d9f878c23b460e4_0006_1a027f80"
+      ],
+      "expected_sources": [
+        "data/documents/llm/06_chain_of_thought.pdf"
+      ],
+      "relevance": {
+        "doc_7d9f878c23b460e4_0006_1a027f80": 3,
+        "doc_7d9f878c23b460e4_0004_a1705990": 1,
+        "doc_7d9f878c23b460e4_0005_18901d73": 1,
+        "doc_7d9f878c23b460e4_0007_33718767": 1,
+        "doc_7d9f878c23b460e4_0008_e9661042": 1
+      },
+      "category": "semantic",
+      "source": "curated_synth"
+    },
+    {
+      "query": "Approximately how many tokens were recently trained large models like GPT-3 and Gopher trained on, according to Chinchilla?",
+      "expected_chunk_ids": [
+        "doc_3fd3632a8ef48171_0006_a84d8c67"
+      ],
+      "expected_sources": [
+        "data/documents/llm/07_chinchilla.pdf"
+      ],
+      "relevance": {
+        "doc_3fd3632a8ef48171_0006_a84d8c67": 3,
+        "doc_3fd3632a8ef48171_0004_845e353f": 1,
+        "doc_3fd3632a8ef48171_0005_85271ff5": 1,
+        "doc_3fd3632a8ef48171_0007_10178e69": 1,
+        "doc_3fd3632a8ef48171_0008_23ad67a4": 1
+      },
+      "category": "semantic",
+      "source": "curated_synth"
+    },
+    {
+      "query": "What key advantages regarding task-switching and training efficiency does LoRA provide?",
+      "expected_chunk_ids": [
+        "doc_e9a0d3128767db61_0006_71d54631"
+      ],
+      "expected_sources": [
+        "data/documents/llm/08_lora.pdf"
+      ],
+      "relevance": {
+        "doc_e9a0d3128767db61_0006_71d54631": 3,
+        "doc_e9a0d3128767db61_0004_ca5842c5": 1,
+        "doc_e9a0d3128767db61_0005_a74cdef8": 1,
+        "doc_e9a0d3128767db61_0007_9176cc55": 1,
+        "doc_e9a0d3128767db61_0008_9e326b72": 1
+      },
+      "category": "semantic",
+      "source": "curated_synth"
+    },
+    {
+      "query": "How does Constitutional AI (CAI) improve upon and partially replace reinforcement learning from human feedback?",
+      "expected_chunk_ids": [
+        "doc_9a456a07ad346e33_0006_add41bb5"
+      ],
+      "expected_sources": [
+        "data/documents/llm/09_constitutional_ai.pdf"
+      ],
+      "relevance": {
+        "doc_9a456a07ad346e33_0006_add41bb5": 3,
+        "doc_9a456a07ad346e33_0004_bcf588e2": 1,
+        "doc_9a456a07ad346e33_0005_ce0ae2ab": 1,
+        "doc_9a456a07ad346e33_0007_bc7bcd50": 1,
+        "doc_9a456a07ad346e33_0008_e9adbeb6": 1
+      },
+      "category": "semantic",
+      "source": "curated_synth"
+    },
+    {
+      "query": "According to the scaling laws paper, what power-law relationship governs performance with respect to model size, dataset size, and compute?",
+      "expected_chunk_ids": [
+        "doc_a41bd7877fd1a6bc_0006_720f47e2"
+      ],
+      "expected_sources": [
+        "data/documents/llm/10_scaling_laws.pdf"
+      ],
+      "relevance": {
+        "doc_a41bd7877fd1a6bc_0006_720f47e2": 3,
+        "doc_a41bd7877fd1a6bc_0004_40f97b55": 1,
+        "doc_a41bd7877fd1a6bc_0005_b2ac729f": 1,
+        "doc_a41bd7877fd1a6bc_0007_93e8293c": 1,
+        "doc_a41bd7877fd1a6bc_0008_2dce3300": 1
+      },
+      "category": "semantic",
+      "source": "curated_synth"
+    },
+    {
+      "query": "Why does ToolLLM consider it urgent to empower open-source LLMs to master diverse APIs, given closed-source models are opaque?",
+      "expected_chunk_ids": [
+        "doc_295299721d67b250_0006_8c0c261a"
+      ],
+      "expected_sources": [
+        "data/documents/mcp/03_toolllm.pdf"
+      ],
+      "relevance": {
+        "doc_295299721d67b250_0006_8c0c261a": 3,
+        "doc_295299721d67b250_0004_37cce61b": 1,
+        "doc_295299721d67b250_0005_d07b487a": 1,
+        "doc_295299721d67b250_0007_90d8e4f5": 1,
+        "doc_295299721d67b250_0008_7b32e33c": 1
+      },
+      "category": "semantic",
+      "source": "curated_synth"
+    },
+    {
+      "query": "What two primary research paradigms for tool integration with LLMs does ToolkenGPT describe?",
+      "expected_chunk_ids": [
+        "doc_50f55a8595310730_0006_8ba70298"
+      ],
+      "expected_sources": [
+        "data/documents/mcp/05_toolkengpt.pdf"
+      ],
+      "relevance": {
+        "doc_50f55a8595310730_0006_8ba70298": 3,
+        "doc_50f55a8595310730_0004_6f612c08": 1,
+        "doc_50f55a8595310730_0005_afdfc13e": 1,
+        "doc_50f55a8595310730_0007_e69937c8": 1,
+        "doc_50f55a8595310730_0008_3b8fa54f": 1
+      },
+      "category": "semantic",
+      "source": "curated_synth"
+    },
+    {
+      "query": "Which dataset of questions from the 'Explain Like I'm Five' subreddit are WebGPT models primarily trained to answer?",
+      "expected_chunk_ids": [
+        "doc_acad8d9fd55a30b9_0006_d53dd5e4"
+      ],
+      "expected_sources": [
+        "data/documents/mcp/07_webgpt.pdf"
+      ],
+      "relevance": {
+        "doc_acad8d9fd55a30b9_0006_d53dd5e4": 3,
+        "doc_acad8d9fd55a30b9_0004_047e603a": 1,
+        "doc_acad8d9fd55a30b9_0005_015cd2d0": 1,
+        "doc_acad8d9fd55a30b9_0007_5c2f7036": 1,
+        "doc_acad8d9fd55a30b9_0008_4a9eb1d5": 1
+      },
+      "category": "semantic",
+      "source": "curated_synth"
+    },
+    {
+      "query": "How many APIs and domains does the ToolACE dataset cover compared to prior tool-augmented datasets like ToolLLM?",
+      "expected_chunk_ids": [
+        "doc_493d43589b1e749c_0006_18af5997"
+      ],
+      "expected_sources": [
+        "data/documents/mcp/08_toolace.pdf"
+      ],
+      "relevance": {
+        "doc_493d43589b1e749c_0006_18af5997": 3,
+        "doc_493d43589b1e749c_0004_4e7f8da7": 1,
+        "doc_493d43589b1e749c_0005_8b1151ff": 1,
+        "doc_493d43589b1e749c_0007_b3b06242": 1,
+        "doc_493d43589b1e749c_0008_76b31f9f": 1
+      },
+      "category": "semantic",
+      "source": "curated_synth"
+    },
+    {
+      "query": "What simulator-based testing approach from high-stakes domains like autonomous driving does ToolEmu adopt?",
+      "expected_chunk_ids": [
+        "doc_2d746c512086bd47_0006_2a880d08"
+      ],
+      "expected_sources": [
+        "data/documents/mcp/09_tool_emu.pdf"
+      ],
+      "relevance": {
+        "doc_2d746c512086bd47_0006_2a880d08": 3,
+        "doc_2d746c512086bd47_0004_1404a178": 1,
+        "doc_2d746c512086bd47_0005_e9b95de5": 1,
+        "doc_2d746c512086bd47_0007_0481dbb9": 1,
+        "doc_2d746c512086bd47_0008_71cae7db": 1
+      },
+      "category": "semantic",
+      "source": "curated_synth"
+    },
+    {
+      "query": "Into which six abilities (PLAN, REASON, RETRIEVE, UNDERSTAND, INSTRUCT, REVIEW) does T-Eval decompose tool utilization?",
+      "expected_chunk_ids": [
+        "doc_fe4332cc5f3997a0_0006_ad647333"
+      ],
+      "expected_sources": [
+        "data/documents/mcp/10_t_eval.pdf"
+      ],
+      "relevance": {
+        "doc_fe4332cc5f3997a0_0006_ad647333": 3,
+        "doc_fe4332cc5f3997a0_0004_4e054b8d": 1,
+        "doc_fe4332cc5f3997a0_0005_f4b9afbd": 1,
+        "doc_fe4332cc5f3997a0_0007_0d294330": 1,
+        "doc_fe4332cc5f3997a0_0008_c17a3b8f": 1
+      },
+      "category": "semantic",
+      "source": "curated_synth"
+    },
+    {
+      "query": "What early work by Mori et al. (1999) on content-based image retrieval does CLIP cite as a precedent?",
+      "expected_chunk_ids": [
+        "doc_6478b6e571a7d6fc_0006_b5be6514"
+      ],
+      "expected_sources": [
+        "data/documents/multimodal/01_clip.pdf"
+      ],
+      "relevance": {
+        "doc_6478b6e571a7d6fc_0006_b5be6514": 3,
+        "doc_6478b6e571a7d6fc_0004_4246147e": 1,
+        "doc_6478b6e571a7d6fc_0005_01810355": 1,
+        "doc_6478b6e571a7d6fc_0007_65eeed2b": 1,
+        "doc_6478b6e571a7d6fc_0008_32a7b021": 1
+      },
+      "category": "semantic",
+      "source": "curated_synth"
+    },
+    {
+      "query": "How were large Transformer-based models like BERT and the GPT line pre-trained and then fine-tuned according to the ViT related work?",
+      "expected_chunk_ids": [
+        "doc_8ce7b83971a14508_0006_34dd0c9d"
+      ],
+      "expected_sources": [
+        "data/documents/multimodal/02_vit.pdf"
+      ],
+      "relevance": {
+        "doc_8ce7b83971a14508_0006_34dd0c9d": 3,
+        "doc_8ce7b83971a14508_0004_13e7de39": 1,
+        "doc_8ce7b83971a14508_0005_b3069ed8": 1,
+        "doc_8ce7b83971a14508_0007_c558453b": 1,
+        "doc_8ce7b83971a14508_0008_77a336e5": 1
+      },
+      "category": "semantic",
+      "source": "curated_synth"
+    },
+    {
+      "query": "How do the captioner and filter (CapFilt) in BLIP work together to improve downstream performance?",
+      "expected_chunk_ids": [
+        "doc_63e0335cdd57c3d9_0006_24230ce8"
+      ],
+      "expected_sources": [
+        "data/documents/multimodal/03_blip.pdf"
+      ],
+      "relevance": {
+        "doc_63e0335cdd57c3d9_0006_24230ce8": 3,
+        "doc_63e0335cdd57c3d9_0004_9cdbe91c": 1,
+        "doc_63e0335cdd57c3d9_0005_489a61a2": 1,
+        "doc_63e0335cdd57c3d9_0007_7b4db6b2": 1,
+        "doc_63e0335cdd57c3d9_0008_cfd4df83": 1
+      },
+      "category": "semantic",
+      "source": "curated_synth"
+    },
+    {
+      "query": "Why does Qwen-VL emphasize fine-grained visual understanding for large vision-language models?",
+      "expected_chunk_ids": [
+        "doc_b4eca60ae9d3c154_0006_ddd67b84"
+      ],
+      "expected_sources": [
+        "data/documents/multimodal/08_qwen_vl.pdf"
+      ],
+      "relevance": {
+        "doc_b4eca60ae9d3c154_0006_ddd67b84": 3,
+        "doc_b4eca60ae9d3c154_0004_642caa69": 1,
+        "doc_b4eca60ae9d3c154_0005_79c2e2c7": 1,
+        "doc_b4eca60ae9d3c154_0007_f20fbb3c": 1,
+        "doc_b4eca60ae9d3c154_0008_8efecca1": 1
+      },
+      "category": "semantic",
+      "source": "curated_synth"
+    },
+    {
+      "query": "What difference in strengths between LLaVA and InstructBLIP on visual reasoning versus VQA benchmarks does LLaVA-1.5 note?",
+      "expected_chunk_ids": [
+        "doc_b7074a6dad218e0d_0006_4f0652e3"
+      ],
+      "expected_sources": [
+        "data/documents/multimodal/10_llava15.pdf"
+      ],
+      "relevance": {
+        "doc_b7074a6dad218e0d_0006_4f0652e3": 3,
+        "doc_b7074a6dad218e0d_0004_d3903423": 1,
+        "doc_b7074a6dad218e0d_0005_89e4a983": 1,
+        "doc_b7074a6dad218e0d_0007_4a963bd1": 1,
+        "doc_b7074a6dad218e0d_0008_96074ad8": 1
+      },
+      "category": "semantic",
+      "source": "curated_synth"
+    },
+    {
+      "query": "By how much does REPLUG improve Codex (175B) performance on MMLU?",
+      "expected_chunk_ids": [
+        "doc_3c24ff147c4912a9_0006_be020096"
+      ],
+      "expected_sources": [
+        "data/documents/rag/07_replug.pdf"
+      ],
+      "relevance": {
+        "doc_3c24ff147c4912a9_0006_be020096": 3,
+        "doc_3c24ff147c4912a9_0004_ce6d61d1": 1,
+        "doc_3c24ff147c4912a9_0005_0c291127": 1,
+        "doc_3c24ff147c4912a9_0007_4079d51a": 1,
+        "doc_3c24ff147c4912a9_0008_075e29ba": 1
+      },
+      "category": "semantic",
+      "source": "curated_synth"
+    },
+    {
+      "query": "What problem with conventional RAG approaches indiscriminately incorporating whole retrieved documents does CRAG identify?",
+      "expected_chunk_ids": [
+        "doc_975aa1fd3c1b6031_0006_18309216"
+      ],
+      "expected_sources": [
+        "data/documents/rag/08_crag.pdf"
+      ],
+      "relevance": {
+        "doc_975aa1fd3c1b6031_0006_18309216": 3,
+        "doc_975aa1fd3c1b6031_0004_f708f0af": 1,
+        "doc_975aa1fd3c1b6031_0005_5d260346": 1,
+        "doc_975aa1fd3c1b6031_0007_3264b034": 1,
+        "doc_975aa1fd3c1b6031_0008_992c6a99": 1
+      },
+      "category": "semantic",
+      "source": "curated_synth"
+    },
+    {
+      "query": "How does GraphRAG use an LLM to construct a knowledge graph and generate community-level summaries?",
+      "expected_chunk_ids": [
+        "doc_730f1a9f38d16689_0006_726f5279"
+      ],
+      "expected_sources": [
+        "data/documents/rag/09_graphrag.pdf"
+      ],
+      "relevance": {
+        "doc_730f1a9f38d16689_0006_726f5279": 3,
+        "doc_730f1a9f38d16689_0004_a8158030": 1,
+        "doc_730f1a9f38d16689_0005_d50236c8": 1,
+        "doc_730f1a9f38d16689_0007_5710082f": 1,
+        "doc_730f1a9f38d16689_0008_e14d85d3": 1
+      },
+      "category": "semantic",
+      "source": "curated_synth"
+    },
+    {
+      "query": "What development stages of RAG in the era of large models, from Transformer pre-training to ChatGPT, does the RAG survey describe?",
+      "expected_chunk_ids": [
+        "doc_396a0fadeb4cd40f_0006_59c32993"
+      ],
+      "expected_sources": [
+        "data/documents/rag/10_rag_survey.pdf"
+      ],
+      "relevance": {
+        "doc_396a0fadeb4cd40f_0006_59c32993": 3,
+        "doc_396a0fadeb4cd40f_0004_1c0d2dbe": 1,
+        "doc_396a0fadeb4cd40f_0005_32b06a5e": 1,
+        "doc_396a0fadeb4cd40f_0007_2de9bb21": 1,
+        "doc_396a0fadeb4cd40f_0008_276200f3": 1
+      },
+      "category": "semantic",
+      "source": "curated_synth"
+    },
+    {
+      "query": "What realistic software engineering setting requiring navigation of large repositories does SWE-bench evaluate language models in?",
+      "expected_chunk_ids": [
+        "doc_f7e8e1df64129742_0006_385eb01c"
+      ],
+      "expected_sources": [
+        "data/documents/agent/08_swe_bench.pdf"
+      ],
+      "relevance": {
+        "doc_f7e8e1df64129742_0006_385eb01c": 3,
+        "doc_f7e8e1df64129742_0004_2446ff34": 1,
+        "doc_f7e8e1df64129742_0005_6a90f728": 1,
+        "doc_f7e8e1df64129742_0007_6e55cc3f": 1,
+        "doc_f7e8e1df64129742_0008_91c7a1fa": 1
+      },
+      "category": "semantic",
+      "source": "curated_synth"
+    },
+    {
+      "query": "In the Transformer, how does the number of operations required to relate two arbitrary positions compare to ConvS2S and ByteNet?",
+      "expected_chunk_ids": [
+        "doc_bdfaa68d8984f0dc_0007_fa38213e"
+      ],
+      "expected_sources": [
+        "data/documents/llm/01_transformer_attention_is_all_you_need.pdf"
+      ],
+      "relevance": {
+        "doc_bdfaa68d8984f0dc_0007_fa38213e": 3,
+        "doc_bdfaa68d8984f0dc_0005_416274e9": 1,
+        "doc_bdfaa68d8984f0dc_0006_27abb5d9": 1,
+        "doc_bdfaa68d8984f0dc_0008_4f748a24": 1,
+        "doc_bdfaa68d8984f0dc_0009_31b5cddc": 1
+      },
+      "category": "semantic",
+      "source": "curated_synth"
+    },
+    {
+      "query": "In the RAG model, what serves as the parametric memory and what serves as the non-parametric memory?",
+      "expected_chunk_ids": [
+        "doc_23e3249e9a1e7541_0007_ae01749d"
+      ],
+      "expected_sources": [
+        "data/documents/rag/01_rag_knowledge_intensive_nlp.pdf"
+      ],
+      "relevance": {
+        "doc_23e3249e9a1e7541_0007_ae01749d": 3,
+        "doc_23e3249e9a1e7541_0005_202b1ce1": 1,
+        "doc_23e3249e9a1e7541_0006_3f1fc994": 1,
+        "doc_23e3249e9a1e7541_0008_804d6298": 1,
+        "doc_23e3249e9a1e7541_0009_1911cceb": 1
+      },
+      "category": "semantic",
+      "source": "curated_synth"
+    },
+    {
+      "query": "What question about training a dense embedding model without additional pretraining does DPR address using a dual-encoder and BERT?",
+      "expected_chunk_ids": [
+        "doc_3e67fc1a9977715a_0007_48aac34a"
+      ],
+      "expected_sources": [
+        "data/documents/rag/02_dense_passage_retrieval.pdf"
+      ],
+      "relevance": {
+        "doc_3e67fc1a9977715a_0007_48aac34a": 3,
+        "doc_3e67fc1a9977715a_0005_930a19d0": 1,
+        "doc_3e67fc1a9977715a_0006_d42a4f79": 1,
+        "doc_3e67fc1a9977715a_0008_4a5ec08a": 1,
+        "doc_3e67fc1a9977715a_0009_af46c514": 1
+      },
+      "category": "semantic",
+      "source": "curated_synth"
+    },
+    {
+      "query": "By what absolute margins does Reflexion improve over strong baselines on AlfWorld decision-making and HotPotQA reasoning tasks?",
+      "expected_chunk_ids": [
+        "doc_6059b6f89fea9959_0007_631fe9b2"
+      ],
+      "expected_sources": [
+        "data/documents/agent/03_reflexion.pdf"
+      ],
+      "relevance": {
+        "doc_6059b6f89fea9959_0007_631fe9b2": 3,
+        "doc_6059b6f89fea9959_0005_307ec994": 1,
+        "doc_6059b6f89fea9959_0006_edadb20e": 1,
+        "doc_6059b6f89fea9959_0008_a2b8e1bd": 1,
+        "doc_6059b6f89fea9959_0009_e60590af": 1
+      },
+      "category": "semantic",
+      "source": "curated_synth"
+    },
+    {
+      "query": "Besides the masked language model, what second pre-training task does BERT use to jointly pretrain text-pair representations?",
+      "expected_chunk_ids": [
+        "doc_5692a5514787a8c6_0007_51f53376"
+      ],
+      "expected_sources": [
+        "data/documents/llm/02_bert.pdf"
+      ],
+      "relevance": {
+        "doc_5692a5514787a8c6_0007_51f53376": 3,
+        "doc_5692a5514787a8c6_0005_cf153df2": 1,
+        "doc_5692a5514787a8c6_0006_92a84793": 1,
+        "doc_5692a5514787a8c6_0008_07d6cad6": 1,
+        "doc_5692a5514787a8c6_0009_bc8a2577": 1
+      },
+      "category": "semantic",
+      "source": "curated_synth"
+    },
+    {
+      "query": "How does REALM make large-scale neural retrieval during pre-training computationally feasible?",
+      "expected_chunk_ids": [
+        "doc_0ec1a7ab3de5514c_0007_f479d79b"
+      ],
+      "expected_sources": [
+        "data/documents/rag/03_realm.pdf"
+      ],
+      "relevance": {
+        "doc_0ec1a7ab3de5514c_0007_f479d79b": 3,
+        "doc_0ec1a7ab3de5514c_0005_7bef8b2d": 1,
+        "doc_0ec1a7ab3de5514c_0006_8c9accbe": 1,
+        "doc_0ec1a7ab3de5514c_0008_b72bfb21": 1,
+        "doc_0ec1a7ab3de5514c_0009_315daf1d": 1
+      },
+      "category": "semantic",
+      "source": "curated_synth"
+    },
+    {
+      "query": "How does LLaMA preprocess the English CommonCrawl data used for pre-training?",
+      "expected_chunk_ids": [
+        "doc_2e663675ae36ad12_0007_670956ee"
+      ],
+      "expected_sources": [
+        "data/documents/llm/04_llama.pdf"
+      ],
+      "relevance": {
+        "doc_2e663675ae36ad12_0007_670956ee": 3,
+        "doc_2e663675ae36ad12_0005_0f246a6e": 1,
+        "doc_2e663675ae36ad12_0006_9caafe57": 1,
+        "doc_2e663675ae36ad12_0008_4e4a3614": 1,
+        "doc_2e663675ae36ad12_0009_7e8b1c4b": 1
+      },
+      "category": "semantic",
+      "source": "curated_synth"
+    },
+    {
+      "query": "What technique does InstructGPT use to fine-tune GPT-3 to follow written instructions, and how many contractors labeled the data?",
+      "expected_chunk_ids": [
+        "doc_c1984bb50a5b90fd_0007_881f7b72"
+      ],
+      "expected_sources": [
+        "data/documents/llm/05_instructgpt.pdf"
+      ],
+      "relevance": {
+        "doc_c1984bb50a5b90fd_0007_881f7b72": 3,
+        "doc_c1984bb50a5b90fd_0005_b5746118": 1,
+        "doc_c1984bb50a5b90fd_0006_e026a37d": 1,
+        "doc_c1984bb50a5b90fd_0008_db88f9bb": 1,
+        "doc_c1984bb50a5b90fd_0009_03f8a937": 1
+      },
+      "category": "semantic",
+      "source": "curated_synth"
+    },
+    {
+      "query": "What concept does HuggingGPT introduce to bridge LLMs and external AI models via their function descriptions?",
+      "expected_chunk_ids": [
+        "doc_5add5f7ff9041299_0007_9710d065"
+      ],
+      "expected_sources": [
+        "data/documents/agent/05_hugginggpt.pdf"
+      ],
+      "relevance": {
+        "doc_5add5f7ff9041299_0007_9710d065": 3,
+        "doc_5add5f7ff9041299_0005_c5819312": 1,
+        "doc_5add5f7ff9041299_0006_c9a6d30c": 1,
+        "doc_5add5f7ff9041299_0008_fd0bd42e": 1,
+        "doc_5add5f7ff9041299_0009_e96a2680": 1
+      },
+      "category": "semantic",
+      "source": "curated_synth"
+    },
+    {
+      "query": "What three key modules make VOYAGER possible, and why does it use code as the action space?",
+      "expected_chunk_ids": [
+        "doc_769a4e33ddeeb738_0007_4a0474d7"
+      ],
+      "expected_sources": [
+        "data/documents/agent/07_voyager.pdf"
+      ],
+      "relevance": {
+        "doc_769a4e33ddeeb738_0007_4a0474d7": 3,
+        "doc_769a4e33ddeeb738_0005_cc4e611b": 1,
+        "doc_769a4e33ddeeb738_0006_7da245ca": 1,
+        "doc_769a4e33ddeeb738_0008_44da9713": 1,
+        "doc_769a4e33ddeeb738_0009_ec84e867": 1
+      },
+      "category": "semantic",
+      "source": "curated_synth"
+    },
+    {
+      "query": "What four motivations does the Constitutional AI paper give for developing its technique?",
+      "expected_chunk_ids": [
+        "doc_9a456a07ad346e33_0007_bc7bcd50"
+      ],
+      "expected_sources": [
+        "data/documents/llm/09_constitutional_ai.pdf"
+      ],
+      "relevance": {
+        "doc_9a456a07ad346e33_0007_bc7bcd50": 3,
+        "doc_9a456a07ad346e33_0005_ce0ae2ab": 1,
+        "doc_9a456a07ad346e33_0006_add41bb5": 1,
+        "doc_9a456a07ad346e33_0008_e9adbeb6": 1,
+        "doc_9a456a07ad346e33_0009_29ee77a4": 1
+      },
+      "category": "semantic",
+      "source": "curated_synth"
+    },
+    {
+      "query": "What power-law relationship do the three scale factors N, D, and C exhibit according to the scaling laws paper?",
+      "expected_chunk_ids": [
+        "doc_a41bd7877fd1a6bc_0007_93e8293c"
+      ],
+      "expected_sources": [
+        "data/documents/llm/10_scaling_laws.pdf"
+      ],
+      "relevance": {
+        "doc_a41bd7877fd1a6bc_0007_93e8293c": 3,
+        "doc_a41bd7877fd1a6bc_0005_b2ac729f": 1,
+        "doc_a41bd7877fd1a6bc_0006_720f47e2": 1,
+        "doc_a41bd7877fd1a6bc_0008_2dce3300": 1,
+        "doc_a41bd7877fd1a6bc_0009_ce5ac32d": 1
+      },
+      "category": "semantic",
+      "source": "curated_synth"
+    },
+    {
+      "query": "What three limitations of existing tool-use works (single tool, manual API set, inferior planning) does ToolLLM identify?",
+      "expected_chunk_ids": [
+        "doc_295299721d67b250_0007_90d8e4f5"
+      ],
+      "expected_sources": [
+        "data/documents/mcp/03_toolllm.pdf"
+      ],
+      "relevance": {
+        "doc_295299721d67b250_0007_90d8e4f5": 3,
+        "doc_295299721d67b250_0005_d07b487a": 1,
+        "doc_295299721d67b250_0006_8c0c261a": 1,
+        "doc_295299721d67b250_0008_7b32e33c": 1,
+        "doc_295299721d67b250_0009_cad778d8": 1
+      },
+      "category": "semantic",
+      "source": "curated_synth"
+    },
+    {
+      "query": "How many APIs, tool-use dialogues, and API calls does the API-Bank evaluation system comprise?",
+      "expected_chunk_ids": [
+        "doc_619006a4cfcdd1d2_0007_fcec9308"
+      ],
+      "expected_sources": [
+        "data/documents/mcp/04_api_bank.pdf"
+      ],
+      "relevance": {
+        "doc_619006a4cfcdd1d2_0007_fcec9308": 3,
+        "doc_619006a4cfcdd1d2_0005_4048c248": 1,
+        "doc_619006a4cfcdd1d2_0006_1a36f476": 1,
+        "doc_619006a4cfcdd1d2_0008_fe4c6edb": 1,
+        "doc_619006a4cfcdd1d2_0009_dd0699f1": 1
+      },
+      "category": "semantic",
+      "source": "curated_synth"
+    },
+    {
+      "query": "How do the fine-tuning and in-context learning paradigms for tool use differ according to ToolkenGPT?",
+      "expected_chunk_ids": [
+        "doc_50f55a8595310730_0007_e69937c8"
+      ],
+      "expected_sources": [
+        "data/documents/mcp/05_toolkengpt.pdf"
+      ],
+      "relevance": {
+        "doc_50f55a8595310730_0007_e69937c8": 3,
+        "doc_50f55a8595310730_0005_afdfc13e": 1,
+        "doc_50f55a8595310730_0006_8ba70298": 1,
+        "doc_50f55a8595310730_0008_3b8fa54f": 1,
+        "doc_50f55a8595310730_0009_1b0bd5d6": 1
+      },
+      "category": "semantic",
+      "source": "curated_synth"
+    },
+    {
+      "query": "What challenges do offline plan-then-execute methods and the ReAct framework face in API-augmented LLMs according to RestGPT?",
+      "expected_chunk_ids": [
+        "doc_61e65633db1e073d_0007_3942250e"
+      ],
+      "expected_sources": [
+        "data/documents/mcp/06_restgpt.pdf"
+      ],
+      "relevance": {
+        "doc_61e65633db1e073d_0007_3942250e": 3,
+        "doc_61e65633db1e073d_0005_52305231": 1,
+        "doc_61e65633db1e073d_0006_81d306ff": 1,
+        "doc_61e65633db1e073d_0008_972b2297": 1,
+        "doc_61e65633db1e073d_0009_54e741ea": 1
+      },
+      "category": "semantic",
+      "source": "curated_synth"
+    },
+    {
+      "query": "How does WebGPT's best model compare to human demonstrators and to the highest-voted ELI5 answers in preference evaluations?",
+      "expected_chunk_ids": [
+        "doc_acad8d9fd55a30b9_0007_5c2f7036"
+      ],
+      "expected_sources": [
+        "data/documents/mcp/07_webgpt.pdf"
+      ],
+      "relevance": {
+        "doc_acad8d9fd55a30b9_0007_5c2f7036": 3,
+        "doc_acad8d9fd55a30b9_0005_015cd2d0": 1,
+        "doc_acad8d9fd55a30b9_0006_d53dd5e4": 1,
+        "doc_acad8d9fd55a30b9_0008_4a9eb1d5": 1,
+        "doc_acad8d9fd55a30b9_0009_164be58a": 1
+      },
+      "category": "semantic",
+      "source": "curated_synth"
+    },
+    {
+      "query": "What is the Tool Self-Evolution Synthesis (TSS) method used by ToolACE to generate tools?",
+      "expected_chunk_ids": [
+        "doc_493d43589b1e749c_0007_b3b06242"
+      ],
+      "expected_sources": [
+        "data/documents/mcp/08_toolace.pdf"
+      ],
+      "relevance": {
+        "doc_493d43589b1e749c_0007_b3b06242": 3,
+        "doc_493d43589b1e749c_0005_8b1151ff": 1,
+        "doc_493d43589b1e749c_0006_18af5997": 1,
+        "doc_493d43589b1e749c_0008_76b31f9f": 1,
+        "doc_493d43589b1e749c_0009_756f8b3c": 1
+      },
+      "category": "semantic",
+      "source": "curated_synth"
+    },
+    {
+      "query": "What two-stage strategy does BLIP-2's Querying Transformer use to bridge the modality gap between frozen image and language models?",
+      "expected_chunk_ids": [
+        "doc_6bc5d399d6127a64_0007_6e2b6f6b"
+      ],
+      "expected_sources": [
+        "data/documents/multimodal/05_blip2.pdf"
+      ],
+      "relevance": {
+        "doc_6bc5d399d6127a64_0007_6e2b6f6b": 3,
+        "doc_6bc5d399d6127a64_0005_4021b25e": 1,
+        "doc_6bc5d399d6127a64_0006_bcdf594d": 1,
+        "doc_6bc5d399d6127a64_0008_b73a8e08": 1,
+        "doc_6bc5d399d6127a64_0009_fb9bf413": 1
+      },
+      "category": "semantic",
+      "source": "curated_synth"
+    },
+    {
+      "query": "How does LLaVA convert image-text pairs into vision-language instruction-following data?",
+      "expected_chunk_ids": [
+        "doc_dc8bace378a282ea_0007_e2de04cb"
+      ],
+      "expected_sources": [
+        "data/documents/multimodal/06_llava.pdf"
+      ],
+      "relevance": {
+        "doc_dc8bace378a282ea_0007_e2de04cb": 3,
+        "doc_dc8bace378a282ea_0005_dfc17e7b": 1,
+        "doc_dc8bace378a282ea_0006_29618799": 1,
+        "doc_dc8bace378a282ea_0008_4b234d22": 1,
+        "doc_dc8bace378a282ea_0009_23cc58a1": 1
+      },
+      "category": "semantic",
+      "source": "curated_synth"
+    },
+    {
+      "query": "What components does Qwen-VL add to the Qwen-7B language model to give it visual capacity?",
+      "expected_chunk_ids": [
+        "doc_b4eca60ae9d3c154_0007_f20fbb3c"
+      ],
+      "expected_sources": [
+        "data/documents/multimodal/08_qwen_vl.pdf"
+      ],
+      "relevance": {
+        "doc_b4eca60ae9d3c154_0007_f20fbb3c": 3,
+        "doc_b4eca60ae9d3c154_0005_79c2e2c7": 1,
+        "doc_b4eca60ae9d3c154_0006_ddd67b84": 1,
+        "doc_b4eca60ae9d3c154_0008_8efecca1": 1,
+        "doc_b4eca60ae9d3c154_0009_4c7b0821": 1
+      },
+      "category": "semantic",
+      "source": "curated_synth"
+    },
+    {
+      "query": "What two simple improvements does LLaVA-1.5 add to the LLaVA framework?",
+      "expected_chunk_ids": [
+        "doc_b7074a6dad218e0d_0007_4a963bd1"
+      ],
+      "expected_sources": [
+        "data/documents/multimodal/10_llava15.pdf"
+      ],
+      "relevance": {
+        "doc_b7074a6dad218e0d_0007_4a963bd1": 3,
+        "doc_b7074a6dad218e0d_0005_89e4a983": 1,
+        "doc_b7074a6dad218e0d_0006_4f0652e3": 1,
+        "doc_b7074a6dad218e0d_0008_96074ad8": 1,
+        "doc_b7074a6dad218e0d_0009_23164205": 1
+      },
+      "category": "semantic",
+      "source": "curated_synth"
+    },
+    {
+      "query": "What supervision signal does REPLUG's training scheme (REPLUG LSR) use to adapt the retrieval model to the language model?",
+      "expected_chunk_ids": [
+        "doc_3c24ff147c4912a9_0007_4079d51a"
+      ],
+      "expected_sources": [
+        "data/documents/rag/07_replug.pdf"
+      ],
+      "relevance": {
+        "doc_3c24ff147c4912a9_0007_4079d51a": 3,
+        "doc_3c24ff147c4912a9_0005_0c291127": 1,
+        "doc_3c24ff147c4912a9_0006_be020096": 1,
+        "doc_3c24ff147c4912a9_0008_075e29ba": 1,
+        "doc_3c24ff147c4912a9_0009_f9fcb913": 1
+      },
+      "category": "semantic",
+      "source": "curated_synth"
+    },
+    {
+      "query": "What three retrieval actions does CRAG's retrieval evaluator trigger based on a quantified confidence degree?",
+      "expected_chunk_ids": [
+        "doc_975aa1fd3c1b6031_0007_3264b034"
+      ],
+      "expected_sources": [
+        "data/documents/rag/08_crag.pdf"
+      ],
+      "relevance": {
+        "doc_975aa1fd3c1b6031_0007_3264b034": 3,
+        "doc_975aa1fd3c1b6031_0005_5d260346": 1,
+        "doc_975aa1fd3c1b6031_0006_18309216": 1,
+        "doc_975aa1fd3c1b6031_0008_992c6a99": 1,
+        "doc_975aa1fd3c1b6031_0009_4fcfe931": 1
+      },
+      "category": "semantic",
+      "source": "curated_synth"
+    },
+    {
+      "query": "Using a BM25 retriever, what percentage of SWE-bench issues can Claude 2 resolve?",
+      "expected_chunk_ids": [
+        "doc_f7e8e1df64129742_0007_6e55cc3f"
+      ],
+      "expected_sources": [
+        "data/documents/agent/08_swe_bench.pdf"
+      ],
+      "relevance": {
+        "doc_f7e8e1df64129742_0007_6e55cc3f": 3,
+        "doc_f7e8e1df64129742_0005_6a90f728": 1,
+        "doc_f7e8e1df64129742_0006_385eb01c": 1,
+        "doc_f7e8e1df64129742_0008_91c7a1fa": 1,
+        "doc_f7e8e1df64129742_0009_0a405322": 1
+      },
+      "category": "semantic",
+      "source": "curated_synth"
+    },
+    {
+      "query": "What is self-attention (intra-attention), and on what tasks has it been used successfully before the Transformer?",
+      "expected_chunk_ids": [
+        "doc_bdfaa68d8984f0dc_0008_4f748a24"
+      ],
+      "expected_sources": [
+        "data/documents/llm/01_transformer_attention_is_all_you_need.pdf"
+      ],
+      "relevance": {
+        "doc_bdfaa68d8984f0dc_0008_4f748a24": 3,
+        "doc_bdfaa68d8984f0dc_0006_27abb5d9": 1,
+        "doc_bdfaa68d8984f0dc_0007_fa38213e": 1,
+        "doc_bdfaa68d8984f0dc_0009_31b5cddc": 1,
+        "doc_bdfaa68d8984f0dc_0010_5ab0b402": 1
+      },
+      "category": "semantic",
+      "source": "curated_synth"
+    },
+    {
+      "query": "By how much does DPR outperform BM25 in Top-5 accuracy, and how does its end-to-end QA accuracy compare to ORQA on Natural Questions?",
+      "expected_chunk_ids": [
+        "doc_3e67fc1a9977715a_0008_4a5ec08a"
+      ],
+      "expected_sources": [
+        "data/documents/rag/02_dense_passage_retrieval.pdf"
+      ],
+      "relevance": {
+        "doc_3e67fc1a9977715a_0008_4a5ec08a": 3,
+        "doc_3e67fc1a9977715a_0006_d42a4f79": 1,
+        "doc_3e67fc1a9977715a_0007_48aac34a": 1,
+        "doc_3e67fc1a9977715a_0009_af46c514": 1,
+        "doc_3e67fc1a9977715a_0010_6b97d955": 1
+      },
+      "category": "semantic",
+      "source": "curated_synth"
+    },
+    {
+      "query": "What is LeetcodeHardGym, the code-generation environment introduced by Reflexion?",
+      "expected_chunk_ids": [
+        "doc_6059b6f89fea9959_0008_a2b8e1bd"
+      ],
+      "expected_sources": [
+        "data/documents/agent/03_reflexion.pdf"
+      ],
+      "relevance": {
+        "doc_6059b6f89fea9959_0008_a2b8e1bd": 3,
+        "doc_6059b6f89fea9959_0006_edadb20e": 1,
+        "doc_6059b6f89fea9959_0007_631fe9b2": 1,
+        "doc_6059b6f89fea9959_0009_e60590af": 1,
+        "doc_6059b6f89fea9959_0010_d1cc574e": 1
+      },
+      "category": "semantic",
+      "source": "curated_synth"
+    },
+    {
+      "query": "For how many NLP tasks does BERT advance the state of the art?",
+      "expected_chunk_ids": [
+        "doc_5692a5514787a8c6_0008_07d6cad6"
+      ],
+      "expected_sources": [
+        "data/documents/llm/02_bert.pdf"
+      ],
+      "relevance": {
+        "doc_5692a5514787a8c6_0008_07d6cad6": 3,
+        "doc_5692a5514787a8c6_0006_92a84793": 1,
+        "doc_5692a5514787a8c6_0007_51f53376": 1,
+        "doc_5692a5514787a8c6_0009_bc8a2577": 1,
+        "doc_5692a5514787a8c6_0010_9412d67e": 1
+      },
+      "category": "semantic",
+      "source": "curated_synth"
+    },
+    {
+      "query": "What proportion of LLaMA's pre-training data comes from GitHub, and how is that data filtered?",
+      "expected_chunk_ids": [
+        "doc_2e663675ae36ad12_0008_4e4a3614"
+      ],
+      "expected_sources": [
+        "data/documents/llm/04_llama.pdf"
+      ],
+      "relevance": {
+        "doc_2e663675ae36ad12_0008_4e4a3614": 3,
+        "doc_2e663675ae36ad12_0006_9caafe57": 1,
+        "doc_2e663675ae36ad12_0007_670956ee": 1,
+        "doc_2e663675ae36ad12_0009_7e8b1c4b": 1,
+        "doc_2e663675ae36ad12_0010_80264be9": 1
+      },
+      "category": "semantic",
+      "source": "curated_synth"
+    },
+    {
+      "query": "How does InstructGPT use a reward model and the PPO algorithm to align GPT-3?",
+      "expected_chunk_ids": [
+        "doc_c1984bb50a5b90fd_0008_db88f9bb"
+      ],
+      "expected_sources": [
+        "data/documents/llm/05_instructgpt.pdf"
+      ],
+      "relevance": {
+        "doc_c1984bb50a5b90fd_0008_db88f9bb": 3,
+        "doc_c1984bb50a5b90fd_0006_e026a37d": 1,
+        "doc_c1984bb50a5b90fd_0007_881f7b72": 1,
+        "doc_c1984bb50a5b90fd_0009_03f8a937": 1,
+        "doc_c1984bb50a5b90fd_0010_3e5adb28": 1
+      },
+      "category": "semantic",
+      "source": "curated_synth"
+    },
+    {
+      "query": "What limitations of rationale-augmented fine-tuning and few-shot prompting does chain-of-thought prompting combine to avoid?",
+      "expected_chunk_ids": [
+        "doc_7d9f878c23b460e4_0008_e9661042"
+      ],
+      "expected_sources": [
+        "data/documents/llm/06_chain_of_thought.pdf"
+      ],
+      "relevance": {
+        "doc_7d9f878c23b460e4_0008_e9661042": 3,
+        "doc_7d9f878c23b460e4_0006_1a027f80": 1,
+        "doc_7d9f878c23b460e4_0007_33718767": 1,
+        "doc_7d9f878c23b460e4_0009_7df7e5d7": 1,
+        "doc_7d9f878c23b460e4_0010_4f4c3887": 1
+      },
+      "category": "semantic",
+      "source": "curated_synth"
+    },
+    {
+      "query": "What trade-off between model size N and training tokens D under a fixed FLOPs budget does Chinchilla formulate?",
+      "expected_chunk_ids": [
+        "doc_3fd3632a8ef48171_0008_23ad67a4"
+      ],
+      "expected_sources": [
+        "data/documents/llm/07_chinchilla.pdf"
+      ],
+      "relevance": {
+        "doc_3fd3632a8ef48171_0008_23ad67a4": 3,
+        "doc_3fd3632a8ef48171_0006_a84d8c67": 1,
+        "doc_3fd3632a8ef48171_0007_10178e69": 1,
+        "doc_3fd3632a8ef48171_0009_20e89fc3": 1,
+        "doc_3fd3632a8ef48171_0010_f8902d29": 1
+      },
+      "category": "semantic",
+      "source": "curated_synth"
+    },
+    {
+      "query": "What three phases does the construction of the ToolBench dataset in ToolLLM entail, and which model constructs it?",
+      "expected_chunk_ids": [
+        "doc_295299721d67b250_0008_7b32e33c"
+      ],
+      "expected_sources": [
+        "data/documents/mcp/03_toolllm.pdf"
+      ],
+      "relevance": {
+        "doc_295299721d67b250_0008_7b32e33c": 3,
+        "doc_295299721d67b250_0006_8c0c261a": 1,
+        "doc_295299721d67b250_0007_90d8e4f5": 1,
+        "doc_295299721d67b250_0009_cad778d8": 1,
+        "doc_295299721d67b250_0010_53a9f0d5": 1
+      },
+      "category": "semantic",
+      "source": "curated_synth"
+    },
+    {
+      "query": "By how much does API-Bank's multi-agent data generation reduce annotation cost, and which base model is fine-tuned into Lynx?",
+      "expected_chunk_ids": [
+        "doc_619006a4cfcdd1d2_0008_fe4c6edb"
+      ],
+      "expected_sources": [
+        "data/documents/mcp/04_api_bank.pdf"
+      ],
+      "relevance": {
+        "doc_619006a4cfcdd1d2_0008_fe4c6edb": 3,
+        "doc_619006a4cfcdd1d2_0006_1a36f476": 1,
+        "doc_619006a4cfcdd1d2_0007_fcec9308": 1,
+        "doc_619006a4cfcdd1d2_0009_dd0699f1": 1,
+        "doc_619006a4cfcdd1d2_0010_e974e486": 1
+      },
+      "category": "semantic",
+      "source": "curated_synth"
+    },
+    {
+      "query": "How does ToolkenGPT represent each tool to enable mastering massive tools without any LLM fine-tuning?",
+      "expected_chunk_ids": [
+        "doc_50f55a8595310730_0008_3b8fa54f"
+      ],
+      "expected_sources": [
+        "data/documents/mcp/05_toolkengpt.pdf"
+      ],
+      "relevance": {
+        "doc_50f55a8595310730_0008_3b8fa54f": 3,
+        "doc_50f55a8595310730_0006_8ba70298": 1,
+        "doc_50f55a8595310730_0007_e69937c8": 1,
+        "doc_50f55a8595310730_0009_1b0bd5d6": 1,
+        "doc_50f55a8595310730_0010_60a6cfc4": 1
+      },
+      "category": "semantic",
+      "source": "curated_synth"
+    },
+    {
+      "query": "What web-service standard and specification does RestGPT rely on to connect with real-world APIs?",
+      "expected_chunk_ids": [
+        "doc_61e65633db1e073d_0008_972b2297"
+      ],
+      "expected_sources": [
+        "data/documents/mcp/06_restgpt.pdf"
+      ],
+      "relevance": {
+        "doc_61e65633db1e073d_0008_972b2297": 3,
+        "doc_61e65633db1e073d_0006_81d306ff": 1,
+        "doc_61e65633db1e073d_0007_3942250e": 1,
+        "doc_61e65633db1e073d_0009_54e741ea": 1,
+        "doc_61e65633db1e073d_0010_85955dd8": 1
+      },
+      "category": "semantic",
+      "source": "curated_synth"
+    },
+    {
+      "query": "What is ToolACE's dual-layer verification (DLV) system for ensuring function-calling data accuracy?",
+      "expected_chunk_ids": [
+        "doc_493d43589b1e749c_0008_76b31f9f"
+      ],
+      "expected_sources": [
+        "data/documents/mcp/08_toolace.pdf"
+      ],
+      "relevance": {
+        "doc_493d43589b1e749c_0008_76b31f9f": 3,
+        "doc_493d43589b1e749c_0006_18af5997": 1,
+        "doc_493d43589b1e749c_0007_b3b06242": 1,
+        "doc_493d43589b1e749c_0009_756f8b3c": 1,
+        "doc_493d43589b1e749c_0010_25a3c6d4": 1
+      },
+      "category": "semantic",
+      "source": "curated_synth"
+    },
+    {
+      "query": "Why is freezing LLMs particularly challenging for vision-language alignment, and what does BLIP-2 propose to address it?",
+      "expected_chunk_ids": [
+        "doc_6bc5d399d6127a64_0008_b73a8e08"
+      ],
+      "expected_sources": [
+        "data/documents/multimodal/05_blip2.pdf"
+      ],
+      "relevance": {
+        "doc_6bc5d399d6127a64_0008_b73a8e08": 3,
+        "doc_6bc5d399d6127a64_0006_bcdf594d": 1,
+        "doc_6bc5d399d6127a64_0007_6e2b6f6b": 1,
+        "doc_6bc5d399d6127a64_0009_fb9bf413": 1,
+        "doc_6bc5d399d6127a64_0010_1703d6e8": 1
+      },
+      "category": "semantic",
+      "source": "curated_synth"
+    },
+    {
+      "query": "How much training data and compute does LLaVA-1.5 require, and how does its data usage compare to Qwen-VL?",
+      "expected_chunk_ids": [
+        "doc_b7074a6dad218e0d_0008_96074ad8"
+      ],
+      "expected_sources": [
+        "data/documents/multimodal/10_llava15.pdf"
+      ],
+      "relevance": {
+        "doc_b7074a6dad218e0d_0008_96074ad8": 3,
+        "doc_b7074a6dad218e0d_0006_4f0652e3": 1,
+        "doc_b7074a6dad218e0d_0007_4a963bd1": 1,
+        "doc_b7074a6dad218e0d_0009_23164205": 1,
+        "doc_b7074a6dad218e0d_0010_46867031": 1
+      },
+      "category": "semantic",
+      "source": "curated_synth"
+    },
+    {
+      "query": "What chunked cross-attention and frozen retriever does RETRO use, and over what parameter range does it give a constant gain?",
+      "expected_chunk_ids": [
+        "doc_1b3e89b589b73d51_0008_03b1f1f4"
+      ],
+      "expected_sources": [
+        "data/documents/rag/06_retro.pdf"
+      ],
+      "relevance": {
+        "doc_1b3e89b589b73d51_0008_03b1f1f4": 3,
+        "doc_1b3e89b589b73d51_0006_905e79d9": 1,
+        "doc_1b3e89b589b73d51_0007_dfb90209": 1,
+        "doc_1b3e89b589b73d51_0009_fcea8984": 1,
+        "doc_1b3e89b589b73d51_0010_a6b2d203": 1
+      },
+      "category": "semantic",
+      "source": "curated_synth"
+    },
+    {
+      "query": "What LLM-as-a-judge technique does GraphRAG use to compare RAG systems on questions that have no ground-truth answer?",
+      "expected_chunk_ids": [
+        "doc_730f1a9f38d16689_0008_e14d85d3"
+      ],
+      "expected_sources": [
+        "data/documents/rag/09_graphrag.pdf"
+      ],
+      "relevance": {
+        "doc_730f1a9f38d16689_0008_e14d85d3": 3,
+        "doc_730f1a9f38d16689_0006_726f5279": 1,
+        "doc_730f1a9f38d16689_0007_5710082f": 1,
+        "doc_730f1a9f38d16689_0009_f8af0a85": 1,
+        "doc_730f1a9f38d16689_0010_08fbe6a9": 1
+      },
+      "category": "semantic",
+      "source": "curated_synth"
+    },
+    {
+      "query": "What is SWE-bench-train, and which fine-tuned models (SWE-Llama) are released from it?",
+      "expected_chunk_ids": [
+        "doc_f7e8e1df64129742_0008_91c7a1fa"
+      ],
+      "expected_sources": [
+        "data/documents/agent/08_swe_bench.pdf"
+      ],
+      "relevance": {
+        "doc_f7e8e1df64129742_0008_91c7a1fa": 3,
+        "doc_f7e8e1df64129742_0006_385eb01c": 1,
+        "doc_f7e8e1df64129742_0007_6e55cc3f": 1,
+        "doc_f7e8e1df64129742_0009_0a405322": 1,
+        "doc_f7e8e1df64129742_0010_5d7f7e81": 1
+      },
+      "category": "semantic",
+      "source": "curated_synth"
+    },
+    {
+      "query": "In the Toolformer example, which four types of external APIs does the model autonomously decide to call?",
+      "expected_chunk_ids": [
+        "doc_6d7483d94653008e_0009_4ecd2700"
+      ],
+      "expected_sources": [
+        "data/documents/agent/02_toolformer.pdf"
+      ],
+      "relevance": {
+        "doc_6d7483d94653008e_0009_4ecd2700": 3,
+        "doc_6d7483d94653008e_0007_b84d52f8": 1,
+        "doc_6d7483d94653008e_0008_631729cb": 1,
+        "doc_6d7483d94653008e_0010_7f2e6036": 1,
+        "doc_6d7483d94653008e_0011_53593baf": 1
+      },
+      "category": "semantic",
+      "source": "curated_synth"
+    },
+    {
+      "query": "What does DPR verify about the relationship between retrieval precision and end-to-end QA accuracy?",
+      "expected_chunk_ids": [
+        "doc_3e67fc1a9977715a_0009_af46c514"
+      ],
+      "expected_sources": [
+        "data/documents/rag/02_dense_passage_retrieval.pdf"
+      ],
+      "relevance": {
+        "doc_3e67fc1a9977715a_0009_af46c514": 3,
+        "doc_3e67fc1a9977715a_0007_48aac34a": 1,
+        "doc_3e67fc1a9977715a_0008_4a5ec08a": 1,
+        "doc_3e67fc1a9977715a_0010_6b97d955": 1,
+        "doc_3e67fc1a9977715a_0011_8f3744df": 1
+      },
+      "category": "semantic",
+      "source": "curated_synth"
+    },
+    {
+      "query": "On which three Open-QA benchmarks is REALM evaluated?",
+      "expected_chunk_ids": [
+        "doc_0ec1a7ab3de5514c_0009_315daf1d"
+      ],
+      "expected_sources": [
+        "data/documents/rag/03_realm.pdf"
+      ],
+      "relevance": {
+        "doc_0ec1a7ab3de5514c_0009_315daf1d": 3,
+        "doc_0ec1a7ab3de5514c_0007_f479d79b": 1,
+        "doc_0ec1a7ab3de5514c_0008_b72bfb21": 1,
+        "doc_0ec1a7ab3de5514c_0010_b22a98e1": 1,
+        "doc_0ec1a7ab3de5514c_0011_10b2f570": 1
+      },
+      "category": "semantic",
+      "source": "curated_synth"
+    },
+    {
+      "query": "What does SELF-RAG provide for each generated segment to enable easier fact verification?",
+      "expected_chunk_ids": [
+        "doc_d9eaa1398abac0df_0009_52f78314"
+      ],
+      "expected_sources": [
+        "data/documents/rag/05_self_rag.pdf"
+      ],
+      "relevance": {
+        "doc_d9eaa1398abac0df_0009_52f78314": 3,
+        "doc_d9eaa1398abac0df_0007_f06f37b4": 1,
+        "doc_d9eaa1398abac0df_0008_e05c7d2a": 1,
+        "doc_d9eaa1398abac0df_0010_4b1a1d38": 1,
+        "doc_d9eaa1398abac0df_0011_e0fefd76": 1
+      },
+      "category": "semantic",
+      "source": "curated_synth"
+    },
+    {
+      "query": "What is the largest data source by proportion in LLaMA's pre-training mixture, and its disk size?",
+      "expected_chunk_ids": [
+        "doc_2e663675ae36ad12_0009_7e8b1c4b"
+      ],
+      "expected_sources": [
+        "data/documents/llm/04_llama.pdf"
+      ],
+      "relevance": {
+        "doc_2e663675ae36ad12_0009_7e8b1c4b": 3,
+        "doc_2e663675ae36ad12_0007_670956ee": 1,
+        "doc_2e663675ae36ad12_0008_4e4a3614": 1,
+        "doc_2e663675ae36ad12_0010_80264be9": 1,
+        "doc_2e663675ae36ad12_0011_c2de3aa5": 1
+      },
+      "category": "semantic",
+      "source": "curated_synth"
+    },
+    {
+      "query": "What concrete examples of believable behavior (such as reacting to a burning breakfast) do generative agents demonstrate?",
+      "expected_chunk_ids": [
+        "doc_1b31e77fb24d25d7_0009_fbab20f0"
+      ],
+      "expected_sources": [
+        "data/documents/agent/04_generative_agents.pdf"
+      ],
+      "relevance": {
+        "doc_1b31e77fb24d25d7_0009_fbab20f0": 3,
+        "doc_1b31e77fb24d25d7_0007_5aa6d01a": 1,
+        "doc_1b31e77fb24d25d7_0008_1bb2ec89": 1,
+        "doc_1b31e77fb24d25d7_0010_0a684804": 1,
+        "doc_1b31e77fb24d25d7_0011_cf7150a6": 1
+      },
+      "category": "semantic",
+      "source": "curated_synth"
+    },
+    {
+      "query": "Into which four stages does the HuggingGPT process divide when fulfilling a user request?",
+      "expected_chunk_ids": [
+        "doc_5add5f7ff9041299_0009_e96a2680"
+      ],
+      "expected_sources": [
+        "data/documents/agent/05_hugginggpt.pdf"
+      ],
+      "relevance": {
+        "doc_5add5f7ff9041299_0009_e96a2680": 3,
+        "doc_5add5f7ff9041299_0007_9710d065": 1,
+        "doc_5add5f7ff9041299_0008_fd0bd42e": 1,
+        "doc_5add5f7ff9041299_0010_e32d1718": 1,
+        "doc_5add5f7ff9041299_0011_40fcd219": 1
+      },
+      "category": "semantic",
+      "source": "curated_synth"
+    },
+    {
+      "query": "What three reasons does AutoGen give for the feasibility and utility of multi-agent conversations?",
+      "expected_chunk_ids": [
+        "doc_fcf8b1acae6b1bd6_0009_2069cbff"
+      ],
+      "expected_sources": [
+        "data/documents/agent/10_autogen.pdf"
+      ],
+      "relevance": {
+        "doc_fcf8b1acae6b1bd6_0009_2069cbff": 3,
+        "doc_fcf8b1acae6b1bd6_0007_4cce0898": 1,
+        "doc_fcf8b1acae6b1bd6_0008_b59db902": 1,
+        "doc_fcf8b1acae6b1bd6_0010_924eeed7": 1,
+        "doc_fcf8b1acae6b1bd6_0011_bf92a4ae": 1
+      },
+      "category": "semantic",
+      "source": "curated_synth"
+    },
+    {
+      "query": "On the GSM8K math benchmark, how does chain-of-thought prompting with PaLM 540B compare to standard prompting?",
+      "expected_chunk_ids": [
+        "doc_7d9f878c23b460e4_0009_7df7e5d7"
+      ],
+      "expected_sources": [
+        "data/documents/llm/06_chain_of_thought.pdf"
+      ],
+      "relevance": {
+        "doc_7d9f878c23b460e4_0009_7df7e5d7": 3,
+        "doc_7d9f878c23b460e4_0007_33718767": 1,
+        "doc_7d9f878c23b460e4_0008_e9661042": 1,
+        "doc_7d9f878c23b460e4_0010_4f4c3887": 1,
+        "doc_7d9f878c23b460e4_0011_5288fac4": 1
+      },
+      "category": "semantic",
+      "source": "curated_synth"
+    },
+    {
+      "query": "How many models and what parameter/token ranges did Chinchilla train to estimate the compute-optimal frontier?",
+      "expected_chunk_ids": [
+        "doc_3fd3632a8ef48171_0009_20e89fc3"
+      ],
+      "expected_sources": [
+        "data/documents/llm/07_chinchilla.pdf"
+      ],
+      "relevance": {
+        "doc_3fd3632a8ef48171_0009_20e89fc3": 3,
+        "doc_3fd3632a8ef48171_0007_10178e69": 1,
+        "doc_3fd3632a8ef48171_0008_23ad67a4": 1,
+        "doc_3fd3632a8ef48171_0010_f8902d29": 1,
+        "doc_3fd3632a8ef48171_0011_63a0e5b0": 1
+      },
+      "category": "semantic",
+      "source": "curated_synth"
+    },
+    {
+      "query": "What does the scaling laws paper find about the sample efficiency of large versus small models?",
+      "expected_chunk_ids": [
+        "doc_a41bd7877fd1a6bc_0009_ce5ac32d"
+      ],
+      "expected_sources": [
+        "data/documents/llm/10_scaling_laws.pdf"
+      ],
+      "relevance": {
+        "doc_a41bd7877fd1a6bc_0009_ce5ac32d": 3,
+        "doc_a41bd7877fd1a6bc_0007_93e8293c": 1,
+        "doc_a41bd7877fd1a6bc_0008_2dce3300": 1,
+        "doc_a41bd7877fd1a6bc_0010_59ebb414": 1,
+        "doc_a41bd7877fd1a6bc_0011_ce4e2f8c": 1
+      },
+      "category": "semantic",
+      "source": "curated_synth"
+    },
+    {
+      "query": "By how much does Lynx improve over Alpaca-7B in API usage, and what gap remains from GPT-4 according to API-Bank?",
+      "expected_chunk_ids": [
+        "doc_619006a4cfcdd1d2_0009_dd0699f1"
+      ],
+      "expected_sources": [
+        "data/documents/mcp/04_api_bank.pdf"
+      ],
+      "relevance": {
+        "doc_619006a4cfcdd1d2_0009_dd0699f1": 3,
+        "doc_619006a4cfcdd1d2_0007_fcec9308": 1,
+        "doc_619006a4cfcdd1d2_0008_fe4c6edb": 1,
+        "doc_619006a4cfcdd1d2_0010_e974e486": 1,
+        "doc_619006a4cfcdd1d2_0011_289d0206": 1
+      },
+      "category": "semantic",
+      "source": "curated_synth"
+    },
+    {
+      "query": "How does ToolkenGPT combine the strengths of fine-tuning and in-context learning while avoiding their limitations?",
+      "expected_chunk_ids": [
+        "doc_50f55a8595310730_0009_1b0bd5d6"
+      ],
+      "expected_sources": [
+        "data/documents/mcp/05_toolkengpt.pdf"
+      ],
+      "relevance": {
+        "doc_50f55a8595310730_0009_1b0bd5d6": 3,
+        "doc_50f55a8595310730_0007_e69937c8": 1,
+        "doc_50f55a8595310730_0008_3b8fa54f": 1,
+        "doc_50f55a8595310730_0010_60a6cfc4": 1,
+        "doc_50f55a8595310730_0011_a06bc7bf": 1
+      },
+      "category": "semantic",
+      "source": "curated_synth"
+    },
+    {
+      "query": "What browsing commands (such as Search, Quote, and Clicked) can WebGPT's model issue in its text-based environment?",
+      "expected_chunk_ids": [
+        "doc_acad8d9fd55a30b9_0009_164be58a"
+      ],
+      "expected_sources": [
+        "data/documents/mcp/07_webgpt.pdf"
+      ],
+      "relevance": {
+        "doc_acad8d9fd55a30b9_0009_164be58a": 3,
+        "doc_acad8d9fd55a30b9_0007_5c2f7036": 1,
+        "doc_acad8d9fd55a30b9_0008_4a9eb1d5": 1,
+        "doc_acad8d9fd55a30b9_0010_c61bd37b": 1,
+        "doc_acad8d9fd55a30b9_0011_c767eb5b": 1
+      },
+      "category": "semantic",
+      "source": "curated_synth"
+    },
+    {
+      "query": "Why does answering 'the weather from a month ago' require a robust planning ability in T-Eval's tool-calling process?",
+      "expected_chunk_ids": [
+        "doc_fe4332cc5f3997a0_0009_c025f64f"
+      ],
+      "expected_sources": [
+        "data/documents/mcp/10_t_eval.pdf"
+      ],
+      "relevance": {
+        "doc_fe4332cc5f3997a0_0009_c025f64f": 3,
+        "doc_fe4332cc5f3997a0_0007_0d294330": 1,
+        "doc_fe4332cc5f3997a0_0008_c17a3b8f": 1,
+        "doc_fe4332cc5f3997a0_0010_231eee6b": 1,
+        "doc_fe4332cc5f3997a0_0011_93e6c582": 1
+      },
+      "category": "semantic",
+      "source": "curated_synth"
+    },
+    {
+      "query": "How does ViT differ from Cordonnier et al. (2020) regarding patch size and image resolution?",
+      "expected_chunk_ids": [
+        "doc_8ce7b83971a14508_0009_6673f39f"
+      ],
+      "expected_sources": [
+        "data/documents/multimodal/02_vit.pdf"
+      ],
+      "relevance": {
+        "doc_8ce7b83971a14508_0009_6673f39f": 3,
+        "doc_8ce7b83971a14508_0007_c558453b": 1,
+        "doc_8ce7b83971a14508_0008_77a336e5": 1,
+        "doc_8ce7b83971a14508_0010_e23aeb3a": 1,
+        "doc_8ce7b83971a14508_0011_a15aa9b4": 1
+      },
+      "category": "semantic",
+      "source": "curated_synth"
+    },
+    {
+      "query": "What happens in the first and second pre-training stages of BLIP-2's Q-Former?",
+      "expected_chunk_ids": [
+        "doc_6bc5d399d6127a64_0009_fb9bf413"
+      ],
+      "expected_sources": [
+        "data/documents/multimodal/05_blip2.pdf"
+      ],
+      "relevance": {
+        "doc_6bc5d399d6127a64_0009_fb9bf413": 3,
+        "doc_6bc5d399d6127a64_0007_6e2b6f6b": 1,
+        "doc_6bc5d399d6127a64_0008_b73a8e08": 1,
+        "doc_6bc5d399d6127a64_0010_1703d6e8": 1,
+        "doc_6bc5d399d6127a64_0011_a9f844ab": 1
+      },
+      "category": "semantic",
+      "source": "curated_synth"
+    },
+    {
+      "query": "What does LLaVA-1.5 find about randomly downsampling its training data mixture by up to 75%?",
+      "expected_chunk_ids": [
+        "doc_b7074a6dad218e0d_0009_23164205"
+      ],
+      "expected_sources": [
+        "data/documents/multimodal/10_llava15.pdf"
+      ],
+      "relevance": {
+        "doc_b7074a6dad218e0d_0009_23164205": 3,
+        "doc_b7074a6dad218e0d_0007_4a963bd1": 1,
+        "doc_b7074a6dad218e0d_0008_96074ad8": 1,
+        "doc_b7074a6dad218e0d_0010_46867031": 1,
+        "doc_b7074a6dad218e0d_0011_af39e47c": 1
+      },
+      "category": "semantic",
+      "source": "curated_synth"
+    },
+    {
+      "query": "On which four datasets is CRAG evaluated to demonstrate generalizability across short- and long-form generation?",
+      "expected_chunk_ids": [
+        "doc_975aa1fd3c1b6031_0009_4fcfe931"
+      ],
+      "expected_sources": [
+        "data/documents/rag/08_crag.pdf"
+      ],
+      "relevance": {
+        "doc_975aa1fd3c1b6031_0009_4fcfe931": 3,
+        "doc_975aa1fd3c1b6031_0007_3264b034": 1,
+        "doc_975aa1fd3c1b6031_0008_992c6a99": 1,
+        "doc_975aa1fd3c1b6031_0010_dc4c654f": 1,
+        "doc_975aa1fd3c1b6031_0011_139f78f3": 1
+      },
+      "category": "semantic",
+      "source": "curated_synth"
+    },
+    {
+      "query": "How many layers does the Transformer encoder have, and what two sub-layers does each layer contain?",
+      "expected_chunk_ids": [
+        "doc_bdfaa68d8984f0dc_0010_5ab0b402"
+      ],
+      "expected_sources": [
+        "data/documents/llm/01_transformer_attention_is_all_you_need.pdf"
+      ],
+      "relevance": {
+        "doc_bdfaa68d8984f0dc_0010_5ab0b402": 3,
+        "doc_bdfaa68d8984f0dc_0008_4f748a24": 1,
+        "doc_bdfaa68d8984f0dc_0009_31b5cddc": 1,
+        "doc_bdfaa68d8984f0dc_0011_85e22e2f": 1,
+        "doc_bdfaa68d8984f0dc_0012_53a67015": 1
+      },
+      "category": "semantic",
+      "source": "curated_synth"
+    },
+    {
+      "query": "On which open-domain QA benchmarks do RAG models achieve state-of-the-art results?",
+      "expected_chunk_ids": [
+        "doc_23e3249e9a1e7541_0010_edbe3941"
+      ],
+      "expected_sources": [
+        "data/documents/rag/01_rag_knowledge_intensive_nlp.pdf"
+      ],
+      "relevance": {
+        "doc_23e3249e9a1e7541_0010_edbe3941": 3,
+        "doc_23e3249e9a1e7541_0008_804d6298": 1,
+        "doc_23e3249e9a1e7541_0009_1911cceb": 1,
+        "doc_23e3249e9a1e7541_0011_2b8ed235": 1,
+        "doc_23e3249e9a1e7541_0012_0842355d": 1
+      },
+      "category": "semantic",
+      "source": "curated_synth"
+    },
+    {
+      "query": "How are reflection tokens inserted into the training corpus in SELF-RAG, and what overhead does this avoid?",
+      "expected_chunk_ids": [
+        "doc_d9eaa1398abac0df_0010_4b1a1d38"
+      ],
+      "expected_sources": [
+        "data/documents/rag/05_self_rag.pdf"
+      ],
+      "relevance": {
+        "doc_d9eaa1398abac0df_0010_4b1a1d38": 3,
+        "doc_d9eaa1398abac0df_0008_e05c7d2a": 1,
+        "doc_d9eaa1398abac0df_0009_52f78314": 1,
+        "doc_d9eaa1398abac0df_0011_e0fefd76": 1,
+        "doc_d9eaa1398abac0df_0012_ad8aa174": 1
+      },
+      "category": "semantic",
+      "source": "curated_synth"
+    },
+    {
+      "query": "What is the memory stream in the generative agents architecture, and what three factors does its memory retrieval model combine?",
+      "expected_chunk_ids": [
+        "doc_1b31e77fb24d25d7_0010_0a684804"
+      ],
+      "expected_sources": [
+        "data/documents/agent/04_generative_agents.pdf"
+      ],
+      "relevance": {
+        "doc_1b31e77fb24d25d7_0010_0a684804": 3,
+        "doc_1b31e77fb24d25d7_0008_1bb2ec89": 1,
+        "doc_1b31e77fb24d25d7_0009_fbab20f0": 1,
+        "doc_1b31e77fb24d25d7_0011_cf7150a6": 1,
+        "doc_1b31e77fb24d25d7_0012_605bd2de": 1
+      },
+      "category": "semantic",
+      "source": "curated_synth"
+    },
+    {
+      "query": "What are Chinchilla's model size and training token count, and how does it compare to Gopher?",
+      "expected_chunk_ids": [
+        "doc_3fd3632a8ef48171_0010_f8902d29"
+      ],
+      "expected_sources": [
+        "data/documents/llm/07_chinchilla.pdf"
+      ],
+      "relevance": {
+        "doc_3fd3632a8ef48171_0010_f8902d29": 3,
+        "doc_3fd3632a8ef48171_0008_23ad67a4": 1,
+        "doc_3fd3632a8ef48171_0009_20e89fc3": 1,
+        "doc_3fd3632a8ef48171_0011_63a0e5b0": 1,
+        "doc_3fd3632a8ef48171_0012_7ac2e117": 1
+      },
+      "category": "semantic",
+      "source": "curated_synth"
+    },
+    {
+      "query": "According to the Constitutional AI Elo comparison, how do RL-CAI models compare to standard RLHF on the harmlessness-helpfulness trade-off?",
+      "expected_chunk_ids": [
+        "doc_9a456a07ad346e33_0010_59329628"
+      ],
+      "expected_sources": [
+        "data/documents/llm/09_constitutional_ai.pdf"
+      ],
+      "relevance": {
+        "doc_9a456a07ad346e33_0010_59329628": 3,
+        "doc_9a456a07ad346e33_0008_e9adbeb6": 1,
+        "doc_9a456a07ad346e33_0009_29ee77a4": 1,
+        "doc_9a456a07ad346e33_0011_b73ab3fd": 1,
+        "doc_9a456a07ad346e33_0012_37b69ffd": 1
+      },
+      "category": "semantic",
+      "source": "curated_synth"
+    }
+  ]
+}

@@ -41,6 +41,10 @@ def _ensure_builtins_registered() -> None:
     except ImportError:
         pass
     try:
+        import src.libs.evaluator.ir_metrics_evaluator  # noqa: F401
+    except ImportError:
+        pass
+    try:
         import src.observability.evaluation.ragas_evaluator  # noqa: F401
     except ImportError:
         pass

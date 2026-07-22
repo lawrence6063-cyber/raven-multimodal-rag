@@ -69,6 +69,14 @@ class HybridSearch:
         """
         k = top_k or self._top_k
 
+        # Ablation gating: a retrieval path whose weight is set to 0 (or below)
+        # is disabled. The ablation harness (scripts/evaluate.py) builds the
+        # no_dense / no_sparse / no_fusion variants purely by zeroing a weight,
+        # so this gate is what makes those ablations actually take effect.
+        # Non-numeric / unset weights default to "enabled" (safe default).
+        use_dense = self._weight_enabled(getattr(self._settings.retrieval, "dense_weight", 1.0))
+        use_sparse = self._weight_enabled(getattr(self._settings.retrieval, "sparse_weight", 1.0))
+
         # Preprocess query
         start = time.perf_counter()
         processed = self._processor.process(query, filters)
@@ -78,7 +86,8 @@ class HybridSearch:
             keywords=len(processed.keywords),
         )
 
-        # Dense retrieval — image vector takes precedence (cross-modal intent)
+        # Dense retrieval — image vector takes precedence (cross-modal intent).
+        # An image query is inherently dense, so it bypasses the dense weight gate.
         dense_results = []
         start = time.perf_counter()
         try:
@@ -90,7 +99,7 @@ class HybridSearch:
                     )
                 else:
                     logger.warning("Image embedding unavailable; image query ignored")
-            elif query:
+            elif query and use_dense:
                 dense_results = self._dense.retrieve(query, top_k=k, filters=merged_filters or None)
             logger.info(f"Dense: {len(dense_results)} results")
         except Exception as e:
@@ -105,7 +114,7 @@ class HybridSearch:
         sparse_results = []
         start = time.perf_counter()
         try:
-            if processed.keywords:
+            if processed.keywords and use_sparse:
                 sparse_results = self._sparse.retrieve(processed.keywords, top_k=k)
                 logger.info(f"Sparse: {len(sparse_results)} results")
         except Exception as e:
@@ -142,6 +151,19 @@ class HybridSearch:
             fused = self._apply_metadata_filters(fused, merged_filters)
 
         return fused[:k]
+
+    @staticmethod
+    def _weight_enabled(value: Any) -> bool:
+        """Return whether a retrieval path is enabled given its weight.
+
+        A numeric weight > 0 enables the path; <= 0 disables it (ablation). Any
+        non-numeric value (e.g. an unset attribute or a test double) defaults to
+        enabled so callers that do not configure weights keep hybrid behavior.
+        """
+        try:
+            return float(value) > 0.0
+        except (TypeError, ValueError):
+            return True
 
     @staticmethod
     def _trace_stage(

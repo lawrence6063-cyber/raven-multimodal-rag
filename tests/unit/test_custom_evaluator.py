@@ -111,6 +111,16 @@ class TestCustomEvaluatorBoundaries:
         assert result.details["total_queries"] == 3
         assert result.details["hits"] == 2
 
+    def test_capped_recall_completeness_large_golden(self):
+        # golden far larger than retrieved slots: capped denom = min(|retrieved|, |golden|).
+        evaluator = CustomEvaluator()
+        golden = [f"g{i}" for i in range(30)]
+        retrieved = [f"g{i}" for i in range(5)]  # 5 unique hits
+        inputs = [EvalInput(query="q", retrieved_ids=retrieved, golden_ids=golden)]
+        result = evaluator.evaluate(inputs)
+        # raw recall = 5/30 ≈ 0.167; capped = 5/min(5,30) = 1.0.
+        assert result.metrics["recall_completeness"] == pytest.approx(1.0)
+
 
 class TestEvaluatorFactory:
     """Test EvaluatorFactory with CustomEvaluator."""

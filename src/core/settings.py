@@ -155,6 +155,8 @@ class EvaluationSettings:
 
     backends: list[str] = field(default_factory=lambda: ["custom"])
     golden_test_set: str = "tests/fixtures/golden_test_set.json"
+    ks: list[int] = field(default_factory=lambda: [1, 3, 5, 10])  # IR 指标 @k 截断点
+    bootstrap_samples: int = 1000  # 消融显著性 bootstrap 重采样次数
 
 
 @dataclass

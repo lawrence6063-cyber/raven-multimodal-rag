@@ -241,6 +241,31 @@ class ChromaStore(BaseVectorStore):
         except Exception as e:
             raise VectorStoreError(f"Update metadata failed: {e}", provider="chroma") from e
 
+    def get_all(self, limit: int = 100000) -> list[QueryResult]:
+        """Return all records in the collection (for enumeration/testset gen).
+
+        Args:
+            limit: Max records to return.
+
+        Returns:
+            List of QueryResult with id, text, metadata (score is 0.0).
+        """
+        collection = self._get_collection()
+        try:
+            results = collection.get(limit=limit, include=["documents", "metadatas"])
+            records: list[QueryResult] = []
+            if results and results.get("ids"):
+                for i, id_ in enumerate(results["ids"]):
+                    records.append(QueryResult(
+                        id=id_,
+                        score=0.0,
+                        text=results["documents"][i] if results.get("documents") else "",
+                        metadata=results["metadatas"][i] if results.get("metadatas") else {},
+                    ))
+            return records
+        except Exception as e:
+            raise VectorStoreError(f"Get all failed: {e}", provider="chroma") from e
+
     def get_all_by_metadata(
         self, where: dict[str, Any], limit: int = 10000
     ) -> list[QueryResult]:

@@ -43,6 +43,12 @@ def main():
         default=None,
         help="Comma-separated evaluator backends (default: settings.evaluation.backends)",
     )
+    parser.add_argument(
+        "--k",
+        default=None,
+        help="Comma-separated @k cutoffs for IR metrics, e.g. 1,3,5,10 "
+        "(default: settings.evaluation.ks)",
+    )
     parser.add_argument("--json", action="store_true", help="Print the full report as JSON")
     args = parser.parse_args()
 
@@ -52,12 +58,26 @@ def main():
         logger.error(f"Configuration error: {e}")
         sys.exit(1)
 
+    # Override IR @k cutoffs from CLI if provided.
+    if args.k:
+        try:
+            settings.evaluation.ks = [int(x) for x in args.k.split(",") if x.strip()]
+        except ValueError:
+            logger.error(f"Invalid --k value: {args.k!r} (expected comma-separated ints)")
+            sys.exit(1)
+
     # Ablation flags via env vars
     no_rerank = os.getenv("COGENT_EVAL_NO_RERANK", "").strip() in ("1", "true", "yes")
     no_dense = os.getenv("COGENT_EVAL_NO_DENSE", "").strip() in ("1", "true", "yes")
     no_sparse = os.getenv("COGENT_EVAL_NO_SPARSE", "").strip() in ("1", "true", "yes")
     no_fusion = os.getenv("COGENT_EVAL_NO_FUSION", "").strip() in ("1", "true", "yes")
     use_agentic = os.getenv("COGENT_EVAL_AGENTIC", "").strip() in ("1", "true", "yes")
+
+    # Optional rerank backend override (e.g. cross_encoder vs llm) for the
+    # precision-latency comparison (spec §6) without editing settings.yaml.
+    rerank_provider = os.getenv("COGENT_EVAL_RERANK_PROVIDER", "").strip()
+    if rerank_provider:
+        settings.rerank.provider = rerank_provider
 
     # Apply ablation overrides to settings
     if no_rerank:
@@ -73,13 +93,15 @@ def main():
         settings.retrieval.dense_weight = 1.0
         settings.retrieval.sparse_weight = 0.0
 
-    # Determine pipeline label for logging
+    # Determine pipeline label for logging. Must mirror the actual gating:
+    # no_dense zeroes dense_weight (-> sparse only); no_sparse/no_fusion zero
+    # sparse_weight (-> dense only); RRF fusion runs only when both paths are on.
     label_parts = []
     if not no_dense:
         label_parts.append("Dense")
-    if not no_sparse:
+    if not no_sparse and not no_fusion:
         label_parts.append("Sparse")
-    if not no_fusion and not no_dense and not no_sparse:
+    if not no_dense and not no_sparse and not no_fusion:
         label_parts.append("RRF")
     if not no_rerank:
         label_parts.append("Rerank")
@@ -94,12 +116,12 @@ def main():
     )
 
     try:
-        evaluator = EvaluatorFactory.create_composite(backends)
+        evaluator = _build_evaluator(settings, backends)
 
         if use_agentic:
             report = _run_agentic_eval(settings, evaluator, args.test_set)
         else:
-            report = _run_hybrid_eval(settings, evaluator, args.test_set, no_rerank)
+            report = _run_hybrid_eval(settings, evaluator, args.test_set, no_rerank, backends)
 
     except FileNotFoundError as e:
         logger.error(str(e))
@@ -130,16 +152,18 @@ def main():
     for item in report.per_query:
         cat = item.get("category", "default")
         if cat not in categories:
-            categories[cat] = {"total": 0, "hits": 0}
+            categories[cat] = {"total": 0, "hits": 0, "recall_sum": 0.0}
         categories[cat]["total"] += 1
         if item["hit"]:
             categories[cat]["hits"] += 1
+        categories[cat]["recall_sum"] += item.get("recall_completeness", 0.0)
 
     if len(categories) > 1:
         print("\nPer-category:")
         for cat, stats in sorted(categories.items()):
             rate = stats["hits"] / stats["total"] if stats["total"] else 0
-            print(f"  {cat:<20} {stats['hits']}/{stats['total']}  ({rate:.1%})")
+            avg_recall = stats["recall_sum"] / stats["total"] if stats["total"] else 0
+            print(f"  {cat:<20} {stats['hits']}/{stats['total']}  ({rate:.1%})  recall={avg_recall:.3f}")
 
     print("\nPer-query:")
     for item in report.per_query:
@@ -150,8 +174,37 @@ def main():
     print("=" * 60)
 
 
-def _run_hybrid_eval(settings, evaluator, test_set, no_rerank):
-    """Run standard hybrid search evaluation with optional rerank."""
+def _build_evaluator(settings, backends):
+    """Build the composite evaluator, injecting an LLM-judge backend for ragas.
+
+    The ``ragas`` PyPI package conflicts with the installed langchain stack and
+    is OpenAI-coupled; when ``ragas`` is requested we back it with the project's
+    own DeepSeek + DashScope LLM-judge (same metric definitions) instead.
+    """
+    if "ragas" not in backends:
+        return EvaluatorFactory.create_composite(backends)
+
+    from src.observability.evaluation.composite_evaluator import CompositeEvaluator
+    from src.observability.evaluation.llm_judge_backend import build_llm_judge_backend
+    from src.observability.evaluation.ragas_evaluator import RagasEvaluator
+
+    evaluators = []
+    for name in backends:
+        if name == "ragas":
+            evaluators.append(RagasEvaluator(backend=build_llm_judge_backend(settings)))
+        else:
+            evaluators.append(EvaluatorFactory.create(name))
+    return CompositeEvaluator(evaluators)
+
+
+def _run_hybrid_eval(settings, evaluator, test_set, no_rerank, backends):
+    """Run standard hybrid search evaluation with optional rerank.
+
+    When ``backends`` requests a generation-side backend (``ragas``), an answer
+    synthesizer is injected so each ``EvalInput`` carries an ``answer``. Pure
+    retrieval backends (``ir`` / ``custom``) skip synthesis to avoid the extra
+    per-query LLM call.
+    """
     from src.core.query_engine.hybrid_search import HybridSearch
     from src.core.query_engine.reranker import QueryReranker
 
@@ -163,12 +216,33 @@ def _run_hybrid_eval(settings, evaluator, test_set, no_rerank):
         except Exception as e:
             logger.warning(f"Reranker init failed, skipping: {e}")
 
-    runner = EvalRunner(settings, hybrid, evaluator, reranker=reranker)
+    synthesizer = None
+    if "ragas" in backends:
+        try:
+            from src.core.agent.answer_synthesizer import AnswerSynthesizer
+
+            synthesizer = AnswerSynthesizer(settings)
+        except Exception as e:  # noqa: BLE001 - degrade to retrieval-only eval
+            logger.warning(f"Answer synthesizer init failed, ragas answer link disabled: {e}")
+
+    runner = EvalRunner(
+        settings, hybrid, evaluator, reranker=reranker, answer_synthesizer=synthesizer
+    )
     return runner.run(test_set)
 
 
 def _run_agentic_eval(settings, evaluator, test_set):
-    """Run Agentic RAG evaluation over the golden set."""
+    """Run Agentic RAG evaluation over the golden set.
+
+    Fairness overrides (env-gated, production defaults untouched) let the
+    agentic config be compared apples-to-apples against the hybrid pipeline:
+
+    * ``COGENT_AGENTIC_TOP_K`` — per-sub-query retrieval depth (align with the
+      hybrid ``retrieval.top_k`` so golden chunks beyond rank-5 are reachable).
+    * ``COGENT_AGENTIC_NO_ROUTE=1`` — disable the router's direct-answer /
+      collection gating so no query is zeroed out by "no retrieval".
+    """
+    import os
     import time
 
     from src.core.agent.agentic_rag import AgenticRAG
@@ -176,6 +250,14 @@ def _run_agentic_eval(settings, evaluator, test_set):
     from src.core.query_engine.reranker import QueryReranker
     from src.libs.evaluator.base_evaluator import EvalInput
     from src.observability.evaluation.eval_runner import EvalReport
+
+    top_k_override = os.getenv("COGENT_AGENTIC_TOP_K", "").strip()
+    if top_k_override:
+        settings.agent.retrieval_top_k = int(top_k_override)
+        logger.info(f"Agentic eval: retrieval_top_k -> {settings.agent.retrieval_top_k}")
+    if os.getenv("COGENT_AGENTIC_NO_ROUTE", "").strip() in ("1", "true", "yes"):
+        settings.agent.route_enabled = False
+        logger.info("Agentic eval: route_enabled -> False (no direct-answer gating)")
 
     hybrid = HybridSearch(settings)
     reranker = None
@@ -198,7 +280,9 @@ def _run_agentic_eval(settings, evaluator, test_set):
 
     for case in test_cases:
         query = case.get("query", "")
+        expected_chunk_ids = case.get("expected_chunk_ids") or []
         expected_sources = case.get("expected_sources") or []
+        relevance = case.get("relevance") or {}
         category = case.get("category", "default")
 
         start = time.perf_counter()
@@ -211,11 +295,19 @@ def _run_agentic_eval(settings, evaluator, test_set):
         total_ms = (time.perf_counter() - start) * 1000.0
         latencies.append(total_ms)
 
+        retrieved_ids = [r.chunk_id for r in results]
         retrieved_sources = [EvalRunner._resolve_source(r) for r in results]
         retrieved_texts = [r.text for r in results]
 
-        golden = expected_sources
-        ids = retrieved_sources
+        # Use the same id space as the other configs (chunk-level when the case
+        # provides expected_chunk_ids, else document-level) so the agentic
+        # config is comparable in ablation_stats.
+        if expected_chunk_ids:
+            ids = retrieved_ids
+            golden = expected_chunk_ids
+        else:
+            ids = retrieved_sources
+            golden = expected_sources
 
         eval_inputs.append(
             EvalInput(
@@ -224,19 +316,30 @@ def _run_agentic_eval(settings, evaluator, test_set):
                 golden_ids=golden,
                 retrieved_texts=retrieved_texts,
                 contexts=retrieved_texts,
+                relevance={str(rid): int(g) for rid, g in relevance.items()},
             )
         )
 
         hit = bool(set(ids) & set(golden))
+
+        # Capped recall completeness (spec §3.1.4), consistent with EvalRunner.
+        golden_set = set(golden)
+        retrieved_set = set(ids)
+        denom = min(len(retrieved_set), len(golden_set))
+        query_recall = (len(retrieved_set & golden_set) / denom) if denom else 0.0
+
         per_query.append(
             {
                 "query": query,
                 "category": category,
+                "retrieved_ids": retrieved_ids,
                 "retrieved_sources": retrieved_sources,
+                "expected_chunk_ids": expected_chunk_ids,
                 "expected_sources": expected_sources,
                 "num_retrieved": len(results),
                 "num_expected": len(golden),
                 "hit": hit,
+                "recall_completeness": round(query_recall, 4),
                 "latency_ms": round(total_ms, 2),
                 "fallback": getattr(result, "fallback", False),
                 "n_steps": len(getattr(result, "steps", [])),
@@ -244,6 +347,9 @@ def _run_agentic_eval(settings, evaluator, test_set):
         )
 
     eval_result = evaluator.evaluate(eval_inputs)
+    # Merge the ir @k per-query breakdown so ablation_stats.py can read
+    # per-query ndcg@k / recall@k for the agentic config too.
+    EvalRunner._merge_ir_per_query(eval_result, per_query)
     avg_lat = sum(latencies) / len(latencies) if latencies else 0
     metrics = dict(eval_result.metrics)
     metrics["avg_latency_ms"] = round(avg_lat, 2)

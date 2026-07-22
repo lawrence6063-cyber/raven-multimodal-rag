@@ -83,3 +83,6 @@ class AgentResult:
     results: list[RetrievalResult] = field(default_factory=list)
     steps: list[dict[str, Any]] = field(default_factory=list)
     fallback: bool = False
+    used_citation_ids: list[int] = field(default_factory=list)
+    cited_chunk_ids: list[str] = field(default_factory=list)
+    audit: dict[str, Any] = field(default_factory=dict)

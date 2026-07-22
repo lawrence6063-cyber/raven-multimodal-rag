@@ -104,9 +104,9 @@ class TestLoadSettings:
     def test_load_project_config(self):
         """Should load the actual project config/settings.yaml."""
         settings = load_settings("config/settings.yaml")
-        assert settings.llm.provider == "qwen"
+        assert settings.llm.provider == "deepseek"
         assert settings.embedding.provider == "qwen_multimodal"
-        assert settings.embedding.model == "tongyi-embedding-vision-plus"
+        assert settings.embedding.model == "tongyi-embedding-vision-plus-2026-03-06"
 
 
 class TestValidateSettings:

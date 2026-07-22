@@ -18,7 +18,8 @@ from __future__ import annotations
 
 from typing import TYPE_CHECKING, Any
 
-from src.core.agent.agent_types import AgentResult, RouteDecision
+from src.core.agent.agent_types import AgentResult, RouteDecision, SynthResult
+from src.core.agent.context_selector import ContextSelection, RetrievalBatch, select_context
 from src.observability.logger import get_logger
 
 if TYPE_CHECKING:
@@ -129,16 +130,36 @@ class AgenticRAG:
         subqueries = self._transform(query, trace)
         steps.append({"stage": "rewrite", "n_subqueries": len(subqueries)})
 
-        # 5. Multi-hop retrieval loop with de-duplicated accumulation + budget.
-        results = self._retrieve_loop(
+        # 5. Multi-hop retrieval loop with fair cross-query context selection.
+        selection = self._retrieve_loop(
             query, subqueries, target_collection, image, top_k, trace, steps
         )
+        results = selection.results
+        audit = selection.to_audit()
 
         # 6. Synthesize the answer (server-side), grounded in the results.
-        answer = self._synthesize(query, results, trace)
-        steps.append({"stage": "synthesize", "answer_len": len(answer)})
+        synth = self._synthesize(query, results, trace)
+        cited_chunk_ids = [
+            results[index - 1].chunk_id
+            for index in synth.used_citation_ids
+            if 1 <= index <= len(results)
+        ]
+        steps.append(
+            {
+                "stage": "synthesize",
+                "answer_len": len(synth.answer),
+                "n_citations": len(synth.used_citation_ids),
+            }
+        )
 
-        return AgentResult(answer=answer, results=results, steps=steps)
+        return AgentResult(
+            answer=synth.answer,
+            results=results,
+            steps=steps,
+            used_citation_ids=synth.used_citation_ids,
+            cited_chunk_ids=cited_chunk_ids,
+            audit=audit,
+        )
 
     def _transform(
         self, query: str, trace: "TraceContext | None"
@@ -159,21 +180,14 @@ class AgenticRAG:
         top_k: int | None,
         trace: "TraceContext | None",
         steps: list[dict[str, Any]],
-    ) -> list["RetrievalResult"]:
-        """Iteratively retrieve over sub-queries, accumulating de-duplicated context.
-
-        The loop is bounded by ``max_hops`` and ``max_context_chunks``. M-C2 runs
-        a single hop over the decomposed sub-queries; the reflector (M-C3) feeds
-        follow-up queries back into ``pending`` to trigger additional hops.
-        """
+    ) -> ContextSelection:
+        """Retrieve iteratively and select context fairly across requests."""
         cfg = self._settings.agent
         max_hops = cfg.max_hops if cfg.multihop_enabled else 1
-        max_chunks = cfg.max_context_chunks
-
-        context: list["RetrievalResult"] = []
-        seen: dict[str, int] = {}
+        batches: list[RetrievalBatch] = []
+        known_candidates: set[str] = set()
         asked: set[str] = set()
-        pending = [sq.text for sq in subqueries]
+        pending = [subquery.text for subquery in subqueries]
         reflect_rounds = 0
 
         hop = 0
@@ -181,19 +195,36 @@ class AgenticRAG:
             hop += 1
             current, pending = pending, []
             new_hits = 0
-            for sub in current:
-                asked.add(sub.strip().lower())
-                results = self._retrieve(sub, collection, image, top_k, trace)
-                results = self._maybe_rerank(sub, results, trace)
-                new_hits += self._accumulate(context, seen, results, max_chunks)
+            for request_index, subquery in enumerate(current, start=1):
+                asked.add(subquery.strip().lower())
+                results = self._retrieve(subquery, collection, image, top_k, trace)
+                results = self._maybe_rerank(subquery, results, trace)
+                request_id = f"hop-{hop}-request-{request_index}"
+                batches.append(
+                    RetrievalBatch(
+                        request_id=request_id,
+                        query=subquery,
+                        hop=hop,
+                        results=results,
+                    )
+                )
+                result_ids = {result.chunk_id for result in results}
+                new_hits += len(result_ids - known_candidates)
+                known_candidates.update(result_ids)
+
+            selection = select_context(batches, cfg.max_context_chunks)
+            context = selection.results
             self._record_hop(trace, hop, current, new_hits, len(context))
             steps.append(
-                {"stage": f"hop_{hop}", "subqueries": current, "new_hits": new_hits}
+                {
+                    "stage": f"hop_{hop}",
+                    "subqueries": current,
+                    "new_hits": new_hits,
+                    "candidate_count": selection.unique_candidate_count,
+                    "context_size": len(context),
+                }
             )
 
-            # Reflect: if the context is insufficient, queue follow-up queries for
-            # the next hop. Bounded by max_hops and max_reflect_rounds; skipped on
-            # the final allowed hop (no room left to act on follow-ups).
             if (
                 cfg.reflect_enabled
                 and context
@@ -211,37 +242,12 @@ class AgenticRAG:
                 if not verdict.sufficient and verdict.follow_up_queries:
                     reflect_rounds += 1
                     pending = [
-                        q
-                        for q in verdict.follow_up_queries
-                        if q.strip().lower() not in asked
+                        follow_up
+                        for follow_up in verdict.follow_up_queries
+                        if follow_up.strip().lower() not in asked
                     ]
 
-        return context
-
-    @staticmethod
-    def _accumulate(
-        context: list["RetrievalResult"],
-        seen: dict[str, int],
-        results: list["RetrievalResult"],
-        max_chunks: int,
-    ) -> int:
-        """Merge ``results`` into ``context``, de-duping by chunk_id (keep best score).
-
-        Returns the number of newly added chunks (respecting the budget).
-        """
-        added = 0
-        for r in results:
-            existing = seen.get(r.chunk_id)
-            if existing is not None:
-                if r.score > context[existing].score:
-                    context[existing] = r
-                continue
-            if len(context) >= max_chunks:
-                continue
-            seen[r.chunk_id] = len(context)
-            context.append(r)
-            added += 1
-        return added
+        return select_context(batches, cfg.max_context_chunks)
 
     @staticmethod
     def _record_hop(
@@ -305,12 +311,11 @@ class AgenticRAG:
         query: str,
         results: list["RetrievalResult"],
         trace: "TraceContext | None",
-    ) -> str:
-        """Synthesize a grounded answer when enabled; empty string otherwise."""
+    ) -> SynthResult:
+        """Synthesize a grounded answer and preserve its citation indices."""
         if not self._settings.agent.synthesize_answer:
-            return ""
-        synth = self._get_synthesizer().answer(query, results, trace=trace)
-        return synth.answer
+            return SynthResult()
+        return self._get_synthesizer().answer(query, results, trace=trace)
 
     def _fallback(
         self,
@@ -329,19 +334,31 @@ class AgenticRAG:
         except Exception as e:  # retrieval itself failed — return empty gracefully
             logger.warning(f"Fallback retrieval failed: {e}")
 
-        answer = ""
+        synth = SynthResult()
         if self._settings.agent.synthesize_answer and results:
             try:
-                answer = self._get_synthesizer().answer(query, results, trace=trace).answer
+                synth = self._get_synthesizer().answer(query, results, trace=trace)
             except Exception as e:
                 logger.warning(f"Fallback synthesis failed, returning results only: {e}")
 
+        cited_chunk_ids = [
+            results[index - 1].chunk_id
+            for index in synth.used_citation_ids
+            if 1 <= index <= len(results)
+        ]
         if trace is not None:
             trace.record_stage(
                 "agent_fallback", method="agentic_rag", elapsed_ms=0.0, reason=reason[:200]
             )
         steps.append({"stage": "fallback", "reason": reason[:200]})
-        return AgentResult(answer=answer, results=results, steps=steps, fallback=True)
+        return AgentResult(
+            answer=synth.answer,
+            results=results,
+            steps=steps,
+            fallback=True,
+            used_citation_ids=synth.used_citation_ids,
+            cited_chunk_ids=cited_chunk_ids,
+        )
 
     # ----------------------------------------------------------- lazy deps
     def _get_hybrid(self) -> "HybridSearch":

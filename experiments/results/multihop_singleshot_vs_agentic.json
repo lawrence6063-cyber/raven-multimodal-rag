@@ -1,0 +1,275 @@
+{
+  "experiment": "multihop_singleshot_vs_agentic",
+  "test_set_path": "data/golden_papers.json",
+  "comparison": {
+    "metric": "recall_completeness (source-level coverage of expected papers)",
+    "n_queries": 8,
+    "top_k": 20,
+    "single_shot": {
+      "recall_completeness": 0.5729,
+      "hit_rate": 0.875,
+      "avg_latency_ms": 2986.84
+    },
+    "agentic": {
+      "recall_completeness": 0.5542,
+      "hit_rate": 1.0,
+      "avg_latency_ms": 72745.67
+    },
+    "delta_recall_completeness": -0.0187,
+    "delta_hit_rate": 0.125,
+    "paired_diff_bootstrap_ci95": [
+      -0.1938,
+      0.15
+    ],
+    "sign_test": {
+      "win": 2,
+      "tie": 4,
+      "loss": 2
+    }
+  },
+  "single_shot_detail": {
+    "arm": "single",
+    "recall_completeness": 0.5729,
+    "hit_rate": 0.875,
+    "avg_latency_ms": 2986.84,
+    "per_query": [
+      {
+        "query": "哪些论文同时涉及检索增强（RAG）和 Agent 自主决策（如反思、工具调用）？",
+        "num_expected": 3,
+        "num_retrieved_chunks": 20,
+        "num_unique_sources": 5,
+        "covered_sources": [
+          "data/documents/rag/05_self_rag.pdf"
+        ],
+        "recall_completeness": 0.3333,
+        "hit": true,
+        "latency_ms": 18829.03
+      },
+      {
+        "query": "Which papers discuss both tool use/API calling and multimodal understanding (vision + language)?",
+        "num_expected": 4,
+        "num_retrieved_chunks": 20,
+        "num_unique_sources": 9,
+        "covered_sources": [
+          "data/documents/agent/02_toolformer.pdf",
+          "data/documents/mcp/02_gorilla.pdf",
+          "data/documents/multimodal/06_llava.pdf"
+        ],
+        "recall_completeness": 0.75,
+        "hit": true,
+        "latency_ms": 952.0
+      },
+      {
+        "query": "从预训练到对齐再到工具使用，LLM 能力演进路径上的关键论文有哪些？",
+        "num_expected": 5,
+        "num_retrieved_chunks": 20,
+        "num_unique_sources": 7,
+        "covered_sources": [],
+        "recall_completeness": 0.0,
+        "hit": false,
+        "latency_ms": 600.21
+      },
+      {
+        "query": "Which papers propose Transformer-based architectures AND apply them to retrieval-augmented generation?",
+        "num_expected": 5,
+        "num_retrieved_chunks": 20,
+        "num_unique_sources": 9,
+        "covered_sources": [
+          "data/documents/llm/01_transformer_attention_is_all_you_need.pdf",
+          "data/documents/rag/01_rag_knowledge_intensive_nlp.pdf",
+          "data/documents/rag/03_realm.pdf"
+        ],
+        "recall_completeness": 0.6,
+        "hit": true,
+        "latency_ms": 987.67
+      },
+      {
+        "query": "有哪些论文讨论了 Agent 的长期记忆、经验回放或持久化知识存储？",
+        "num_expected": 4,
+        "num_retrieved_chunks": 20,
+        "num_unique_sources": 4,
+        "covered_sources": [
+          "data/documents/agent/03_reflexion.pdf",
+          "data/documents/agent/04_generative_agents.pdf"
+        ],
+        "recall_completeness": 0.5,
+        "hit": true,
+        "latency_ms": 572.12
+      },
+      {
+        "query": "Papers that combine vision-language models (CLIP/ViT) with reasoning or agent capabilities?",
+        "num_expected": 4,
+        "num_retrieved_chunks": 20,
+        "num_unique_sources": 13,
+        "covered_sources": [
+          "data/documents/multimodal/01_clip.pdf",
+          "data/documents/multimodal/02_vit.pdf",
+          "data/documents/multimodal/06_llava.pdf",
+          "data/documents/multimodal/09_cogvlm.pdf"
+        ],
+        "recall_completeness": 1.0,
+        "hit": true,
+        "latency_ms": 600.76
+      },
+      {
+        "query": "哪些论文涉及大模型的高效微调方法（如 LoRA、指令微调）以及在工具使用或 Agent 场景的应用？",
+        "num_expected": 5,
+        "num_retrieved_chunks": 20,
+        "num_unique_sources": 8,
+        "covered_sources": [
+          "data/documents/llm/08_lora.pdf",
+          "data/documents/mcp/03_toolllm.pdf"
+        ],
+        "recall_completeness": 0.4,
+        "hit": true,
+        "latency_ms": 668.39
+      },
+      {
+        "query": "Which papers discuss collaborative multi-agent systems or LLM-based software engineering workflows?",
+        "num_expected": 4,
+        "num_retrieved_chunks": 20,
+        "num_unique_sources": 8,
+        "covered_sources": [
+          "data/documents/agent/05_hugginggpt.pdf",
+          "data/documents/agent/08_swe_bench.pdf",
+          "data/documents/agent/09_metagpt.pdf",
+          "data/documents/agent/10_autogen.pdf"
+        ],
+        "recall_completeness": 1.0,
+        "hit": true,
+        "latency_ms": 684.56
+      }
+    ]
+  },
+  "agentic_detail": {
+    "arm": "agentic",
+    "recall_completeness": 0.5542,
+    "hit_rate": 1.0,
+    "avg_latency_ms": 72745.67,
+    "per_query": [
+      {
+        "query": "哪些论文同时涉及检索增强（RAG）和 Agent 自主决策（如反思、工具调用）？",
+        "num_expected": 3,
+        "num_retrieved_chunks": 20,
+        "num_unique_sources": 5,
+        "covered_sources": [
+          "data/documents/rag/05_self_rag.pdf"
+        ],
+        "recall_completeness": 0.3333,
+        "hit": true,
+        "latency_ms": 45345.1,
+        "n_steps": 5,
+        "fallback": false
+      },
+      {
+        "query": "Which papers discuss both tool use/API calling and multimodal understanding (vision + language)?",
+        "num_expected": 4,
+        "num_retrieved_chunks": 20,
+        "num_unique_sources": 8,
+        "covered_sources": [
+          "data/documents/agent/02_toolformer.pdf",
+          "data/documents/multimodal/06_llava.pdf",
+          "data/documents/multimodal/08_qwen_vl.pdf"
+        ],
+        "recall_completeness": 0.75,
+        "hit": true,
+        "latency_ms": 65177.07,
+        "n_steps": 5,
+        "fallback": false
+      },
+      {
+        "query": "从预训练到对齐再到工具使用，LLM 能力演进路径上的关键论文有哪些？",
+        "num_expected": 5,
+        "num_retrieved_chunks": 20,
+        "num_unique_sources": 8,
+        "covered_sources": [
+          "data/documents/llm/02_bert.pdf",
+          "data/documents/llm/03_gpt3_few_shot_learners.pdf"
+        ],
+        "recall_completeness": 0.4,
+        "hit": true,
+        "latency_ms": 63072.41,
+        "n_steps": 8,
+        "fallback": false
+      },
+      {
+        "query": "Which papers propose Transformer-based architectures AND apply them to retrieval-augmented generation?",
+        "num_expected": 5,
+        "num_retrieved_chunks": 20,
+        "num_unique_sources": 7,
+        "covered_sources": [
+          "data/documents/llm/02_bert.pdf",
+          "data/documents/rag/01_rag_knowledge_intensive_nlp.pdf",
+          "data/documents/rag/03_realm.pdf"
+        ],
+        "recall_completeness": 0.6,
+        "hit": true,
+        "latency_ms": 115814.72,
+        "n_steps": 8,
+        "fallback": false
+      },
+      {
+        "query": "有哪些论文讨论了 Agent 的长期记忆、经验回放或持久化知识存储？",
+        "num_expected": 4,
+        "num_retrieved_chunks": 20,
+        "num_unique_sources": 2,
+        "covered_sources": [
+          "data/documents/agent/03_reflexion.pdf",
+          "data/documents/agent/04_generative_agents.pdf"
+        ],
+        "recall_completeness": 0.5,
+        "hit": true,
+        "latency_ms": 58783.6,
+        "n_steps": 5,
+        "fallback": false
+      },
+      {
+        "query": "Papers that combine vision-language models (CLIP/ViT) with reasoning or agent capabilities?",
+        "num_expected": 4,
+        "num_retrieved_chunks": 20,
+        "num_unique_sources": 11,
+        "covered_sources": [
+          "data/documents/multimodal/01_clip.pdf",
+          "data/documents/multimodal/02_vit.pdf",
+          "data/documents/multimodal/09_cogvlm.pdf"
+        ],
+        "recall_completeness": 0.75,
+        "hit": true,
+        "latency_ms": 76379.57,
+        "n_steps": 5,
+        "fallback": false
+      },
+      {
+        "query": "哪些论文涉及大模型的高效微调方法（如 LoRA、指令微调）以及在工具使用或 Agent 场景的应用？",
+        "num_expected": 5,
+        "num_retrieved_chunks": 20,
+        "num_unique_sources": 8,
+        "covered_sources": [
+          "data/documents/agent/02_toolformer.pdf",
+          "data/documents/llm/08_lora.pdf",
+          "data/documents/mcp/03_toolllm.pdf"
+        ],
+        "recall_completeness": 0.6,
+        "hit": true,
+        "latency_ms": 79444.14,
+        "n_steps": 8,
+        "fallback": false
+      },
+      {
+        "query": "Which papers discuss collaborative multi-agent systems or LLM-based software engineering workflows?",
+        "num_expected": 4,
+        "num_retrieved_chunks": 20,
+        "num_unique_sources": 9,
+        "covered_sources": [
+          "data/documents/agent/09_metagpt.pdf",
+          "data/documents/agent/10_autogen.pdf"
+        ],
+        "recall_completeness": 0.5,
+        "hit": true,
+        "latency_ms": 77948.74,
+        "n_steps": 5,
+        "fallback": false
+      }
+    ]
+  }
+}

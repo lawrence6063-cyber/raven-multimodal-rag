@@ -78,12 +78,33 @@
 
 ---
 
+## 评估体系升级（H2：对标业界 IR 指标）
+
+在原阶段 H（hit_rate/mrr/recall_completeness，文档级、31 条）基础上升级为对标 BEIR/Ragas/DeepEval 的成熟体系，详见 `docs/EVAL_UPGRADE_SPEC.md`：
+
+| 编号 | 交付 | 状态 |
+|------|------|------|
+| H2-1 | `IRMetricsEvaluator`（recall/precision/mrr/map/**ndcg**@k，graded 0-3，离线无 key）+ `EvalInput.relevance` + `EvalRunner` @k 明细/p95 + CLI `--k` + 工厂注册 | ✅ |
+| H2-2 | CI 回归门禁 `tests/e2e/test_eval_regression.py`（hermetic，断言 `ir.ndcg@5 >= baseline-0.02`） | ✅ |
+| H2-3 | 测试集扩充脚本 `scripts/gen_testset.py`（llamaindex/ragas 双路线）+ `scripts/merge_testset.py`（chunk 级+graded，向后兼容；无 key 优雅退出） | ✅ 脚本就绪（扩充执行需 LLM key + 已摄取 DB） |
+| H2-4 | 消融显著性 `scripts/ablation_stats.py`（bootstrap 95% CI + paired permutation p-value，仅 numpy）+ 升级 `run_ablation.sh` | ✅ |
+| H2-5 | 生成侧真跑（Ragas 后端，有 key 时 faithfulness/answer_relevancy/context_recall；离线降级） | ✅ 复用现有 RagasEvaluator |
+| H2-6 | 公开基准锚定 `scripts/run_beir.py`（BEIR 子集，同口径 IRMetricsEvaluator；beir 为可选依赖） | ✅ 脚本就绪 |
+
+- **口径**：nDCG 用 `DCG@k=Σ(2^rel_i−1)/log2(i+1)`，IDCG 取 golden grade 降序理想排列，IDCG=0 记 0；`relevance` 为空自动退化二值 nDCG（旧 31 条零改动兼容）。
+- **配置**：`config/settings.yaml::evaluation` 新增 `ks: [1,3,5,10]`、`bootstrap_samples: 1000`，`backends` 默认 `["ir","custom"]`。
+- **安全**：`settings.yaml` 硬编码 DashScope key 已清空，key 仅从 `DASHSCOPE_API_KEY`/`OPENAI_API_KEY` 环境变量注入。
+- **可选依赖**：`pip install -e ".[eval]"`（pytrec_eval / beir / ragas）。
+
+---
+
 ## 环境信息
 
 - **Python**: 3.13
 - **虚拟环境**: `.venv/`
-- **安装依赖**: `pip install -e ".[dev]"`
+- **安装依赖**: `pip install -e ".[dev]"`（评估附加：`pip install -e ".[eval]"`）
 - **运行测试**: `source .venv/bin/activate && python -m pytest tests/ -q`
-- **运行评估**: `python scripts/evaluate.py [--backends custom,ragas] [--json]`
+- **运行评估**: `python scripts/evaluate.py --backends ir,custom --k 1,3,5,10 [--json]`
+- **消融显著性**: `bash scripts/run_ablation.sh`（输出 95% CI + p-value）
 - **启动 Dashboard**: `python scripts/start_dashboard.py`
 - **MCP 入口**: `python main.py`（stdio）

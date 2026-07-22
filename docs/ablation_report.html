@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>RAG 检索消融实验报告 · Modular RAG MCP Server</title>
+<style>
+  :root{
+    --bg:#0f1420; --card:#171e2e; --card2:#1e2740; --ink:#e8edf7; --muted:#93a1bd;
+    --line:#2a3550; --accent:#4f8cff; --good:#33c98a; --warn:#f0a92b; --bad:#ef5f6b;
+    --chip:#233152;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--ink);
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Microsoft YaHei",sans-serif;
+    line-height:1.6;font-size:15px}
+  .wrap{max-width:1080px;margin:0 auto;padding:40px 24px 80px}
+  header{border-bottom:1px solid var(--line);padding-bottom:24px;margin-bottom:32px}
+  h1{font-size:30px;margin:0 0 8px;letter-spacing:.3px}
+  h2{font-size:21px;margin:44px 0 14px;padding-left:12px;border-left:4px solid var(--accent)}
+  h3{font-size:16px;margin:26px 0 10px;color:#cdd8ee}
+  .sub{color:var(--muted);font-size:14px}
+  p{margin:10px 0}
+  .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:14px;margin:18px 0}
+  .kpi{background:linear-gradient(160deg,var(--card2),var(--card));border:1px solid var(--line);
+    border-radius:12px;padding:16px 18px}
+  .kpi .v{font-size:26px;font-weight:700;letter-spacing:.5px}
+  .kpi .l{color:var(--muted);font-size:12.5px;margin-top:2px}
+  .kpi .d{font-size:12px;margin-top:6px}
+  .up{color:var(--good)} .down{color:var(--bad)} .flat{color:var(--warn)}
+  table{width:100%;border-collapse:collapse;margin:12px 0;font-size:13.5px;
+    background:var(--card);border:1px solid var(--line);border-radius:10px;overflow:hidden}
+  th,td{padding:10px 12px;text-align:right;border-bottom:1px solid var(--line)}
+  th:first-child,td:first-child{text-align:left}
+  thead th{background:var(--card2);color:#cdd8ee;font-weight:600;position:sticky;top:0}
+  tbody tr:hover{background:#1b2439}
+  tr.best td{background:rgba(51,201,138,.08)}
+  .tag{display:inline-block;padding:1px 8px;border-radius:20px;font-size:11.5px;font-weight:600}
+  .t-sig{background:rgba(239,95,107,.16);color:#ff8b95}
+  .t-ns{background:rgba(240,169,43,.16);color:#f5be5e}
+  .t-base{background:rgba(79,140,255,.16);color:#8fb6ff}
+  .bar{position:relative;height:20px;background:#212c47;border-radius:5px;overflow:hidden}
+  .bar>span{position:absolute;left:0;top:0;bottom:0;border-radius:5px;
+    background:linear-gradient(90deg,#3f6fd4,#4f8cff)}
+  .bar.g>span{background:linear-gradient(90deg,#2a9d75,#33c98a)}
+  .bar.r>span{background:linear-gradient(90deg,#c94b57,#ef5f6b)}
+  .bar em{position:absolute;right:6px;top:0;font-style:normal;font-size:11.5px;line-height:20px;color:#dfe7f5}
+  .ci{color:var(--muted);font-size:12px}
+  .callout{background:var(--card);border:1px solid var(--line);border-left:4px solid var(--accent);
+    border-radius:8px;padding:14px 18px;margin:16px 0}
+  .callout.good{border-left-color:var(--good)}
+  .callout.warn{border-left-color:var(--warn)}
+  .callout.bad{border-left-color:var(--bad)}
+  code{background:#0c111c;padding:1px 6px;border-radius:5px;font-size:12.5px;color:#a9c6ff}
+  ul{margin:8px 0 8px 2px;padding-left:22px} li{margin:5px 0}
+  .foot{margin-top:50px;padding-top:18px;border-top:1px solid var(--line);color:var(--muted);font-size:12.5px}
+  .pill{display:inline-block;background:var(--chip);color:#b9c8e6;border:1px solid var(--line);
+    border-radius:20px;padding:2px 11px;font-size:12px;margin:2px 4px 2px 0}
+  .two{display:grid;grid-template-columns:1fr 1fr;gap:20px}
+  @media(max-width:720px){.two{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<div class="wrap">
+<header>
+  <h1>RAG 检索消融实验报告</h1>
+  <div class="sub">Modular RAG MCP Server &nbsp;·&nbsp; 评估驱动优化 &nbsp;·&nbsp; 生成日期 2026-07-17（Agentic 公平化、多跳与组合证据专项更新至 2026-07-21）</div>
+  <div style="margin-top:14px">
+    <span class="pill">Golden 集 230 条（199 chunk 级 graded + 31 文档级）</span>
+    <span class="pill">Embedding: tongyi-embedding-vision-plus (1152d)</span>
+    <span class="pill">精排: cross-encoder ms-marco-MiniLM</span>
+    <span class="pill">统计: 1000 bootstrap + 10000 置换检验</span>
+  </div>
+</header>
+
+<!-- ===================== 摘要 ===================== -->
+<h2>1 · 执行摘要</h2>
+<p>本实验在真实科研论文库上，对混合检索管线的各组件做系统消融，量化边际贡献并给出统计显著性。
+实验过程中发现并修复了一处<strong>向量库 embedding 空间错位</strong>的重大缺陷（详见 §2），修复后 full pipeline 全面达标。</p>
+<div class="grid">
+  <div class="kpi"><div class="v" style="color:var(--good)">0.692</div><div class="l">nDCG@10 (full, chunk 级)</div><div class="d up">目标 0.58 ✓ 超标</div></div>
+  <div class="kpi"><div class="v" style="color:var(--good)">0.952</div><div class="l">Hit@5 (文档命中)</div><div class="d up">目标 0.85 ✓ 超标</div></div>
+  <div class="kpi"><div class="v" style="color:var(--good)">0.854</div><div class="l">MRR@10</div><div class="d up">目标 0.55 ✓ 超标</div></div>
+  <div class="kpi"><div class="v" style="color:var(--good)">0.71s</div><div class="l">p95 端到端延迟</div><div class="d up">llm rerank 43s → -98%</div></div>
+</div>
+
+<!-- ===================== 关键发现 ===================== -->
+<h2>2 · 关键发现：dense embedding 空间错位（发现 → 诊断 → 修复）</h2>
+<div class="callout bad">
+  <strong>问题现象</strong>：消融初跑时，纯 dense 检索（no_fusion）nDCG@10 仅 <b>0.023</b>，且对<em>任意</em>查询都返回同一批
+  <code>08_swe_bench.pdf</code> 的 chunk——dense 检索形同报废。
+</div>
+<h3>三步诊断</h3>
+<table>
+  <thead><tr><th>诊断步骤</th><th>结果</th><th>判定</th></tr></thead>
+  <tbody>
+    <tr><td>① query embedding 是否有区分度</td><td>cos(不同语义文本)=0.70 / 0.58</td><td>正常 ✓</td></tr>
+    <tr><td>② 库内存储向量是否有区分度</td><td>两两 cos 分布 0.15~0.81</td><td>正常 ✓</td></tr>
+    <tr><td>③ 库内 chunk 原文<b>重新编码</b> vs 其<b>存储向量</b></td><td>cos ≈ <b>0.16</b>（应 ≈1.0）</td><td>空间错位 ✗</td></tr>
+  </tbody>
+</table>
+<p>根因：建库时使用的 embedding 与当前 query 时的 embedding 不在同一向量空间。</p>
+<div class="callout good">
+  <strong>修复</strong>：确认 embedding 确定性（cos=1.0000）后，复用 Chroma 已存的 chunk 原文，用当前 embedding
+  <b>重嵌 8321 条文本向量</b>（60 分钟，0 失败，不重新解析 PDF）。修复后 dense-only nDCG@10 从 <b>0.023 → 0.694</b>。
+</div>
+
+<!-- ===================== 主结果 ===================== -->
+<h2>3 · 五组消融主结果（230 条，chunk 级 graded）</h2>
+<table>
+  <thead><tr>
+    <th>配置</th><th>nDCG@10</th><th>nDCG@5</th><th>Hit@5</th><th>MRR@10</th><th>Recall@10</th><th>p50</th><th>p95</th>
+  </tr></thead>
+  <tbody>
+    <tr class="best"><td>full · Dense+Sparse+RRF+CE</td><td><b>0.692</b></td><td>0.668</td><td><b>0.952</b></td><td><b>0.854</b></td><td>0.443</td><td>500ms</td><td>708ms</td></tr>
+    <tr><td>no_fusion · 纯 Dense + CE</td><td>0.694</td><td>0.671</td><td>0.943</td><td>0.857</td><td>0.436</td><td>514ms</td><td>805ms</td></tr>
+    <tr><td>no_rerank · Dense+Sparse+RRF</td><td>0.538</td><td>0.502</td><td>0.848</td><td>0.662</td><td>0.376</td><td>354ms</td><td>582ms</td></tr>
+    <tr><td>no_dense · 纯 BM25 + CE</td><td>0.430</td><td>0.424</td><td>0.587</td><td>0.546</td><td>0.239</td><td>111ms</td><td>157ms</td></tr>
+    <tr><td>agentic · 多跳+反思+改写</td><td>0.598</td><td>0.567</td><td>0.887</td><td>0.740</td><td>0.415</td><td colspan="2" style="text-align:center">avg 42.7s</td></tr>
+  </tbody>
+</table>
+<p class="sub">注：Recall@10 采用 capped 口径（分母 <code>min(k, |golden|)</code>）；agentic 每条含多次 LLM 调用，仅报 avg 延迟。
+agentic 采用<b>公平化口径</b>（2026-07-21 重跑）：对齐检索深度 <code>retrieval_top_k=30</code>、关闭路由直答门控（<code>route_enabled=false</code>，避免整条 query 因“未检索”被零分）、最终上下文按精排分数全局降序——使其与检索类配置在同一 chunk 级 graded 口径下可比。修正前（每子查询 top-5 + 路由直答，31/230 条零检索）为 0.303，属口径不公平的低估。</p>
+
+<h3>nDCG@10 直观对比</h3>
+<table>
+  <thead><tr><th style="width:220px">配置</th><th>nDCG@10</th></tr></thead>
+  <tbody>
+    <tr><td>full</td><td><div class="bar g"><span style="width:69.2%"></span><em>0.692</em></div></td></tr>
+    <tr><td>no_fusion</td><td><div class="bar g"><span style="width:69.4%"></span><em>0.694</em></div></td></tr>
+    <tr><td>no_rerank</td><td><div class="bar"><span style="width:53.8%"></span><em>0.538</em></div></td></tr>
+    <tr><td>no_dense</td><td><div class="bar r"><span style="width:43.0%"></span><em>0.430</em></div></td></tr>
+    <tr><td>agentic</td><td><div class="bar"><span style="width:59.8%"></span><em>0.598</em></div></td></tr>
+  </tbody>
+</table>
+
+<!-- ===================== 显著性 ===================== -->
+<h2>4 · 统计显著性（bootstrap 95% CI + 置换检验）</h2>
+<p class="sub">baseline = full；p &lt; 0.05 记为显著（✱）。1000 次 bootstrap 重采样估计 CI，10000 次配对置换检验估 p 值。</p>
+<table>
+  <thead><tr><th>配置</th><th>nDCG@10 [95% CI]</th><th>MRR@10 [95% CI]</th><th>Recall@10 [95% CI]</th><th>p (vs full)</th><th>显著性</th></tr></thead>
+  <tbody>
+    <tr><td>full</td><td>0.692 <span class="ci">[.656,.724]</span></td><td>0.854 <span class="ci">[.816,.890]</span></td><td>0.443 <span class="ci">[.410,.474]</span></td><td>—</td><td><span class="tag t-base">baseline</span></td></tr>
+    <tr><td>no_fusion</td><td>0.694 <span class="ci">[.663,.725]</span></td><td>0.857 <span class="ci">[.821,.890]</span></td><td>0.436 <span class="ci">[.406,.468]</span></td><td>0.858</td><td><span class="tag t-ns">不显著</span></td></tr>
+    <tr><td>no_rerank</td><td>0.538 <span class="ci">[.498,.577]</span></td><td>0.662 <span class="ci">[.611,.710]</span></td><td>0.376 <span class="ci">[.342,.413]</span></td><td>0.0001</td><td><span class="tag t-sig">显著 ✱</span></td></tr>
+    <tr><td>no_dense</td><td>0.430 <span class="ci">[.377,.480]</span></td><td>0.546 <span class="ci">[.479,.606]</span></td><td>0.239 <span class="ci">[.205,.280]</span></td><td>0.0001</td><td><span class="tag t-sig">显著 ✱</span></td></tr>
+    <tr><td>agentic</td><td>0.598 <span class="ci">[.561,.636]</span></td><td>0.740 <span class="ci">[.694,.785]</span></td><td>0.415 <span class="ci">[.384,.449]</span></td><td>0.0001</td><td><span class="tag t-sig">显著 ✱</span></td></tr>
+  </tbody>
+</table>
+
+<h3>各组件边际贡献（nDCG@10）</h3>
+<table>
+  <thead><tr><th>组件</th><th>对比</th><th>Δ nDCG@10</th><th>结论</th></tr></thead>
+  <tbody>
+    <tr><td>Dense 检索</td><td>full − no_dense</td><td class="up">+0.262</td><td>主力，显著 (p&lt;0.001)</td></tr>
+    <tr><td>Cross-encoder 精排</td><td>full − no_rerank</td><td class="up">+0.154</td><td>显著有效 (p&lt;0.001)</td></tr>
+    <tr><td>Sparse / RRF 融合</td><td>full − no_fusion</td><td class="flat">−0.002</td><td>此语料<b>不显著</b> (p=0.86)</td></tr>
+    <tr><td>Agentic 编排</td><td>full − agentic</td><td class="down">−0.094</td><td>单跳集上小幅劣化，同量级 (p&lt;0.001)</td></tr>
+  </tbody>
+</table>
+
+<!-- ===================== §6 精排对比 ===================== -->
+<h2>5 · 精排后端对比：cross-encoder vs LLM rerank</h2>
+<p class="sub">同一 20 条 chunk 级子集，apples-to-apples 对比精度与延迟。</p>
+<div class="two">
+<table>
+  <thead><tr><th>指标</th><th>cross-encoder</th><th>LLM rerank</th></tr></thead>
+  <tbody>
+    <tr class="best"><td>nDCG@10</td><td><b>0.697</b></td><td>0.483</td></tr>
+    <tr><td>MRR@10</td><td><b>0.935</b></td><td>0.813</td></tr>
+    <tr><td>Hit@5</td><td>1.00</td><td>0.95</td></tr>
+    <tr><td>p50 延迟</td><td><b>470ms</b></td><td>51.7s</td></tr>
+    <tr><td>p95 延迟</td><td><b>1.6s</b></td><td>73.3s</td></tr>
+    <tr><td>外部调用</td><td>无（本地）</td><td>每 query 1 次 LLM</td></tr>
+  </tbody>
+</table>
+<div>
+  <div class="callout good" style="margin-top:0">
+    <strong>结论：cross-encoder 又快又准。</strong>
+    在这套科研论文语料上，本地 cross-encoder 精度更高（nDCG@10 +0.21）且延迟低约 <b>45 倍</b>。
+  </div>
+  <p class="sub">推荐：默认走 cross-encoder（生产延迟友好）；LLM rerank 作为可选"高精度模式"（其质量依赖 prompt，本实验为 as-measured 结果）。</p>
+</div>
+</div>
+
+<!-- ===================== 生成侧 ===================== -->
+<h2>6 · 生成侧评估（服务端答案合成，20 条验证）</h2>
+<p class="sub">评估的是服务端 <code>AnswerSynthesizer</code> 合成答案的质量（Ragas 口径），由自实现的 DeepSeek LLM-judge 计算（绕开 ragas 包的依赖冲突）。</p>
+<div class="grid">
+  <div class="kpi"><div class="v up">0.850</div><div class="l">Faithfulness（无幻觉）</div><div class="d up">目标 0.85 ✓</div></div>
+  <div class="kpi"><div class="v up">0.861</div><div class="l">Answer Relevancy（切题）</div><div class="d up">目标 0.85 ✓</div></div>
+  <div class="kpi"><div class="v flat">0.676</div><div class="l">Context Precision（信噪比）</div><div class="d flat">目标 0.70，略低</div></div>
+</div>
+
+<!-- ===================== 多跳专项 ===================== -->
+<h2>7 · 多跳专项：single-shot vs Agentic RAG（Recall Completeness）</h2>
+<div class="callout warn">
+  <strong>Caveat（口径边界）</strong>：前四节 golden 集偏单跳事实型查询，对 agentic 的多跳/分解能力不利。
+  为公平评估 agentic 的完整度收益，本节另构造 8 条真·跨域多跳 query（每条预期 3~5 篇论文）做专项对比。
+</div>
+<p class="sub">
+  做<b>配对单变量</b>对比：对照组 = 一次 hybrid+CE 检索；实验组 = 完整 AgenticRAG
+  （route → 改写/分解 → 多跳 → 反思回灌 → 合成）。两 arm 共用同一检索器/精排器，并把最终上下文预算对齐为
+  <code>top_k=20</code>，唯一变量是 agentic 编排。指标 = source 级 Recall Completeness（预期论文覆盖率）+ Hit Rate。
+  脚本 <code>scripts/eval_multihop_singleshot_vs_agentic.py</code>，结果
+  <code>experiments/results/multihop_singleshot_vs_agentic.json</code>。
+</p>
+<table>
+  <thead><tr><th style="width:200px">配置</th><th>Recall Completeness</th><th>Hit Rate</th><th>avg 延迟</th></tr></thead>
+  <tbody>
+    <tr class="best"><td>single-shot · hybrid+CE</td><td><b>0.573</b></td><td>87.5%</td><td>3.0s</td></tr>
+    <tr><td>agentic · 多跳+反思+改写</td><td>0.554</td><td><b>100%</b></td><td>72.7s</td></tr>
+  </tbody>
+</table>
+<p class="sub">
+  <b>ΔRecall Completeness = −0.019</b>，配对 bootstrap 95% CI <code>[−0.194, +0.150]</code>（跨 0），
+  符号检验 win 2 / tie 4 / loss 2 —— <b>多跳完整度上无显著增益</b>；
+  <b>ΔHit Rate = +12.5%</b>（87.5%→100%）：agentic 靠子问题分解救回 single-shot 完全命中失败的 1 条 query
+  （Recall 0.0→0.4），但在 single-shot 已完整覆盖的 2 条上出现回退（1.0→0.75、1.0→0.5），因多跳累积 +
+  全局分数排序 + top-k 截断把 off-topic 高分 chunk 挤入、稀释了已覆盖的 source。
+</p>
+<div class="callout warn">
+  <strong>关键结论修正</strong>：早期"Agentic 把 Recall Completeness 从 0.287 提升到 0.410"的数据来自
+  <b>向量库重嵌之前</b>——彼时 embedding 空间错位、dense-only nDCG≈0.02，single-shot 几乎全靠 BM25 故完整度很差，
+  agentic 的查询分解能弥补。重嵌修复 dense 后 single-shot 本身已强（0.573），该完整度红利<b>消失</b>。
+  因此 Agentic 的价值应重新定位为<b>召回鲁棒性兜底</b>（把难 query 的 Hit Rate 兜到 100%）与复杂推理路径，
+  而非"多跳完整度显著提升"；代价是延迟约 24 倍（3s→73s）。
+</div>
+
+<!-- ===================== 组合证据专项 ===================== -->
+<h2>8 · 组合式证据链专项：有利方向是“按需分解”，不是盲目反思</h2>
+<div class="callout good">
+  <strong>找到稳定正收益方向</strong>：对必须同时覆盖两篇论文证据的 composition query，
+  Agentic RAG 中的<b>查询分解 + 多子查询检索</b>显著优于 single-shot；继续叠加 route / reflect / 多跳回灌反而退化。
+  因此工程方向应是 <b>complexity-gated selective agentic</b>：复杂组合题启用分解，只有证据不足时才触发反思。
+</div>
+<p class="sub">
+  数据先于正式实验冻结：从既有 chunk-level golden 证据按固定种子构造 30 条双证据题（6 dev + 24 test），
+  每题记录两个精确 chunk、source 与文本 SHA-256；正式统计只使用 24 条 test。
+  三 arm 共用 tongyi embedding、hybrid+CE、DeepSeek 合成、<code>retrieval_top_k=20</code> 和最终 20 chunk 预算。
+  数据 <code>data/agentic_bridge_qa.json</code>，SHA-256
+  <code>770cc4f49eab7683b0ea5e076963b99150b90b968acbaa8371fb1f0eff3946cd</code>；
+  脚本 <code>scripts/eval_agentic_bridge_qa.py</code>，结果 <code>experiments/results/agentic_bridge_qa.json</code>。
+</p>
+<table>
+  <thead><tr><th>配置</th><th>证据链完整率</th><th>Evidence Recall</th><th>Answer Fact F1</th><th>Citation Recall</th><th>avg / p95 延迟</th><th>avg LLM 调用</th></tr></thead>
+  <tbody>
+    <tr><td>single-shot · 一次检索</td><td>29.2%</td><td>56.3%</td><td>0.219</td><td>29.2%</td><td>24.3s / 52.6s</td><td>1.00</td></tr>
+    <tr class="best"><td><b>decompose-only · 按需分解</b></td><td><b>58.3%</b></td><td><b>79.2%</b></td><td><b>0.261</b></td><td><b>43.8%</b></td><td>32.6s / 53.8s</td><td>3.00</td></tr>
+    <tr><td>full-agentic · route+分解+反思</td><td>25.0%</td><td>41.7%</td><td>0.181</td><td>27.1%</td><td>55.1s / 111.6s</td><td>4.33</td></tr>
+  </tbody>
+</table>
+<div class="two">
+  <div class="callout good">
+    <strong>decompose-only vs single-shot</strong><br>
+    证据链完整率 <b>+29.2pp</b>，配对 bootstrap 95% CI <code>[+8.3pp, +50.0pp]</code>，
+    win/tie/loss = 8/15/1；Answer Fact F1 <b>+0.0417</b>，95% CI
+    <code>[+0.0135, +0.0723]</code>，win/tie/loss = 15/2/7。两个预注册主指标均为稳定正收益。
+  </div>
+  <div class="callout bad">
+    <strong>full-agentic vs single-shot</strong><br>
+    证据链完整率 <b>−4.2pp</b>，95% CI <code>[−20.8pp, +12.5pp]</code>；
+    Answer Fact F1 <b>−0.0376</b>，95% CI <code>[−0.0968, +0.0173]</code>。
+    反思产生的探索查询增加到平均 4 次检索，但会稀释强初始证据，成本与质量均不占优。
+  </div>
+</div>
+<p class="sub">
+  这不是把负结果“换数据集”：原单跳 nDCG 与 8 条宽泛多文档召回结果全部保留。
+  新专项回答的是不同问题——当用户问题天然包含两个可分解证据目标时，Agentic 的哪个机制有价值。
+  结论是<b>分解器有效，当前反思器无效</b>，应做路由后的能力选择，而不是默认执行全链路。
+</p>
+
+<!-- ===================== 结论 ===================== -->
+<h2>9 · 结论与工程建议</h2>
+<div class="callout">
+<ul>
+  <li><b>Dense 是检索主力</b>：贡献 nDCG@10 +0.262（p&lt;0.001）。前提是 embedding 空间对齐——本实验最大教训。</li>
+  <li><b>cross-encoder 精排显著且高性价比</b>：+0.154 nDCG@10，本地毫秒级，全面优于 LLM rerank。</li>
+  <li><b>BM25 稀疏融合在此语料收益不显著</b>（p=0.86）：当前 dense 已足够强，RRF 更适合作为鲁棒性冗余。</li>
+  <li><b>Agentic RAG 的有效边界已定位</b>：单跳默认走快速 hybrid+CE；组合式双证据题启用 decompose-only，可把证据链完整率从 29.2% 提至 58.3%（CI 不跨 0）；当前 full-agentic 反思链质量更低且 p95 达 111.6s，暂不应默认开启。</li>
+  <li><b>推荐生产策略</b>：增加 query complexity gate，单跳→single-shot，显式组合/比较题→decompose-only，只有可观测到证据缺口且有剩余预算时→reflect，并设置延迟与调用硬上限。</li>
+</ul>
+</div>
+
+<!-- ===================== 附录 ===================== -->
+<h2>10 · 附录：方法与产物</h2>
+<h3>实验设置</h3>
+<ul>
+  <li>召回池 <code>retrieval.top_k = 30</code>，精排 <code>rerank.top_n = 20</code>（解开 @10 家族截断）</li>
+  <li>相关性：graded 0~3，nDCG 用指数增益 <code>(2^rel − 1)/log2(i+1)</code></li>
+  <li>Recall 采用 capped 口径：分母 <code>min(k, |golden|)</code></li>
+  <li>消融开关：<code>COGENT_EVAL_NO_RERANK / NO_DENSE / NO_FUSION / AGENTIC</code>；精排后端覆盖 <code>COGENT_EVAL_RERANK_PROVIDER</code></li>
+</ul>
+<h3>结果文件（experiments/results/）</h3>
+<p>
+  <span class="pill">ablation_full.json</span><span class="pill">ablation_no_rerank.json</span>
+  <span class="pill">ablation_no_fusion.json</span><span class="pill">ablation_no_dense.json</span>
+  <span class="pill">ablation_agentic.json</span><span class="pill">ablation_stats.json</span>
+  <span class="pill">sec6_ce.json</span><span class="pill">sec6_llm.json</span><span class="pill">ragas20.json</span>
+  <span class="pill">multihop_singleshot_vs_agentic.json</span><span class="pill">agentic_bridge_qa.json</span>
+</p>
+
+<div class="foot">
+  本报告数据均来自真实评估产出，可复现。指标口径、显著性方法与目标值定义见
+  <code>docs/EVAL_OPTIMIZATION_SPEC.md</code>。Modular RAG MCP Server · 评估驱动优化。
+</div>
+</div>
+</body>
+</html>

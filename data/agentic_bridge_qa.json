@@ -1,0 +1,1590 @@
+{
+  "schema_version": "1.0",
+  "name": "agentic_composition_qa",
+  "frozen": true,
+  "seed": 20260721,
+  "corpus_collection": "default",
+  "construction": {
+    "source": "deterministic pairing of pre-existing chunk-level golden cases",
+    "rule": "six distinct-source pairs per collection; generation sees only verified passages",
+    "development_cases": 6,
+    "frozen_test_cases": 24
+  },
+  "cases": [
+    {
+      "id": "composition-001",
+      "split": "dev",
+      "type": "composition",
+      "query": "How do VOYAGER and AutoGen each leverage feedback to improve agent performance?",
+      "reference_answer": "VOYAGER refines skills based on environmental feedback and commits mastered skills to memory for future reuse, while AutoGen uses multi-agent conversations where agents incorporate feedback by providing and seeking reasoning, observations, critiques, and validation, enabling them to cooperate on complex tasks.",
+      "answer_facts": [
+        {
+          "fact": "VOYAGER refines skills based on environmental feedback and commits mastered skills to memory for future reuse in similar situations.",
+          "aliases": [
+            "VOYAGER uses environmental feedback to refine and memorize skills",
+            "skill refinement and memory from feedback"
+          ]
+        },
+        {
+          "fact": "AutoGen agents cooperate through conversations that incorporate feedback, where they provide and seek reasoning, observations, critiques, and validation.",
+          "aliases": [
+            "AutoGen’s multi-agent dialogues include feedback for cooperation",
+            "conversations with feedback exchange"
+          ]
+        }
+      ],
+      "bridge_entity": "feedback-based agent improvement",
+      "evidence_chain": [
+        {
+          "hop": 1,
+          "depends_on": [],
+          "source": "data/documents/agent/07_voyager.pdf",
+          "chunk_id": "doc_769a4e33ddeeb738_0006_7da245ca",
+          "text_sha256": "7da245ca1d2a3e9e5be48b12d366beddffb8fc184355e7201d04027ad38d8a59",
+          "source_question": "What three abilities (refine skills, commit to memory, self-driven exploration) does VOYAGER aim to achieve?"
+        },
+        {
+          "hop": 2,
+          "depends_on": [
+            1
+          ],
+          "source": "data/documents/agent/10_autogen.pdf",
+          "chunk_id": "doc_fcf8b1acae6b1bd6_0009_2069cbff",
+          "text_sha256": "2069cbffd30f60cd92fc2e32f2d6d6b45c8508fa44e74305d100f65adf2f6469",
+          "source_question": "What three reasons does AutoGen give for the feasibility and utility of multi-agent conversations?"
+        }
+      ],
+      "required_chunk_ids": [
+        "doc_769a4e33ddeeb738_0006_7da245ca",
+        "doc_fcf8b1acae6b1bd6_0009_2069cbff"
+      ],
+      "required_sources": [
+        "data/documents/agent/07_voyager.pdf",
+        "data/documents/agent/10_autogen.pdf"
+      ]
+    },
+    {
+      "id": "composition-002",
+      "split": "dev",
+      "type": "composition",
+      "query": "How do generative agents react when they notice their breakfast burning, and what is the purpose of the SWE-bench-train dataset?",
+      "reference_answer": "Generative agents turn off the stove when they see their breakfast is burning. SWE-bench-train is a training dataset of 19,000 non-testing task instances from 37 repositories, released to fine-tune models such as SWE-Llama 7b and 13b for solving software engineering issues.",
+      "answer_facts": [
+        {
+          "fact": "Generative agents turn off the stove when they see that their breakfast is burning.",
+          "aliases": [
+            "turn off stove upon seeing burning breakfast",
+            "switch off stove when breakfast burns",
+            "react to burning breakfast by turning off the stove"
+          ]
+        },
+        {
+          "fact": "SWE-bench-train is a training dataset comprising 19,000 non-testing task instances derived from 37 repositories, used to fine-tune SWE-Llama models.",
+          "aliases": [
+            "SWE-bench-train: 19,000 task instances from 37 repos",
+            "dataset of 19,000 examples from 37 repositories",
+            "training set for fine-tuning SWE-Llama"
+          ]
+        }
+      ],
+      "bridge_entity": "context-responsive AI systems",
+      "evidence_chain": [
+        {
+          "hop": 1,
+          "depends_on": [],
+          "source": "data/documents/agent/08_swe_bench.pdf",
+          "chunk_id": "doc_f7e8e1df64129742_0008_91c7a1fa",
+          "text_sha256": "91c7a1fa11fc37239ac11f140f49087122b2e200289b772a2c2ef90fc41b3258",
+          "source_question": "What is SWE-bench-train, and which fine-tuned models (SWE-Llama) are released from it?"
+        },
+        {
+          "hop": 2,
+          "depends_on": [
+            1
+          ],
+          "source": "data/documents/agent/04_generative_agents.pdf",
+          "chunk_id": "doc_1b31e77fb24d25d7_0009_fbab20f0",
+          "text_sha256": "fbab20f0808a8bf16199c26e5b18c5a8576635a475989ef014ada38699a97cb3",
+          "source_question": "What concrete examples of believable behavior (such as reacting to a burning breakfast) do generative agents demonstrate?"
+        }
+      ],
+      "required_chunk_ids": [
+        "doc_f7e8e1df64129742_0008_91c7a1fa",
+        "doc_1b31e77fb24d25d7_0009_fbab20f0"
+      ],
+      "required_sources": [
+        "data/documents/agent/08_swe_bench.pdf",
+        "data/documents/agent/04_generative_agents.pdf"
+      ]
+    },
+    {
+      "id": "composition-003",
+      "split": "dev",
+      "type": "composition",
+      "query": "How does the Toolformer model augment a large language model using external APIs, and what memory-related capabilities does the generative agents architecture add to an LLM?",
+      "reference_answer": "Toolformer autonomously decides to call a question answering system, a calculator, a machine translation system, and a Wikipedia search engine to obtain useful information. The generative agents architecture extends an LLM to store a complete record of experiences in natural language, synthesize those memories over time into higher-level reflections, and retrieve them dynamically to plan behavior.",
+      "answer_facts": [
+        {
+          "fact": "Toolformer autonomously decides to call a question answering system, a calculator, a machine translation system, and a Wikipedia search engine.",
+          "aliases": [
+            "calls four APIs: QA, calculator, translation, Wikipedia"
+          ]
+        },
+        {
+          "fact": "The generative agents architecture extends a large language model to store a complete record of experiences, synthesize memories into higher-level reflections, and retrieve them dynamically to plan behavior.",
+          "aliases": [
+            "LLM stores experiences, synthesizes reflections, retrieves for behavior planning"
+          ]
+        }
+      ],
+      "bridge_entity": "methods for augmenting large language models with external tools and memory systems",
+      "evidence_chain": [
+        {
+          "hop": 1,
+          "depends_on": [],
+          "source": "data/documents/agent/02_toolformer.pdf",
+          "chunk_id": "doc_6d7483d94653008e_0009_4ecd2700",
+          "text_sha256": "4ecd2700ffc654c9b72bedd2495a520666d95dbb1ba18c3af020a11cd79dd4f4",
+          "source_question": "In the Toolformer example, which four types of external APIs does the model autonomously decide to call?"
+        },
+        {
+          "hop": 2,
+          "depends_on": [
+            1
+          ],
+          "source": "data/documents/agent/04_generative_agents.pdf",
+          "chunk_id": "doc_1b31e77fb24d25d7_0003_90a9e9c7",
+          "text_sha256": "90a9e9c7f63f50df73b7c96b7f2ce3632e4917561b498faca9ed7c3cbd118ce0",
+          "source_question": "What capabilities does the generative agents architecture add to a large language model to store and reflect on experiences?"
+        }
+      ],
+      "required_chunk_ids": [
+        "doc_6d7483d94653008e_0009_4ecd2700",
+        "doc_1b31e77fb24d25d7_0003_90a9e9c7"
+      ],
+      "required_sources": [
+        "data/documents/agent/02_toolformer.pdf",
+        "data/documents/agent/04_generative_agents.pdf"
+      ]
+    },
+    {
+      "id": "composition-004",
+      "split": "dev",
+      "type": "composition",
+      "query": "What human ability, described as a tight synergy, facilitates fast task learning and robust decision-making, and what grand AI challenge does it emphasize for embodied agents in open-ended worlds?",
+      "reference_answer": "The synergy between acting and reasoning enables humans to learn new tasks quickly and make robust decisions even under uncertainty. Building generally capable embodied agents that can continuously explore, plan, and develop new skills in open-ended worlds is a grand challenge for the AI community.",
+      "answer_facts": [
+        {
+          "fact": "The synergy between acting and reasoning allows humans to learn new tasks quickly and perform robust decision making even under previously unseen circumstances or information uncertainties.",
+          "aliases": [
+            "acting-reasoning synergy enables fast learning and robust decisions",
+            "human acting and reasoning synergy aids quick task learning and robust decision-making"
+          ]
+        },
+        {
+          "fact": "Building generally capable embodied agents that continuously explore, plan, and develop new skills in open-ended worlds is a grand challenge for the AI community.",
+          "aliases": [
+            "embodied agents in open-ended worlds are a grand AI challenge",
+            "lifelong learning embodied agents present a grand challenge for AI"
+          ]
+        }
+      ],
+      "bridge_entity": "synergy of acting and reasoning",
+      "evidence_chain": [
+        {
+          "hop": 1,
+          "depends_on": [],
+          "source": "data/documents/agent/01_react.pdf",
+          "chunk_id": "doc_f285b0971ae4a790_0005_1d992549",
+          "text_sha256": "1d99254942853ac433c7c8c947ddcd0d1394c4e5cb94f9a027c06ebc295a0961",
+          "source_question": "How does the synergy between acting and reasoning help humans learn new tasks and make robust decisions according to ReAct?"
+        },
+        {
+          "hop": 2,
+          "depends_on": [
+            1
+          ],
+          "source": "data/documents/agent/07_voyager.pdf",
+          "chunk_id": "doc_769a4e33ddeeb738_0004_741540cd",
+          "text_sha256": "741540cd05716a3bdd9f6aa4eb25f4766205e7b8224faa80da86c9d1c9faf788",
+          "source_question": "What grand challenge for the AI community regarding embodied agents in open-ended worlds does VOYAGER address?"
+        }
+      ],
+      "required_chunk_ids": [
+        "doc_f285b0971ae4a790_0005_1d992549",
+        "doc_769a4e33ddeeb738_0004_741540cd"
+      ],
+      "required_sources": [
+        "data/documents/agent/01_react.pdf",
+        "data/documents/agent/07_voyager.pdf"
+      ]
+    },
+    {
+      "id": "composition-005",
+      "split": "dev",
+      "type": "composition",
+      "query": "For what reason does MetaGPT require structured intermediate outputs during collaboration, and how does Minecraft's open-ended nature benefit VOYAGER's learning process?",
+      "reference_answer": "MetaGPT uses structured intermediate outputs to minimize ambiguities and reduce hallucinations that arise from idle chatter between LLMs in role-playing frameworks. In contrast, Minecraft's lack of a predefined end goal provides endless possibilities, allowing VOYAGER to propose tasks based on its current skill level and world state and to refine skills through environmental feedback.",
+      "answer_facts": [
+        {
+          "fact": "Structured intermediate outputs in MetaGPT reduce hallucinations caused by idle chatter between LLMs in role-playing frameworks.",
+          "aliases": [
+            "Structured handovers minimize idle chatter",
+            "Formal artifacts prevent off-topic dialogue"
+          ]
+        },
+        {
+          "fact": "Minecraft imposes no predefined end goal, offering endless possibilities and requiring agents to propose tasks based on skill level and world state.",
+          "aliases": [
+            "Minecraft's open-ended world provides endless possibilities",
+            "No fixed storyline allows adaptive task proposal"
+          ]
+        }
+      ],
+      "bridge_entity": "Design choices for controlling agent communication and learning",
+      "evidence_chain": [
+        {
+          "hop": 1,
+          "depends_on": [],
+          "source": "data/documents/agent/09_metagpt.pdf",
+          "chunk_id": "doc_17582e47647fac8e_0006_a9b14666",
+          "text_sha256": "a9b1466618721748f8b436ace3c0cd5b16ecd9eadee6446c26d97040866b025a",
+          "source_question": "How do structured intermediate outputs in MetaGPT help reduce hallucinations during multi-agent collaboration?"
+        },
+        {
+          "hop": 2,
+          "depends_on": [
+            1
+          ],
+          "source": "data/documents/agent/07_voyager.pdf",
+          "chunk_id": "doc_769a4e33ddeeb738_0005_cc4e611b",
+          "text_sha256": "cc4e611bee62d6821cc902abe1482464f346eae3f27748ba66a2899821245a92",
+          "source_question": "Why is Minecraft chosen as the environment for VOYAGER, given it imposes no predefined end goal or fixed storyline?"
+        }
+      ],
+      "required_chunk_ids": [
+        "doc_17582e47647fac8e_0006_a9b14666",
+        "doc_769a4e33ddeeb738_0005_cc4e611b"
+      ],
+      "required_sources": [
+        "data/documents/agent/09_metagpt.pdf",
+        "data/documents/agent/07_voyager.pdf"
+      ]
+    },
+    {
+      "id": "composition-006",
+      "split": "dev",
+      "type": "composition",
+      "query": "What capabilities do large language models like ChatGPT demonstrate, and what kind of output does MetaGPT require from its agents?",
+      "reference_answer": "Large language models like ChatGPT demonstrate superior capabilities in language understanding, generation, and reasoning. MetaGPT, a GPT-based meta-programming framework, requires agents to produce structured outputs such as high-quality requirements.",
+      "answer_facts": [
+        {
+          "fact": "Large language models like ChatGPT exhibit superior capabilities in language understanding, generation, and reasoning.",
+          "aliases": [
+            "LLMs master language comprehension, text generation, and logical reasoning",
+            "ChatGPT shows high-level language skills: understanding, generating, and reasoning"
+          ]
+        },
+        {
+          "fact": "MetaGPT requires agents to generate structured outputs, e.g., high-quality requirements.",
+          "aliases": [
+            "Agents in MetaGPT must produce structured outputs like high-quality requirement documents",
+            "MetaGPT demands structured outputs such as detailed requirements from its agents"
+          ]
+        }
+      ],
+      "bridge_entity": "GPT-based systems",
+      "evidence_chain": [
+        {
+          "hop": 1,
+          "depends_on": [],
+          "source": "data/documents/agent/05_hugginggpt.pdf",
+          "chunk_id": "doc_5add5f7ff9041299_0003_f91ab271",
+          "text_sha256": "f91ab2715b615b91a8b383b4f741199be6d08831a539ecc55dad3b6a335bd926",
+          "source_question": "What capabilities do large language models like ChatGPT gain from large-scale pre-training and reinforcement learning from human feedback?"
+        },
+        {
+          "hop": 2,
+          "depends_on": [
+            1
+          ],
+          "source": "data/documents/agent/09_metagpt.pdf",
+          "chunk_id": "doc_17582e47647fac8e_0005_c1ccde48",
+          "text_sha256": "c1ccde48c8352de3333a1209402316bcd778562245b911470840239f03a51bdc",
+          "source_question": "What kind of structured outputs does MetaGPT require agents to generate within its meta-programming framework?"
+        }
+      ],
+      "required_chunk_ids": [
+        "doc_5add5f7ff9041299_0003_f91ab271",
+        "doc_17582e47647fac8e_0005_c1ccde48"
+      ],
+      "required_sources": [
+        "data/documents/agent/05_hugginggpt.pdf",
+        "data/documents/agent/09_metagpt.pdf"
+      ]
+    },
+    {
+      "id": "composition-007",
+      "split": "test",
+      "type": "composition",
+      "query": "What does LoRA’s reparametrization train while keeping pre-trained weights frozen, and what trade-off does Chinchilla formulate under a fixed FLOPs budget?",
+      "reference_answer": "In LoRA's reparametrization, only the low-rank matrices A and B are trained, while the pre-trained weights remain frozen. For optimal training under a fixed FLOPs budget, Chinchilla formulates a trade-off between model size N and number of training tokens D by minimizing the loss L(N,D) given the compute constraint.",
+      "answer_facts": [
+        {
+          "fact": "In LoRA's reparametrization, only matrices A and B are trained, while pre-trained weights are kept frozen.",
+          "aliases": [
+            "LoRA trains A and B",
+            "only low-rank matrices A and B are updated"
+          ]
+        },
+        {
+          "fact": "Chinchilla formulates the trade-off between model size N and training tokens D by minimizing loss L(N,D) under the constraint FLOPs(N,D)=C.",
+          "aliases": [
+            "Chinchilla optimizes N and D under fixed compute",
+            "minimize L(N,D) s.t. FLOPs(N,D)=C trade-off"
+          ]
+        }
+      ],
+      "bridge_entity": "efficiency and quality trade-offs in large language models",
+      "evidence_chain": [
+        {
+          "hop": 1,
+          "depends_on": [],
+          "source": "data/documents/llm/08_lora.pdf",
+          "chunk_id": "doc_e9a0d3128767db61_0004_ca5842c5",
+          "text_sha256": "ca5842c55ef3ea6428848ae7a7983b97489ed45dfd58bb2ebb98817dfe10eb44",
+          "source_question": "In LoRA's reparametrization, which matrices are trained while the pre-trained weights are kept frozen?"
+        },
+        {
+          "hop": 2,
+          "depends_on": [
+            1
+          ],
+          "source": "data/documents/llm/07_chinchilla.pdf",
+          "chunk_id": "doc_3fd3632a8ef48171_0008_23ad67a4",
+          "text_sha256": "23ad67a40c97e05409289b9b4b24450b640b03abb863eafcbb1af3356f8046dd",
+          "source_question": "What trade-off between model size N and training tokens D under a fixed FLOPs budget does Chinchilla formulate?"
+        }
+      ],
+      "required_chunk_ids": [
+        "doc_e9a0d3128767db61_0004_ca5842c5",
+        "doc_3fd3632a8ef48171_0008_23ad67a4"
+      ],
+      "required_sources": [
+        "data/documents/llm/08_lora.pdf",
+        "data/documents/llm/07_chinchilla.pdf"
+      ]
+    },
+    {
+      "id": "composition-008",
+      "split": "test",
+      "type": "composition",
+      "query": "Why might scaling up a language model's size, dataset, and compute according to the power-law relationship not fix the misalignment issue where the standard next-token prediction objective differs from following user instructions helpfully and safely?",
+      "reference_answer": "Scaling laws show that performance on the standard language modeling objective of predicting next tokens improves smoothly as a power-law with model size, dataset size, and compute. However, that objective itself is misaligned with the goal of following user instructions helpfully and safely, so even a much larger model excelling at next-token prediction can still produce unintended and unsafe behaviors.",
+      "answer_facts": [
+        {
+          "fact": "The standard language modeling objective of predicting next tokens is misaligned with following user instructions helpfully and safely.",
+          "aliases": [
+            "standard LM objective is misaligned",
+            "predicting next token misaligned with helpful and safe instruction following"
+          ]
+        },
+        {
+          "fact": "Language modeling performance has a power-law relationship with model size, dataset size, and compute.",
+          "aliases": [
+            "LM performance scales as power-law with scale factors",
+            "performance power-law with N, D, C"
+          ]
+        }
+      ],
+      "bridge_entity": "the standard language modeling objective",
+      "evidence_chain": [
+        {
+          "hop": 1,
+          "depends_on": [],
+          "source": "data/documents/llm/05_instructgpt.pdf",
+          "chunk_id": "doc_c1984bb50a5b90fd_0005_b5746118",
+          "text_sha256": "b574611808c255ba07c8a2ec09992747baa6b2d604fc2b8cd9de26cf6f39892f",
+          "source_question": "Why is the standard language modeling objective of predicting the next token described as misaligned in InstructGPT?"
+        },
+        {
+          "hop": 2,
+          "depends_on": [
+            1
+          ],
+          "source": "data/documents/llm/10_scaling_laws.pdf",
+          "chunk_id": "doc_a41bd7877fd1a6bc_0006_720f47e2",
+          "text_sha256": "720f47e2c4200ddc7723a24699bbe9b59f791119378765590373b11d002e1597",
+          "source_question": "According to the scaling laws paper, what power-law relationship governs performance with respect to model size, dataset size, and compute?"
+        }
+      ],
+      "required_chunk_ids": [
+        "doc_c1984bb50a5b90fd_0005_b5746118",
+        "doc_a41bd7877fd1a6bc_0006_720f47e2"
+      ],
+      "required_sources": [
+        "data/documents/llm/05_instructgpt.pdf",
+        "data/documents/llm/10_scaling_laws.pdf"
+      ]
+    },
+    {
+      "id": "composition-009",
+      "split": "test",
+      "type": "composition",
+      "query": "How does chain-of-thought prompting circumvent the limitations of earlier reasoning methods, and what empirical scaling patterns were observed for Transformer language models?",
+      "reference_answer": "Chain-of-thought prompting avoids the costly creation of high-quality rationales needed for fine-tuning and the weak reasoning performance of traditional few-shot prompting. In parallel, scaling laws research found that Transformer language modeling loss follows precise power-law relationships with training time, context length, dataset size, model size, and compute budget.",
+      "answer_facts": [
+        {
+          "fact": "Chain-of-thought prompting eliminates the expensive rationale creation required by fine-tuning and the poor reasoning of standard few-shot prompting.",
+          "aliases": [
+            "avoids costly rationales",
+            "bypasses weak few-shot reasoning"
+          ]
+        },
+        {
+          "fact": "Transformer language modeling loss obeys power-law scalings in training time, context length, dataset size, model size, and compute.",
+          "aliases": [
+            "power-law loss scaling with model and data scale",
+            "scaling laws for compute, data, and parameters"
+          ]
+        }
+      ],
+      "bridge_entity": "methods for improving and understanding language model performance",
+      "evidence_chain": [
+        {
+          "hop": 1,
+          "depends_on": [],
+          "source": "data/documents/llm/06_chain_of_thought.pdf",
+          "chunk_id": "doc_7d9f878c23b460e4_0008_e9661042",
+          "text_sha256": "e96610429378475f8a337d623bea700951e6b93ac316c78d6d4f67906c67222a",
+          "source_question": "What limitations of rationale-augmented fine-tuning and few-shot prompting does chain-of-thought prompting combine to avoid?"
+        },
+        {
+          "hop": 2,
+          "depends_on": [
+            1
+          ],
+          "source": "data/documents/llm/10_scaling_laws.pdf",
+          "chunk_id": "doc_a41bd7877fd1a6bc_0004_40f97b55",
+          "text_sha256": "40f97b5521c4072f85452025817a496d0544fd08f4717f4a8f03f3563740c558",
+          "source_question": "Which factors (model architecture, size, compute, data) does the scaling laws paper investigate for their effect on language modeling loss?"
+        }
+      ],
+      "required_chunk_ids": [
+        "doc_7d9f878c23b460e4_0008_e9661042",
+        "doc_a41bd7877fd1a6bc_0004_40f97b55"
+      ],
+      "required_sources": [
+        "data/documents/llm/06_chain_of_thought.pdf",
+        "data/documents/llm/10_scaling_laws.pdf"
+      ]
+    },
+    {
+      "id": "composition-010",
+      "split": "test",
+      "type": "composition",
+      "query": "Which model architecture relies entirely on an attention mechanism instead of recurrence, and what recent trend in training such models has led to dense language models with over 500 billion parameters?",
+      "reference_answer": "The Transformer architecture relies entirely on an attention mechanism instead of recurrence to capture global dependencies. A recent trend is training ever-larger dense language models, with the largest now having over 500 billion parameters.",
+      "answer_facts": [
+        {
+          "fact": "The Transformer relies entirely on an attention mechanism instead of recurrence to draw global dependencies.",
+          "aliases": [
+            "attention-only Transformer",
+            "Transformer uses attention not recurrence"
+          ]
+        },
+        {
+          "fact": "The largest dense language models now have over 500 billion parameters.",
+          "aliases": [
+            "largest dense LMs exceed 500B parameters",
+            "dense language models over 500 billion parameters"
+          ]
+        }
+      ],
+      "bridge_entity": "scaled Transformer language models",
+      "evidence_chain": [
+        {
+          "hop": 1,
+          "depends_on": [],
+          "source": "data/documents/llm/07_chinchilla.pdf",
+          "chunk_id": "doc_3fd3632a8ef48171_0003_8bf31caa",
+          "text_sha256": "8bf31caa2888a2fbe37f02839d5b5ed845eb6b81e1049a5e7e26241d9913ff02",
+          "source_question": "What trend of training ever-larger dense language models motivates the Chinchilla study?"
+        },
+        {
+          "hop": 2,
+          "depends_on": [
+            1
+          ],
+          "source": "data/documents/llm/01_transformer_attention_is_all_you_need.pdf",
+          "chunk_id": "doc_bdfaa68d8984f0dc_0006_27abb5d9",
+          "text_sha256": "27abb5d974b0c9fda80fdbb7316a371e77c35becea06c38f70ac79259bb2567c",
+          "source_question": "What does the Transformer propose to rely on entirely, instead of recurrence, to draw global dependencies between input and output?"
+        }
+      ],
+      "required_chunk_ids": [
+        "doc_3fd3632a8ef48171_0003_8bf31caa",
+        "doc_bdfaa68d8984f0dc_0006_27abb5d9"
+      ],
+      "required_sources": [
+        "data/documents/llm/07_chinchilla.pdf",
+        "data/documents/llm/01_transformer_attention_is_all_you_need.pdf"
+      ]
+    },
+    {
+      "id": "composition-011",
+      "split": "test",
+      "type": "composition",
+      "query": "How does LLaMA's pre-training incorporate scaling laws, and what limitation of scaling up model size alone does chain-of-thought prompting address?",
+      "reference_answer": "LLaMA's pre-training follows the Chinchilla scaling laws, training large transformers on a large quantity of textual data using a standard optimizer. However, scaling up model size alone has not proved sufficient for achieving high performance on challenging reasoning tasks such as arithmetic, commonsense, and symbolic reasoning.",
+      "answer_facts": [
+        {
+          "fact": "LLaMA's pre-training follows the Chinchilla scaling laws.",
+          "aliases": [
+            "inspired by Chinchilla scaling laws",
+            "Chinchilla scaling laws"
+          ]
+        },
+        {
+          "fact": "Scaling up model size alone is insufficient for high performance on arithmetic, commonsense, and symbolic reasoning.",
+          "aliases": [
+            "insufficient for challenging reasoning tasks",
+            "not sufficient for complex reasoning"
+          ]
+        }
+      ],
+      "bridge_entity": "Scaling laws and the limitations of scaling model size alone",
+      "evidence_chain": [
+        {
+          "hop": 1,
+          "depends_on": [],
+          "source": "data/documents/llm/04_llama.pdf",
+          "chunk_id": "doc_2e663675ae36ad12_0006_9caafe57",
+          "text_sha256": "9caafe571eee83665d65e6f36de9bda4c77636468bc618ff4bd2a0f7130c641b",
+          "source_question": "What scaling laws and standard training approach does LLaMA's pre-training follow?"
+        },
+        {
+          "hop": 2,
+          "depends_on": [
+            1
+          ],
+          "source": "data/documents/llm/06_chain_of_thought.pdf",
+          "chunk_id": "doc_7d9f878c23b460e4_0005_18901d73",
+          "text_sha256": "18901d7395ff30cd280c96bbda29e075fda00cfb32d1478b6133cbee833a1685",
+          "source_question": "What limitation of scaling up model size alone for challenging reasoning tasks does chain-of-thought prompting address?"
+        }
+      ],
+      "required_chunk_ids": [
+        "doc_2e663675ae36ad12_0006_9caafe57",
+        "doc_7d9f878c23b460e4_0005_18901d73"
+      ],
+      "required_sources": [
+        "data/documents/llm/04_llama.pdf",
+        "data/documents/llm/06_chain_of_thought.pdf"
+      ]
+    },
+    {
+      "id": "composition-012",
+      "split": "test",
+      "type": "composition",
+      "query": "What techniques help mitigate the sequential bottleneck in recurrent neural networks, and what role does the linear model play in LLaMA’s CommonCrawl preprocessing?",
+      "reference_answer": "Recurrent networks use factorization tricks and conditional computation to improve computational efficiency. In LLaMA’s CCNet pipeline, a linear model classifies pages as Wikipedia references and discards those not classified as references to filter low-quality content.",
+      "answer_facts": [
+        {
+          "fact": "Factorization tricks and conditional computation improve the computational efficiency of recurrent models.",
+          "aliases": [
+            "factorization tricks",
+            "conditional computation",
+            "efficiency improvements for recurrent networks"
+          ]
+        },
+        {
+          "fact": "LLaMA’s CCNet pipeline employs a linear model to classify pages as Wikipedia references and discards non-reference pages.",
+          "aliases": [
+            "linear classifier for reference pages",
+            "discarding non-Wikipedia-reference pages",
+            "reference-based quality filtering"
+          ]
+        }
+      ],
+      "bridge_entity": "supplementary quality and efficiency measures in model pipelines",
+      "evidence_chain": [
+        {
+          "hop": 1,
+          "depends_on": [],
+          "source": "data/documents/llm/01_transformer_attention_is_all_you_need.pdf",
+          "chunk_id": "doc_bdfaa68d8984f0dc_0005_416274e9",
+          "text_sha256": "416274e9eba13052850e26126d1f79fd899fcac5ac3aba874b98cfb46098f3ff",
+          "source_question": "Why does the inherently sequential nature of recurrent models preclude parallelization within training examples?"
+        },
+        {
+          "hop": 2,
+          "depends_on": [
+            1
+          ],
+          "source": "data/documents/llm/04_llama.pdf",
+          "chunk_id": "doc_2e663675ae36ad12_0007_670956ee",
+          "text_sha256": "670956ee98858d29f76231bd49e0d03108a2b5c7df1611106c4f87fb2f0969f0",
+          "source_question": "How does LLaMA preprocess the English CommonCrawl data used for pre-training?"
+        }
+      ],
+      "required_chunk_ids": [
+        "doc_bdfaa68d8984f0dc_0005_416274e9",
+        "doc_2e663675ae36ad12_0007_670956ee"
+      ],
+      "required_sources": [
+        "data/documents/llm/01_transformer_attention_is_all_you_need.pdf",
+        "data/documents/llm/04_llama.pdf"
+      ]
+    },
+    {
+      "id": "composition-013",
+      "split": "test",
+      "type": "composition",
+      "query": "What practical applications does integrating function calling unlock for LLMs, and how many APIs, tool-use dialogues, and API calls does the API-Bank evaluation system contain?",
+      "reference_answer": "Integrating function calling to LLMs unlocks applications like workflow automation, financial reporting, and travel planning. The API-Bank evaluation system comprises 73 APIs, 314 tool-use dialogues, and 753 API calls.",
+      "answer_facts": [
+        {
+          "fact": "Integrating function calling to LLMs unlocks applications such as workflow automation, financial reporting, and travel planning.",
+          "aliases": [
+            "function calling enables workflow automation, financial reporting, travel planning",
+            "applications unlocked by function calling include workflow automation, financial reporting, travel planning"
+          ]
+        },
+        {
+          "fact": "The API-Bank evaluation system comprises 73 APIs, 314 tool-use dialogues, and 753 API calls.",
+          "aliases": [
+            "API-Bank benchmark includes 73 APIs, 314 dialogues, 753 calls",
+            "API-Bank consists of 73 APIs, 314 tool-use dialogues, 753 API calls"
+          ]
+        }
+      ],
+      "bridge_entity": "LLM tool-use capabilities and evaluation benchmarks",
+      "evidence_chain": [
+        {
+          "hop": 1,
+          "depends_on": [],
+          "source": "data/documents/mcp/08_toolace.pdf",
+          "chunk_id": "doc_493d43589b1e749c_0003_d7f8b390",
+          "text_sha256": "d7f8b3904b08c0376378a403007067950db10b823bd270c3edf4023b672f20a5",
+          "source_question": "What capabilities does integrating function calling unlock for LLMs according to ToolACE?"
+        },
+        {
+          "hop": 2,
+          "depends_on": [
+            1
+          ],
+          "source": "data/documents/mcp/04_api_bank.pdf",
+          "chunk_id": "doc_619006a4cfcdd1d2_0007_fcec9308",
+          "text_sha256": "fcec9308d4302aa64fffad89e985747fab97e38430f49eac9d3987e0d45989f3",
+          "source_question": "How many APIs, tool-use dialogues, and API calls does the API-Bank evaluation system comprise?"
+        }
+      ],
+      "required_chunk_ids": [
+        "doc_493d43589b1e749c_0003_d7f8b390",
+        "doc_619006a4cfcdd1d2_0007_fcec9308"
+      ],
+      "required_sources": [
+        "data/documents/mcp/08_toolace.pdf",
+        "data/documents/mcp/04_api_bank.pdf"
+      ]
+    },
+    {
+      "id": "composition-014",
+      "split": "test",
+      "type": "composition",
+      "query": "What makes real-world function calls diverse and complex, and which two primary research paradigms for tool integration with LLMs have been developed to address these challenges?",
+      "reference_answer": "Real-world function calls are diverse and complex due to varied API functionalities and a broad range of tasks. The two primary research paradigms for tool integration with LLMs are fine-tuning LLMs to learn specific tools and in-context learning.",
+      "answer_facts": [
+        {
+          "fact": "Real-world function calls are diverse and complex due to varied API functionalities and a broad range of tasks.",
+          "aliases": [
+            "varied API functionalities",
+            "broad range of tasks",
+            "diverse function calls",
+            "complex function calls"
+          ]
+        },
+        {
+          "fact": "The two primary research paradigms for tool integration with LLMs are fine-tuning LLMs to learn specific tools and in-context learning.",
+          "aliases": [
+            "fine-tuning",
+            "in-context learning",
+            "tool learning paradigms",
+            "fine-tuning and in-context learning"
+          ]
+        }
+      ],
+      "bridge_entity": "Addressing real-world function calling complexity with LLM tool integration paradigms",
+      "evidence_chain": [
+        {
+          "hop": 1,
+          "depends_on": [],
+          "source": "data/documents/mcp/08_toolace.pdf",
+          "chunk_id": "doc_493d43589b1e749c_0004_4e7f8da7",
+          "text_sha256": "4e7f8da7ba4bb2d1df538685b01e93cea9eb7f95b4d819c69e3e0e05f16aedce",
+          "source_question": "Why are function calls in real-world applications often diverse and complex according to ToolACE?"
+        },
+        {
+          "hop": 2,
+          "depends_on": [
+            1
+          ],
+          "source": "data/documents/mcp/05_toolkengpt.pdf",
+          "chunk_id": "doc_50f55a8595310730_0006_8ba70298",
+          "text_sha256": "8ba70298cf4a574c3b92e08aac46dc1b0fe655062bedc1b55527ebf5d5ea0342",
+          "source_question": "What two primary research paradigms for tool integration with LLMs does ToolkenGPT describe?"
+        }
+      ],
+      "required_chunk_ids": [
+        "doc_493d43589b1e749c_0004_4e7f8da7",
+        "doc_50f55a8595310730_0006_8ba70298"
+      ],
+      "required_sources": [
+        "data/documents/mcp/08_toolace.pdf",
+        "data/documents/mcp/05_toolkengpt.pdf"
+      ]
+    },
+    {
+      "id": "composition-015",
+      "split": "test",
+      "type": "composition",
+      "query": "According to the passage, what is the remaining performance gap of Lynx from GPT-4 in API usage, and what makes scaling risk assessment for language model agents difficult?",
+      "reference_answer": "Lynx remains 21% behind GPT-4 in API usage. Scaling risk assessment is difficult because identifying long-tail, open-ended risks requires substantial engineering effort, with labor-intensive sandbox setups that constrain the test space.",
+      "answer_facts": [
+        {
+          "fact": "There remains a 21% gap from GPT-4 in API usage.",
+          "aliases": [
+            "Lynx 21% behind GPT-4",
+            "21% gap from GPT-4"
+          ]
+        },
+        {
+          "fact": "Scaling risk assessment for LM agents is difficult because identifying long-tail, open-ended risks requires substantial engineering effort and labor-intensive sandbox setups that limit the test space.",
+          "aliases": [
+            "Long-tail, open-ended risks and labor-intensive testing hinder scalability of risk identification"
+          ]
+        }
+      ],
+      "bridge_entity": "evaluation challenges for AI agents",
+      "evidence_chain": [
+        {
+          "hop": 1,
+          "depends_on": [],
+          "source": "data/documents/mcp/04_api_bank.pdf",
+          "chunk_id": "doc_619006a4cfcdd1d2_0009_dd0699f1",
+          "text_sha256": "dd0699f11838afff0f0f47a370ffa5ccbd08ad5f3862ed41dd5f20623ab521b6",
+          "source_question": "By how much does Lynx improve over Alpaca-7B in API usage, and what gap remains from GPT-4 according to API-Bank?"
+        },
+        {
+          "hop": 2,
+          "depends_on": [
+            1
+          ],
+          "source": "data/documents/mcp/09_tool_emu.pdf",
+          "chunk_id": "doc_2d746c512086bd47_0005_e9b95de5",
+          "text_sha256": "e9b95de5628fe4c14bc9cb912ff1b9fbea27807a300d74c76357262cde15f802",
+          "source_question": "Why is identifying the risks associated with LM agents challenging due to their long-tail, open-ended nature according to ToolEmu?"
+        }
+      ],
+      "required_chunk_ids": [
+        "doc_619006a4cfcdd1d2_0009_dd0699f1",
+        "doc_2d746c512086bd47_0005_e9b95de5"
+      ],
+      "required_sources": [
+        "data/documents/mcp/04_api_bank.pdf",
+        "data/documents/mcp/09_tool_emu.pdf"
+      ]
+    },
+    {
+      "id": "composition-016",
+      "split": "test",
+      "type": "composition",
+      "query": "What limitation do offline plan-then-execute methods and ReAct share in API-augmented LLMs, and what process does ToolACE's Tool Self-Evolution Synthesis (TSS) employ to create tools?",
+      "reference_answer": "Offline plan-then-execute methods and ReAct encounter challenges in effectively adapting API feedback and generating viable plans. ToolACE's TSS method uses a speciation-adaptation-evolution process to synthesize tools across multiple domains with diverse data types and constraints.",
+      "answer_facts": [
+        {
+          "fact": "Offline plan-then-execute methods and ReAct struggle to effectively adapt API feedback and generate viable plans.",
+          "aliases": [
+            "Offline plan-then-execute and ReAct have difficulty adapting feedback and making plans",
+            "existing techniques face adaptation and planning challenges"
+          ]
+        },
+        {
+          "fact": "ToolACE's TSS method employs a speciation-adaptation-evolution process to generate tools across multiple domains with diverse data types and constraints.",
+          "aliases": [
+            "TSS uses speciation-adaptation-evolution to synthesize diverse tools",
+            "Tool Self-Evolution Synthesis generates tools via iterative speciation-adaptation-evolution"
+          ]
+        }
+      ],
+      "bridge_entity": "API-augmented LLMs",
+      "evidence_chain": [
+        {
+          "hop": 1,
+          "depends_on": [],
+          "source": "data/documents/mcp/06_restgpt.pdf",
+          "chunk_id": "doc_61e65633db1e073d_0007_3942250e",
+          "text_sha256": "3942250effd32cb72f75fed8012479667e8d37b9e54d07e3180c0b6c489cde40",
+          "source_question": "What challenges do offline plan-then-execute methods and the ReAct framework face in API-augmented LLMs according to RestGPT?"
+        },
+        {
+          "hop": 2,
+          "depends_on": [
+            1
+          ],
+          "source": "data/documents/mcp/08_toolace.pdf",
+          "chunk_id": "doc_493d43589b1e749c_0007_b3b06242",
+          "text_sha256": "b3b06242816b195d94b694982580b61783eb26acabc84df6f323af59e47a0d49",
+          "source_question": "What is the Tool Self-Evolution Synthesis (TSS) method used by ToolACE to generate tools?"
+        }
+      ],
+      "required_chunk_ids": [
+        "doc_61e65633db1e073d_0007_3942250e",
+        "doc_493d43589b1e749c_0007_b3b06242"
+      ],
+      "required_sources": [
+        "data/documents/mcp/06_restgpt.pdf",
+        "data/documents/mcp/08_toolace.pdf"
+      ]
+    },
+    {
+      "id": "composition-017",
+      "split": "test",
+      "type": "composition",
+      "query": "How does the ToolACE dataset compare to ToolLLM in terms of tool coverage, and what three research questions does API-Bank aim to answer regarding the use of tools by large language models?",
+      "reference_answer": "ToolACE covers 26,507 APIs across 390 domains, substantially surpassing ToolLLM's 16,464 APIs across 49 domains. API-Bank seeks to answer: (1) How effective are current LLMs in utilizing tools? (2) How can we enhance LLMs' ability to utilize tools? (3) What obstacles need to be overcome to leverage tools?",
+      "answer_facts": [
+        {
+          "fact": "ToolACE covers 26,507 APIs and 390 domains, far exceeding ToolLLM's 16,464 APIs and 49 domains.",
+          "aliases": [
+            "ToolACE has 26,507 APIs and 390 domains, versus ToolLLM's 16,464 APIs and 49 domains",
+            "ToolACE includes 26,507 APIs across 390 domains, surpassing ToolLLM's 16,464 APIs across 49 domains"
+          ]
+        },
+        {
+          "fact": "API-Bank addresses three pivotal questions: (1) How effective are current LLMs in utilizing tools? (2) How can we enhance LLMs' ability to utilize tools? (3) What obstacles need to be overcome to leverage tools?",
+          "aliases": [
+            "The three questions are about tool-use effectiveness, enhancement, and obstacles",
+            "API-Bank's three questions concern tool-use effectiveness, improvement, and barriers"
+          ]
+        }
+      ],
+      "bridge_entity": "benchmarking tool-augmented large language models",
+      "evidence_chain": [
+        {
+          "hop": 1,
+          "depends_on": [],
+          "source": "data/documents/mcp/08_toolace.pdf",
+          "chunk_id": "doc_493d43589b1e749c_0006_18af5997",
+          "text_sha256": "18af599787f862a0014991407769cef5d35ae0909776c1eb73cc20a26ffca293",
+          "source_question": "How many APIs and domains does the ToolACE dataset cover compared to prior tool-augmented datasets like ToolLLM?"
+        },
+        {
+          "hop": 2,
+          "depends_on": [
+            1
+          ],
+          "source": "data/documents/mcp/04_api_bank.pdf",
+          "chunk_id": "doc_619006a4cfcdd1d2_0004_7696c167",
+          "text_sha256": "7696c16726aeeb9d4eb7ab5166f19042fa59ac2135a531dad2d600227f5ea0d3",
+          "source_question": "What three pivotal questions about LLM tool use does API-Bank aim to answer?"
+        }
+      ],
+      "required_chunk_ids": [
+        "doc_493d43589b1e749c_0006_18af5997",
+        "doc_619006a4cfcdd1d2_0004_7696c167"
+      ],
+      "required_sources": [
+        "data/documents/mcp/08_toolace.pdf",
+        "data/documents/mcp/04_api_bank.pdf"
+      ]
+    },
+    {
+      "id": "composition-018",
+      "split": "test",
+      "type": "composition",
+      "query": "Why is swift adaptation important for large language models when new tools emerge, and how does WebGPT’s approach to web browsing support a similar end-to-end improvement?",
+      "reference_answer": "The rapid emergence of new tools like advanced software libraries and novel APIs requires LLMs to adapt and master them quickly to stay effective. WebGPT creates a text-based web-browsing environment that allows a fine-tuned language model to improve retrieval and synthesis end-to-end using imitation and reinforcement learning.",
+      "answer_facts": [
+        {
+          "fact": "The rapid emergence of new tools (advanced software libraries, novel APIs, domain‑specific utilities) makes it crucial for LLMs to adapt and master them swiftly.",
+          "aliases": [
+            "rapid tool emergence necessitates swift adaptation",
+            "LLMs must quickly learn new tools"
+          ]
+        },
+        {
+          "fact": "WebGPT introduces a text‑based web‑browsing environment to improve retrieval and synthesis end‑to‑end via imitation and reinforcement learning.",
+          "aliases": [
+            "text‑based web browsing environment",
+            "end‑to‑end improvement of retrieval and synthesis",
+            "fine‑tuned language model interacts with a browsing environment"
+          ]
+        }
+      ],
+      "bridge_entity": "Rapid adaptation to new tools and end‑to‑end system improvement",
+      "evidence_chain": [
+        {
+          "hop": 1,
+          "depends_on": [],
+          "source": "data/documents/mcp/05_toolkengpt.pdf",
+          "chunk_id": "doc_50f55a8595310730_0005_afdfc13e",
+          "text_sha256": "afdfc13e6bc070ce5c268f8f52e943eca49a184f6821ffe84bff108defe1b7d5",
+          "source_question": "Why does the rapid emergence of new tools and APIs make swift adaptation important for tool learning in ToolkenGPT?"
+        },
+        {
+          "hop": 2,
+          "depends_on": [
+            1
+          ],
+          "source": "data/documents/mcp/07_webgpt.pdf",
+          "chunk_id": "doc_acad8d9fd55a30b9_0005_015cd2d0",
+          "text_sha256": "015cd2d05a9d736a47304d48379655130aeb7f3d8a85fc5585cd194a370394b2",
+          "source_question": "What text-based web-browsing environment does WebGPT create to improve retrieval and synthesis end-to-end?"
+        }
+      ],
+      "required_chunk_ids": [
+        "doc_50f55a8595310730_0005_afdfc13e",
+        "doc_acad8d9fd55a30b9_0005_015cd2d0"
+      ],
+      "required_sources": [
+        "data/documents/mcp/05_toolkengpt.pdf",
+        "data/documents/mcp/07_webgpt.pdf"
+      ]
+    },
+    {
+      "id": "composition-019",
+      "split": "test",
+      "type": "composition",
+      "query": "How does BLIP's approach of using a captioner and filter (CapFilt) relate to the open-world visual understanding capabilities that LLaVA inherits from language-augmented foundation vision models?",
+      "reference_answer": "BLIP's captioner and filter (CapFilt) work together to bootstrap diverse captions, leading to substantial improvement on downstream vision-language tasks. LLaVA leverages language-augmented foundation vision models that already achieve strong open-world visual understanding—including classification, detection, segmentation, and captioning—to build interactive instruction-following agents.",
+      "answer_facts": [
+        {
+          "fact": "BLIP's captioner and filter (CapFilt) bootstrap captions to improve downstream task performance.",
+          "aliases": [
+            "CapFilt generates bootstrapped captions",
+            "BLIP bootstrapping caption improvement"
+          ]
+        },
+        {
+          "fact": "Language-augmented foundation vision models have strong open-world visual understanding capabilities such as classification, detection, segmentation, and captioning.",
+          "aliases": [
+            "open-world vision tasks include classification detection segmentation captioning",
+            "language-augmented models' open-world understanding"
+          ]
+        }
+      ],
+      "bridge_entity": "caption bootstrapping and open-world visual understanding",
+      "evidence_chain": [
+        {
+          "hop": 1,
+          "depends_on": [],
+          "source": "data/documents/multimodal/03_blip.pdf",
+          "chunk_id": "doc_63e0335cdd57c3d9_0006_24230ce8",
+          "text_sha256": "24230ce85a5ac90ac6c33005b3ab44c8f4f50a9abc8f5c0a3f5970d296677519",
+          "source_question": "How do the captioner and filter (CapFilt) in BLIP work together to improve downstream performance?"
+        },
+        {
+          "hop": 2,
+          "depends_on": [
+            1
+          ],
+          "source": "data/documents/multimodal/06_llava.pdf",
+          "chunk_id": "doc_dc8bace378a282ea_0004_8ff1c7f5",
+          "text_sha256": "8ff1c7f586e049431aff4979b688bdad4a8b8ca369c3b746ed96c02f614bb9c9",
+          "source_question": "What open-world visual understanding capabilities of language-augmented foundation vision models does LLaVA build upon?"
+        }
+      ],
+      "required_chunk_ids": [
+        "doc_63e0335cdd57c3d9_0006_24230ce8",
+        "doc_dc8bace378a282ea_0004_8ff1c7f5"
+      ],
+      "required_sources": [
+        "data/documents/multimodal/03_blip.pdf",
+        "data/documents/multimodal/06_llava.pdf"
+      ]
+    },
+    {
+      "id": "composition-020",
+      "split": "test",
+      "type": "composition",
+      "query": "Why is vision-language alignment particularly challenging when keeping large language models frozen, and how does Qwen-VL attempt to overcome the inherent limitation of text-only LLMs?",
+      "reference_answer": "Freezing LLMs makes vision-language alignment challenging because they have not encountered images during unimodal pre-training, leaving them without visual understanding. Qwen-VL addresses the limitation of native LLMs living in a pure-text world by acting as a large vision-language model that directly handles visual inputs, thus extending their application scope.",
+      "answer_facts": [
+        {
+          "fact": "Freezing LLMs makes vision-language alignment challenging because they have not seen images during unimodal pre-training.",
+          "aliases": [
+            "LLMs lack visual pretraining",
+            "no exposure to images before freezing"
+          ]
+        },
+        {
+          "fact": "Qwen-VL is a large vision-language model that overcomes the restriction of native LLMs to a pure-text world by incorporating visual processing.",
+          "aliases": [
+            "Qwen-VL handles visual modality",
+            "extends beyond text-only limitation"
+          ]
+        }
+      ],
+      "bridge_entity": "vision-language modality gap",
+      "evidence_chain": [
+        {
+          "hop": 1,
+          "depends_on": [],
+          "source": "data/documents/multimodal/05_blip2.pdf",
+          "chunk_id": "doc_6bc5d399d6127a64_0008_b73a8e08",
+          "text_sha256": "b73a8e0893f7388308cbd952ced685bb6f9baca41e653b2770433c14d24b2aea",
+          "source_question": "Why is freezing LLMs particularly challenging for vision-language alignment, and what does BLIP-2 propose to address it?"
+        },
+        {
+          "hop": 2,
+          "depends_on": [
+            1
+          ],
+          "source": "data/documents/multimodal/08_qwen_vl.pdf",
+          "chunk_id": "doc_b4eca60ae9d3c154_0004_642caa69",
+          "text_sha256": "642caa69351711b838066aa4e474f825f957a835ed646e70b4b61a0c0e691ab5",
+          "source_question": "What limitation of native large language models living in a pure-text world does Qwen-VL address?"
+        }
+      ],
+      "required_chunk_ids": [
+        "doc_6bc5d399d6127a64_0008_b73a8e08",
+        "doc_b4eca60ae9d3c154_0004_642caa69"
+      ],
+      "required_sources": [
+        "data/documents/multimodal/05_blip2.pdf",
+        "data/documents/multimodal/08_qwen_vl.pdf"
+      ]
+    },
+    {
+      "id": "composition-021",
+      "split": "test",
+      "type": "composition",
+      "query": "What role does language play as a universal interface for a general-purpose assistant, and how does LLaVA's performance on visual reasoning and VQA benchmarks compare to InstructBLIP's?",
+      "reference_answer": "Language acts as a universal interface for a general-purpose assistant by explicitly encoding task instructions in language to switch between tasks. LLaVA excels in conversational-style visual reasoning and outperforms InstructBLIP on those benchmarks, while InstructBLIP excels on traditional VQA benchmarks demanding single-word or short answers.",
+      "answer_facts": [
+        {
+          "fact": "LLaVA outperforms InstructBLIP on conversational visual reasoning benchmarks, but InstructBLIP outperforms LLaVA on traditional VQA benchmarks that require short answers.",
+          "aliases": [
+            "LLaVA is better at conversational visual reasoning, InstructBLIP is better at short-answer VQA",
+            "LLaVA excels at visual reasoning, InstructBLIP excels at VQA"
+          ]
+        },
+        {
+          "fact": "Language serves as a universal interface for a general-purpose assistant by explicitly representing task instructions in language to guide task switching.",
+          "aliases": [
+            "Language is a universal interface for task instructions",
+            "Task instructions in language allow the assistant to switch tasks"
+          ]
+        }
+      ],
+      "bridge_entity": "general-purpose assistants",
+      "evidence_chain": [
+        {
+          "hop": 1,
+          "depends_on": [],
+          "source": "data/documents/multimodal/10_llava15.pdf",
+          "chunk_id": "doc_b7074a6dad218e0d_0006_4f0652e3",
+          "text_sha256": "4f0652e37d87cf522b58fe0ae5b1c216d88cb8fae1bf03330b1f70246fc78f0a",
+          "source_question": "What difference in strengths between LLaVA and InstructBLIP on visual reasoning versus VQA benchmarks does LLaVA-1.5 note?"
+        },
+        {
+          "hop": 2,
+          "depends_on": [
+            1
+          ],
+          "source": "data/documents/multimodal/06_llava.pdf",
+          "chunk_id": "doc_dc8bace378a282ea_0005_dfc17e7b",
+          "text_sha256": "dfc17e7b499515c16db95eea95766a329d07014de999a4448c5be06adf457d59",
+          "source_question": "How can language serve as a universal interface for a general-purpose assistant according to LLaVA?"
+        }
+      ],
+      "required_chunk_ids": [
+        "doc_b7074a6dad218e0d_0006_4f0652e3",
+        "doc_dc8bace378a282ea_0005_dfc17e7b"
+      ],
+      "required_sources": [
+        "data/documents/multimodal/10_llava15.pdf",
+        "data/documents/multimodal/06_llava.pdf"
+      ]
+    },
+    {
+      "id": "composition-022",
+      "split": "test",
+      "type": "composition",
+      "query": "What broad objective in artificial intelligence motivates the LLaVA assistant, and how does the Vision Transformer's patch-size approach differ from the earlier model by Cordonnier et al. (2020) to support tasks that require higher image resolution?",
+      "reference_answer": "LLaVA is motivated by the core aspiration to build a general-purpose assistant that can follow multi-modal vision-and-language instructions aligned with human intent. The Vision Transformer deviates from the Cordonnier et al. model by using larger patch sizes instead of 2×2 patches, which allows it to process medium-resolution images, a necessary capability for such an assistant to handle real-world visual tasks.",
+      "answer_facts": [
+        {
+          "fact": "A core aspiration in artificial intelligence is to develop a general-purpose assistant that can effectively follow multi-modal vision-and-language instructions.",
+          "aliases": [
+            "general-purpose multi-modal assistant",
+            "vision-and-language instruction following",
+            "multi-modal assistant aligned with human intent"
+          ]
+        },
+        {
+          "fact": "The Vision Transformer handles medium-resolution images by using larger patch sizes than the 2×2 patches used in Cordonnier et al. (2020).",
+          "aliases": [
+            "ViT uses patches larger than 2x2",
+            "ViT not limited to tiny 2x2 patches",
+            "larger patches enable medium-resolution image processing"
+          ]
+        }
+      ],
+      "bridge_entity": "general-purpose visual AI assistants",
+      "evidence_chain": [
+        {
+          "hop": 1,
+          "depends_on": [],
+          "source": "data/documents/multimodal/06_llava.pdf",
+          "chunk_id": "doc_dc8bace378a282ea_0003_e2bd93f0",
+          "text_sha256": "e2bd93f00c8a3f1ec4e485363473c1f125f3cf97a151b5c577d0925d17a16cce",
+          "source_question": "What core aspiration in AI regarding a general-purpose multi-modal assistant motivates LLaVA?"
+        },
+        {
+          "hop": 2,
+          "depends_on": [
+            1
+          ],
+          "source": "data/documents/multimodal/02_vit.pdf",
+          "chunk_id": "doc_8ce7b83971a14508_0009_6673f39f",
+          "text_sha256": "6673f39f7b354084d51adad3e18c00e6643683b6ab093893f8a92665be3e82d7",
+          "source_question": "How does ViT differ from Cordonnier et al. (2020) regarding patch size and image resolution?"
+        }
+      ],
+      "required_chunk_ids": [
+        "doc_dc8bace378a282ea_0003_e2bd93f0",
+        "doc_8ce7b83971a14508_0009_6673f39f"
+      ],
+      "required_sources": [
+        "data/documents/multimodal/06_llava.pdf",
+        "data/documents/multimodal/02_vit.pdf"
+      ]
+    },
+    {
+      "id": "composition-023",
+      "split": "test",
+      "type": "composition",
+      "query": "What is the central concept that recent large multimodal models are converging on, and what early work by Mori et al. (1999) explored a similar approach of learning from image–text pairs?",
+      "reference_answer": "Recent large multimodal models converge on visual instruction tuning, while the early work by Mori et al. (1999) improved content-based image retrieval by training a model to predict the nouns and adjectives found in text documents paired with images.",
+      "answer_facts": [
+        {
+          "fact": "Recent large multimodal models converge on visual instruction tuning.",
+          "aliases": [
+            "visual instruction tuning"
+          ]
+        },
+        {
+          "fact": "Mori et al. (1999) explored improving content-based image retrieval by training a model to predict the nouns and adjectives in text documents paired with images.",
+          "aliases": [
+            "predicting nouns and adjectives from image-text pairs",
+            "improving image retrieval via noun/adjective prediction"
+          ]
+        }
+      ],
+      "bridge_entity": "multimodal image-text learning",
+      "evidence_chain": [
+        {
+          "hop": 1,
+          "depends_on": [],
+          "source": "data/documents/multimodal/10_llava15.pdf",
+          "chunk_id": "doc_b7074a6dad218e0d_0004_d3903423",
+          "text_sha256": "d39034238a78a58575a6471ba21bdd35e11d9bd74ee729809d9199717a5a8032",
+          "source_question": "What central concept known as visual instruction tuning are recent studies on large multimodal models converging on?"
+        },
+        {
+          "hop": 2,
+          "depends_on": [
+            1
+          ],
+          "source": "data/documents/multimodal/01_clip.pdf",
+          "chunk_id": "doc_6478b6e571a7d6fc_0006_b5be6514",
+          "text_sha256": "b5be6514b096b9e0756b5ef7e558515360f77718a76cb3e880e5d8e03381eab4",
+          "source_question": "What early work by Mori et al. (1999) on content-based image retrieval does CLIP cite as a precedent?"
+        }
+      ],
+      "required_chunk_ids": [
+        "doc_b7074a6dad218e0d_0004_d3903423",
+        "doc_6478b6e571a7d6fc_0006_b5be6514"
+      ],
+      "required_sources": [
+        "data/documents/multimodal/10_llava15.pdf",
+        "data/documents/multimodal/01_clip.pdf"
+      ]
+    },
+    {
+      "id": "composition-024",
+      "split": "test",
+      "type": "composition",
+      "query": "Why does the Vision Transformer succeed on large datasets despite lacking CNN inductive biases, and what does Qwen-VL argue is crucial for large vision-language models to handle complex real-world visuals?",
+      "reference_answer": "The Vision Transformer succeeded because large-scale training trumps the inductive bias inherent to CNNs, enabling excellent results on benchmarks. Meanwhile, Qwen-VL emphasizes that fine-grained visual understanding is crucial for large vision-language models to assist people effectively and precisely in complicated real-world visual scenarios.",
+      "answer_facts": [
+        {
+          "fact": "Large-scale training trumps the inductive bias of CNNs, allowing Vision Transformers to attain excellent results when pre-trained on sufficient data.",
+          "aliases": [
+            "scale exceeds inductive bias",
+            "big data overcomes CNN priors"
+          ]
+        },
+        {
+          "fact": "Fine-grained visual understanding is crucial for large vision-language models to assist effectively and precisely in complicated real-world visual scenarios.",
+          "aliases": [
+            "fine-grained perception essential",
+            "detailed visual comprehension needed"
+          ]
+        }
+      ],
+      "bridge_entity": "critical factors for vision model performance in real-world scenarios",
+      "evidence_chain": [
+        {
+          "hop": 1,
+          "depends_on": [],
+          "source": "data/documents/multimodal/08_qwen_vl.pdf",
+          "chunk_id": "doc_b4eca60ae9d3c154_0006_ddd67b84",
+          "text_sha256": "ddd67b8402bbe55aff356df0a9251fa05a9298ef6902cf21086ce9e64874debf",
+          "source_question": "Why does Qwen-VL emphasize fine-grained visual understanding for large vision-language models?"
+        },
+        {
+          "hop": 2,
+          "depends_on": [
+            1
+          ],
+          "source": "data/documents/multimodal/02_vit.pdf",
+          "chunk_id": "doc_8ce7b83971a14508_0005_b3069ed8",
+          "text_sha256": "b3069ed8781527d2325419bf8667ccdde65c1ed7aa83ef9c4e4ad9911c6e99e5",
+          "source_question": "What does ViT find about the trade-off between the inductive bias of CNNs and large-scale training data?"
+        }
+      ],
+      "required_chunk_ids": [
+        "doc_b4eca60ae9d3c154_0006_ddd67b84",
+        "doc_8ce7b83971a14508_0005_b3069ed8"
+      ],
+      "required_sources": [
+        "data/documents/multimodal/08_qwen_vl.pdf",
+        "data/documents/multimodal/02_vit.pdf"
+      ]
+    },
+    {
+      "id": "composition-025",
+      "split": "test",
+      "type": "composition",
+      "query": "RETRO uses a chunked cross-attention mechanism and a frozen retriever to incorporate retrieved text, providing a constant gain over what parameter range? And how does REPLUG LSR's training approach differ from RETRO's adaptation of the language model to the retriever?",
+      "reference_answer": "RETRO gives a constant gain for models ranging from 150M to 7B parameters using a chunked cross-attention module and a frozen BERT retriever. REPLUG LSR differs by adapting the retriever to the language model via LM supervision, whereas RETRO adapts the language model to the retriever by modifying the LM to integrate retrieved text.",
+      "answer_facts": [
+        {
+          "fact": "RETRO uses a chunked cross-attention module and a frozen BERT retriever to incorporate retrieved text, and provides a constant gain for model sizes from 150M to 7B parameters.",
+          "aliases": [
+            "chunked cross-attention with frozen retriever",
+            "constant gain across 150M-7B parameters"
+          ]
+        },
+        {
+          "fact": "REPLUG LSR adapts the retriever to the language model using supervision from a frozen black-box LM, in contrast to RETRO which adapts the language model to the retriever.",
+          "aliases": [
+            "REPLUG LSR adapts retriever to LM",
+            "LM-supervised retriever training",
+            "opposite of adapting LM to retriever"
+          ]
+        }
+      ],
+      "bridge_entity": "adaptation direction between language models and retrievers",
+      "evidence_chain": [
+        {
+          "hop": 1,
+          "depends_on": [],
+          "source": "data/documents/rag/06_retro.pdf",
+          "chunk_id": "doc_1b3e89b589b73d51_0008_03b1f1f4",
+          "text_sha256": "03b1f1f4adc0a38bd5c41bd4acacd37ac1c75ed2b6d938db93eb16b20126d1b6",
+          "source_question": "What chunked cross-attention and frozen retriever does RETRO use, and over what parameter range does it give a constant gain?"
+        },
+        {
+          "hop": 2,
+          "depends_on": [
+            1
+          ],
+          "source": "data/documents/rag/07_replug.pdf",
+          "chunk_id": "doc_3c24ff147c4912a9_0005_0c291127",
+          "text_sha256": "0c2911276a7f388adcae3cbcfddb549f7d4e47bd5b9df4e2362d1242ea4e0e25",
+          "source_question": "What is REPLUG LSR (LM-Supervised Retrieval), and how does it differ from prior work that adapts language models to the retriever?"
+        }
+      ],
+      "required_chunk_ids": [
+        "doc_1b3e89b589b73d51_0008_03b1f1f4",
+        "doc_3c24ff147c4912a9_0005_0c291127"
+      ],
+      "required_sources": [
+        "data/documents/rag/06_retro.pdf",
+        "data/documents/rag/07_replug.pdf"
+      ]
+    },
+    {
+      "id": "composition-026",
+      "split": "test",
+      "type": "composition",
+      "query": "What problem does REALM identify with storing world knowledge implicitly in neural network parameters, and what limitation of the canonical RAG setup related to a language model's context window does GraphRAG address?",
+      "reference_answer": "REALM addresses the problem that implicit knowledge storage in neural network parameters makes it difficult to determine what knowledge is stored and where, and storage capacity is limited by network size, necessitating ever-larger models. GraphRAG addresses the limitation that canonical RAG retrieves only a subset of records small enough to fit within the LLM’s context window, which constrains the total context available for answering.",
+      "answer_facts": [
+        {
+          "fact": "Storing world knowledge implicitly in neural network parameters makes it difficult to determine what knowledge is stored and where, and storage space is limited by network size, requiring ever-larger networks.",
+          "aliases": [
+            "implicit parameter storage problem",
+            "hard to locate stored knowledge",
+            "limited storage capacity",
+            "need for larger models"
+          ]
+        },
+        {
+          "fact": "The canonical RAG setup retrieves a subset of records that collectively fit into the LLM's context window, restricting the amount of context that can be provided.",
+          "aliases": [
+            "RAG context window limitation",
+            "retrieved records must fit context window",
+            "context window constrains retrieved context"
+          ]
+        }
+      ],
+      "bridge_entity": "retrieval-augmented language models",
+      "evidence_chain": [
+        {
+          "hop": 1,
+          "depends_on": [],
+          "source": "data/documents/rag/03_realm.pdf",
+          "chunk_id": "doc_0ec1a7ab3de5514c_0004_7a7044e4",
+          "text_sha256": "7a7044e4da49508c8f2ef2ff7ecbe4307f5db1a55b854ee53063bd5ffbfd356b",
+          "source_question": "What problem with storing world knowledge implicitly in neural network parameters does REALM address?"
+        },
+        {
+          "hop": 2,
+          "depends_on": [
+            1
+          ],
+          "source": "data/documents/rag/09_graphrag.pdf",
+          "chunk_id": "doc_730f1a9f38d16689_0003_f2266671",
+          "text_sha256": "f226667150a3cdc820d3753110acded6277f69174fff018f89de48717ecfa993",
+          "source_question": "What limitation of the canonical RAG setup regarding a language model's context window does GraphRAG address?"
+        }
+      ],
+      "required_chunk_ids": [
+        "doc_0ec1a7ab3de5514c_0004_7a7044e4",
+        "doc_730f1a9f38d16689_0003_f2266671"
+      ],
+      "required_sources": [
+        "data/documents/rag/03_realm.pdf",
+        "data/documents/rag/09_graphrag.pdf"
+      ]
+    },
+    {
+      "id": "composition-027",
+      "split": "test",
+      "type": "composition",
+      "query": "What issue relevant to hallucinations do both parametric-memory-only pre-trained language models and conventional RAG approaches that treat all retrieved document content equally encounter?",
+      "reference_answer": "Both are susceptible to producing hallucinations. Parametric-memory-only models can hallucinate because they lack an external memory that can be easily revised or expanded. Conventional RAG approaches, by indiscriminately incorporating whole retrieved documents including nonessential text, may mislead the generation and cause hallucinations.",
+      "answer_facts": [
+        {
+          "fact": "Parametric-memory-only pre-trained language models may produce hallucinations.",
+          "aliases": [
+            "parametric-only models hallucinate",
+            "hallucinations in models without retrieval"
+          ]
+        },
+        {
+          "fact": "Conventional RAG approaches indiscriminately incorporate whole retrieved documents, including nonessential text, which can mislead and cause hallucinations.",
+          "aliases": [
+            "standard RAG with indiscriminate document use leads to hallucinations",
+            "whole-document RAG causes hallucinations due to irrelevant content"
+          ]
+        }
+      ],
+      "bridge_entity": "hallucination tendencies in language models",
+      "evidence_chain": [
+        {
+          "hop": 1,
+          "depends_on": [],
+          "source": "data/documents/rag/01_rag_knowledge_intensive_nlp.pdf",
+          "chunk_id": "doc_23e3249e9a1e7541_0003_4f460415",
+          "text_sha256": "4f460415ad1798f1a9f936e5d8c663478a7f2be6247d6ccbcc833ec839da4401",
+          "source_question": "What downsides of parametric-memory-only pre-trained language models does RAG aim to address?"
+        },
+        {
+          "hop": 2,
+          "depends_on": [
+            1
+          ],
+          "source": "data/documents/rag/08_crag.pdf",
+          "chunk_id": "doc_975aa1fd3c1b6031_0006_18309216",
+          "text_sha256": "18309216221cef90b2a56ba07a604e13f8e9a0c4aca67211db60422c4b81fa7b",
+          "source_question": "What problem with conventional RAG approaches indiscriminately incorporating whole retrieved documents does CRAG identify?"
+        }
+      ],
+      "required_chunk_ids": [
+        "doc_23e3249e9a1e7541_0003_4f460415",
+        "doc_975aa1fd3c1b6031_0006_18309216"
+      ],
+      "required_sources": [
+        "data/documents/rag/01_rag_knowledge_intensive_nlp.pdf",
+        "data/documents/rag/08_crag.pdf"
+      ]
+    },
+    {
+      "id": "composition-028",
+      "split": "test",
+      "type": "composition",
+      "query": "What computational strategy does REALM use to make large-scale neural retrieval feasible during pre-training, and how does SELF-RAG use critique tokens to improve final output?",
+      "reference_answer": "REALM caches and asynchronously updates the computation for each document and formulates document selection as Maximum Inner Product Search. SELF-RAG generates critique tokens that criticize its own output to choose the best one in terms of factuality and overall quality.",
+      "answer_facts": [
+        {
+          "fact": "REALM makes large-scale neural retrieval feasible by caching and asynchronously updating per-document computation and using Maximum Inner Product Search (MIPS) to select the best documents.",
+          "aliases": [
+            "caching and async updates with MIPS",
+            "cached MIPS retrieval"
+          ]
+        },
+        {
+          "fact": "SELF-RAG generates critique tokens to criticize its own output and select the best one based on factuality and overall quality.",
+          "aliases": [
+            "critique tokens for selecting best output",
+            "self-critique via tokens"
+          ]
+        }
+      ],
+      "bridge_entity": "retrieval-augmented generation optimization",
+      "evidence_chain": [
+        {
+          "hop": 1,
+          "depends_on": [],
+          "source": "data/documents/rag/03_realm.pdf",
+          "chunk_id": "doc_0ec1a7ab3de5514c_0007_f479d79b",
+          "text_sha256": "f479d79bc6ea34eed6be316d6ff5a3c4427ec8a6d48c2575743beba9fa882c84",
+          "source_question": "How does REALM make large-scale neural retrieval during pre-training computationally feasible?"
+        },
+        {
+          "hop": 2,
+          "depends_on": [
+            1
+          ],
+          "source": "data/documents/rag/05_self_rag.pdf",
+          "chunk_id": "doc_d9eaa1398abac0df_0006_f0537ae9",
+          "text_sha256": "f0537ae903d867bffa8175862cf74696ee1ec31bf38f2dd06d4c23ef50ae4d06",
+          "source_question": "What three steps involving retrieval, relevance evaluation, and critique tokens does SELF-RAG follow?"
+        }
+      ],
+      "required_chunk_ids": [
+        "doc_0ec1a7ab3de5514c_0007_f479d79b",
+        "doc_d9eaa1398abac0df_0006_f0537ae9"
+      ],
+      "required_sources": [
+        "data/documents/rag/03_realm.pdf",
+        "data/documents/rag/05_self_rag.pdf"
+      ]
+    },
+    {
+      "id": "composition-029",
+      "split": "test",
+      "type": "composition",
+      "query": "How does REALM incorporate retrieved documents into its predictions, and what findings from Fusion-in-Decoder support the ability of generative models to combine evidence from multiple passages?",
+      "reference_answer": "REALM uses a retriever to fetch documents from a large corpus like Wikipedia before each prediction, and then attends over those documents to inform its output. Fusion-in-Decoder sets new state-of-the-art results on the TriviaQA and NaturalQuestions benchmarks, and its performance significantly improves when the number of retrieved passages increases, demonstrating that generative models are good at combining evidence from multiple passages.",
+      "answer_facts": [
+        {
+          "fact": "REALM retrieves documents from a large corpus (e.g., Wikipedia) before each prediction and attends over them.",
+          "aliases": [
+            "REALM fetches Wikipedia documents prior to inference",
+            "REALM uses retriever to get documents from a large corpus"
+          ]
+        },
+        {
+          "fact": "Fusion-in-Decoder achieves state-of-the-art results on TriviaQA and NaturalQuestions, and its performance improves with more retrieved passages.",
+          "aliases": [
+            "Fusion-in-Decoder SOTA on TriviaQA, NaturalQuestions",
+            "performance increases with more retrieved passages"
+          ]
+        }
+      ],
+      "bridge_entity": "retrieval-augmented language models",
+      "evidence_chain": [
+        {
+          "hop": 1,
+          "depends_on": [],
+          "source": "data/documents/rag/03_realm.pdf",
+          "chunk_id": "doc_0ec1a7ab3de5514c_0005_7bef8b2d",
+          "text_sha256": "7bef8b2d640d253622a6a68cdc60addd388bdcd1f5549a3991fbd1ff8c9a3dbf",
+          "source_question": "How does REALM use a retriever to retrieve documents from a corpus like Wikipedia before making each prediction?"
+        },
+        {
+          "hop": 2,
+          "depends_on": [
+            1
+          ],
+          "source": "data/documents/rag/04_fusion_in_decoder.pdf",
+          "chunk_id": "doc_f1ee7e927c3fb31b_0006_e568ecea",
+          "text_sha256": "e568eceab42179fa6fc1ce536dd22df3d854ce78ae378b288ffa6771f178192a",
+          "source_question": "What benchmarks does the Fusion-in-Decoder method set new state-of-the-art results on, and how does performance change with more passages?"
+        }
+      ],
+      "required_chunk_ids": [
+        "doc_0ec1a7ab3de5514c_0005_7bef8b2d",
+        "doc_f1ee7e927c3fb31b_0006_e568ecea"
+      ],
+      "required_sources": [
+        "data/documents/rag/03_realm.pdf",
+        "data/documents/rag/04_fusion_in_decoder.pdf"
+      ]
+    },
+    {
+      "id": "composition-030",
+      "split": "test",
+      "type": "composition",
+      "query": "How do GraphRAG and REALM each use the notion of model performance to guide retrieval or evaluation in their respective approaches?",
+      "reference_answer": "GraphRAG employs an LLM-as-a-judge technique where one LLM generates diverse global sensemaking questions and a second LLM judges the answers of two RAG systems using predefined criteria, enabling comparison without ground-truth answers. REALM trains its retriever using a performance-based signal from unsupervised text, rewarding retrievals that improve the language model’s perplexity and penalizing uninformative ones, thereby optimizing the end-to-end retrieval-augmented prediction.",
+      "answer_facts": [
+        {
+          "fact": "GraphRAG uses an LLM-as-a-judge technique that has one LLM generate questions and a second LLM judge RAG system answers using predefined criteria.",
+          "aliases": [
+            "LLM-as-a-judge for RAG evaluation",
+            "two-LLM judging approach",
+            "predefined criteria judgment by a second LLM"
+          ]
+        },
+        {
+          "fact": "REALM trains its retriever with a performance-based signal from unsupervised text, rewarding retrievals that improve language model perplexity and penalizing uninformative ones.",
+          "aliases": [
+            "performance-based signal for retriever training",
+            "perplexity improvement reward",
+            "latent variable language model optimization",
+            "unsupervised text signal"
+          ]
+        }
+      ],
+      "bridge_entity": "performance-based evaluation or training signal in retrieval-augmented systems",
+      "evidence_chain": [
+        {
+          "hop": 1,
+          "depends_on": [],
+          "source": "data/documents/rag/09_graphrag.pdf",
+          "chunk_id": "doc_730f1a9f38d16689_0008_e14d85d3",
+          "text_sha256": "e14d85d381782af07265c05cf9c99c6d59f466b27c8c6b12cb2f60f4b0a26d26",
+          "source_question": "What LLM-as-a-judge technique does GraphRAG use to compare RAG systems on questions that have no ground-truth answer?"
+        },
+        {
+          "hop": 2,
+          "depends_on": [
+            1
+          ],
+          "source": "data/documents/rag/03_realm.pdf",
+          "chunk_id": "doc_0ec1a7ab3de5514c_0006_8c9accbe",
+          "text_sha256": "8c9accbe3e10b46c01ed1dfa311c217f460ddfd5b6da4f499d39d6b163b7a217",
+          "source_question": "What performance-based signal from unsupervised text does REALM use to train its retriever?"
+        }
+      ],
+      "required_chunk_ids": [
+        "doc_730f1a9f38d16689_0008_e14d85d3",
+        "doc_0ec1a7ab3de5514c_0006_8c9accbe"
+      ],
+      "required_sources": [
+        "data/documents/rag/09_graphrag.pdf",
+        "data/documents/rag/03_realm.pdf"
+      ]
+    }
+  ],
+  "dataset_sha256": "770cc4f49eab7683b0ea5e076963b99150b90b968acbaa8371fb1f0eff3946cd"
+}

@@ -183,3 +183,67 @@ class TestHybridSearchIntegration:
         assert results[0].text == "dense text"
         assert results[1].text == "sparse filled"
         mock_store.get_by_ids.assert_called_once_with(["c2"])
+
+
+class TestHybridSearchAblationGating:
+    """Weight gating: dense_weight/sparse_weight<=0 disables that path.
+
+    This is what makes the NO_DENSE / NO_SPARSE / NO_FUSION ablation variants
+    actually take effect (they zero a weight in scripts/evaluate.py).
+    """
+
+    def _make(self, dense_weight, sparse_weight):
+        from src.core.settings import Settings
+
+        settings = Settings()
+        settings.retrieval.dense_weight = dense_weight
+        settings.retrieval.sparse_weight = sparse_weight
+
+        processor = MagicMock()
+        processor.process.return_value = MagicMock(keywords=["python"], filters=None)
+        dense = MagicMock()
+        dense.retrieve.return_value = [
+            RetrievalResult(chunk_id="d1", score=0.9, text="dense", metadata={})
+        ]
+        sparse = MagicMock()
+        sparse.retrieve.return_value = [
+            RetrievalResult(chunk_id="s1", score=0.8, text="sparse", metadata={})
+        ]
+        fusion = MagicMock()
+        fusion.fuse.return_value = []
+        store = MagicMock()
+        store.get_by_ids.return_value = []
+        hs = HybridSearch(
+            settings=settings,
+            query_processor=processor,
+            dense_retriever=dense,
+            sparse_retriever=sparse,
+            fusion=fusion,
+            vector_store=store,
+        )
+        return hs, dense, sparse, fusion
+
+    def test_no_dense_skips_dense_path(self):
+        # dense_weight=0 -> dense retriever must NOT be called (no embedding call,
+        # so this variant does not require the embedding API key).
+        hs, dense, sparse, fusion = self._make(0.0, 1.0)
+        results = hs.search("python programming")
+        dense.retrieve.assert_not_called()
+        sparse.retrieve.assert_called_once()
+        fusion.fuse.assert_not_called()  # only one path -> sparse_only, no fusion
+        assert [r.chunk_id for r in results] == ["s1"]
+
+    def test_no_sparse_skips_sparse_path(self):
+        hs, dense, sparse, fusion = self._make(1.0, 0.0)
+        results = hs.search("python programming")
+        sparse.retrieve.assert_not_called()
+        dense.retrieve.assert_called_once()
+        fusion.fuse.assert_not_called()  # dense_only
+        assert [r.chunk_id for r in results] == ["d1"]
+
+    def test_both_weights_positive_runs_both_and_fuses(self):
+        hs, dense, sparse, fusion = self._make(0.7, 0.3)
+        hs.search("python programming")
+        dense.retrieve.assert_called_once()
+        sparse.retrieve.assert_called_once()
+        fusion.fuse.assert_called_once()

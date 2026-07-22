@@ -1,0 +1,14 @@
+{
+  "test_cases": [
+    {
+      "query": "What is Dense Passage Retrieval (DPR)?",
+      "expected_sources": ["data/documents/rag/02_dense_passage_retrieval.pdf"],
+      "category": "title_match"
+    },
+    {
+      "query": "How does FLAML optimize hyperparameters?",
+      "expected_sources": ["data/documents/agent/06_flaml.pdf"],
+      "category": "title_match"
+    }
+  ]
+}

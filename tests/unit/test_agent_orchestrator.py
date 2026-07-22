@@ -161,6 +161,43 @@ class TestAgenticRAGHappyPath:
         out = agent.run("q")
         assert len(out.results) == 2
 
+    def test_context_budget_covers_later_subquery(self):
+        s = Settings()
+        s.agent.max_context_chunks = 2
+        hybrid = FakeHybrid(
+            results_by_query={
+                "first": _results(5),
+                "second": [RetrievalResult(chunk_id="later", score=0.1, text="later")],
+            }
+        )
+        agent = _build(
+            s,
+            hybrid_search=hybrid,
+            router=FakeRouter(RouteDecision(need_retrieval=True)),
+            transformer=FakeTransformer(["first", "second"]),
+            synthesizer=FakeSynth(),
+            registry=FakeRegistry([]),
+        )
+
+        out = agent.run("q")
+
+        assert [result.chunk_id for result in out.results] == ["c1", "later"]
+        assert out.audit["selected_count"] == 2
+        assert out.audit["request_count"] == 2
+
+    def test_synthesis_citations_propagate_to_chunk_ids(self):
+        agent = _build(
+            hybrid_search=FakeHybrid(_results(2)),
+            router=FakeRouter(RouteDecision(need_retrieval=True)),
+            synthesizer=FakeSynth(),
+            registry=FakeRegistry([]),
+        )
+
+        out = agent.run("q")
+
+        assert out.used_citation_ids == [1, 2]
+        assert out.cited_chunk_ids == ["c1", "c2"]
+
     def test_explicit_collection_overrides_routing(self):
         hybrid = FakeHybrid(_results(1))
         agent = _build(
